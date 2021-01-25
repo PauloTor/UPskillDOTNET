@@ -27,9 +27,9 @@ namespace ParqueAPI.Models
 
         public bool PrePagamento { get; set; }
 
-        //public long FaturaID { get; set; }
-        //[ForeignKey("FaturaID")]
-        //public Fatura Fatura { get; set; }
+        public long FaturaID { get; set; }
+        [ForeignKey("FaturaID")]
+        public Fatura Fatura { get; set; }
 
         //public long QRCodeApiID { get; set; }
         //[ForeignKey("QRCodeApiID")]
@@ -39,8 +39,8 @@ namespace ParqueAPI.Models
         [ForeignKey("ClienteID")]
         public Cliente Cliente { get; set; }
 
-        //public long LugarID { get; set; }
-        //[ForeignKey("LugarID")]
-        //public Lugar Lugar { get; set; }
+        public long LugarID { get; set; }
+        [ForeignKey("LugarID")]
+        public Lugar Lugar { get; set; }
     }
 }
