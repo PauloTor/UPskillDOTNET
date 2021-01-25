@@ -27,10 +27,7 @@ namespace ParqueAPI.Models
 
         public bool PrePagamento { get; set; }
 
-        public long FaturaID { get; set; }
-        [ForeignKey("FaturaID")]
-        public Fatura Fatura { get; set; }
-
+    
         //public long QRCodeApiID { get; set; }
         //[ForeignKey("QRCodeApiID")]
         //public QRCodeApiID { get; set; }

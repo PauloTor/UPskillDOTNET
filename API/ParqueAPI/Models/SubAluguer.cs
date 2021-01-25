@@ -14,5 +14,12 @@ namespace ParqueAPI.Models
         public float Preço { get; set; }
         public DateTime DataInicio { get; set; }
         public DateTime DataFim { get; set; }
+
+        public Reserva reserva { get; set; }
+
+        public Cliente cliente { get; set; }
     }
+
+
+
 }

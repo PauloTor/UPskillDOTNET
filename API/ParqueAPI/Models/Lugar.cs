@@ -12,5 +12,6 @@ namespace ParqueAPI.Models
         public int Sector { get; set; }
         public float Preço { get; set; }
         public long ParqueID { get; set; }
+        public  Parque parque { get; set; }
     }
 }
