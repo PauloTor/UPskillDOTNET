@@ -15,7 +15,7 @@ namespace ParqueAPI.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DataFatura { get; set; }
 
-       public string MetodoPagamentoFatura { get; set; }
+        public string MetodoPagamentoFatura { get; set; }
 
         public float PrecoFatura { get; set; }
 
