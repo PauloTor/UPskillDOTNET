@@ -7,5 +7,10 @@ namespace ParqueAPI.Models
 {
     public class Lugar
     {
+        public long LugarID { get; set; }
+        public int Fila { get; set; }
+        public int Sector { get; set; }
+        public float Preço { get; set; }
+        public long ParqueID { get; set; }
     }
 }
