@@ -19,5 +19,7 @@ namespace ParqueAPI.Data
         public DbSet<ParqueAPI.Models.Parque> Parque { get; set; }
 
         public DbSet<ParqueAPI.Models.Cliente> Cliente { get; set; }
+
+        public DbSet<ParqueAPI.Models.Fatura> Fatura { get; set; }
     }
 }
