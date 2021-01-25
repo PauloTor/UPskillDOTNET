@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore;
+using ParqueAPI.Models;
 
 namespace ParqueAPI
 {
@@ -26,7 +28,7 @@ namespace ParqueAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddDbContext<ParqueAPIContext>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

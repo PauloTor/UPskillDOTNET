@@ -28,11 +28,13 @@ O gestor_park confirma.
 O sistema elimina o lugar de estacionamento.
 
 -Requisitos especiais:
--
+n/a
+
 -Variações em tecnologias e dados:
--
+n/a
+
 -Frequência de ocorrência:
 Raramente
 
 -Questões em aberto:
--
+n/a
