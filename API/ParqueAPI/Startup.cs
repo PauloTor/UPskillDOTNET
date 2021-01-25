@@ -29,12 +29,16 @@ namespace ParqueAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ParqueAPIContext>();
+            //services.AddDbContext<ParqueAPIContext>();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ParqueAPI", Version = "v1" });
             });
+
+            services.AddDbContext<ParqueAPIContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("ParqueAPIContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

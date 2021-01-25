@@ -1,0 +1,36 @@
+﻿@model ParqueAPI.Models.Parque
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Parque</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NomeParque)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NomeParque)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ParquePublico)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ParquePublico)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Morada)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Morada.MoradaID)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ParqueID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
