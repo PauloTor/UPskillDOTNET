@@ -23,5 +23,9 @@ namespace ParqueAPI.Data
         public DbSet<ParqueAPI.Models.Fatura> Fatura { get; set; }
 
         public DbSet<ParqueAPI.Models.Reserva> Reserva { get; set; }
+
+        public DbSet<ParqueAPI.Models.Lugar> Lugar { get; set; }
+
+        public DbSet<ParqueAPI.Models.SubAluguer> SubAluguer { get; set; }
     }
 }
