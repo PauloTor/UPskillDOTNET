@@ -201,13 +201,13 @@ namespace ParqueAPI.Data
                     );
                 context.Parque.AddRange(
 
-                new Parque { ParqueID = 1, NomeParque = " Boavista Park", ParquePublico = false, MoradaID = 1 },
-                new Parque { ParqueID = 2, NomeParque = " Nice Parking", ParquePublico = false, MoradaID = 2 },
-                new Parque { ParqueID = 3, NomeParque = " Parking da cidade", ParquePublico = false, MoradaID = 2 },
-                new Parque { ParqueID = 4, NomeParque = " West Parking", ParquePublico = true, MoradaID = 3 },
-                new Parque { ParqueID = 5, NomeParque = " North Parking", ParquePublico = true, MoradaID = 4 },
-                new Parque { ParqueID = 6, NomeParque = " Souith Parking", ParquePublico = true, MoradaID = 2 },
-                new Parque { ParqueID = 7, NomeParque = " East Parking", ParquePublico = true, MoradaID = 1 }
+                new Parque { ParqueID = 1, NomeParque = " Boavista Park", TipoParque = 0, MoradaID = 1 },
+                new Parque { ParqueID = 2, NomeParque = " Nice Parking", TipoParque = 0, MoradaID = 2 },
+                new Parque { ParqueID = 3, NomeParque = " Parking da cidade", TipoParque = 1, MoradaID = 2 },
+                new Parque { ParqueID = 4, NomeParque = " West Parking", TipoParque = 1, MoradaID = 3 },
+                new Parque { ParqueID = 5, NomeParque = " North Parking", TipoParque = 0, MoradaID = 4 },
+                new Parque { ParqueID = 6, NomeParque = " Souith Parking", TipoParque = 1, MoradaID = 2 },
+                new Parque { ParqueID = 7, NomeParque = " East Parking", TipoParque = 1, MoradaID = 1 }
                 );
 
                 context.Fatura.AddRange(
