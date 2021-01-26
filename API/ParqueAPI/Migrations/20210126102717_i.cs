@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ParqueAPI.Migrations
 {
-    public partial class ss : Migration
+    public partial class i : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -45,7 +45,7 @@ namespace ParqueAPI.Migrations
                     ParqueID = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     NomeParque = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ParquePublico = table.Column<bool>(type: "bit", nullable: false),
+                    TipoParque = table.Column<int>(type: "int", nullable: false),
                     MoradaID = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
@@ -143,8 +143,7 @@ namespace ParqueAPI.Migrations
                     ReservaID = table.Column<long>(type: "bigint", nullable: false),
                     ClienteID = table.Column<int>(type: "int", nullable: false),
                     Preço = table.Column<float>(type: "real", nullable: false),
-                    DataInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataFim = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Data = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ClienteID1 = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>

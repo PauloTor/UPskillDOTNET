@@ -129,8 +129,8 @@ namespace ParqueAPI.Migrations
                     b.Property<string>("NomeParque")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("ParquePublico")
-                        .HasColumnType("bit");
+                    b.Property<int>("TipoParque")
+                        .HasColumnType("int");
 
                     b.HasKey("ParqueID");
 
@@ -189,10 +189,7 @@ namespace ParqueAPI.Migrations
                     b.Property<long?>("ClienteID1")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("DataFim")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DataInicio")
+                    b.Property<DateTime>("Data")
                         .HasColumnType("datetime2");
 
                     b.Property<float>("Preço")
