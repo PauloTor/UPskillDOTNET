@@ -7,13 +7,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ParqueAPI.Models
 {
+    public enum TipoParque { publico, privado }
+
     public class Parque
     {
         public long ParqueID { get; set; }
 
         public string NomeParque { get; set; }
 
-        public bool ParquePublico { get; set; }
+        public TipoParque TipoParque { get; set; }
 
         [ForeignKey("MoradaID")]
         public long MoradaID { get; set; }
