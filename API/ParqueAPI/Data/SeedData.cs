@@ -24,7 +24,7 @@ namespace ParqueAPI.Data
                 new Cliente { ClienteID = 1, NomeCliente = "Pedro", EmailCliente = "pedro1@hotmail.com", NifCliente = 123456789, MetodoPagamento = "CartaoCredito", Credito = 5 },
                 new Cliente { ClienteID = 2, NomeCliente = "Pedro2", EmailCliente = "pedro2@hotmail.com", NifCliente = 22222189, MetodoPagamento = "DD", Credito = 115 },
                 new Cliente { ClienteID = 3, NomeCliente = "Pedro3", EmailCliente = "pedro3@hotmail.com", NifCliente = 3333456789, MetodoPagamento = "CartaoCredito", Credito = 25 },
-                new Cliente { ClienteID = 4, NomeCliente = "Pedro4", EmailCliente = "pedro4@hotmail.com", NifCliente = 444456789, MetodoPagamento = "Paypall", Credito = 544 },
+                new Cliente { ClienteID = 4, NomeCliente = "Pedro4", EmailCliente = "pedro4@hotmail.com", NifCliente = 444456789, MetodoPagamento = "Paypal", Credito = 544 },
                 new Cliente { ClienteID = 5, NomeCliente = "Pedro5", EmailCliente = "pedro5@hotmail.com", NifCliente = 5555556789, MetodoPagamento = "Mbway", Credito = 65 },
                 new Cliente { ClienteID = 6, NomeCliente = "Pedro6", EmailCliente = "pedro6@hotmail.com", NifCliente = 66666789, MetodoPagamento = "Paypal", Credito = 5 },
                 new Cliente { ClienteID = 7, NomeCliente = "Pedro7", EmailCliente = "pedro7@hotmail.com", NifCliente = 777756789, MetodoPagamento = "MBWay", Credito = 11 },
