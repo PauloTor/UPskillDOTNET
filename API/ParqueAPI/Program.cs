@@ -9,33 +9,44 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ParqueAPI.Data;
 
+
 namespace ParqueAPI
 {
     public class Program
     {
+
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
             var host = CreateHostBuilder(args).Build();
 
+            CreateDbIfNotExists(host);
+
+            host.Run();
+        }
+
+
+        // new
+        private static void CreateDbIfNotExists(IHost host)
+        {
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-
                 try
                 {
-                    SeedData.Initialize(services);
+                    var context = services.GetRequiredService<ParqueAPIContext>();
+                    DbInitializer.Initialize(context);
                 }
                 catch (Exception ex)
                 {
                     var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred seeding the DB.");
+                    logger.LogError(ex, "An error occurred creating the DB.");
                 }
             }
-
-            host.Run();
-
         }
+
+
+
+
 
 
 

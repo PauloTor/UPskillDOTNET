@@ -32,10 +32,6 @@ namespace ParqueAPI.Models
         //[ForeignKey("QRCodeApiID")]
         //public QRCodeApiID { get; set; }
 
-        public long ClienteID { get; set; }
-        [ForeignKey("ClienteID")]
-        public Cliente Cliente { get; set; }
-
         public long LugarID { get; set; }
         [ForeignKey("LugarID")]
         public Lugar Lugar { get; set; }
