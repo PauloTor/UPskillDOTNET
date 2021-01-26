@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ParqueAPI.Models;
+using ParqueAPI.Data;
 
 namespace ParqueAPI.Data
 {
@@ -12,7 +13,10 @@ namespace ParqueAPI.Data
         public ParqueAPIContext (DbContextOptions<ParqueAPIContext> options)
             : base(options)
         {
+            
         }
+
+         
 
         public DbSet<ParqueAPI.Models.Morada> Morada { get; set; }
 

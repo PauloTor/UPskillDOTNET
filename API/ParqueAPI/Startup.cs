@@ -31,6 +31,18 @@ namespace ParqueAPI
         {
             //services.AddDbContext<ParqueAPIContext>();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("MyAllowSpecificOrigins",
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200",
+                                        "http://myDeployedWebSite")
+                                        .AllowAnyHeader()
+                                        .AllowAnyMethod();
+                });
+            });
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -46,6 +58,7 @@ namespace ParqueAPI
         {
             if (env.IsDevelopment())
             {
+                app.UseCors("MyAllowSpecificOrigins");
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ParqueAPI v1"));
