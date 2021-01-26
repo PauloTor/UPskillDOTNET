@@ -12,11 +12,9 @@ namespace ParqueAPI.Models
         public long ReservaID { get; set; }
         public int ClienteID { get; set; }
         public float Preço { get; set; }
-        public DateTime DataInicio { get; set; }
-        public DateTime DataFim { get; set; }
-
+        public DateTime Data { get; set; }
+    
         public Reserva reserva { get; set; }
-
         public Cliente cliente { get; set; }
     }
 
