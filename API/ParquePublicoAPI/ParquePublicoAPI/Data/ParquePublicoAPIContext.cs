@@ -15,5 +15,9 @@ namespace ParquePublicoAPI.Data
         }
 
         public DbSet<ParquePublicoAPI.Models.Rua> Rua { get; set; }
+
+        public DbSet<ParquePublicoAPI.Models.Lugar> Lugar { get; set; }
+
+        public DbSet<ParquePublicoAPI.Models.Reserva> Reserva { get; set; }
     }
 }
