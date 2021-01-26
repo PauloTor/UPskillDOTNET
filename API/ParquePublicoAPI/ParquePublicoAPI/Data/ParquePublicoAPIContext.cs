@@ -4,18 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ParquePublicoAPI.Models;
-using ParquePublicoAPI.Data;
 
 namespace ParquePublicoAPI.Data
 {
-    public class ParquePublicoContext : DbContext
+    public class ParquePublicoAPIContext : DbContext
     {
-        public ParquePublicoContext (DbContextOptions<ParquePublicoContext> options)
+        public ParquePublicoAPIContext (DbContextOptions<ParquePublicoAPIContext> options)
             : base(options)
         {
-
         }
 
-
+        public DbSet<ParquePublicoAPI.Models.Rua> Rua { get; set; }
     }
 }
