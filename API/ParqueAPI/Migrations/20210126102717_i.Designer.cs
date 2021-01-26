@@ -10,8 +10,8 @@ using ParqueAPI.Data;
 namespace ParqueAPI.Migrations
 {
     [DbContext(typeof(ParqueAPIContext))]
-    [Migration("20210125174647_init")]
-    partial class init
+    [Migration("20210126102717_i")]
+    partial class i
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -131,8 +131,8 @@ namespace ParqueAPI.Migrations
                     b.Property<string>("NomeParque")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("ParquePublico")
-                        .HasColumnType("bit");
+                    b.Property<int>("TipoParque")
+                        .HasColumnType("int");
 
                     b.HasKey("ParqueID");
 
@@ -191,10 +191,7 @@ namespace ParqueAPI.Migrations
                     b.Property<long?>("ClienteID1")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("DataFim")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DataInicio")
+                    b.Property<DateTime>("Data")
                         .HasColumnType("datetime2");
 
                     b.Property<float>("Preço")

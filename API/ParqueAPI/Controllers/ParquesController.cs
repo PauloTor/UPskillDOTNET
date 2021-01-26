@@ -23,7 +23,7 @@ namespace ParqueAPI.Controllers
 
         // GET: api/Parques
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Parque>>> GetParque()
+        public async Task<ActionResult<IEnumerable<Parque>>> GetParques()
         {
             return await _context.Parque.Include(p => p.Morada).ToListAsync();
         }
