@@ -10,7 +10,7 @@ using ParqueAPI.Models;
 
 namespace ParqueAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/clientes")]
     [ApiController]
     public class ClientesController : ControllerBase
     {
@@ -79,7 +79,21 @@ namespace ParqueAPI.Controllers
         public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
         {
             _context.Cliente.Add(cliente);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (ClienteExists(cliente.ClienteID))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return CreatedAtAction("GetCliente", new { id = cliente.ClienteID }, cliente);
         }

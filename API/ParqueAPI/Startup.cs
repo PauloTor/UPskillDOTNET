@@ -31,6 +31,16 @@ namespace ParqueAPI
         {
             //services.AddDbContext<ParqueAPIContext>();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("MyAllowSpecificOrigins",
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200",
+                                        "http://myDeployedWebSite");
+                });
+            });
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
