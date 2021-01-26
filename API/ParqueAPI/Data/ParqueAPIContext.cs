@@ -18,18 +18,15 @@ namespace ParqueAPI.Data
 
          
 
-        public DbSet<ParqueAPI.Models.Morada> Morada { get; set; }
+        public DbSet<Morada> Morada { get; set; }
 
-        public DbSet<ParqueAPI.Models.Parque> Parque { get; set; }
+        public DbSet<Parque> Parque { get; set; }
 
-        public DbSet<ParqueAPI.Models.Cliente> Cliente { get; set; }
+        
+        public DbSet<Reserva> Reserva { get; set; }
 
-        public DbSet<ParqueAPI.Models.Fatura> Fatura { get; set; }
+        public DbSet<Lugar> Lugar { get; set; }
 
-        public DbSet<ParqueAPI.Models.Reserva> Reserva { get; set; }
-
-        public DbSet<ParqueAPI.Models.Lugar> Lugar { get; set; }
-
-        public DbSet<ParqueAPI.Models.SubAluguer> SubAluguer { get; set; }
+        
     }
 }
