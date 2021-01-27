@@ -41,15 +41,15 @@ namespace ParquePublicoAPI.Data
             var rua = new Rua[]
 
                 {
-                    new Rua { RuaID = 1, NomeRua = "Primeira", CodigoPostal = "1111 - 111", Lotacao = 11 },
-                    new Rua { RuaID = 2, NomeRua = "Segunda", CodigoPostal = "2222 - 222", Lotacao = 22 },
-                    new Rua { RuaID = 3, NomeRua = "Terceira", CodigoPostal = "3333 - 333", Lotacao = 33 },
-                    new Rua { RuaID = 4, NomeRua = "Quarta", CodigoPostal = "4444 - 444", Lotacao = 44 },
-                    new Rua { RuaID = 5, NomeRua = "Quinta", CodigoPostal = "5555 - 555", Lotacao = 55 },
-                    new Rua { RuaID = 6, NomeRua = "Sexta", CodigoPostal = "6666 - 666", Lotacao = 66 },
-                    new Rua { RuaID = 7, NomeRua = "Setima", CodigoPostal = "7777 - 777", Lotacao = 77 },
-                    new Rua { RuaID = 8, NomeRua = "Oitava", CodigoPostal = "8888 - 888", Lotacao = 88 },
-                    new Rua { RuaID = 9, NomeRua = "Nona", CodigoPostal = "9999 - 999", Lotacao = 99 }
+                    new Rua { NomeRua = "Primeira", CodigoPostal = "1111 - 111", Lotacao = 11 },
+                    new Rua { NomeRua = "Segunda", CodigoPostal = "2222 - 222", Lotacao = 22 },
+                    new Rua { NomeRua = "Terceira", CodigoPostal = "3333 - 333", Lotacao = 33 },
+                    new Rua { NomeRua = "Quarta", CodigoPostal = "4444 - 444", Lotacao = 44 },
+                    new Rua { NomeRua = "Quinta", CodigoPostal = "5555 - 555", Lotacao = 55 },
+                    new Rua { NomeRua = "Sexta", CodigoPostal = "6666 - 666", Lotacao = 66 },
+                    new Rua { NomeRua = "Setima", CodigoPostal = "7777 - 777", Lotacao = 77 },
+                    new Rua { NomeRua = "Oitava", CodigoPostal = "8888 - 888", Lotacao = 88 },
+                    new Rua { NomeRua = "Nona", CodigoPostal = "9999 - 999", Lotacao = 99 }
                 };
 
             foreach (Rua r in rua)
