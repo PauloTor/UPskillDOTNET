@@ -41,10 +41,6 @@ namespace ParquePublicoAPI
             });
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ParquePublicoAPI", Version = "v1" });
-            });
 
             services.AddDbContext<ParquePublicoAPIContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("ParquePublicoAPIContext")));
