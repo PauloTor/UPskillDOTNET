@@ -12,23 +12,23 @@ namespace ParquePrivateAPI.Controllers
 {
     [Route("api/Lugares")]
     [ApiController]
-    public class LugarsController : ControllerBase
+    public class LugaresController : ControllerBase
     {
         private readonly ParquePrivateAPIContext _context;
 
-        public LugarsController(ParquePrivateAPIContext context)
+        public LugaresController(ParquePrivateAPIContext context)
         {
             _context = context;
         }
 
-        // GET: api/Lugars
+        // GET: api/Lugares
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Lugar>>> GetLugar()
         {
-            return await _context.Lugar.ToListAsync();
+            return await _context.Lugar.Include(l => l.Parque).ToListAsync();
         }
 
-        // GET: api/Lugars/5
+        // GET: api/Lugares/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Lugar>> GetLugar(long id)
         {
@@ -42,7 +42,7 @@ namespace ParquePrivateAPI.Controllers
             return lugar;
         }
 
-        // PUT: api/Lugars/5
+        // PUT: api/Lugares/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
@@ -55,6 +55,9 @@ namespace ParquePrivateAPI.Controllers
 
             _context.Entry(lugar).State = EntityState.Modified;
 
+
+            //var x = _context.Reserva.Where(n => )
+            //var y = _context.Lugar.Where(n => !x.Contains(n.LugarID));
             try
             {
                 await _context.SaveChangesAsync();
@@ -74,7 +77,7 @@ namespace ParquePrivateAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Lugars
+        // POST: api/Lugares
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
@@ -86,7 +89,7 @@ namespace ParquePrivateAPI.Controllers
             return CreatedAtAction("GetLugar", new { id = lugar.LugarID }, lugar);
         }
 
-        // DELETE: api/Lugars/5
+        // DELETE: api/Lugares/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Lugar>> DeleteLugar(long id)
         {

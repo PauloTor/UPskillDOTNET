@@ -25,7 +25,7 @@ namespace ParquePrivateAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Parque>>> GetParque()
         {
-            return await _context.Parque.ToListAsync();
+            return await _context.Parque.Include(p => p.Morada).ToListAsync();
         }
 
         // GET: api/Parques/5
