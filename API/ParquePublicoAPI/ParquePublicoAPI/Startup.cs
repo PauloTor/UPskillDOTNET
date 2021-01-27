@@ -28,13 +28,15 @@ namespace ParquePublicoAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSwaggerGen();
+
             services.AddCors(options =>
             {
                 options.AddPolicy("MyAllowSpecificOrigins",
                 builder =>
                 {
-                    builder.WithOrigins("http://localhost:4200",
-                                        "http://myDeployedWebSite")
+                    builder.WithOrigins("http://localhost:4200")
+                                        //"http://myDeployedWebSite")
                                         .AllowAnyHeader()
                                         .AllowAnyMethod();
                 });
@@ -44,6 +46,7 @@ namespace ParquePublicoAPI
 
             services.AddDbContext<ParquePublicoAPIContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("ParquePublicoAPIContext")));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
