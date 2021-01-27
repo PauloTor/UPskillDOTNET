@@ -37,6 +37,43 @@ namespace ParquePublicoAPI.Data
                 context.Lugar.Add(s);
             }
             context.SaveChanges();
+
+            var rua = new Rua[]
+
+                {
+                    new Rua { RuaID = 1, NomeRua = "Primeira", CodigoPostal = "1111 - 111", Lotacao = 11 },
+                    new Rua { RuaID = 2, NomeRua = "Segunda", CodigoPostal = "2222 - 222", Lotacao = 22 },
+                    new Rua { RuaID = 3, NomeRua = "Terceira", CodigoPostal = "3333 - 333", Lotacao = 33 },
+                    new Rua { RuaID = 4, NomeRua = "Quarta", CodigoPostal = "4444 - 444", Lotacao = 44 },
+                    new Rua { RuaID = 5, NomeRua = "Quinta", CodigoPostal = "5555 - 555", Lotacao = 55 },
+                    new Rua { RuaID = 6, NomeRua = "Sexta", CodigoPostal = "6666 - 666", Lotacao = 66 },
+                    new Rua { RuaID = 7, NomeRua = "Setima", CodigoPostal = "7777 - 777", Lotacao = 77 },
+                    new Rua { RuaID = 8, NomeRua = "Oitava", CodigoPostal = "8888 - 888", Lotacao = 88 },
+                    new Rua { RuaID = 9, NomeRua = "Nona", CodigoPostal = "9999 - 999", Lotacao = 99 }
+                };
+
+            foreach (Rua r in rua)
+            {
+                context.Rua.Add(r);
+            }
+            context.SaveChanges();
+
+            var reserva = new Reserva[]
+
+               {
+                   new Reserva { ReservaID = 1, DataReserva = DateTime.Parse("2020-1-26 15:00:00"), DataInicio = DateTime.Parse("2020-02-12 16:00:00"), DataFim = DateTime.Parse("2020-02-12 17:00:00"), LugarID = 1},
+                   new Reserva { ReservaID = 2, DataReserva = DateTime.Parse("2020-1-26 16:00:00"), DataInicio = DateTime.Parse("2020-02-12 15:00:00"), DataFim = DateTime.Parse("2020-02-12 18:00:00"), LugarID = 2},
+                   new Reserva { ReservaID = 3, DataReserva = DateTime.Parse("2020-1-27 09:00:00"), DataInicio = DateTime.Parse("2020-02-12 15:00:00"), DataFim = DateTime.Parse("2020-02-12 18:00:00"), LugarID = 1},
+                   new Reserva { ReservaID = 4, DataReserva = DateTime.Parse("2020-1-27 10:00:00"), DataInicio = DateTime.Parse("2020-02-13 09:00:00"), DataFim = DateTime.Parse("2020-02-13 21:00:00"), LugarID = 1}
+               };
+
+            foreach (Reserva r in reserva)
+            {
+                context.Reserva.Add(r);
+            }
+            context.SaveChanges();
+
+
             //===========================================================================================0
         }
     }
