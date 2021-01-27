@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ParquePublicoAPI.Models
+namespace ParqueAPIPrivado.Models
 {
     public class Reserva
     {
@@ -23,8 +23,17 @@ namespace ParquePublicoAPI.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DataFim { get; set; }
 
-        [ForeignKey("LugarID")]
+        public string MetodoPagamentoReserva { get; set; }
+
+        public bool PrePagamento { get; set; }
+
+    
+        //public long QRCodeApiID { get; set; }
+        //[ForeignKey("QRCodeApiID")]
+        //public QRCodeApiID { get; set; }
+
         public long LugarID { get; set; }
+        [ForeignKey("LugarID")]
         public Lugar Lugar { get; set; }
     }
 }

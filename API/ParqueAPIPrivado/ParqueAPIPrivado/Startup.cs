@@ -6,15 +6,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using ParquePublicoAPI.Data;
+using ParqueAPIPrivado.Data;
 
-namespace ParquePublicoAPI
+namespace ParqueAPIPrivado
 {
     public class Startup
     {
@@ -28,26 +27,10 @@ namespace ParquePublicoAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options =>
-            {
-                options.AddPolicy("MyAllowSpecificOrigins",
-                builder =>
-                {
-                    builder.WithOrigins("http://localhost:4200",
-                                        "http://myDeployedWebSite")
-                                        .AllowAnyHeader()
-                                        .AllowAnyMethod();
-                });
-            });
-
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ParquePublicoAPI", Version = "v1" });
-            });
 
-            services.AddDbContext<ParquePublicoAPIContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("ParquePublicoAPIContext")));
+            services.AddDbContext<ParqueAPIPrivadoContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("ParqueAPIPrivadoContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,11 +39,7 @@ namespace ParquePublicoAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ParquePublicoAPI v1"));
             }
-
-            app.UseCors("MyAllowSpecificOrigins");
 
             app.UseHttpsRedirection();
 
