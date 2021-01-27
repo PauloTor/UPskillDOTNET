@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ParquePrivateAPI.Models;
 using ParquePrivateAPI.Data;
+using Microsoft.AspNetCore.Cors;
 
 namespace ParquePrivateAPI.Controllers
 {
+    [EnableCors("MyAllowSpecificOrigins")]
     [Route("api/Lugares")]
     [ApiController]
     public class LugaresController : ControllerBase
@@ -22,6 +24,7 @@ namespace ParquePrivateAPI.Controllers
         }
 
         // GET: api/Lugares
+        [EnableCors("MyAllowSpecificOrigins")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Lugar>>> GetLugar()
         {
@@ -29,6 +32,7 @@ namespace ParquePrivateAPI.Controllers
         }
 
         // GET: api/Lugares/5
+        [EnableCors]
         [HttpGet("{id}")]
         public async Task<ActionResult<Lugar>> GetLugar(long id)
         {
@@ -45,6 +49,7 @@ namespace ParquePrivateAPI.Controllers
         // PUT: api/Lugares/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [EnableCors]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutLugar(long id, Lugar lugar)
         {
@@ -80,6 +85,7 @@ namespace ParquePrivateAPI.Controllers
         // POST: api/Lugares
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [EnableCors]
         [HttpPost]
         public async Task<ActionResult<Lugar>> PostLugar(Lugar lugar)
         {
@@ -90,6 +96,7 @@ namespace ParquePrivateAPI.Controllers
         }
 
         // DELETE: api/Lugares/5
+        [EnableCors]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Lugar>> DeleteLugar(long id)
         {
