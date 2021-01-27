@@ -17,7 +17,7 @@ namespace ParquePublicoAPI
         {
             var host = CreateHostBuilder(args).Build();
 
-            CreateHostBuilder(args).Build().Run();
+            CreateDbIfNotExists(host);
 
             host.Run();
         }
