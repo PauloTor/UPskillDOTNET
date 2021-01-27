@@ -10,7 +10,7 @@ using ParquePrivateAPI.Data;
 
 namespace ParquePrivateAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Reservas")]
     [ApiController]
     public class ReservasController : ControllerBase
     {
