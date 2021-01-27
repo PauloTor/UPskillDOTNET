@@ -25,7 +25,7 @@ namespace ParquePrivateAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Reserva>>> GetReserva()
         {
-            return await _context.Reserva.ToListAsync();
+            return await _context.Reserva.Include(r => r.Lugar).ToListAsync();
         }
 
         // GET: api/Reservas/5
