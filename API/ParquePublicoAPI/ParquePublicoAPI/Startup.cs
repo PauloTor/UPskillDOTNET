@@ -28,19 +28,6 @@ namespace ParquePublicoAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSwaggerGen();
-
-            services.AddCors(options =>
-            {
-                options.AddPolicy("MyAllowSpecificOrigins",
-                builder =>
-                {
-                    builder.WithOrigins("http://localhost:4200")
-                                        //"http://myDeployedWebSite")
-                                        .AllowAnyHeader()
-                                        .AllowAnyMethod();
-                });
-            });
 
             services.AddControllers();
 
@@ -58,8 +45,6 @@ namespace ParquePublicoAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ParquePublicoAPI v1"));
             }
-
-            app.UseCors("MyAllowSpecificOrigins");
 
             app.UseHttpsRedirection();
 

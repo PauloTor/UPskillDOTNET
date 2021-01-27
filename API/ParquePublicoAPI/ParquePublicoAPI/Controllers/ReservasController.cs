@@ -11,7 +11,6 @@ using ParquePublicoAPI.Models;
 
 namespace ParquePublicoAPI.Controllers
 {
-    [EnableCors("MyAllowSpecificOrigins")]
     [Route("api/Reservas")]
     [ApiController]
     public class ReservasController : ControllerBase
@@ -24,7 +23,6 @@ namespace ParquePublicoAPI.Controllers
         }
 
         // GET: api/Reservas
-        [EnableCors("MyAllowSpecificOrigins")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Reserva>>> GetReserva()
         {
@@ -32,7 +30,6 @@ namespace ParquePublicoAPI.Controllers
         }
 
         // GET: api/Reservas/5
-        [EnableCors]
         [HttpGet("{id}")]
         public async Task<ActionResult<Reserva>> GetReserva(long id)
         {
@@ -48,7 +45,6 @@ namespace ParquePublicoAPI.Controllers
 
         // PUT: api/Reservas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [EnableCors]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutReserva(long id, Reserva reserva)
         {
@@ -80,7 +76,6 @@ namespace ParquePublicoAPI.Controllers
 
         // POST: api/Reservas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [EnableCors]
         [HttpPost]
         public async Task<ActionResult<Reserva>> PostReserva(Reserva reserva)
         {
@@ -91,7 +86,6 @@ namespace ParquePublicoAPI.Controllers
         }
 
         // DELETE: api/Reservas/5
-        [EnableCors]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteReserva(long id)
         {
