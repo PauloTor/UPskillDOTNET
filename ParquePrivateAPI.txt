@@ -1,0 +1,14 @@
+Microsoft.AspNetCore.Cors
+Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore
+Microsoft.Data.Sqlite.Core
+Microsoft.EntityFrameworkCore
+Microsoft.EntityFrameworkCore.Analyzers
+Microsoft.EntityFrameworkCore.Design
+Microsoft.EntityFrameworkCore.Relational
+Microsoft.EntityFrameworkCore.Sqlite
+Microsoft.EntityFrameworkCore.SqlServer
+Microsoft.EntityFrameworkCore.Tools
+Microsoft.OData.Edm
+Microsoft.VisualStudio.Web.CodeGeneration.Design
+QRCoder
+Swashbuckle.AspNetCore
