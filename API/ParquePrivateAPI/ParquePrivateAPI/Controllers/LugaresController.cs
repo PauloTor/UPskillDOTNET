@@ -28,7 +28,7 @@ namespace ParquePrivateAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Lugar>>> GetLugar()
         {
-            return await _context.Lugar.Include(l => l.Parque).ToListAsync();
+            return await _context.Lugar.Include(l => l.Parque).Include(p => p.Parque.Morada).ToListAsync();
         }
 
         // GET: api/Lugares/5
@@ -36,7 +36,9 @@ namespace ParquePrivateAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Lugar>> GetLugar(long id)
         {
-            var lugar = await _context.Lugar.FindAsync(id);
+            var lugar = await _context.Lugar
+                        .Include(l => l.Parque).Include(p => p.Parque.Morada)
+                        .FirstOrDefaultAsync(l => l.LugarID == id);
 
             if (lugar == null)
             {

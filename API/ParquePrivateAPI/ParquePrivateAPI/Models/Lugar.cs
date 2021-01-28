@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ParquePrivateAPI.Models
 {
@@ -11,6 +13,8 @@ namespace ParquePrivateAPI.Models
         public int Fila { get; set; }
         public int Sector { get; set; }
         public float Preço { get; set; }
+
+        [ForeignKey("ParqueID")]
         public long ParqueID { get; set; }
         public  Parque Parque { get; set; }
     }

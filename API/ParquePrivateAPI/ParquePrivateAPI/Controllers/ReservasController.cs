@@ -28,7 +28,7 @@ namespace ParquePrivateAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Reserva>>> GetReserva()
         {
-            return await _context.Reserva.Include(r => r.Lugar).ToListAsync();
+            return await _context.Reserva.Include(r => r.Lugar).Include(l => l.Lugar.Parque).Include(p => p.Lugar.Parque.Morada).ToListAsync();
         }
 
         // GET: api/Reservas/5
@@ -36,7 +36,9 @@ namespace ParquePrivateAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Reserva>> GetReserva(long id)
         {
-            var reserva = await _context.Reserva.FindAsync(id);
+            var reserva = await _context.Reserva
+                         .Include(r => r.Lugar).Include(l => l.Lugar.Parque).Include(p => p.Lugar.Parque.Morada)
+                         .FirstOrDefaultAsync(r => r.ReservaID == id);
 
             if (reserva == null)
             {
