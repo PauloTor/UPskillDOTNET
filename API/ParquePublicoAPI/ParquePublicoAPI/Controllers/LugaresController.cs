@@ -112,5 +112,29 @@ namespace ParquePublicoAPI.Controllers
         {
             return _context.Lugar.Any(e => e.LugarID == id);
         }
+
+        // GET: api/Lugares/data1,data2 Pesquisar lugares sem reserva
+        [HttpGet("{dateInicio}/{dateFim}")]
+        public ActionResult<IEnumerable<Lugar>> GetLugaresSemReserva(string dateInicio, string dateFim)
+        {
+            var dateTimeInicio = DateTime.Parse(dateInicio);
+            var dateTimeFim = DateTime.Parse(dateFim);
+
+            //validar datas
+
+            if (dateTimeInicio >= dateTimeFim)
+            {
+                return BadRequest();
+            }
+
+            var reservasTimeFrame = _context.Reserva.Where(n => (n.DataInicio >= dateTimeInicio && n.DataFim <= dateTimeFim)
+                                                || (n.DataInicio < dateTimeInicio && n.DataInicio < dateTimeFim && dateTimeFim < n.DataFim)
+                                                || (n.DataFim > dateTimeFim && n.DataInicio < dateTimeInicio && dateTimeInicio < n.DataFim))
+                                                    .Select(n => n.LugarID).ToList();
+
+            var lugaresDisponiveis = _context.Lugar.Include(n => n.Rua).Where(n => !reservasTimeFrame.Contains(n.LugarID)).ToList();
+
+            return lugaresDisponiveis;
+        }
     }
 }
