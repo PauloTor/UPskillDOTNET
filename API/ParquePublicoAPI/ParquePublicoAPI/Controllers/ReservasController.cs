@@ -28,7 +28,7 @@ namespace ParquePublicoAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Reserva>>> GetReserva()
         {
-            return await _context.Reserva.Include(r => r.Lugar).ToListAsync();
+            return await _context.Reserva.Include(r => r.Lugar).Include(l => l.Lugar.Rua).ToListAsync();
         }
 
         // GET: api/Reservas/5
@@ -36,7 +36,9 @@ namespace ParquePublicoAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Reserva>> GetReserva(long id)
         {
-            var reserva = await _context.Reserva.FindAsync(id);
+            var reserva = await _context.Reserva
+                         .Include(r => r.Lugar).Include(l => l.Lugar.Rua)
+                         .FirstOrDefaultAsync(r => r.ReservaID == id);
 
             if (reserva == null)
             {

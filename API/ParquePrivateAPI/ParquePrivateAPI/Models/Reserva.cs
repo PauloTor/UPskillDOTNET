@@ -23,17 +23,8 @@ namespace ParquePrivateAPI.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DataFim { get; set; }
 
-        public string MetodoPagamentoReserva { get; set; }
-
-        public bool PrePagamento { get; set; }
-
-    
-        //public long QRCodeApiID { get; set; }
-        //[ForeignKey("QRCodeApiID")]
-        //public QRCodeApiID { get; set; }
-
-        public long LugarID { get; set; }
         [ForeignKey("LugarID")]
+        public long LugarID { get; set; }        
         public Lugar Lugar { get; set; }
     }
 }

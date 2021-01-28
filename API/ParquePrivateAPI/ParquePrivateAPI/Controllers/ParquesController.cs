@@ -36,7 +36,9 @@ namespace ParquePrivateAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Parque>> GetParque(long id)
         {
-            var parque = await _context.Parque.FindAsync(id);
+            var parque = await _context.Parque
+                        .Include(p => p.Morada)
+                        .FirstOrDefaultAsync(p => p.ParqueID == id);
 
             if (parque == null)
             {
