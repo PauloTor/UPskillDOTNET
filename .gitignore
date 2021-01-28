@@ -348,3 +348,6 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/API/ParquePublicoAPI/ParquePublicoAPI/Migrations
+/API/ParquePrivateAPI/ParquePrivateAPI/Migrations/20210127140710_initialPrivate.cs
+/API/ParquePrivateAPI/ParquePrivateAPI/Migrations/20210127140710_initialPrivate.Designer.cs
