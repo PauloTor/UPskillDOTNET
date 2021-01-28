@@ -35,7 +35,9 @@ namespace ParquePublicoAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Lugar>> GetLugar(long id)
         {
-            var lugar = await _context.Lugar.FindAsync(id);
+            var lugar = await _context.Lugar
+                       .Include(l => l.Rua)
+                       .FirstOrDefaultAsync(r => r.LugarID == id);
 
             if (lugar == null)
             {
