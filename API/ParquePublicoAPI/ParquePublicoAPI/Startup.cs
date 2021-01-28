@@ -91,8 +91,8 @@ namespace ParquePublicoAPI
         {
             // add hardcoded test user to db on startup,  
             // plain text password is used for simplicity, hashed passwords should be used in production applications
-            context.Users.Add(new User { FirstName = "Test", LastName = "User", Username = "test", Password = "test" });
-            context.SaveChanges();
+            //context.Users.Add(new User { FirstName = "Test", LastName = "User", Username = "test", Password = "test" });
+            //context.SaveChanges();
 
             if (env.IsDevelopment())
             {
