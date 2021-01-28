@@ -83,8 +83,6 @@ namespace ParquePrivateAPI.Data
                 DataReserva = DateTime.Parse("2020-01-01 15:00:00"),
                 DataInicio = DateTime.Parse("2020-01-05 15:00:00"),
                 DataFim = DateTime.Parse("2020-01-05 16:00:00"),
-                MetodoPagamentoReserva = "PayPal",
-                PrePagamento = true,
                 LugarID = 1
             },
 
@@ -93,8 +91,6 @@ namespace ParquePrivateAPI.Data
                 DataReserva = DateTime.Parse("2020-01-2 15:00:00"),
                 DataInicio = DateTime.Parse("2020-01-04 11:00:00"),
                 DataFim = DateTime.Parse("2020-01-04 13:00:00"),
-                MetodoPagamentoReserva = "CartaoCredito",
-                PrePagamento = false,
                 LugarID = 2
             },
 
@@ -103,8 +99,6 @@ namespace ParquePrivateAPI.Data
                 DataReserva = DateTime.Parse("2019-12-15 15:00:00"),
                 DataInicio = DateTime.Parse("2020-02-09 17:00:00"),
                 DataFim = DateTime.Parse("2020-02-09 18:00:00"),
-                MetodoPagamentoReserva = "CartaoCredito",
-                PrePagamento = false,
                 LugarID = 3
             },
 
@@ -113,8 +107,6 @@ namespace ParquePrivateAPI.Data
                 DataReserva = DateTime.Parse("2019-12-10 10:00:00"),
                 DataInicio = DateTime.Parse("2020-02-01 11:00:00"),
                 DataFim = DateTime.Parse("2020-02-01 15:00:00"),
-                MetodoPagamentoReserva = "CartaoCredito",
-                PrePagamento = false,
                 LugarID = 1
             }
         };
@@ -123,14 +115,7 @@ namespace ParquePrivateAPI.Data
                 context.Reserva.Add(s);
             }
             context.SaveChanges();
-
-
-
-
-
-            
-
-            
+      
         }
 
 
