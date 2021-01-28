@@ -28,6 +28,20 @@ namespace ParquePublicoAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("MyAllowSpecificOrigins",
+                builder =>
+                {
+                    builder.WithOrigins("https://localhost:4200",
+                                        "https://myDeployedWebSite")
+                                        .AllowAnyHeader()
+                                        .AllowAnyMethod();
+
+                });
+            });
+
+            services.AddSwaggerGen();
 
             services.AddControllers();
 
@@ -49,6 +63,8 @@ namespace ParquePublicoAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("MyAllowSpecificOrigins");
 
             app.UseAuthorization();
 

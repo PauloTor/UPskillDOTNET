@@ -27,13 +27,13 @@ namespace ParquePrivateAPI.Models
 
         public bool PrePagamento { get; set; }
 
-    
+
         //public long QRCodeApiID { get; set; }
         //[ForeignKey("QRCodeApiID")]
         //public QRCodeApiID { get; set; }
 
-        public long LugarID { get; set; }
         [ForeignKey("LugarID")]
+        public long LugarID { get; set; }        
         public Lugar Lugar { get; set; }
     }
 }

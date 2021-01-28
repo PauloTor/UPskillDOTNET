@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ParquePrivateAPI.Models;
 using ParquePrivateAPI.Data;
+using Microsoft.AspNetCore.Cors;
 
 namespace ParquePrivateAPI.Controllers
 {
+    [EnableCors("MyAllowSpecificOrigins")]
     [Route("api/Parques")]
     [ApiController]
     public class ParquesController : ControllerBase
@@ -22,6 +24,7 @@ namespace ParquePrivateAPI.Controllers
         }
 
         // GET: api/Parques
+        [EnableCors("MyAllowSpecificOrigins")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Parque>>> GetParque()
         {
@@ -29,10 +32,13 @@ namespace ParquePrivateAPI.Controllers
         }
 
         // GET: api/Parques/5
+        [EnableCors]
         [HttpGet("{id}")]
         public async Task<ActionResult<Parque>> GetParque(long id)
         {
-            var parque = await _context.Parque.FindAsync(id);
+            var parque = await _context.Parque
+                        .Include(p => p.Morada)
+                        .FirstOrDefaultAsync(p => p.ParqueID == id);
 
             if (parque == null)
             {
@@ -45,6 +51,7 @@ namespace ParquePrivateAPI.Controllers
         // PUT: api/Parques/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [EnableCors]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutParque(long id, Parque parque)
         {
@@ -77,6 +84,7 @@ namespace ParquePrivateAPI.Controllers
         // POST: api/Parques
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [EnableCors]
         [HttpPost]
         public async Task<ActionResult<Parque>> PostParque(Parque parque)
         {
@@ -87,6 +95,7 @@ namespace ParquePrivateAPI.Controllers
         }
 
         // DELETE: api/Parques/5
+        [EnableCors]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Parque>> DeleteParque(long id)
         {

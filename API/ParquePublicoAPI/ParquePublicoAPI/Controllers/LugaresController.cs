@@ -11,6 +11,7 @@ using ParquePublicoAPI.Models;
 
 namespace ParquePublicoAPI.Controllers
 {
+    [EnableCors("MyAllowSpecificOrigins")]
     [Route("api/Lugares")]
     [ApiController]
     public class LugaresController : ControllerBase
@@ -21,8 +22,8 @@ namespace ParquePublicoAPI.Controllers
         {
             _context = context;
         }
-
         // GET: api/Lugares
+        [EnableCors("MyAllowSpecificOrigins")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Lugar>>> GetLugar()
         {
@@ -30,6 +31,7 @@ namespace ParquePublicoAPI.Controllers
         }
 
         // GET: api/Lugares/5
+        [EnableCors]
         [HttpGet("{id}")]
         public async Task<ActionResult<Lugar>> GetLugar(long id)
         {
@@ -45,6 +47,7 @@ namespace ParquePublicoAPI.Controllers
 
         // PUT: api/Lugares/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [EnableCors]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutLugar(long id, Lugar lugar)
         {
@@ -76,6 +79,7 @@ namespace ParquePublicoAPI.Controllers
 
         // POST: api/Lugares
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [EnableCors]
         [HttpPost]
         public async Task<ActionResult<Lugar>> PostLugar(Lugar lugar)
         {
@@ -86,6 +90,7 @@ namespace ParquePublicoAPI.Controllers
         }
 
         // DELETE: api/Lugares/5
+        [EnableCors]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteLugar(long id)
         {

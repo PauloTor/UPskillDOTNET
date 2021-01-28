@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ParquePrivateAPI.Models;
 using ParquePrivateAPI.Data;
+using Microsoft.AspNetCore.Cors;
 
 namespace ParquePrivateAPI.Controllers
 {
+    [EnableCors("MyAllowSpecificOrigins")]
     [Route("api/Moradas")]
     [ApiController]
     public class MoradasController : ControllerBase
@@ -22,6 +24,7 @@ namespace ParquePrivateAPI.Controllers
         }
 
         // GET: api/Moradas
+        [EnableCors("MyAllowSpecificOrigins")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Morada>>> GetMorada()
         {
@@ -29,6 +32,7 @@ namespace ParquePrivateAPI.Controllers
         }
 
         // GET: api/Moradas/5
+        [EnableCors]
         [HttpGet("{id}")]
         public async Task<ActionResult<Morada>> GetMorada(long id)
         {
@@ -45,6 +49,7 @@ namespace ParquePrivateAPI.Controllers
         // PUT: api/Moradas/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [EnableCors]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMorada(long id, Morada morada)
         {
@@ -77,6 +82,7 @@ namespace ParquePrivateAPI.Controllers
         // POST: api/Moradas
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [EnableCors]
         [HttpPost]
         public async Task<ActionResult<Morada>> PostMorada(Morada morada)
         {
@@ -87,6 +93,7 @@ namespace ParquePrivateAPI.Controllers
         }
 
         // DELETE: api/Moradas/5
+        [EnableCors]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Morada>> DeleteMorada(long id)
         {
