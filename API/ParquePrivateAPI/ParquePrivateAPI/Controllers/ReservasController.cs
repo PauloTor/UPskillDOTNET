@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ParquePrivateAPI.Models;
 using ParquePrivateAPI.Data;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ParquePrivateAPI.Controllers
 {
