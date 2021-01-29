@@ -21,5 +21,7 @@ namespace ParquePrivateAPI.Data
         public DbSet<ParquePrivateAPI.Models.Reserva> Reserva { get; set; }
 
         public DbSet<ParquePrivateAPI.Models.Parque> Parque { get; set; }
+
+        public DbSet<ParquePrivateAPI.Models.User> Users { get; set; }
     }
 }
