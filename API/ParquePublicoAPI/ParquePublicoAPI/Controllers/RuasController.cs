@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ using ParquePublicoAPI.Models;
 
 namespace ParquePublicoAPI.Controllers
 {
+    [Authorize]
     [EnableCors("MyAllowSpecificOrigins")]
     [Route("api/Ruas")]
     [ApiController]
@@ -24,6 +26,7 @@ namespace ParquePublicoAPI.Controllers
         }
 
         // GET: api/Ruas
+        [Authorize]
         [EnableCors("MyAllowSpecificOrigins")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Rua>>> GetRua()
@@ -32,6 +35,7 @@ namespace ParquePublicoAPI.Controllers
         }
 
         // GET: api/Ruas/5
+        [Authorize]
         [EnableCors]
         [HttpGet("{id}")]
         public async Task<ActionResult<Rua>> GetRua(long id)
@@ -48,6 +52,7 @@ namespace ParquePublicoAPI.Controllers
 
         // PUT: api/Ruas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [EnableCors]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRua(long id, Rua rua)
@@ -80,6 +85,7 @@ namespace ParquePublicoAPI.Controllers
 
         // POST: api/Ruas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [EnableCors]
         [HttpPost]
         public async Task<ActionResult<Rua>> PostRua(Rua rua)
@@ -91,6 +97,7 @@ namespace ParquePublicoAPI.Controllers
         }
 
         // DELETE: api/Ruas/5
+        [Authorize]
         [EnableCors]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRua(long id)

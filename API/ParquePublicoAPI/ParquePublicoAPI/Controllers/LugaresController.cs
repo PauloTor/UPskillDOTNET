@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ using ParquePublicoAPI.Models;
 
 namespace ParquePublicoAPI.Controllers
 {
+    [Authorize]
     [EnableCors("MyAllowSpecificOrigins")]
     [Route("api/Lugares")]
     [ApiController]
@@ -23,6 +25,7 @@ namespace ParquePublicoAPI.Controllers
             _context = context;
         }
         // GET: api/Lugares
+        [Authorize]
         [EnableCors("MyAllowSpecificOrigins")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Lugar>>> GetLugar()
@@ -31,6 +34,7 @@ namespace ParquePublicoAPI.Controllers
         }
 
         // GET: api/Lugares/5
+        [Authorize]
         [EnableCors]
         [HttpGet("{id}")]
         public async Task<ActionResult<Lugar>> GetLugar(long id)
@@ -49,6 +53,7 @@ namespace ParquePublicoAPI.Controllers
 
         // PUT: api/Lugares/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [EnableCors]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutLugar(long id, Lugar lugar)
@@ -81,6 +86,7 @@ namespace ParquePublicoAPI.Controllers
 
         // POST: api/Lugares
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [EnableCors]
         [HttpPost]
         public async Task<ActionResult<Lugar>> PostLugar(Lugar lugar)
@@ -92,6 +98,7 @@ namespace ParquePublicoAPI.Controllers
         }
 
         // DELETE: api/Lugares/5
+        [Authorize]
         [EnableCors]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteLugar(long id)

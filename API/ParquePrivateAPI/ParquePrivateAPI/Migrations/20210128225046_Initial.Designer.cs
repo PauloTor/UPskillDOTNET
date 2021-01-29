@@ -10,8 +10,8 @@ using ParquePrivateAPI.Data;
 namespace ParquePrivateAPI.Migrations
 {
     [DbContext(typeof(ParquePrivateAPIContext))]
-    [Migration("20210127165228_~igration2")]
-    partial class igration2
+    [Migration("20210128225046_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -107,12 +107,6 @@ namespace ParquePrivateAPI.Migrations
                     b.Property<long>("LugarID")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("MetodoPagamentoReserva")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PrePagamento")
-                        .HasColumnType("bit");
-
                     b.HasKey("ReservaID");
 
                     b.HasIndex("LugarID");
@@ -122,7 +116,7 @@ namespace ParquePrivateAPI.Migrations
 
             modelBuilder.Entity("ParquePrivateAPI.Models.Lugar", b =>
                 {
-                    b.HasOne("ParquePrivateAPI.Models.Parque", "parque")
+                    b.HasOne("ParquePrivateAPI.Models.Parque", "Parque")
                         .WithMany()
                         .HasForeignKey("ParqueID")
                         .OnDelete(DeleteBehavior.Cascade)
