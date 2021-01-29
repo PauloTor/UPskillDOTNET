@@ -21,7 +21,6 @@ namespace ParquePrivateAPI.Controllers
         }
 
         [AllowAnonymous]
-
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody] AuthenticateRequest model)
         {
@@ -66,8 +65,8 @@ namespace ParquePrivateAPI.Controllers
 
             return Ok(new { message = "Token revoked" });
         }
-        [AllowAnonymous]
 
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult GetAll()
         {
