@@ -15,7 +15,7 @@ namespace ParquePublicoAPI.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/Users")]
     public class UsersController : ControllerBase
     {
         private IUserService _userService;

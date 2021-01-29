@@ -29,7 +29,7 @@ namespace ParquePublicoAPI.Services
         private ParquePublicoAPIContext _context;
         private readonly AppSettings _appSettings;
 
-        public UserService(
+    public UserService(
             ParquePublicoAPIContext context,
             IOptions<AppSettings> appSettings)
         {
@@ -39,7 +39,7 @@ namespace ParquePublicoAPI.Services
 
         public AuthenticateResponse Authenticate(AuthenticateRequest model, string ipAddress)
         {
-            var user = _context.Users.SingleOrDefault(x => x.Username == model.Username && x.Password == model.Password);
+            var user = _context.Users.FirstOrDefault(x => x.Username == model.Username && x.Password == model.Password);
 
             // return null if user not found
             if (user == null) return null;
