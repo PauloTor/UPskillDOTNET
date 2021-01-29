@@ -31,7 +31,7 @@ namespace testProject
             Assert.Equal(5, items.Count);
         }
 
-        /*[Fact]
+        [Fact]
         public async Task GetAllLugaresDisponiveisAsync_ShouldReturnAllLugaresDisponiveisAsync()
         {
             Thread.Sleep(2200);
@@ -46,7 +46,7 @@ namespace testProject
             var items = Assert.IsType<List<Lugar>>(result.Value);
             Assert.Equal(4, items.Count);
         }
-        */
+        
         [Fact]
         public async Task PostLugares_ShouldCreateLugaresAsync()
         {

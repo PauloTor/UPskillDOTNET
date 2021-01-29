@@ -18,7 +18,7 @@ namespace testProject
         /*[Fact]
         public async Task GetAllReservasAsync_ShouldReturnAllReservasAsync()
         {
-            Thread.Sleep(2000);
+            Thread.Sleep(3000);
             //Arrange
             var testContext = ParquePublicoAPIContextMocker.GetParquePublicoAPIContext("DBTest4GetAllReservas");
             var theController = new ReservasController(testContext);
@@ -79,7 +79,7 @@ namespace testProject
         [Fact]
         public async Task DeleteReservabyIDAsync_ShouldDeleteReserva1Async()
         {
-            Thread.Sleep(3400);
+            Thread.Sleep(3600);
             //Arrange
             var testContext = ParquePublicoAPIContextMocker.GetParquePublicoAPIContext("DBTest4DeleteReserva");
             var testController = new ReservasController(testContext);
