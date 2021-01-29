@@ -118,7 +118,7 @@ namespace ParquePrivateAPI.Controllers
 
         // GET: api/Lugares/data1,data2 Pesquisar lugares sem reserva
         [HttpGet("{dateInicio}/{dateFim}")]
-        public ActionResult<IEnumerable<Lugar>> GetLugaresSemReserva(string dateInicio, string dateFim)
+        public async Task<ActionResult<IEnumerable<Lugar>>> GetLugaresSemReserva(string dateInicio, string dateFim)
         {
             var dateTimeInicio = DateTime.Parse(dateInicio);
             var dateTimeFim = DateTime.Parse(dateFim);
@@ -130,12 +130,12 @@ namespace ParquePrivateAPI.Controllers
                 return BadRequest();
             }
 
-            var reservasTimeFrame = _context.Reserva.Where(n => (n.DataInicio >= dateTimeInicio && n.DataFim <= dateTimeFim)
+            var reservasTimeFrame =  _context.Reserva.Where(n => (n.DataInicio >= dateTimeInicio && n.DataFim <= dateTimeFim)
                                                 || (n.DataInicio < dateTimeInicio && n.DataInicio < dateTimeFim && dateTimeFim < n.DataFim)
                                                 || (n.DataFim > dateTimeFim && n.DataInicio < dateTimeInicio && dateTimeInicio < n.DataFim))
                                                     .Select(n => n.LugarID).ToList();
 
-            var lugaresDisponiveis = _context.Lugar.Include(n => n.Parque).Where(n => !reservasTimeFrame.Contains(n.LugarID)).ToList();
+            var lugaresDisponiveis = await _context.Lugar.Include(n => n.Parque).Where(n => !reservasTimeFrame.Contains(n.LugarID)).ToListAsync();
 
             return lugaresDisponiveis;
         }

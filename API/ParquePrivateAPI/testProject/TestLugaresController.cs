@@ -40,11 +40,11 @@ namespace testProject
             var theController = new LugaresController(testContext);
 
             //Act
-            var result = await theController.GetLugar();
+            var result = await theController.GetLugaresSemReserva("2020-01-05 15:00:00", "2020-01-05 16:00:00");
 
             //Assert
             var items = Assert.IsType<List<Lugar>>(result.Value);
-            Assert.Equal(10, items.Count);
+            Assert.Equal(9, items.Count);
         }
 
         [Fact]
