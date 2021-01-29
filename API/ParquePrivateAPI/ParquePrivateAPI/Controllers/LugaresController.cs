@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using ParquePrivateAPI.Models;
 using ParquePrivateAPI.Data;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ParquePrivateAPI.Controllers
 {
+    [Authorize]
     [EnableCors("MyAllowSpecificOrigins")]
     [Route("api/Lugares")]
     [ApiController]
@@ -22,7 +24,7 @@ namespace ParquePrivateAPI.Controllers
         {
             _context = context;
         }
-
+        
         // GET: api/Lugares
         [EnableCors("MyAllowSpecificOrigins")]
         [HttpGet]
