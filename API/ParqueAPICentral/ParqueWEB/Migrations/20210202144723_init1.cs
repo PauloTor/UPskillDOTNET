@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ParqueAPICentral.Migrations
 {
-    public partial class Inicia1 : Migration
+    public partial class init1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -36,19 +36,6 @@ namespace ParqueAPICentral.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Morada", x => x.MoradaID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Pagamento",
-                columns: table => new
-                {
-                    PagamentoID = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FaturaID = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Pagamento", x => x.PagamentoID);
                 });
 
             migrationBuilder.CreateTable(
@@ -96,7 +83,8 @@ namespace ParqueAPICentral.Migrations
                     Fila = table.Column<int>(type: "int", nullable: false),
                     Sector = table.Column<int>(type: "int", nullable: false),
                     Preço = table.Column<float>(type: "real", nullable: false),
-                    ParqueID = table.Column<long>(type: "bigint", nullable: false)
+                    ParqueID = table.Column<long>(type: "bigint", nullable: false),
+                    RuaID = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -106,6 +94,12 @@ namespace ParqueAPICentral.Migrations
                         column: x => x.ParqueID,
                         principalTable: "Parque",
                         principalColumn: "ParqueID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Lugar_Rua_RuaID",
+                        column: x => x.RuaID,
+                        principalTable: "Rua",
+                        principalColumn: "RuaID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -183,6 +177,25 @@ namespace ParqueAPICentral.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Pagamento",
+                columns: table => new
+                {
+                    PagamentoID = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FaturaID = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pagamento", x => x.PagamentoID);
+                    table.ForeignKey(
+                        name: "FK_Pagamento_Fatura_FaturaID",
+                        column: x => x.FaturaID,
+                        principalTable: "Fatura",
+                        principalColumn: "FaturaID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Fatura_ReservaID",
                 table: "Fatura",
@@ -192,6 +205,16 @@ namespace ParqueAPICentral.Migrations
                 name: "IX_Lugar_ParqueID",
                 table: "Lugar",
                 column: "ParqueID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Lugar_RuaID",
+                table: "Lugar",
+                column: "RuaID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pagamento_FaturaID",
+                table: "Pagamento",
+                column: "FaturaID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Parque_MoradaID",
@@ -217,16 +240,13 @@ namespace ParqueAPICentral.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Fatura");
-
-            migrationBuilder.DropTable(
                 name: "Pagamento");
 
             migrationBuilder.DropTable(
-                name: "Rua");
+                name: "SubAluguer");
 
             migrationBuilder.DropTable(
-                name: "SubAluguer");
+                name: "Fatura");
 
             migrationBuilder.DropTable(
                 name: "Reserva");
@@ -239,6 +259,9 @@ namespace ParqueAPICentral.Migrations
 
             migrationBuilder.DropTable(
                 name: "Parque");
+
+            migrationBuilder.DropTable(
+                name: "Rua");
 
             migrationBuilder.DropTable(
                 name: "Morada");

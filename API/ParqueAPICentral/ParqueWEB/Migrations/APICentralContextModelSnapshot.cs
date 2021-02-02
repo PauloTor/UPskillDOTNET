@@ -85,12 +85,17 @@ namespace ParqueAPICentral.Migrations
                     b.Property<float>("Preço")
                         .HasColumnType("real");
 
+                    b.Property<long>("RuaID")
+                        .HasColumnType("bigint");
+
                     b.Property<int>("Sector")
                         .HasColumnType("int");
 
                     b.HasKey("LugarID");
 
                     b.HasIndex("ParqueID");
+
+                    b.HasIndex("RuaID");
 
                     b.ToTable("Lugar");
                 });
@@ -124,6 +129,8 @@ namespace ParqueAPICentral.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("PagamentoID");
+
+                    b.HasIndex("FaturaID");
 
                     b.ToTable("Pagamento");
                 });
@@ -254,7 +261,26 @@ namespace ParqueAPICentral.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ParqueAPICentral.Models.Rua", "Rua")
+                        .WithMany()
+                        .HasForeignKey("RuaID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Parque");
+
+                    b.Navigation("Rua");
+                });
+
+            modelBuilder.Entity("ParqueAPICentral.Models.Pagamento", b =>
+                {
+                    b.HasOne("ParqueAPICentral.Models.Fatura", "Fatura")
+                        .WithMany()
+                        .HasForeignKey("FaturaID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Fatura");
                 });
 
             modelBuilder.Entity("ParqueAPICentral.Models.Parque", b =>

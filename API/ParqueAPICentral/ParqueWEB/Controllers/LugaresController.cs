@@ -10,7 +10,7 @@ using ParqueAPICentral.Models;
 
 namespace ParqueAPICentral.Controllers
 {
-    [Route("api/Lugares")]
+    [Route("api/[controller]")]
     [ApiController]
     public class LugaresController : ControllerBase
     {

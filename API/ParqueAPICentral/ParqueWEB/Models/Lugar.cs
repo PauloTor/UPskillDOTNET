@@ -20,6 +20,12 @@ namespace ParqueAPICentral.Models
         [ForeignKey("ParqueID")]
         public long ParqueID { get; set; }
         public Parque Parque { get; set; }
+
+        [ForeignKey("RuaID")]
+        public long RuaID { get; set; }
+
+        public Rua Rua { get; set; }
+
     }
 }
 
