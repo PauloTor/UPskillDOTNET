@@ -15,7 +15,7 @@ namespace ParqueAPICentral.Data
         {
             //context.Database.EnsureCreated();
 
-            //Look for any Doencas.
+            //Look for any Pagamento.
             if (context.Pagamento.Any())
             {
                 return;   // DB has been seeded
