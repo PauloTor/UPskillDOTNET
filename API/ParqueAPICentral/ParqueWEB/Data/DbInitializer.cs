@@ -61,9 +61,6 @@ namespace ParqueAPICentral.Data
                     },
 
 
-
-
-
                     new Morada
                     {
 
@@ -101,26 +98,6 @@ namespace ParqueAPICentral.Data
 
             //=================================================================
 
-            var fatura = new Fatura[]
-
-               {
-
-
-            new Fatura { DataFatura = DateTime.Parse("2021-02-03 15:00:00"), PrecoFatura = 5, ReservaID = 1 },
-            new Fatura { DataFatura = DateTime.Parse("2021-02-05 15:00:00"), PrecoFatura = 40, ReservaID = 2 },
-            new Fatura { DataFatura = DateTime.Parse("2021-02-07 15:00:00"), PrecoFatura = 35, ReservaID = 3 },
-            new Fatura { DataFatura = DateTime.Parse("2021-03-03 15:00:00"), PrecoFatura = 40, ReservaID = 4 },
-            new Fatura { DataFatura = DateTime.Parse("2021-05-03 15:00:00"), PrecoFatura = 50, ReservaID = 5 }
-
-            };
-
-            foreach (Fatura s in fatura)
-            {
-                context.Fatura.Add(s);
-            }
-            context.SaveChanges();
-
-            //=================================================================
 
             var lugar = new Lugar[]
 
@@ -181,6 +158,26 @@ namespace ParqueAPICentral.Data
             context.SaveChanges();
 
             //-----------------------------------------------------------------------------------------------------------------
+
+            var fatura = new Fatura[]
+
+               {
+
+
+            new Fatura { DataFatura = DateTime.Parse("2021-02-03 15:00:00"), PrecoFatura = 5, ReservaID = 1 },
+            new Fatura { DataFatura = DateTime.Parse("2021-02-05 15:00:00"), PrecoFatura = 40, ReservaID = 2 },
+            new Fatura { DataFatura = DateTime.Parse("2021-02-07 15:00:00"), PrecoFatura = 35, ReservaID = 3 },
+            new Fatura { DataFatura = DateTime.Parse("2021-03-03 15:00:00"), PrecoFatura = 40, ReservaID = 4 }
+
+            };
+
+            foreach (Fatura s in fatura)
+            {
+                context.Fatura.Add(s);
+            }
+            context.SaveChanges();
+
+            //=================================================================
             var subaluguer = new SubAluguer[]
                 {
 
