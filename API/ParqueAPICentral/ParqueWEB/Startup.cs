@@ -28,7 +28,7 @@ namespace ParqueAPICentral
             services.AddControllersWithViews();
 
             services.AddDbContext<APICentralContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("ParqueWEBContext")));
+                    options.UseSqlServer(Configuration.GetConnectionString("APICentralContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
