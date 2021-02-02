@@ -43,7 +43,7 @@ namespace ParqueAPICentral.Data
             // ===============================================================
 
             var cliente = new Cliente[]
-           {
+            {
                 new Cliente { NomeCliente = "Cliente1", EmailCliente = "cliente1@hotmail.com", NifCliente = 111111111, MetodoPagamento = "DD", Credito = 1 },
                 new Cliente { NomeCliente = "Cliente2", EmailCliente = "cliente2@hotmail.com", NifCliente = 222222222, MetodoPagamento = "CartaoCredito", Credito = 0 },
                 new Cliente { NomeCliente = "Cliente3", EmailCliente = "cliente3@hotmail.com", NifCliente = 333333333, MetodoPagamento = "CartaoCredito", Credito = 0 },
@@ -53,7 +53,7 @@ namespace ParqueAPICentral.Data
                 new Cliente { NomeCliente = "Cliente6", EmailCliente = "cliente7@hotmail.com", NifCliente = 777777777, MetodoPagamento = "Paypall", Credito = 0 },
                 new Cliente { NomeCliente = "Cliente6", EmailCliente = "cliente8@hotmail.com", NifCliente = 888888888, MetodoPagamento = "Paypall", Credito = 2 },
                 new Cliente { NomeCliente = "Cliente9", EmailCliente = "cliente9@hotmail.com", NifCliente = 999999999, MetodoPagamento = "DD", Credito = 1 }
-           };
+            };
 
             foreach (Cliente c in cliente)
             {
@@ -121,6 +121,7 @@ namespace ParqueAPICentral.Data
                 DataInicio = DateTime.Parse("2020-01-05 15:00:00"),
                 DataFim = DateTime.Parse("2020-01-05 18:00:00"),
                 DataSaida = DateTime.Parse("2020-01-05 18:00:00"),
+                LugarID = 2,
                 ClienteID = 1
             },
 
@@ -130,6 +131,7 @@ namespace ParqueAPICentral.Data
                 DataInicio = DateTime.Parse("2020-01-04 18:00:00"),
                 DataFim = DateTime.Parse("2020-01-04 20:00:00"),
                 DataSaida = DateTime.Parse("2020-01-04 21:00:00"),
+                LugarID = 3,
                 ClienteID = 2
             },
 
@@ -139,6 +141,7 @@ namespace ParqueAPICentral.Data
                 DataInicio = DateTime.Parse("2020-01-13 15:00:00"),
                 DataFim = DateTime.Parse("2020-01-14 14:00:00"),
                 DataSaida = DateTime.Parse("2020-01-14 13:00:00"),
+                LugarID = 1,
                 ClienteID = 3
             },
 
@@ -148,6 +151,7 @@ namespace ParqueAPICentral.Data
                 DataInicio = DateTime.Parse("2020-02-03 08:00:00"),
                 DataFim = DateTime.Parse("2020-02-03 19:00:00"),
                 DataSaida = DateTime.Parse("2020-01-05 18:30:00"),
+                LugarID = 3,
                 ClienteID = 4
             }
         };

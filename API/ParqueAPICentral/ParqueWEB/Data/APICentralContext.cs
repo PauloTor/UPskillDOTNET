@@ -25,6 +25,7 @@ namespace ParqueAPICentral.Data
         public DbSet<ParqueAPICentral.Models.Reserva> Reserva { get; set; }
 
         public DbSet<ParqueAPICentral.Models.Rua> Rua { get; set; }
+
         public DbSet<ParqueAPICentral.Models.Pagamento> Pagamento { get; set; }
 
         public DbSet<ParqueAPICentral.Models.Lugar> Lugar { get; set; }
