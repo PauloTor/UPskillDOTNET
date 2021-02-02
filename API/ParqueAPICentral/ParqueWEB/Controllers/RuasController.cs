@@ -10,49 +10,49 @@ using ParqueAPICentral.Models;
 
 namespace ParqueAPICentral.Controllers
 {
-    [Route("api/lugares")]
+    [Route("api/Ruas")]
     [ApiController]
-    public class LugaresController : ControllerBase
+    public class RuasController : ControllerBase
     {
         private readonly APICentralContext _context;
 
-        public LugaresController(APICentralContext context)
+        public RuasController(APICentralContext context)
         {
             _context = context;
         }
 
-        // GET: api/Lugares
+        // GET: api/Ruas
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Lugar>>> GetLugar()
+        public async Task<ActionResult<IEnumerable<Rua>>> GetRua()
         {
-            return await _context.Lugar.ToListAsync();
+            return await _context.Rua.ToListAsync();
         }
 
-        // GET: api/Lugares/5
+        // GET: api/Ruas/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Lugar>> GetLugar(long id)
+        public async Task<ActionResult<Rua>> GetRua(long id)
         {
-            var lugar = await _context.Lugar.FindAsync(id);
+            var rua = await _context.Rua.FindAsync(id);
 
-            if (lugar == null)
+            if (rua == null)
             {
                 return NotFound();
             }
 
-            return lugar;
+            return rua;
         }
 
-        // PUT: api/Lugares/5
+        // PUT: api/Ruas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutLugar(long id, Lugar lugar)
+        public async Task<IActionResult> PutRua(long id, Rua rua)
         {
-            if (id != lugar.LugarID)
+            if (id != rua.RuaID)
             {
                 return BadRequest();
             }
 
-            _context.Entry(lugar).State = EntityState.Modified;
+            _context.Entry(rua).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace ParqueAPICentral.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!LugarExists(id))
+                if (!RuaExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace ParqueAPICentral.Controllers
             return NoContent();
         }
 
-        // POST: api/Lugares
+        // POST: api/Ruas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Lugar>> PostLugar(Lugar lugar)
+        public async Task<ActionResult<Rua>> PostRua(Rua rua)
         {
-            _context.Lugar.Add(lugar);
+            _context.Rua.Add(rua);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetLugar", new { id = lugar.LugarID }, lugar);
+            return CreatedAtAction("GetRua", new { id = rua.RuaID }, rua);
         }
 
-        // DELETE: api/Lugares/5
+        // DELETE: api/Ruas/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteLugar(long id)
+        public async Task<IActionResult> DeleteRua(long id)
         {
-            var lugar = await _context.Lugar.FindAsync(id);
-            if (lugar == null)
+            var rua = await _context.Rua.FindAsync(id);
+            if (rua == null)
             {
                 return NotFound();
             }
 
-            _context.Lugar.Remove(lugar);
+            _context.Rua.Remove(rua);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool LugarExists(long id)
+        private bool RuaExists(long id)
         {
-            return _context.Lugar.Any(e => e.LugarID == id);
+            return _context.Rua.Any(e => e.RuaID == id);
         }
     }
 }

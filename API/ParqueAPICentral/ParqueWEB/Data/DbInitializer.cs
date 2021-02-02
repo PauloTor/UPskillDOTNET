@@ -16,7 +16,7 @@ namespace ParqueAPICentral.Data
             //context.Database.EnsureCreated();
 
             //Look for any Doencas.
-            if (context.Cliente.Any())
+            if (context.Pagamento.Any())
             {
                 return;   // DB has been seeded
             }
@@ -177,7 +177,9 @@ namespace ParqueAPICentral.Data
                 context.Fatura.Add(f);
             }
             context.SaveChanges();
+
             //=================================================================
+
             var subaluguer = new SubAluguer[]
                 {
                     new SubAluguer { PrecoSubAluguer = 10, DataSubAluguer = DateTime.Parse("2020-01-01 17:00:00"), DataInicio = DateTime.Parse("2020-01-05 15:00:00"), DataFim = DateTime.Parse("2020-01-05 18:00:00"), ReservaID = 1 },
@@ -192,6 +194,7 @@ namespace ParqueAPICentral.Data
             }
             context.SaveChanges();
 
+            //=================================================================
 
             var Pagamento = new Pagamento[]
 
@@ -201,14 +204,14 @@ namespace ParqueAPICentral.Data
                     new Pagamento { FaturaID = 1 },
                     new Pagamento { FaturaID = 2 },
                     new Pagamento { FaturaID = 3 },
-                     new Pagamento { FaturaID = 4 },
+                    new Pagamento { FaturaID = 4 },
                     new Pagamento { FaturaID = 3},
 
                };
 
-            foreach (Fatura s in fatura)
+            foreach (Pagamento s in Pagamento)
             {
-                context.Fatura.Add(s);
+                context.Pagamento.Add(s);
             }
             context.SaveChanges();
 
