@@ -146,37 +146,41 @@ namespace ParqueAPICentral.Data
             {
                 DataReserva = DateTime.Parse("2020-01-01 15:00:00"),
                 DataInicio = DateTime.Parse("2020-01-05 15:00:00"),
-                DataFim = DateTime.Parse("2020-01-05 16:00:00"),
-                LugarID = 1
+                DataFim = DateTime.Parse("2020-01-05 18:00:00"),
+                DataSaida = DateTime.Parse("2020-01-05 18:00:00"),
+                ClienteID = 1
             },
 
             new Reserva
             {
-                DataReserva = DateTime.Parse("2020-01-2 15:00:00"),
-                DataInicio = DateTime.Parse("2020-01-04 11:00:00"),
-                DataFim = DateTime.Parse("2020-01-04 13:00:00"),
-                LugarID = 2
+                DataReserva = DateTime.Parse("2020-01-04 11:00:00"),
+                DataInicio = DateTime.Parse("2020-01-04 18:00:00"),
+                DataFim = DateTime.Parse("2020-01-04 20:00:00"),
+                DataSaida = DateTime.Parse("2020-01-04 21:00:00"),
+                ClienteID = 2
             },
 
             new Reserva
             {
-                DataReserva = DateTime.Parse("2019-12-15 15:00:00"),
-                DataInicio = DateTime.Parse("2020-02-09 17:00:00"),
-                DataFim = DateTime.Parse("2020-02-09 18:00:00"),
-                LugarID = 3
+                DataReserva = DateTime.Parse("2020-01-11 09:30:00"),
+                DataInicio = DateTime.Parse("2020-01-13 15:00:00"),
+                DataFim = DateTime.Parse("2020-01-14 14:00:00"),
+                DataSaida = DateTime.Parse("2020-01-14 13:00:00"),
+                ClienteID = 3
             },
 
             new Reserva
             {
-                DataReserva = DateTime.Parse("2019-12-10 10:00:00"),
-                DataInicio = DateTime.Parse("2020-02-01 11:00:00"),
-                DataFim = DateTime.Parse("2020-02-01 15:00:00"),
-                LugarID = 1
+                DataReserva = DateTime.Parse("2020-01-18 15:00:00"),
+                DataInicio = DateTime.Parse("2020-02-03 08:00:00"),
+                DataFim = DateTime.Parse("2020-02-03 19:00:00"),
+                DataSaida = DateTime.Parse("2020-01-05 18:30:00"),
+                ClienteID = 4
             }
         };
-            foreach (Reserva s in reserva)
+            foreach (Reserva r in reserva)
             {
-                context.Reserva.Add(s);
+                context.Reserva.Add(r);
             }
             context.SaveChanges();
 
