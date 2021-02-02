@@ -16,7 +16,7 @@ namespace ParqueAPICentral.Data
             //context.Database.EnsureCreated();
 
             //Look for any Doencas.
-            if (context.Reserva.Any())
+            if (context.Cliente.Any())
             {
                 return;   // DB has been seeded
             }
@@ -25,13 +25,53 @@ namespace ParqueAPICentral.Data
             var morada = new Morada[]
 
                 {
+
                     new Morada
                     {
 
                         Rua = " Rua da Boavista",
                         CodigoPostal = "5002 - 456"
                     },
-                };
+
+
+                    new Morada
+                    {
+
+                        Rua = " Rua da aaaaaaaaa",
+                        CodigoPostal = "5202 - 436"
+                    },
+
+
+
+
+                    new Morada
+                    {
+
+                        Rua = " Rua bbbbbbbbbbbbbbb",
+                        CodigoPostal = "5102 - 452"
+                    },
+
+
+
+                    new Morada
+                    {
+
+                        Rua = " Rua ccccccccccccccc",
+                        CodigoPostal = "5302 - 452"
+                    },
+
+
+
+
+
+                    new Morada
+                    {
+
+                        Rua = " Rua ddddddddddddd",
+                        CodigoPostal = "5122 - 412"
+                    },
+        };
+
 
 
             foreach (Morada s in morada)
@@ -140,6 +180,13 @@ namespace ParqueAPICentral.Data
             }
             context.SaveChanges();
 
+            //-----------------------------------------------------------------------------------------------------------------
+            var subaluguer = new SubAluguer[]
+
+            new SubAluguer { SubAluguerID = 1, PrecoSubAluguer = 10, DataSubAluguer = DateTime.Parse("2020-01-01 10:00:00"), DataInicio = DateTime.Parse("2020-01-02 08:00:00"), DataFim = DateTime.Parse("2020-01-02 16:00:00"), ReservaID = 1 };
+            new SubAluguer { SubAluguerID = 1, PrecoSubAluguer = 10, DataSubAluguer = DateTime.Parse("2020-01-01 10:00:00"), DataInicio = DateTime.Parse("2020-01-02 08:00:00"), DataFim = DateTime.Parse("2020-01-02 16:00:00"), ReservaID = 1 };
+            new SubAluguer { SubAluguerID = 1, PrecoSubAluguer = 10, DataSubAluguer = DateTime.Parse("2020-01-01 10:00:00"), DataInicio = DateTime.Parse("2020-01-02 08:00:00"), DataFim = DateTime.Parse("2020-01-02 16:00:00"), ReservaID = 1 };
+            new SubAluguer { SubAluguerID = 1, PrecoSubAluguer = 10, DataSubAluguer = DateTime.Parse("2020-01-01 10:00:00"), DataInicio = DateTime.Parse("2020-01-02 08:00:00"), DataFim = DateTime.Parse("2020-01-02 16:00:00"), ReservaID = 1 };
         }
 
 
