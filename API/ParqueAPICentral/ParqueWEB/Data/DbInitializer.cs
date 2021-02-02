@@ -167,8 +167,7 @@ namespace ParqueAPICentral.Data
             new Fatura { DataFatura = DateTime.Parse("2021-02-03 15:00:00"), PrecoFatura = 5, ReservaID = 1 },
             new Fatura { DataFatura = DateTime.Parse("2021-02-05 15:00:00"), PrecoFatura = 40, ReservaID = 2 },
             new Fatura { DataFatura = DateTime.Parse("2021-02-07 15:00:00"), PrecoFatura = 35, ReservaID = 3 },
-            new Fatura { DataFatura = DateTime.Parse("2021-03-03 15:00:00"), PrecoFatura = 40, ReservaID = 4 },
-            new Fatura { DataFatura = DateTime.Parse("2021-05-03 15:00:00"), PrecoFatura = 50, ReservaID = 5 }
+            new Fatura { DataFatura = DateTime.Parse("2021-03-03 15:00:00"), PrecoFatura = 40, ReservaID = 4 }
 
             };
 
