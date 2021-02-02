@@ -71,9 +71,9 @@ namespace ParqueAPICentral.Data
 
 
 
-            foreach (Morada s in morada)
+            foreach (Morada m in morada)
             {
-                context.Morada.Add(s);
+                context.Morada.Add(m);
             }
             context.SaveChanges();
 
@@ -90,9 +90,9 @@ namespace ParqueAPICentral.Data
             new Parque { NomeParque = "Porto Park", Lotacao = 6, MoradaID = 5}
              };
 
-            foreach (Parque s in parque)
+            foreach (Parque p in parque)
             {
-                context.Parque.Add(s);
+                context.Parque.Add(p);
             }
             context.SaveChanges();
 
@@ -110,9 +110,9 @@ namespace ParqueAPICentral.Data
                     new Lugar { Fila = 5, Sector = 1, Preço = 10, ParqueID = 1 },
                 };
 
-            foreach (Lugar s in lugar)
+            foreach (Lugar l in lugar)
             {
-                context.Lugar.Add(s);
+                context.Lugar.Add(l);
             }
             context.SaveChanges();
             //===========================================================================================0
@@ -151,9 +151,9 @@ namespace ParqueAPICentral.Data
                 LugarID = 1
             }
         };
-            foreach (Reserva s in reserva)
+            foreach (Reserva r in reserva)
             {
-                context.Reserva.Add(s);
+                context.Reserva.Add(r);
             }
             context.SaveChanges();
 
@@ -171,9 +171,9 @@ namespace ParqueAPICentral.Data
 
             };
 
-            foreach (Fatura s in fatura)
+            foreach (Fatura f in fatura)
             {
-                context.Fatura.Add(s);
+                context.Fatura.Add(f);
             }
             context.SaveChanges();
 
