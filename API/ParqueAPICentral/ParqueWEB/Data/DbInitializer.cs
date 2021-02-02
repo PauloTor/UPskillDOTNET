@@ -44,15 +44,15 @@ namespace ParqueAPICentral.Data
 
             var cliente = new Cliente[]
            {
-                new Cliente { NomeCliente = "Cliente1", EmailCliente = "", NifCliente = "111111111", MetodoPagamento = "DD", Credito = "" },
-                new Cliente { NomeCliente = "Cliente1", EmailCliente = "", NifCliente = "222222222", MetodoPagamento = "CartaoCredito", Credito = "" },
-                new Cliente { NomeCliente = "Cliente1", EmailCliente = "", NifCliente = "333333333", MetodoPagamento = "CartaoCredito", Credito = "" },
-                new Cliente { NomeCliente = "Cliente1", EmailCliente = "", NifCliente = "444444444", MetodoPagamento = "CartaoCredito", Credito = "" },
-                new Cliente { NomeCliente = "Cliente1", EmailCliente = "", NifCliente = "555555555", MetodoPagamento = "Paypall", Credito = "" },
-                new Cliente { NomeCliente = "Cliente1", EmailCliente = "", NifCliente = "666666666", MetodoPagamento = "DD", Credito = ""6 },
-                new Cliente { NomeCliente = "Cliente1", EmailCliente = "", NifCliente = "777777777", MetodoPagamento = "Paypall", Credito = "" },
-                new Cliente { NomeCliente = "Cliente1", EmailCliente = "", NifCliente = "888888888", MetodoPagamento = "Paypall", Credito = "" },
-                new Cliente { NomeCliente = "Cliente1", EmailCliente = "", NifCliente = "999999999", MetodoPagamento = "DD", Credito = "" }
+                new Cliente { NomeCliente = "Cliente1", EmailCliente = "cliente1@hotmail.com", NifCliente = 111111111, MetodoPagamento = "DD", Credito = 1 },
+                new Cliente { NomeCliente = "Cliente2", EmailCliente = "cliente2@hotmail.com", NifCliente = 222222222, MetodoPagamento = "CartaoCredito", Credito = 0 },
+                new Cliente { NomeCliente = "Cliente3", EmailCliente = "cliente3@hotmail.com", NifCliente = 333333333, MetodoPagamento = "CartaoCredito", Credito = 0 },
+                new Cliente { NomeCliente = "Cliente4", EmailCliente = "cliente4@hotmail.com", NifCliente = 444444444, MetodoPagamento = "CartaoCredito", Credito = 0 },
+                new Cliente { NomeCliente = "Cliente5", EmailCliente = "cliente5@hotmail.com", NifCliente = 555555555, MetodoPagamento = "Paypall", Credito = 0 },
+                new Cliente { NomeCliente = "Cliente6", EmailCliente = "cliente6@hotmail.com", NifCliente = 666666666, MetodoPagamento = "DD", Credito = 0 },
+                new Cliente { NomeCliente = "Cliente6", EmailCliente = "cliente7@hotmail.com", NifCliente = 777777777, MetodoPagamento = "Paypall", Credito = 0 },
+                new Cliente { NomeCliente = "Cliente6", EmailCliente = "cliente8@hotmail.com", NifCliente = 888888888, MetodoPagamento = "Paypall", Credito = 2 },
+                new Cliente { NomeCliente = "Cliente9", EmailCliente = "cliente9@hotmail.com", NifCliente = 999999999, MetodoPagamento = "DD", Credito = 1 }
            };
 
             foreach (Cliente c in cliente)
