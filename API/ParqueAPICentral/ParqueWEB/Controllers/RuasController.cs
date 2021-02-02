@@ -10,49 +10,49 @@ using ParqueAPICentral.Models;
 
 namespace ParqueAPICentral.Controllers
 {
-    [Route("api/Clientes")]
+    [Route("api/Ruas")]
     [ApiController]
-    public class ClientesController : ControllerBase
+    public class RuasController : ControllerBase
     {
         private readonly APICentralContext _context;
 
-        public ClientesController(APICentralContext context)
+        public RuasController(APICentralContext context)
         {
             _context = context;
         }
 
-        // GET: api/Clientes
+        // GET: api/Ruas
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Cliente>>> GetCliente()
+        public async Task<ActionResult<IEnumerable<Rua>>> GetRua()
         {
-            return await _context.Cliente.ToListAsync();
+            return await _context.Rua.ToListAsync();
         }
 
-        // GET: api/Clientes/5
+        // GET: api/Ruas/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Cliente>> GetCliente(long id)
+        public async Task<ActionResult<Rua>> GetRua(long id)
         {
-            var cliente = await _context.Cliente.FindAsync(id);
+            var rua = await _context.Rua.FindAsync(id);
 
-            if (cliente == null)
+            if (rua == null)
             {
                 return NotFound();
             }
 
-            return cliente;
+            return rua;
         }
 
-        // PUT: api/Clientes/5
+        // PUT: api/Ruas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCliente(long id, Cliente cliente)
+        public async Task<IActionResult> PutRua(long id, Rua rua)
         {
-            if (id != cliente.ClienteID)
+            if (id != rua.RuaID)
             {
                 return BadRequest();
             }
 
-            _context.Entry(cliente).State = EntityState.Modified;
+            _context.Entry(rua).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace ParqueAPICentral.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ClienteExists(id))
+                if (!RuaExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace ParqueAPICentral.Controllers
             return NoContent();
         }
 
-        // POST: api/Clientes
+        // POST: api/Ruas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
+        public async Task<ActionResult<Rua>> PostRua(Rua rua)
         {
-            _context.Cliente.Add(cliente);
+            _context.Rua.Add(rua);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCliente", new { id = cliente.ClienteID }, cliente);
+            return CreatedAtAction("GetRua", new { id = rua.RuaID }, rua);
         }
 
-        // DELETE: api/Clientes/5
+        // DELETE: api/Ruas/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCliente(long id)
+        public async Task<IActionResult> DeleteRua(long id)
         {
-            var cliente = await _context.Cliente.FindAsync(id);
-            if (cliente == null)
+            var rua = await _context.Rua.FindAsync(id);
+            if (rua == null)
             {
                 return NotFound();
             }
 
-            _context.Cliente.Remove(cliente);
+            _context.Rua.Remove(rua);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool ClienteExists(long id)
+        private bool RuaExists(long id)
         {
-            return _context.Cliente.Any(e => e.ClienteID == id);
+            return _context.Rua.Any(e => e.RuaID == id);
         }
     }
 }
