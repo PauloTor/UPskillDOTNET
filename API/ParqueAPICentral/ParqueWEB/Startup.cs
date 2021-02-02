@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ParqueAPICentral.Data;
 
-namespace ParqueWEB
+namespace ParqueAPICentral
 {
     public class Startup
     {
