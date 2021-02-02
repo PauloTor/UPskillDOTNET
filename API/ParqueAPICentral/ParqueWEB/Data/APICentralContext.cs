@@ -14,7 +14,7 @@ namespace ParqueAPICentral.Data
         {
         }
 
-        public DbSet<ParqueAPICentral.Models.SubAluger> SubAluger { get; set; }
+        public DbSet<ParqueAPICentral.Models.SubAluguer> SubAluguer { get; set; }
         public DbSet<ParqueAPICentral.Models.Cliente> Cliente { get; set; }
     }
 }
