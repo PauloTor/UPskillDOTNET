@@ -181,10 +181,10 @@ namespace ParqueAPICentral.Data
             var subaluguer = new SubAluguer[]
                 {
 
-                    new SubAluguer { SubAluguerID = 1, PrecoSubAluguer = 10, DataSubAluguer = DateTime.Parse("2020-01-01 10:00:00"), DataInicio = DateTime.Parse("2020-01-02 08:00:00"), DataFim = DateTime.Parse("2020-01-02 16:00:00"), ReservaID = 1 },
-                    new SubAluguer { SubAluguerID = 2, PrecoSubAluguer = 15, DataSubAluguer = DateTime.Parse("2020-01-04 08:00:00"), DataInicio = DateTime.Parse("2020-01-08 10:00:00"), DataFim = DateTime.Parse("2020-01-08 11:00:00"), ReservaID = 2 },
-                    new SubAluguer { SubAluguerID = 3, PrecoSubAluguer = 20, DataSubAluguer = DateTime.Parse("2020-01-05 15:00:00"), DataInicio = DateTime.Parse("2020-01-09 12:00:00"), DataFim = DateTime.Parse("2020-01-09 14:00:00"), ReservaID = 3 },
-                    new SubAluguer { SubAluguerID = 4, PrecoSubAluguer = 15, DataSubAluguer = DateTime.Parse("2020-01-04 19:00:00"), DataInicio = DateTime.Parse("2020-01-07 15:00:00"), DataFim = DateTime.Parse("2020-01-07 19:00:00"), ReservaID = 2 },
+                    new SubAluguer { PrecoSubAluguer = 10, DataSubAluguer = DateTime.Parse("2020-01-01 10:00:00"), DataInicio = DateTime.Parse("2020-01-02 08:00:00"), DataFim = DateTime.Parse("2020-01-02 16:00:00"), ReservaID = 1 },
+                    new SubAluguer { PrecoSubAluguer = 15, DataSubAluguer = DateTime.Parse("2020-01-04 08:00:00"), DataInicio = DateTime.Parse("2020-01-08 10:00:00"), DataFim = DateTime.Parse("2020-01-08 11:00:00"), ReservaID = 2 },
+                    new SubAluguer { PrecoSubAluguer = 20, DataSubAluguer = DateTime.Parse("2020-01-05 15:00:00"), DataInicio = DateTime.Parse("2020-01-09 12:00:00"), DataFim = DateTime.Parse("2020-01-09 14:00:00"), ReservaID = 3 },
+                    new SubAluguer { PrecoSubAluguer = 15, DataSubAluguer = DateTime.Parse("2020-01-04 19:00:00"), DataInicio = DateTime.Parse("2020-01-07 15:00:00"), DataFim = DateTime.Parse("2020-01-07 19:00:00"), ReservaID = 2 },
 
                 };
 
@@ -193,6 +193,31 @@ namespace ParqueAPICentral.Data
                 context.SubAluguer.Add(s);
             }
             context.SaveChanges();
+
+
+            var Pagamento = new Pagamento[]
+
+               {
+
+                    new Pagamento { FaturaID = 1 },
+                    new Pagamento { FaturaID = 1 },
+                    new Pagamento { FaturaID = 2 },
+                    new Pagamento { FaturaID = 3 },
+                     new Pagamento { FaturaID = 4 },
+                    new Pagamento { FaturaID = 3},
+
+               };
+
+            foreach (Fatura s in fatura)
+            {
+                context.Fatura.Add(s);
+            }
+            context.SaveChanges();
+
+
+
+
+
         }
     }
 }
