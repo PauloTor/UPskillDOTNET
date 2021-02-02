@@ -1,6 +1,6 @@
 using System;
 
-namespace ParqueWEB.Models
+namespace ParqueAPICentral.Models
 {
     public class ErrorViewModel
     {
