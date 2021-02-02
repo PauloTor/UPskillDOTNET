@@ -100,11 +100,11 @@ namespace ParqueAPICentral.Data
             var lugar = new Lugar[]
 
                 {
-                    new Lugar { Fila = 1, Sector = 1, Preço = 10, ParqueID = 1 },
-                    new Lugar { Fila = 2, Sector = 2, Preço = 11, ParqueID = 1 },
-                    new Lugar { Fila = 3, Sector = 1, Preço = 10, ParqueID = 1 },
-                    new Lugar { Fila = 4, Sector = 2, Preço = 11, ParqueID = 1 },
-                    new Lugar { Fila = 5, Sector = 1, Preço = 10, ParqueID = 1 },
+                    new Lugar { Fila = 1, Sector = 1, Preço = 10, ParqueID = 1, RuaID =1 },
+                    new Lugar { Fila = 2, Sector = 2, Preço = 11, ParqueID = 1, RuaID =2},
+                    new Lugar { Fila = 3, Sector = 1, Preço = 10, ParqueID = 1,RuaID =3  },
+                    new Lugar { Fila = 4, Sector = 2, Preço = 11, ParqueID = 1,RuaID =4 },
+                    new Lugar { Fila = 5, Sector = 1, Preço = 10, ParqueID = 1,RuaID =3 },
                 };
 
             foreach (Lugar l in lugar)
