@@ -140,7 +140,7 @@ namespace ParqueAPICentral.Data
                 DataReserva = DateTime.Parse("2020-01-11 09:30:00"),
                 DataInicio = DateTime.Parse("2020-01-13 15:00:00"),
                 DataFim = DateTime.Parse("2020-01-14 14:00:00"),
-                DataSaida = DateTime.Parse("2020-01-14 13:00:00"),
+                DataSaida = DateTime.Parse("2020-01-14 14:00:00"),
                 LugarID = 1,
                 ClienteID = 3
             },
@@ -150,7 +150,7 @@ namespace ParqueAPICentral.Data
                 DataReserva = DateTime.Parse("2020-01-18 15:00:00"),
                 DataInicio = DateTime.Parse("2020-02-03 08:00:00"),
                 DataFim = DateTime.Parse("2020-02-03 19:00:00"),
-                DataSaida = DateTime.Parse("2020-01-05 18:30:00"),
+                DataSaida = DateTime.Parse("2020-02-03 19:00:00"),
                 LugarID = 3,
                 ClienteID = 4
             }
@@ -166,10 +166,10 @@ namespace ParqueAPICentral.Data
             var fatura = new Fatura[]
 
                 {
-                    new Fatura { DataFatura = DateTime.Parse("2021-02-03 15:00:00"), PrecoFatura = 5, ReservaID = 1 },
-                    new Fatura { DataFatura = DateTime.Parse("2021-02-05 15:00:00"), PrecoFatura = 40, ReservaID = 2 },
-                    new Fatura { DataFatura = DateTime.Parse("2021-02-07 15:00:00"), PrecoFatura = 35, ReservaID = 3 },
-                    new Fatura { DataFatura = DateTime.Parse("2021-03-03 15:00:00"), PrecoFatura = 40, ReservaID = 4 }
+                    new Fatura { DataFatura = DateTime.Parse("2020-01-05 18:00:00"), PrecoFatura = 33, ReservaID = 1 },
+                    new Fatura { DataFatura = DateTime.Parse("2020-01-04 21:00:00"), PrecoFatura = 30, ReservaID = 2 },
+                    new Fatura { DataFatura = DateTime.Parse("2020-01-14 15:00:00"), PrecoFatura = 230, ReservaID = 3 },
+                    new Fatura { DataFatura = DateTime.Parse("2020-02-03 19:00:00"), PrecoFatura = 110, ReservaID = 4 }
                 };
 
             foreach (Fatura f in fatura)
@@ -184,7 +184,7 @@ namespace ParqueAPICentral.Data
                 {
                     new SubAluguer { PrecoSubAluguer = 10, DataSubAluguer = DateTime.Parse("2020-01-01 17:00:00"), DataInicio = DateTime.Parse("2020-01-05 15:00:00"), DataFim = DateTime.Parse("2020-01-05 18:00:00"), ReservaID = 1 },
                     new SubAluguer { PrecoSubAluguer = 15, DataSubAluguer = DateTime.Parse("2020-01-04 12:00:00"), DataInicio = DateTime.Parse("2020-01-04 18:00:00"), DataFim = DateTime.Parse("2020-01-04 20:00:00"), ReservaID = 2 },
-                    new SubAluguer { PrecoSubAluguer = 20, DataSubAluguer = DateTime.Parse("2020-01-12 15:00:00"), DataInicio = DateTime.Parse("2020-01-13 15:00:00"), DataFim = DateTime.Parse("2020-01-14 14:00:00"), ReservaID = 3 },
+                    new SubAluguer { PrecoSubAluguer = 20, DataSubAluguer = DateTime.Parse("2020-01-14 14:00:00"), DataInicio = DateTime.Parse("2020-01-13 15:00:00"), DataFim = DateTime.Parse("2020-01-14 14:00:00"), ReservaID = 3 },
                     new SubAluguer { PrecoSubAluguer = 15, DataSubAluguer = DateTime.Parse("2020-01-25 19:00:00"), DataInicio = DateTime.Parse("2020-02-03 08:00:00"), DataFim = DateTime.Parse("2020-02-03 19:00:00"), ReservaID = 4 },
                 };
 
