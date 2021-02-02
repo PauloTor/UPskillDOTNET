@@ -187,6 +187,31 @@ namespace ParqueAPICentral.Data
                 context.SubAluguer.Add(s);
             }
             context.SaveChanges();
+
+
+            var Pagamento = new Pagamento[]
+
+               {
+
+                    new Pagamento { FaturaID = 1 },
+                    new Pagamento { FaturaID = 1 },
+                    new Pagamento { FaturaID = 2 },
+                    new Pagamento { FaturaID = 3 },
+                     new Pagamento { FaturaID = 4 },
+                    new Pagamento { FaturaID = 3},
+
+               };
+
+            foreach (Fatura s in fatura)
+            {
+                context.Fatura.Add(s);
+            }
+            context.SaveChanges();
+
+
+
+
+
         }
     }
 }
