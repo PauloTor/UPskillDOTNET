@@ -15,7 +15,12 @@ namespace ParqueAPICentral
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            
+            var host = CreateHostBuilder(args).Build();
+
+            CreateDbIfNotExists(host);
+
+            host.Run();
         }
 
         private static void CreateDbIfNotExists(IHost host)
