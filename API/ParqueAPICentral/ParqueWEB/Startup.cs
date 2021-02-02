@@ -27,7 +27,7 @@ namespace ParqueAPICentral
         {
             services.AddControllersWithViews();
 
-            services.AddDbContext<ParqueWEBContext>(options =>
+            services.AddDbContext<APICentralContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("ParqueWEBContext")));
         }
 
