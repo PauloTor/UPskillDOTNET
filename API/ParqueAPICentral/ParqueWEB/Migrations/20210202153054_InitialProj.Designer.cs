@@ -10,8 +10,8 @@ using ParqueAPICentral.Data;
 namespace ParqueAPICentral.Migrations
 {
     [DbContext(typeof(APICentralContext))]
-    [Migration("20210202144723_init1")]
-    partial class init1
+    [Migration("20210202153054_InitialProj")]
+    partial class InitialProj
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -184,6 +184,9 @@ namespace ParqueAPICentral.Migrations
 
                     b.Property<long>("LugarID")
                         .HasColumnType("bigint");
+
+                    b.Property<bool>("SubAlugado")
+                        .HasColumnType("bit");
 
                     b.HasKey("ReservaID");
 

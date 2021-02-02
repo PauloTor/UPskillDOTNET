@@ -122,7 +122,9 @@ namespace ParqueAPICentral.Data
                 DataFim = DateTime.Parse("2020-01-05 18:00:00"),
                 DataSaida = DateTime.Parse("2020-01-05 18:00:00"),
                 LugarID = 2,
-                ClienteID = 1
+                ClienteID = 1,
+                SubAlugado = false
+                
             },
 
             new Reserva
@@ -132,7 +134,8 @@ namespace ParqueAPICentral.Data
                 DataFim = DateTime.Parse("2020-01-04 20:00:00"),
                 DataSaida = DateTime.Parse("2020-01-04 21:00:00"),
                 LugarID = 3,
-                ClienteID = 2
+                ClienteID = 2,
+                SubAlugado = false
             },
 
             new Reserva
@@ -142,7 +145,8 @@ namespace ParqueAPICentral.Data
                 DataFim = DateTime.Parse("2020-01-14 14:00:00"),
                 DataSaida = DateTime.Parse("2020-01-14 14:00:00"),
                 LugarID = 1,
-                ClienteID = 3
+                ClienteID = 3,
+                SubAlugado = false
             },
 
             new Reserva
@@ -152,7 +156,8 @@ namespace ParqueAPICentral.Data
                 DataFim = DateTime.Parse("2020-02-03 19:00:00"),
                 DataSaida = DateTime.Parse("2020-02-03 19:00:00"),
                 LugarID = 3,
-                ClienteID = 4
+                ClienteID = 4,
+                SubAlugado = false
             }
         };
             foreach (Reserva r in reserva)
@@ -182,10 +187,10 @@ namespace ParqueAPICentral.Data
 
             var subaluguer = new SubAluguer[]
                 {
-                    new SubAluguer { PrecoSubAluguer = 10, DataSubAluguer = DateTime.Parse("2020-01-01 17:00:00"), DataInicio = DateTime.Parse("2020-01-05 15:00:00"), DataFim = DateTime.Parse("2020-01-05 18:00:00"), ReservaID = 1 },
-                    new SubAluguer { PrecoSubAluguer = 15, DataSubAluguer = DateTime.Parse("2020-01-04 12:00:00"), DataInicio = DateTime.Parse("2020-01-04 18:00:00"), DataFim = DateTime.Parse("2020-01-04 20:00:00"), ReservaID = 2 },
-                    new SubAluguer { PrecoSubAluguer = 20, DataSubAluguer = DateTime.Parse("2020-01-14 14:00:00"), DataInicio = DateTime.Parse("2020-01-13 15:00:00"), DataFim = DateTime.Parse("2020-01-14 14:00:00"), ReservaID = 3 },
-                    new SubAluguer { PrecoSubAluguer = 15, DataSubAluguer = DateTime.Parse("2020-01-25 19:00:00"), DataInicio = DateTime.Parse("2020-02-03 08:00:00"), DataFim = DateTime.Parse("2020-02-03 19:00:00"), ReservaID = 4 },
+                    new SubAluguer { PrecoSubAluguer = 10, DataSubAluguer = DateTime.Parse("2020-01-01 17:00:00"), DataInicio = DateTime.Parse("2020-01-05 15:00:00"), DataFim = DateTime.Parse("2020-01-05 18:00:00"), ReservaID = 4 },
+                    new SubAluguer { PrecoSubAluguer = 15, DataSubAluguer = DateTime.Parse("2020-01-04 12:00:00"), DataInicio = DateTime.Parse("2020-01-04 18:00:00"), DataFim = DateTime.Parse("2020-01-04 20:00:00"), ReservaID = 3 },
+                    new SubAluguer { PrecoSubAluguer = 20, DataSubAluguer = DateTime.Parse("2020-01-14 14:00:00"), DataInicio = DateTime.Parse("2020-01-13 15:00:00"), DataFim = DateTime.Parse("2020-01-14 14:00:00"), ReservaID = 2 },
+                    new SubAluguer { PrecoSubAluguer = 15, DataSubAluguer = DateTime.Parse("2020-01-25 19:00:00"), DataInicio = DateTime.Parse("2020-02-03 08:00:00"), DataFim = DateTime.Parse("2020-02-03 19:00:00"), ReservaID = 1 },
                 };
 
             foreach (SubAluguer s in subaluguer)

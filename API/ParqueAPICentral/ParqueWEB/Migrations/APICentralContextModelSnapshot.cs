@@ -183,6 +183,9 @@ namespace ParqueAPICentral.Migrations
                     b.Property<long>("LugarID")
                         .HasColumnType("bigint");
 
+                    b.Property<bool>("SubAlugado")
+                        .HasColumnType("bit");
+
                     b.HasKey("ReservaID");
 
                     b.HasIndex("ClienteID");

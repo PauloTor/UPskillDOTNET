@@ -26,5 +26,7 @@ namespace ParqueAPICentral.Models
         [ForeignKey("LugarID")]
         public long LugarID { get; set; }
         public Lugar Lugar { get; set; }
+
+        public bool SubAlugado { get; set; } 
     }
 }
