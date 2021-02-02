@@ -20,7 +20,49 @@ namespace ParqueAPICentral.Data
             {
                 return;   // DB has been seeded
             }
-            //----------------------------------------------------------------------------
+
+            var rua = new Rua[]
+            {
+                new Rua { NomeRua = "Primeira", CodigoPostal = "1111 - 111", Lotacao = 11 },
+                new Rua { NomeRua = "Segunda", CodigoPostal = "2222 - 222", Lotacao = 22 },
+                new Rua { NomeRua = "Terceira", CodigoPostal = "3333 - 333", Lotacao = 33 },
+                new Rua { NomeRua = "Quarta", CodigoPostal = "4444 - 444", Lotacao = 44 },
+                new Rua { NomeRua = "Quinta", CodigoPostal = "5555 - 555", Lotacao = 55 },
+                new Rua { NomeRua = "Sexta", CodigoPostal = "6666 - 666", Lotacao = 66 },
+                new Rua { NomeRua = "Setima", CodigoPostal = "7777 - 777", Lotacao = 77 },
+                new Rua { NomeRua = "Oitava", CodigoPostal = "8888 - 888", Lotacao = 88 },
+                new Rua { NomeRua = "Nona", CodigoPostal = "9999 - 999", Lotacao = 99 }
+            };
+
+            foreach (Rua r in rua)
+            {
+                context.Rua.Add(r);
+            }
+            context.SaveChanges();
+
+            // ===============================================================
+
+            var cliente = new Cliente[]
+           {
+                new Cliente { NomeCliente = "Cliente1", EmailCliente = "", NifCliente = "111111111", MetodoPagamento = "DD", Credito = "" },
+                new Cliente { NomeCliente = "Cliente1", EmailCliente = "", NifCliente = "222222222", MetodoPagamento = "CartaoCredito", Credito = "" },
+                new Cliente { NomeCliente = "Cliente1", EmailCliente = "", NifCliente = "333333333", MetodoPagamento = "CartaoCredito", Credito = "" },
+                new Cliente { NomeCliente = "Cliente1", EmailCliente = "", NifCliente = "444444444", MetodoPagamento = "CartaoCredito", Credito = "" },
+                new Cliente { NomeCliente = "Cliente1", EmailCliente = "", NifCliente = "555555555", MetodoPagamento = "Paypall", Credito = "" },
+                new Cliente { NomeCliente = "Cliente1", EmailCliente = "", NifCliente = "666666666", MetodoPagamento = "DD", Credito = ""6 },
+                new Cliente { NomeCliente = "Cliente1", EmailCliente = "", NifCliente = "777777777", MetodoPagamento = "Paypall", Credito = "" },
+                new Cliente { NomeCliente = "Cliente1", EmailCliente = "", NifCliente = "888888888", MetodoPagamento = "Paypall", Credito = "" },
+                new Cliente { NomeCliente = "Cliente1", EmailCliente = "", NifCliente = "999999999", MetodoPagamento = "DD", Credito = "" }
+           };
+
+            foreach (Cliente c in cliente)
+            {
+                context.Cliente.Add(c);
+            }
+            context.SaveChanges();
+
+            // ===============================================================
+
             var morada = new Morada[]
 
                 {
@@ -77,32 +119,36 @@ namespace ParqueAPICentral.Data
             {
                 DataReserva = DateTime.Parse("2020-01-01 15:00:00"),
                 DataInicio = DateTime.Parse("2020-01-05 15:00:00"),
-                DataFim = DateTime.Parse("2020-01-05 16:00:00"),
-                LugarID = 1
+                DataFim = DateTime.Parse("2020-01-05 18:00:00"),
+                DataSaida = DateTime.Parse("2020-01-05 18:00:00"),
+                ClienteID = 1
             },
 
             new Reserva
             {
-                DataReserva = DateTime.Parse("2020-01-2 15:00:00"),
-                DataInicio = DateTime.Parse("2020-01-04 11:00:00"),
-                DataFim = DateTime.Parse("2020-01-04 13:00:00"),
-                LugarID = 2
+                DataReserva = DateTime.Parse("2020-01-04 11:00:00"),
+                DataInicio = DateTime.Parse("2020-01-04 18:00:00"),
+                DataFim = DateTime.Parse("2020-01-04 20:00:00"),
+                DataSaida = DateTime.Parse("2020-01-04 21:00:00"),
+                ClienteID = 2
             },
 
             new Reserva
             {
-                DataReserva = DateTime.Parse("2019-12-15 15:00:00"),
-                DataInicio = DateTime.Parse("2020-02-09 17:00:00"),
-                DataFim = DateTime.Parse("2020-02-09 18:00:00"),
-                LugarID = 3
+                DataReserva = DateTime.Parse("2020-01-11 09:30:00"),
+                DataInicio = DateTime.Parse("2020-01-13 15:00:00"),
+                DataFim = DateTime.Parse("2020-01-14 14:00:00"),
+                DataSaida = DateTime.Parse("2020-01-14 13:00:00"),
+                ClienteID = 3
             },
 
             new Reserva
             {
-                DataReserva = DateTime.Parse("2019-12-10 10:00:00"),
-                DataInicio = DateTime.Parse("2020-02-01 11:00:00"),
-                DataFim = DateTime.Parse("2020-02-01 15:00:00"),
-                LugarID = 1
+                DataReserva = DateTime.Parse("2020-01-18 15:00:00"),
+                DataInicio = DateTime.Parse("2020-02-03 08:00:00"),
+                DataFim = DateTime.Parse("2020-02-03 19:00:00"),
+                DataSaida = DateTime.Parse("2020-01-05 18:30:00"),
+                ClienteID = 4
             }
         };
             foreach (Reserva r in reserva)

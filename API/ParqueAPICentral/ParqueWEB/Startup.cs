@@ -9,9 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using ParqueWEB.Data;
+using ParqueAPICentral.Data;
 
-namespace ParqueWEB
+namespace ParqueAPICentral
 {
     public class Startup
     {
