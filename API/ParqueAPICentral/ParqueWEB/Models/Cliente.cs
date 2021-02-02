@@ -7,6 +7,7 @@ namespace ParqueAPICentral.Models
 {
     public class Cliente
     {
+        public long ClienteID { get; set; }
 
     }
 }
