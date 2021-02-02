@@ -20,7 +20,8 @@ namespace ParqueAPICentral.Data
 
         public DbSet<ParqueAPICentral.Models.Morada> Morada { get; set; }
 
-  
-        
+        public DbSet<ParqueAPICentral.Models.Morada> Reserva { get; set; }
+
+        public DbSet<ParqueAPICentral.Models.Morada> Lugar { get; set; }
     }
 }
