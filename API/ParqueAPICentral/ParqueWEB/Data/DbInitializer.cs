@@ -61,9 +61,6 @@ namespace ParqueAPICentral.Data
                     },
 
 
-
-
-
                     new Morada
                     {
 
@@ -74,9 +71,9 @@ namespace ParqueAPICentral.Data
 
 
 
-            foreach (Morada s in morada)
+            foreach (Morada m in morada)
             {
-                context.Morada.Add(s);
+                context.Morada.Add(m);
             }
             context.SaveChanges();
 
@@ -93,34 +90,14 @@ namespace ParqueAPICentral.Data
             new Parque { NomeParque = "Porto Park", Lotacao = 6, MoradaID = 5}
              };
 
-            foreach (Parque s in parque)
+            foreach (Parque p in parque)
             {
-                context.Parque.Add(s);
+                context.Parque.Add(p);
             }
             context.SaveChanges();
 
             //=================================================================
 
-            var fatura = new Fatura[]
-
-               {
-
-
-            new Fatura { DataFatura = DateTime.Parse("2021-02-03 15:00:00"), PrecoFatura = 5, ReservaID = 1 },
-            new Fatura { DataFatura = DateTime.Parse("2021-02-05 15:00:00"), PrecoFatura = 40, ReservaID = 2 },
-            new Fatura { DataFatura = DateTime.Parse("2021-02-07 15:00:00"), PrecoFatura = 35, ReservaID = 3 },
-            new Fatura { DataFatura = DateTime.Parse("2021-03-03 15:00:00"), PrecoFatura = 40, ReservaID = 4 },
-            new Fatura { DataFatura = DateTime.Parse("2021-05-03 15:00:00"), PrecoFatura = 50, ReservaID = 5 }
-
-            };
-
-            foreach (Fatura s in fatura)
-            {
-                context.Fatura.Add(s);
-            }
-            context.SaveChanges();
-
-            //=================================================================
 
             var lugar = new Lugar[]
 
@@ -133,9 +110,9 @@ namespace ParqueAPICentral.Data
                     new Lugar { Fila = 5, Sector = 1, Preço = 10, ParqueID = 1 },
                 };
 
-            foreach (Lugar s in lugar)
+            foreach (Lugar l in lugar)
             {
-                context.Lugar.Add(s);
+                context.Lugar.Add(l);
             }
             context.SaveChanges();
             //===========================================================================================0
@@ -185,14 +162,41 @@ namespace ParqueAPICentral.Data
             context.SaveChanges();
 
             //-----------------------------------------------------------------------------------------------------------------
+
+            var fatura = new Fatura[]
+
+               {
+
+
+            new Fatura { DataFatura = DateTime.Parse("2021-02-03 15:00:00"), PrecoFatura = 5, ReservaID = 1 },
+            new Fatura { DataFatura = DateTime.Parse("2021-02-05 15:00:00"), PrecoFatura = 40, ReservaID = 2 },
+            new Fatura { DataFatura = DateTime.Parse("2021-02-07 15:00:00"), PrecoFatura = 35, ReservaID = 3 },
+            new Fatura { DataFatura = DateTime.Parse("2021-03-03 15:00:00"), PrecoFatura = 40, ReservaID = 4 }
+
+            };
+
+            foreach (Fatura f in fatura)
+            {
+                context.Fatura.Add(f);
+            }
+            context.SaveChanges();
+
+            //=================================================================
             var subaluguer = new SubAluguer[]
+                {
 
-            new SubAluguer { SubAluguerID = 1, PrecoSubAluguer = 10, DataSubAluguer = DateTime.Parse("2020-01-01 10:00:00"), DataInicio = DateTime.Parse("2020-01-02 08:00:00"), DataFim = DateTime.Parse("2020-01-02 16:00:00"), ReservaID = 1 };
-            new SubAluguer { SubAluguerID = 1, PrecoSubAluguer = 10, DataSubAluguer = DateTime.Parse("2020-01-01 10:00:00"), DataInicio = DateTime.Parse("2020-01-02 08:00:00"), DataFim = DateTime.Parse("2020-01-02 16:00:00"), ReservaID = 1 };
-            new SubAluguer { SubAluguerID = 1, PrecoSubAluguer = 10, DataSubAluguer = DateTime.Parse("2020-01-01 10:00:00"), DataInicio = DateTime.Parse("2020-01-02 08:00:00"), DataFim = DateTime.Parse("2020-01-02 16:00:00"), ReservaID = 1 };
-            new SubAluguer { SubAluguerID = 1, PrecoSubAluguer = 10, DataSubAluguer = DateTime.Parse("2020-01-01 10:00:00"), DataInicio = DateTime.Parse("2020-01-02 08:00:00"), DataFim = DateTime.Parse("2020-01-02 16:00:00"), ReservaID = 1 };
+                    new SubAluguer { SubAluguerID = 1, PrecoSubAluguer = 10, DataSubAluguer = DateTime.Parse("2020-01-01 10:00:00"), DataInicio = DateTime.Parse("2020-01-02 08:00:00"), DataFim = DateTime.Parse("2020-01-02 16:00:00"), ReservaID = 1 },
+                    new SubAluguer { SubAluguerID = 2, PrecoSubAluguer = 15, DataSubAluguer = DateTime.Parse("2020-01-04 08:00:00"), DataInicio = DateTime.Parse("2020-01-08 10:00:00"), DataFim = DateTime.Parse("2020-01-08 11:00:00"), ReservaID = 2 },
+                    new SubAluguer { SubAluguerID = 3, PrecoSubAluguer = 20, DataSubAluguer = DateTime.Parse("2020-01-05 15:00:00"), DataInicio = DateTime.Parse("2020-01-09 12:00:00"), DataFim = DateTime.Parse("2020-01-09 14:00:00"), ReservaID = 3 },
+                    new SubAluguer { SubAluguerID = 4, PrecoSubAluguer = 15, DataSubAluguer = DateTime.Parse("2020-01-04 19:00:00"), DataInicio = DateTime.Parse("2020-01-07 15:00:00"), DataFim = DateTime.Parse("2020-01-07 19:00:00"), ReservaID = 2 },
+
+                };
+
+            foreach (SubAluguer s in subaluguer)
+            {
+                context.SubAluguer.Add(s);
+            }
+            context.SaveChanges();
         }
-
-
     }
 }
