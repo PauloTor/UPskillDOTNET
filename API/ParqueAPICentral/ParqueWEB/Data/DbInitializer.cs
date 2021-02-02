@@ -121,6 +121,7 @@ namespace ParqueAPICentral.Data
                 DataInicio = DateTime.Parse("2020-01-05 15:00:00"),
                 DataFim = DateTime.Parse("2020-01-05 18:00:00"),
                 DataSaida = DateTime.Parse("2020-01-05 18:00:00"),
+                LugarID = 2,
                 ClienteID = 1
             },
 
@@ -130,6 +131,7 @@ namespace ParqueAPICentral.Data
                 DataInicio = DateTime.Parse("2020-01-04 18:00:00"),
                 DataFim = DateTime.Parse("2020-01-04 20:00:00"),
                 DataSaida = DateTime.Parse("2020-01-04 21:00:00"),
+                LugarID = 3,
                 ClienteID = 2
             },
 
@@ -139,6 +141,7 @@ namespace ParqueAPICentral.Data
                 DataInicio = DateTime.Parse("2020-01-13 15:00:00"),
                 DataFim = DateTime.Parse("2020-01-14 14:00:00"),
                 DataSaida = DateTime.Parse("2020-01-14 13:00:00"),
+                LugarID = 1,
                 ClienteID = 3
             },
 
@@ -148,6 +151,7 @@ namespace ParqueAPICentral.Data
                 DataInicio = DateTime.Parse("2020-02-03 08:00:00"),
                 DataFim = DateTime.Parse("2020-02-03 19:00:00"),
                 DataSaida = DateTime.Parse("2020-01-05 18:30:00"),
+                LugarID = 3,
                 ClienteID = 4
             }
         };
