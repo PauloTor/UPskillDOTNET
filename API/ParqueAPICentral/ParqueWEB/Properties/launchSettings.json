@@ -9,13 +9,14 @@
   },
   "profiles": {
     "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+        "commandName": "IISExpress",
+        "launchBrowser": true,
+        "launchUrl": "api/Reservas",
+        "environmentVariables": {
+            "ASPNETCORE_ENVIRONMENT": "Development"
+        }
     },
-    "ParqueWEB": {
+    "ParqueAPICentral": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,
