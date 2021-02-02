@@ -20,56 +20,16 @@ namespace ParqueAPICentral.Data
             {
                 return;   // DB has been seeded
             }
-
-
+            //----------------------------------------------------------------------------
             var morada = new Morada[]
 
                 {
-
-                    new Morada
-                    {
-
-                        Rua = " Rua da Boavista",
-                        CodigoPostal = "5002 - 456"
-                    },
-
-
-                    new Morada
-                    {
-
-                        Rua = " Rua da aaaaaaaaa",
-                        CodigoPostal = "5202 - 436"
-                    },
-
-
-
-
-                    new Morada
-                    {
-
-                        Rua = " Rua bbbbbbbbbbbbbbb",
-                        CodigoPostal = "5102 - 452"
-                    },
-
-
-
-                    new Morada
-                    {
-
-                        Rua = " Rua ccccccccccccccc",
-                        CodigoPostal = "5302 - 452"
-                    },
-
-
-                    new Morada
-                    {
-
-                        Rua = " Rua ddddddddddddd",
-                        CodigoPostal = "5122 - 412"
-                    },
-        };
-
-
+                    new Morada { Rua = " Rua da Boavista", CodigoPostal = "5002 - 456"},
+                    new Morada { Rua = " Rua da aaaaaaaaa", CodigoPostal = "5202 - 436"},
+                    new Morada { Rua = " Rua bbbbbbbbbbbbbbb", CodigoPostal = "5102 - 452" },
+                    new Morada { Rua = " Rua ccccccccccccccc", CodigoPostal = "5302 - 452"},
+                    new Morada { Rua = " Rua ddddddddddddd", CodigoPostal = "5122 - 412"},
+                 };
 
             foreach (Morada m in morada)
             {
@@ -81,14 +41,12 @@ namespace ParqueAPICentral.Data
             var parque = new Parque[]
 
                 {
-
-
-            new Parque { NomeParque = "Boavista Park", Lotacao = 5, MoradaID = 1 },
-            new Parque { NomeParque = "Lisboa Park", Lotacao = 30, MoradaID = 2},
-            new Parque { NomeParque = "Aveiro Park", Lotacao = 100, MoradaID = 3},
-            new Parque { NomeParque = "Gaia Park", Lotacao = 10, MoradaID = 4},
-            new Parque { NomeParque = "Porto Park", Lotacao = 6, MoradaID = 5}
-             };
+                    new Parque { NomeParque = "Boavista Park", Lotacao = 5, MoradaID = 1 },
+                    new Parque { NomeParque = "Lisboa Park", Lotacao = 30, MoradaID = 2},
+                    new Parque { NomeParque = "Aveiro Park", Lotacao = 100, MoradaID = 3},
+                    new Parque { NomeParque = "Gaia Park", Lotacao = 10, MoradaID = 4},
+                    new Parque { NomeParque = "Porto Park", Lotacao = 6, MoradaID = 5}
+                 };
 
             foreach (Parque p in parque)
             {
@@ -97,12 +55,9 @@ namespace ParqueAPICentral.Data
             context.SaveChanges();
 
             //=================================================================
-
-
             var lugar = new Lugar[]
 
                 {
-
                     new Lugar { Fila = 1, Sector = 1, Preço = 10, ParqueID = 1 },
                     new Lugar { Fila = 2, Sector = 2, Preço = 11, ParqueID = 1 },
                     new Lugar { Fila = 3, Sector = 1, Preço = 10, ParqueID = 1 },
@@ -116,7 +71,6 @@ namespace ParqueAPICentral.Data
             }
             context.SaveChanges();
             //===========================================================================================0
-
             var reserva = new Reserva[]
 {
             new Reserva
@@ -161,31 +115,25 @@ namespace ParqueAPICentral.Data
 
             var fatura = new Fatura[]
 
-               {
-
-
-            new Fatura { DataFatura = DateTime.Parse("2021-02-03 15:00:00"), PrecoFatura = 5, ReservaID = 1 },
-            new Fatura { DataFatura = DateTime.Parse("2021-02-05 15:00:00"), PrecoFatura = 40, ReservaID = 2 },
-            new Fatura { DataFatura = DateTime.Parse("2021-02-07 15:00:00"), PrecoFatura = 35, ReservaID = 3 },
-            new Fatura { DataFatura = DateTime.Parse("2021-03-03 15:00:00"), PrecoFatura = 40, ReservaID = 4 }
-
-            };
+                {
+                    new Fatura { DataFatura = DateTime.Parse("2021-02-03 15:00:00"), PrecoFatura = 5, ReservaID = 1 },
+                    new Fatura { DataFatura = DateTime.Parse("2021-02-05 15:00:00"), PrecoFatura = 40, ReservaID = 2 },
+                    new Fatura { DataFatura = DateTime.Parse("2021-02-07 15:00:00"), PrecoFatura = 35, ReservaID = 3 },
+                    new Fatura { DataFatura = DateTime.Parse("2021-03-03 15:00:00"), PrecoFatura = 40, ReservaID = 4 }
+                };
 
             foreach (Fatura f in fatura)
             {
                 context.Fatura.Add(f);
             }
             context.SaveChanges();
-
             //=================================================================
             var subaluguer = new SubAluguer[]
                 {
-
                     new SubAluguer { SubAluguerID = 1, PrecoSubAluguer = 10, DataSubAluguer = DateTime.Parse("2020-01-01 10:00:00"), DataInicio = DateTime.Parse("2020-01-02 08:00:00"), DataFim = DateTime.Parse("2020-01-02 16:00:00"), ReservaID = 1 },
                     new SubAluguer { SubAluguerID = 2, PrecoSubAluguer = 15, DataSubAluguer = DateTime.Parse("2020-01-04 08:00:00"), DataInicio = DateTime.Parse("2020-01-08 10:00:00"), DataFim = DateTime.Parse("2020-01-08 11:00:00"), ReservaID = 2 },
                     new SubAluguer { SubAluguerID = 3, PrecoSubAluguer = 20, DataSubAluguer = DateTime.Parse("2020-01-05 15:00:00"), DataInicio = DateTime.Parse("2020-01-09 12:00:00"), DataFim = DateTime.Parse("2020-01-09 14:00:00"), ReservaID = 3 },
                     new SubAluguer { SubAluguerID = 4, PrecoSubAluguer = 15, DataSubAluguer = DateTime.Parse("2020-01-04 19:00:00"), DataInicio = DateTime.Parse("2020-01-07 15:00:00"), DataFim = DateTime.Parse("2020-01-07 19:00:00"), ReservaID = 2 },
-
                 };
 
             foreach (SubAluguer s in subaluguer)
