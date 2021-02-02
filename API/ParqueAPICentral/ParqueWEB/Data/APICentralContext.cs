@@ -15,8 +15,11 @@ namespace ParqueAPICentral.Data
         }
 
         public DbSet<ParqueAPICentral.Models.SubAluguer> SubAluguer { get; set; }
+<<<<<<< HEAD
         public DbSet<ParqueAPICentral.Models.Cliente> Cliente { get; set; }
 
         public DbSet<ParqueAPICentral.Models.Morada> Morada { get; set; }
+=======
+>>>>>>> 645d589ea096b091927c1561540a0363b0565362
     }
 }
