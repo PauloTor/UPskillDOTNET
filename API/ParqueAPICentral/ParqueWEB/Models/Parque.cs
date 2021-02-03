@@ -11,10 +11,5 @@ namespace ParqueAPICentral.Models
         public long ParqueID { get; set; }
 
         public string NomeParque { get; set; }
-        public long Lotacao { get; set; }
-
-        [ForeignKey("MoradaID")]
-        public long MoradaID { get; set; }
-        public Morada Morada { get; set; }
     }
 }
