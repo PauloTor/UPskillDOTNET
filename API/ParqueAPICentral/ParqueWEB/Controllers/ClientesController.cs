@@ -4,6 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ParqueAPICentral.Models;
+using ParqueAPICentral.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace ParqueAPICentral.Controllers
 {
@@ -22,14 +25,14 @@ namespace ParqueAPICentral.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes()
         {
-            return await _context.Clientes.ToListAsync();
+            return await _context.Cliente.ToListAsync();
         }
 
         // GET: api/Clientes/5  - Obter Informação de um Cliente por ID
         [HttpGet("{id}")]
         public async Task<ActionResult<Cliente>> GetCliente(long id)
         {
-            var cliente = await _context.Clientes.FindAsync(id);
+            var cliente = await _context.Cliente.FindAsync(id);
 
             if (cliente == null)
             {
