@@ -72,19 +72,19 @@ namespace ParqueAPICentral.Controllers
             return NoContent();
         }
 
-        // DELETE: api/reservas/id - Cancelar reserva
+        // DELETE: api/reservas/id - Cancelar reserva, nao acabado, em fase de experiencia
 
         [EnableCors]
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Reserva_>> CancelarReserva(long id)
+        public async Task<ActionResult<Reserva>> CancelarReserva(long id)
         {
-            var reserva = await _context.Reserva_.FindAsync(id);
+            var reserva = await _context.Reserva.FindAsync(id);
             if (reserva == null)
             {
                 return NotFound();
             }
 
-            _context.Reserva_.Remove(reserva);
+            _context.Reserva.Remove(reserva);
             await _context.SaveChangesAsync();
 
             return reserva;
