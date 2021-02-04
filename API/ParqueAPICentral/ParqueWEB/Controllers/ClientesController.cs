@@ -68,5 +68,17 @@ namespace ParqueAPICentral.Controllers
 
             return NoContent();
         }
+        // POST: api/Clientes : Criação de um Cliente
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
+        {
+            _context.Clientes.Add(cliente);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetCliente", new { id = cliente.ClienteID }, cliente);
+        }
+
+    }
     }
 }
