@@ -71,6 +71,24 @@ namespace ParqueAPICentral.Controllers
             }
             return NoContent();
         }
+
+        // DELETE: api/reservas/id - Cancelar reserva
+
+        [EnableCors]
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Reserva_>> CancelarReserva(long id)
+        {
+            var reserva = await _context.Reserva_.FindAsync(id);
+            if (reserva == null)
+            {
+                return NotFound();
+            }
+
+            _context.Reserva_.Remove(reserva);
+            await _context.SaveChangesAsync();
+
+            return reserva;
+        }
     }
 }
 
