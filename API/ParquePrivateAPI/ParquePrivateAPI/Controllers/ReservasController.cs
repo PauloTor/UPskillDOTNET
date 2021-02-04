@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ParquePrivateAPI.Controllers
 {
-    [Authorize]
     [EnableCors("MyAllowSpecificOrigins")]
     [Route("api/Reservas")]
     [ApiController]
@@ -26,7 +25,6 @@ namespace ParquePrivateAPI.Controllers
         }
 
         // GET: api/Reservas
-        [Authorize]
         [EnableCors("MyAllowSpecificOrigins")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Reserva>>> GetReserva()
@@ -35,7 +33,6 @@ namespace ParquePrivateAPI.Controllers
         }
 
         // GET: api/Reservas/5
-        [Authorize]
         [EnableCors]
         [HttpGet("{id}")]
         public async Task<ActionResult<Reserva>> GetReserva(long id)
@@ -55,7 +52,6 @@ namespace ParquePrivateAPI.Controllers
         // PUT: api/Reservas/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [Authorize]
         [EnableCors]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutReserva(long id, Reserva reserva)
@@ -89,7 +85,6 @@ namespace ParquePrivateAPI.Controllers
         // POST: api/Reservas
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [Authorize]
         [EnableCors]
         [HttpPost]
         public async Task<ActionResult<Reserva>> PostReserva(Reserva reserva)
@@ -99,9 +94,25 @@ namespace ParquePrivateAPI.Controllers
 
             return CreatedAtAction("GetReserva", new { id = reserva.ReservaID }, reserva);
         }
+/*
+        [EnableCors]
+        // Post: api/Reservas/data1,data2 Criar Reserva por datas
+        
+        [HttpGet("{dateInicio}/{dateFim}")]
+        public async Task<ActionResult<Reserva>> PostReservaByData(DateTime DataInicio, DateTime DataFim, long Lugar)
+        {
 
+
+
+            _context.Reserva.Add(reserva);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetReserva", new { id = reserva.ReservaID }, reserva);
+        }
+
+        */
         // DELETE: api/Reservas/5
-        [Authorize]
+
         [EnableCors]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Reserva>> DeleteReserva(long id)

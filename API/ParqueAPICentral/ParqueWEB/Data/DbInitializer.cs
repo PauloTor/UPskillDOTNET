@@ -21,25 +21,6 @@ namespace ParqueAPICentral.Data
                 return;   // DB has been seeded
             }
 
-            var rua = new Rua[]
-            {
-                new Rua { NomeRua = "Primeira", CodigoPostal = "1111 - 111", Lotacao = 11 },
-                new Rua { NomeRua = "Segunda", CodigoPostal = "2222 - 222", Lotacao = 22 },
-                new Rua { NomeRua = "Terceira", CodigoPostal = "3333 - 333", Lotacao = 33 },
-                new Rua { NomeRua = "Quarta", CodigoPostal = "4444 - 444", Lotacao = 44 },
-                new Rua { NomeRua = "Quinta", CodigoPostal = "5555 - 555", Lotacao = 55 },
-                new Rua { NomeRua = "Sexta", CodigoPostal = "6666 - 666", Lotacao = 66 },
-                new Rua { NomeRua = "Setima", CodigoPostal = "7777 - 777", Lotacao = 77 },
-                new Rua { NomeRua = "Oitava", CodigoPostal = "8888 - 888", Lotacao = 88 },
-                new Rua { NomeRua = "Nona", CodigoPostal = "9999 - 999", Lotacao = 99 }
-            };
-
-            foreach (Rua r in rua)
-            {
-                context.Rua.Add(r);
-            }
-            context.SaveChanges();
-
             // ===============================================================
 
             var cliente = new Cliente[]
@@ -63,24 +44,8 @@ namespace ParqueAPICentral.Data
 
             // ===============================================================
 
-            var morada = new Morada[]
-
-                {
-                    new Morada { Rua = " Rua da Boavista", CodigoPostal = "5002 - 456"},
-                    new Morada { Rua = " Rua da aaaaaaaaa", CodigoPostal = "5202 - 436"},
-                    new Morada { Rua = " Rua bbbbbbbbbbbbbbb", CodigoPostal = "5102 - 452" },
-                    new Morada { Rua = " Rua ccccccccccccccc", CodigoPostal = "5302 - 452"},
-                    new Morada { Rua = " Rua ddddddddddddd", CodigoPostal = "5122 - 412"},
-                 };
-
-            foreach (Morada m in morada)
-            {
-                context.Morada.Add(m);
-            }
-            context.SaveChanges();
-
             // ===============================================================
-            var parque = new Parque[]
+           /* var parque = new Parque[]
 
                 {
                     new Parque { NomeParque = "Boavista Park", Lotacao = 5, MoradaID = 1 },
@@ -95,25 +60,11 @@ namespace ParqueAPICentral.Data
                 context.Parque.Add(p);
             }
             context.SaveChanges();
-
+           */
             //=================================================================
-            var lugar = new Lugar[]
-
-                {
-                    new Lugar { Fila = 1, Sector = 1, Preço = 10, ParqueID = 1, RuaID =1 },
-                    new Lugar { Fila = 2, Sector = 2, Preço = 11, ParqueID = 1, RuaID =2},
-                    new Lugar { Fila = 3, Sector = 1, Preço = 10, ParqueID = 1,RuaID =3  },
-                    new Lugar { Fila = 4, Sector = 2, Preço = 11, ParqueID = 1,RuaID =4 },
-                    new Lugar { Fila = 5, Sector = 1, Preço = 10, ParqueID = 1,RuaID =3 },
-                };
-
-            foreach (Lugar l in lugar)
-            {
-                context.Lugar.Add(l);
-            }
-            context.SaveChanges();
+            
             //===========================================================================================0
-            var reserva = new Reserva[]
+          /*  var reserva = new Reserva[]
 {
             new Reserva
             {
@@ -165,7 +116,7 @@ namespace ParqueAPICentral.Data
                 context.Reserva.Add(r);
             }
             context.SaveChanges();
-
+          */
             //-----------------------------------------------------------------------------------------------------------------
 
             var fatura = new Fatura[]

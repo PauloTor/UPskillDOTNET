@@ -28,6 +28,6 @@ namespace ParqueAPICentral.Models
 
         [ForeignKey("ReservaID")]
         public long ReservaID { get; set; }
-        public Reserva Reserva { get; set; }
+        public Reserva_  reserva_ { get; set; }
     }
 }

@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ParquePrivateAPI.Controllers
 {
-    [Authorize]
+    
     [EnableCors("MyAllowSpecificOrigins")]
     [Route("api/Lugares")]
     [ApiController]
@@ -20,13 +20,14 @@ namespace ParquePrivateAPI.Controllers
     {
         private readonly ParquePrivateAPIContext _context;
 
+
         public LugaresController(ParquePrivateAPIContext context)
         {
             _context = context;
         }
 
         // GET: api/Lugares
-        [Authorize]
+       
         [EnableCors("MyAllowSpecificOrigins")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Lugar>>> GetLugar()
@@ -35,8 +36,7 @@ namespace ParquePrivateAPI.Controllers
         }
 
         // GET: api/Lugares/5
-        [Authorize]
-        [EnableCors]
+               [EnableCors]
         [HttpGet("{id}")]
         public async Task<ActionResult<Lugar>> GetLugar(long id)
         {
@@ -55,8 +55,7 @@ namespace ParquePrivateAPI.Controllers
         // PUT: api/Lugares/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [Authorize]
-        [EnableCors]
+               [EnableCors]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutLugar(long id, Lugar lugar)
         {
@@ -89,7 +88,7 @@ namespace ParquePrivateAPI.Controllers
         // POST: api/Lugares
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [Authorize]
+        
         [EnableCors]
         [HttpPost]
         public async Task<ActionResult<Lugar>> PostLugar(Lugar lugar)
@@ -101,7 +100,7 @@ namespace ParquePrivateAPI.Controllers
         }
 
         // DELETE: api/Lugares/5
-        [Authorize]
+        
         [EnableCors]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Lugar>> DeleteLugar(long id)
@@ -124,7 +123,7 @@ namespace ParquePrivateAPI.Controllers
         }
 
         // GET: api/Lugares/data1,data2 Pesquisar lugares sem reserva
-        [Authorize]
+        
         [HttpGet("{dateInicio}/{dateFim}")]
         public async Task<ActionResult<IEnumerable<Lugar>>> GetLugaresSemReserva(string dateInicio, string dateFim)
         {
@@ -144,6 +143,9 @@ namespace ParquePrivateAPI.Controllers
                                                     .Select(n => n.LugarID).ToList();
 
             var lugaresDisponiveis = await _context.Lugar.Include(n => n.Parque).Where(n => !reservasTimeFrame.Contains(n.LugarID)).ToListAsync();
+
+         
+
 
             return lugaresDisponiveis;
         }
