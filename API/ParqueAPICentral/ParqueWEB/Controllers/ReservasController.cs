@@ -79,6 +79,7 @@ namespace ParqueAPICentral.Controllers
         public async Task<ActionResult<Reserva>> CancelarReserva(long id)
         {
             var reserva = await _context.Reserva.FindAsync(id);
+
             if (reserva == null)
             {
                 return NotFound();
@@ -86,8 +87,7 @@ namespace ParqueAPICentral.Controllers
 
             _context.Reserva.Remove(reserva);
             await _context.SaveChangesAsync();
-
-            return reserva;
+            return NoContent();
         }
     }
 }
