@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ParqueAPICentral.Data;
+using ParqueAPICentral.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,14 +25,14 @@ namespace ParqueAPICentral.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes()
         {
-            return await _context.Clientes.ToListAsync();
+            return await _context.Cliente.ToListAsync();
         }
 
         // GET: api/Clientes/5  - Obter Informação de um Cliente por ID
         [HttpGet("{id}")]
         public async Task<ActionResult<Cliente>> GetCliente(long id)
         {
-            var cliente = await _context.Clientes.FindAsync(id);
+            var cliente = await _context.Cliente.FindAsync(id);
 
             if (cliente == null)
             {
@@ -73,12 +76,15 @@ namespace ParqueAPICentral.Controllers
         [HttpPost]
         public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
         {
-            _context.Clientes.Add(cliente);
+            _context.Cliente.Add(cliente);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetCliente", new { id = cliente.ClienteID }, cliente);
         }
-
-    }
+        private bool ClienteExists(long id)
+        {
+            return _context.Cliente.Any(e => e.ClienteID == id);
+        }
     }
 }
+
