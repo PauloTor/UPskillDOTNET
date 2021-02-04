@@ -18,13 +18,27 @@ namespace ParqueAPICentral.Controllers
             _context = context;
         }
 
-        // GET: api/Clientes
+        // GET: api/Clientes : Obter Informação de um Cliente
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes()
         {
             return await _context.Clientes.ToListAsync();
         }
 
-  
+        // GET: api/Clientes/5  - Obter Informação de um Cliente por ID
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Cliente>> GetCliente(long id)
+        {
+            var cliente = await _context.Clientes.FindAsync(id);
+
+            if (cliente == null)
+            {
+                return NotFound();
+            }
+
+            return cliente;
+        }
+
+
     }
 }
