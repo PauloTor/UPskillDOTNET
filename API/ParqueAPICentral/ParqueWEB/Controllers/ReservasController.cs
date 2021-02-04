@@ -39,8 +39,8 @@ namespace ParqueAPICentral.Controllers
             var dateTimeInicio = DateTime.Parse(DataInicio);
             var dateTimeFim = DateTime.Parse(DataFim);
             string BaseUrl = "https://localhost:44365/";
-            Reserva reserva;
-            var ListaLugar = new List<Lugar>();
+            ReservaDto reserva;
+            var ListaLugar = new List<LugarDto>();
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(BaseUrl);
@@ -51,7 +51,7 @@ namespace ParqueAPICentral.Controllers
                 var response = await client.GetAsync(endpoint);
                 response.EnsureSuccessStatusCode();
                 // Lugares disponiveis para criar Reserva
-                ListaLugar = await response.Content.ReadAsAsync<List<Lugar>>();
+                ListaLugar = await response.Content.ReadAsAsync<List<LugarDto>>();
                 long lugar = 0;
                 
                 if (ListaLugar.Count != 0)
@@ -62,7 +62,7 @@ namespace ParqueAPICentral.Controllers
                 }
                 var datanow = DateTime.Now;
                 //cria instancia para uma nova reserva
-                reserva = new Reserva(datanow, dateTimeInicio, dateTimeFim, lugar);
+                reserva = new ReservaDto(datanow, dateTimeInicio, dateTimeFim, lugar);
                 //Passa a reserva para formato JSON
                 StringContent reserva_ = new StringContent(JsonConvert.SerializeObject(reserva), Encoding.UTF8, "application/json");
                 string endpoint2 = BaseUrl + "API/reservas/";

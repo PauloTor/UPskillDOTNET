@@ -8,7 +8,7 @@ using ParqueAPICentral.Models;
 
 namespace ParquePrivateAPI.Models
 {
-    public class Lugar
+    public class LugarDto
     {
         public long LugarID { get; set; }
         public int Fila { get; set; }
