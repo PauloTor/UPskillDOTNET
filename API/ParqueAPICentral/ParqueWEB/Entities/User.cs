@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-﻿using System;
-=======
-﻿using IdentityServer4.Models;
 using System;
->>>>>>> ea324b603656c308964d6ef2f3fd279357191eee
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
@@ -20,11 +15,6 @@ namespace ParqueAPICentral.Entities
 
         [JsonIgnore]
         public string Password { get; set; }
-<<<<<<< HEAD
-=======
-
-        [JsonIgnore]
-        public List<RefreshToken> RefreshTokens { get; set; }
->>>>>>> ea324b603656c308964d6ef2f3fd279357191eee
     }
 }
+

@@ -1,12 +1,5 @@
-<<<<<<< HEAD
-﻿using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-=======
-﻿/*using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
->>>>>>> ea324b603656c308964d6ef2f3fd279357191eee
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -81,11 +74,4 @@ namespace ParqueAPICentral.Services
             return tokenHandler.WriteToken(token);
         }
     }
-<<<<<<< HEAD
 }
-=======
-
-
-}
-*/
->>>>>>> ea324b603656c308964d6ef2f3fd279357191eee
