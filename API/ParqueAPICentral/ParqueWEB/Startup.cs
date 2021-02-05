@@ -10,6 +10,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ParqueAPICentral.Data;
+using ParqueAPICentral.Helpers;
+using ParqueAPICentral.Services;
+
 
 namespace ParqueAPICentral
 {
@@ -26,14 +29,28 @@ namespace ParqueAPICentral
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddCors();
+            services.AddControllers();
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+
+            // configure DI for application services
+            services.AddScoped<IUserService, UserService>();
+
+
+
 
             services.AddDbContext<APICentralContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("APICentralContext")));
+
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -49,16 +66,25 @@ namespace ParqueAPICentral
 
             app.UseRouting();
 
-            app.UseCors();
+
+            app.UseCors(x => x
+              .AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader());
 
             app.UseAuthorization();
+            app.UseMiddleware<JwtMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-            });
+                endpoints.MapControllers();
+            }
+
+
+            );
         }
     }
 }

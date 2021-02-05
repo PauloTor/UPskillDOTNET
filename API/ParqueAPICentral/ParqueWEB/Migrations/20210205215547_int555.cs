@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ParqueAPICentral.Migrations
 {
-    public partial class InitialProj : Migration
+    public partial class int555 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -25,82 +25,32 @@ namespace ParqueAPICentral.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Morada",
-                columns: table => new
-                {
-                    MoradaID = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Rua = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CodigoPostal = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Morada", x => x.MoradaID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Rua",
-                columns: table => new
-                {
-                    RuaID = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    NomeRua = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CodigoPostal = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Lotacao = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Rua", x => x.RuaID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Parque",
                 columns: table => new
                 {
                     ParqueID = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NomeParque = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Lotacao = table.Column<long>(type: "bigint", nullable: false),
-                    MoradaID = table.Column<long>(type: "bigint", nullable: false)
+                    NomeParque = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Parque", x => x.ParqueID);
-                    table.ForeignKey(
-                        name: "FK_Parque_Morada_MoradaID",
-                        column: x => x.MoradaID,
-                        principalTable: "Morada",
-                        principalColumn: "MoradaID",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Lugar",
+                name: "Users",
                 columns: table => new
                 {
-                    LugarID = table.Column<long>(type: "bigint", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Fila = table.Column<int>(type: "int", nullable: false),
-                    Sector = table.Column<int>(type: "int", nullable: false),
-                    Preço = table.Column<float>(type: "real", nullable: false),
-                    ParqueID = table.Column<long>(type: "bigint", nullable: false),
-                    RuaID = table.Column<long>(type: "bigint", nullable: false)
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Username = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Lugar", x => x.LugarID);
-                    table.ForeignKey(
-                        name: "FK_Lugar_Parque_ParqueID",
-                        column: x => x.ParqueID,
-                        principalTable: "Parque",
-                        principalColumn: "ParqueID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Lugar_Rua_RuaID",
-                        column: x => x.RuaID,
-                        principalTable: "Rua",
-                        principalColumn: "RuaID",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -109,13 +59,7 @@ namespace ParqueAPICentral.Migrations
                 {
                     ReservaID = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DataReserva = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataFim = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataSaida = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ClienteID = table.Column<long>(type: "bigint", nullable: false),
-                    LugarID = table.Column<long>(type: "bigint", nullable: false),
-                    SubAlugado = table.Column<bool>(type: "bit", nullable: false)
+                    ClienteID = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -125,12 +69,6 @@ namespace ParqueAPICentral.Migrations
                         column: x => x.ClienteID,
                         principalTable: "Cliente",
                         principalColumn: "ClienteID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Reserva_Lugar_LugarID",
-                        column: x => x.LugarID,
-                        principalTable: "Lugar",
-                        principalColumn: "LugarID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -203,34 +141,14 @@ namespace ParqueAPICentral.Migrations
                 column: "ReservaID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Lugar_ParqueID",
-                table: "Lugar",
-                column: "ParqueID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Lugar_RuaID",
-                table: "Lugar",
-                column: "RuaID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Pagamento_FaturaID",
                 table: "Pagamento",
                 column: "FaturaID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Parque_MoradaID",
-                table: "Parque",
-                column: "MoradaID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Reserva_ClienteID",
                 table: "Reserva",
                 column: "ClienteID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Reserva_LugarID",
-                table: "Reserva",
-                column: "LugarID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SubAluguer_ReservaID",
@@ -244,7 +162,13 @@ namespace ParqueAPICentral.Migrations
                 name: "Pagamento");
 
             migrationBuilder.DropTable(
+                name: "Parque");
+
+            migrationBuilder.DropTable(
                 name: "SubAluguer");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Fatura");
@@ -254,18 +178,6 @@ namespace ParqueAPICentral.Migrations
 
             migrationBuilder.DropTable(
                 name: "Cliente");
-
-            migrationBuilder.DropTable(
-                name: "Lugar");
-
-            migrationBuilder.DropTable(
-                name: "Parque");
-
-            migrationBuilder.DropTable(
-                name: "Rua");
-
-            migrationBuilder.DropTable(
-                name: "Morada");
         }
     }
 }

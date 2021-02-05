@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ParqueAPICentral.Data;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace ParqueAPICentral.Controllers
 {
+    [Authorize]
     [Route("api/Clientes")]
     [ApiController]
     public class ClientesController : ControllerBase
@@ -22,6 +24,7 @@ namespace ParqueAPICentral.Controllers
         }
 
         // GET: api/Clientes : Obter Informação de um Cliente
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes()
         {
@@ -85,6 +88,7 @@ namespace ParqueAPICentral.Controllers
         {
             return _context.Cliente.Any(e => e.ClienteID == id);
         }
+
+
     }
-*/
 }

@@ -97,8 +97,6 @@ namespace ParqueAPICentral.Controllers
                 // alteral modelo tirar reservaID clienteID para a reserva
                 //var temp2 = reserva_.ClienteID;
                 
-
-
                 endpoint = BaseUrl + "api/faturas/" + temp;
                 var response2 = await client.GetAsync(endpoint);
                 ListaFaturas = await response2.Content.ReadAsAsync<List<Fatura>>();
@@ -106,16 +104,12 @@ namespace ParqueAPICentral.Controllers
                 var reserva2 = ListaFaturas.FirstOrDefault();
                 var temp_ = reserva2.PrecoFatura;
 
-
-
                 var p = _context.Cliente.FindAsync(temp2);
-
-
 
                 var response3 = await client.GetAsync(endpoint);
                 ListaClientes = await response3.Content.ReadAsAsync<List<Cliente>>();
                 var reserva4 = ListaClientes.FirstOrDefault();
-                var cliente_ = reserva4.ClienteID
+                var cliente_ = reserva4.ClienteID;
 
             }
 

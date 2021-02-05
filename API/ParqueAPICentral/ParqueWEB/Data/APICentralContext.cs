@@ -28,7 +28,7 @@ namespace ParqueAPICentral.Data
 
         public DbSet<ParqueAPICentral.Models.Pagamento> Pagamento { get; set; }
 
-        
+        public DbSet<ParqueAPICentral.Entities.User> Users { get; set; }
 
         public DbSet<ParqueAPICentral.Models.Fatura> Fatura { get; set; }
         public object Clientes { get; internal set; }
