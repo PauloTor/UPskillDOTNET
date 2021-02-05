@@ -78,8 +78,17 @@ namespace ParqueAPICentral.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Reserva>> CancelarReserva(long id)
         {
+
             var reserva = await _context.Reserva.FindAsync(id);
+
+            if (reserva == null)
+            {
+                return NotFound();
+            }
+
+            //string PublicoBaseUrl = "https://localhost:44363/";
             string BaseUrl = "https://localhost:44365/";
+
             var ListaReserva = new List<Reserva>();
             var ListaFaturas = new List<Fatura>();
             var ListaClientes = new List<Cliente>();
@@ -90,15 +99,12 @@ namespace ParqueAPICentral.Controllers
                 var response = await client.GetAsync(endpoint);
                 ListaReserva = await response.Content.ReadAsAsync<List<Reserva>>();
 
-
                 var reserva_ = ListaReserva.FirstOrDefault();
                 var temp = reserva_.ReservaID;
                 var temp2 = reserva_.ClienteID;
                 // alteral modelo tirar reservaID clienteID para a reserva
                 //var temp2 = reserva_.ClienteID;
-                
-
-
+              
                 endpoint = BaseUrl + "api/faturas/" + temp;
                 var response2 = await client.GetAsync(endpoint);
                 ListaFaturas = await response2.Content.ReadAsAsync<List<Fatura>>();
@@ -106,24 +112,13 @@ namespace ParqueAPICentral.Controllers
                 var reserva2 = ListaFaturas.FirstOrDefault();
                 var temp_ = reserva2.PrecoFatura;
 
-
-
                 var p = _context.Cliente.FindAsync(temp2);
-
-
 
                 var response3 = await client.GetAsync(endpoint);
                 ListaClientes = await response3.Content.ReadAsAsync<List<Cliente>>();
                 var reserva4 = ListaClientes.FirstOrDefault();
-                var cliente_ = reserva4.ClienteID
+                var cliente_ = reserva4.ClienteID;
 
-            }
-
-
-
-            if (reserva == null)
-            {
-                return NotFound();
             }
 
             await _context.SaveChangesAsync();
@@ -131,10 +126,4 @@ namespace ParqueAPICentral.Controllers
         }
     }
 }
-
-
-
-
-
-
 
