@@ -79,6 +79,14 @@ namespace ParqueAPICentral.Controllers
         public async Task<ActionResult<Reserva>> CancelarReserva(long id)
         {
             var reserva = await _context.Reserva.FindAsync(id);
+            string BaseUrl = "https://localhost:44365/";
+            
+            using (HttpClient cliente = new HttpClient())
+                      
+            {
+                string endpoint = BaseUrl + "api/reservas/" + id;
+                var response = await cliente.DeleteAsync(endpoint);
+            }
 
             if (reserva == null)
             {
@@ -87,7 +95,7 @@ namespace ParqueAPICentral.Controllers
 
             _context.Reserva.Remove(reserva);
             await _context.SaveChangesAsync();
-            return NoContent();
+            return NoContent();                   
         }
     }
 }
