@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ParqueAPICentral.Controllers
 {
-   /*    [Route("api/Clientes")]
+    [Route("api/Clientes")]
     [ApiController]
     public class ClientesController : ControllerBase
     {
@@ -59,7 +59,7 @@ namespace ParqueAPICentral.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ClienteExist(id))
+                if (!ClienteExists(id))
                 {
                     return NotFound();
                 }
@@ -88,4 +88,3 @@ namespace ParqueAPICentral.Controllers
     }
 */
 }
-
