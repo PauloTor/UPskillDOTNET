@@ -40,7 +40,6 @@ namespace ParqueAPICentral.Controllers
             var dateTimeFim = DateTime.Parse(DataFim);
             string BaseUrl = "https://localhost:44365/";
             ReservaDto reserva;
-            var ListaLugar = new List<LugarDto>();
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(BaseUrl);
@@ -51,7 +50,7 @@ namespace ParqueAPICentral.Controllers
                 var response = await client.GetAsync(endpoint);
                 response.EnsureSuccessStatusCode();
                 // Lugares disponiveis para criar Reserva
-                ListaLugar = await response.Content.ReadAsAsync<List<LugarDto>>();
+                List<LugarDto> ListaLugar = await response.Content.ReadAsAsync<List<LugarDto>>();
                 long lugar = 0;
 
                 if (ListaLugar.Count != 0)
@@ -75,17 +74,14 @@ namespace ParqueAPICentral.Controllers
         // DELETE: api/reservas/id - Cancelar reserva
 
         [EnableCors]
-        [HttpDelete("{id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Reserva>> CancelarReserva(long id)
         {
             var reserva = await _context.Reserva.FindAsync(id);
-            string BaseUrl = "https://localhost:44365/";
-            var ListaReserva = new List<Reserva>();
-            var ListaFaturas = new List<Fatura>();
-            var ListaClientes = new List<Cliente>();
-            using (HttpClient client = new HttpClient())
 
+            if (reserva == null)
             {
+
                 string endpoint = BaseUrl + "api/reservas/" + id;
                 var response = await client.GetAsync(endpoint);
                 ListaReserva = await response.Content.ReadAsAsync<List<Reserva>>();
@@ -110,14 +106,34 @@ namespace ParqueAPICentral.Controllers
                 ListaClientes = await response3.Content.ReadAsAsync<List<Cliente>>();
                 var reserva4 = ListaClientes.FirstOrDefault();
                 var cliente_ = reserva4.ClienteID;
-
+=======
+                return NotFound();
             }
 
+            //string PublicoBaseUrl = "https://localhost:44363/";
+            string BaseUrl = "https://localhost:44365/";
 
-
-            if (reserva == null)
+            using (HttpClient client = new HttpClient())
             {
-                return NotFound();
+                string endpoint = BaseUrl + "api/reservas/" + id;
+                var reservaRes = await client.GetAsync(endpoint);
+                var reserva_ = await reservaRes.Content.ReadAsAsync<Reserva>();
+
+                var reservaById = reserva_.ReservaID;
+
+
+
+                var reservaByCliente = _context.Reserva.Find(reservaById);
+                //var reservaDeCliente = reservaByCliente.ClienteID
+              
+                var fatura_ = _context.Fatura.Find(reservaById); ;
+>>>>>>> ea324b603656c308964d6ef2f3fd279357191eee
+
+                var faturaPreco = fatura_.PrecoFatura;
+
+                var res = _context.Cliente.Find(reservaByCliente);
+
+
             }
 
             await _context.SaveChangesAsync();
@@ -125,10 +141,4 @@ namespace ParqueAPICentral.Controllers
         }
     }
 }
-
-
-
-
-
-
 

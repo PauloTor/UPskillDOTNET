@@ -11,7 +11,7 @@ namespace ParqueAPICentral.Models
     {
         public long FaturaID { get; set; }
 
-        [DataType(DataType.Date)]
+
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DataFatura { get; set; }
 
@@ -21,5 +21,11 @@ namespace ParqueAPICentral.Models
         public long ReservaID { get; set; }
         public Reserva Reserva { get; set; }
 
+        public Fatura(DateTime dataFatura, float precoFatura, long reservaID)
+        {
+            DataFatura = dataFatura;
+            PrecoFatura = precoFatura;
+            ReservaID = reservaID;
+        }
     }
 }
