@@ -86,5 +86,4 @@ namespace ParqueAPICentral.Controllers
             return _context.Cliente.Any(e => e.ClienteID == id);
         }
     }
-*/
 }
