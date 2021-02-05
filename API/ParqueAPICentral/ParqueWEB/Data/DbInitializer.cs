@@ -45,94 +45,96 @@ namespace ParqueAPICentral.Data
             // ===============================================================
 
             // ===============================================================
-           /* var parque = new Parque[]
+            /* var parque = new Parque[]
 
-                {
-                    new Parque { NomeParque = "Boavista Park", Lotacao = 5, MoradaID = 1 },
-                    new Parque { NomeParque = "Lisboa Park", Lotacao = 30, MoradaID = 2},
-                    new Parque { NomeParque = "Aveiro Park", Lotacao = 100, MoradaID = 3},
-                    new Parque { NomeParque = "Gaia Park", Lotacao = 10, MoradaID = 4},
-                    new Parque { NomeParque = "Porto Park", Lotacao = 6, MoradaID = 5}
-                 };
+                 {
+                     new Parque { NomeParque = "Boavista Park", Lotacao = 5, MoradaID = 1 },
+                     new Parque { NomeParque = "Lisboa Park", Lotacao = 30, MoradaID = 2},
+                     new Parque { NomeParque = "Aveiro Park", Lotacao = 100, MoradaID = 3},
+                     new Parque { NomeParque = "Gaia Park", Lotacao = 10, MoradaID = 4},
+                     new Parque { NomeParque = "Porto Park", Lotacao = 6, MoradaID = 5}
+                  };
 
-            foreach (Parque p in parque)
-            {
-                context.Parque.Add(p);
-            }
-            context.SaveChanges();
-           */
+             foreach (Parque p in parque)
+             {
+                 context.Parque.Add(p);
+             }
+             context.SaveChanges();
+            */
             //=================================================================
-            
+
             //===========================================================================================0
-          /*  var reserva = new Reserva[]
-{
-            new Reserva
-            {
-                DataReserva = DateTime.Parse("2020-01-01 15:00:00"),
-                DataInicio = DateTime.Parse("2020-01-05 15:00:00"),
-                DataFim = DateTime.Parse("2020-01-05 18:00:00"),
-                DataSaida = DateTime.Parse("2020-01-05 18:00:00"),
-                LugarID = 2,
-                ClienteID = 1,
-                SubAlugado = false
-                
-            },
+            /*  var reserva = new Reserva[]
+  {
+              new Reserva
+              {
+                  DataReserva = DateTime.Parse("2020-01-01 15:00:00"),
+                  DataInicio = DateTime.Parse("2020-01-05 15:00:00"),
+                  DataFim = DateTime.Parse("2020-01-05 18:00:00"),
+                  DataSaida = DateTime.Parse("2020-01-05 18:00:00"),
+                  LugarID = 2,
+                  ClienteID = 1,
+                  SubAlugado = false
 
-            new Reserva
-            {
-                DataReserva = DateTime.Parse("2020-01-04 11:00:00"),
-                DataInicio = DateTime.Parse("2020-01-04 18:00:00"),
-                DataFim = DateTime.Parse("2020-01-04 20:00:00"),
-                DataSaida = DateTime.Parse("2020-01-04 21:00:00"),
-                LugarID = 3,
-                ClienteID = 2,
-                SubAlugado = false
-            },
+              },
 
-            new Reserva
-            {
-                DataReserva = DateTime.Parse("2020-01-11 09:30:00"),
-                DataInicio = DateTime.Parse("2020-01-13 15:00:00"),
-                DataFim = DateTime.Parse("2020-01-14 14:00:00"),
-                DataSaida = DateTime.Parse("2020-01-14 14:00:00"),
-                LugarID = 1,
-                ClienteID = 3,
-                SubAlugado = false
-            },
+              new Reserva
+              {
+                  DataReserva = DateTime.Parse("2020-01-04 11:00:00"),
+                  DataInicio = DateTime.Parse("2020-01-04 18:00:00"),
+                  DataFim = DateTime.Parse("2020-01-04 20:00:00"),
+                  DataSaida = DateTime.Parse("2020-01-04 21:00:00"),
+                  LugarID = 3,
+                  ClienteID = 2,
+                  SubAlugado = false
+              },
 
-            new Reserva
-            {
-                DataReserva = DateTime.Parse("2020-01-18 15:00:00"),
-                DataInicio = DateTime.Parse("2020-02-03 08:00:00"),
-                DataFim = DateTime.Parse("2020-02-03 19:00:00"),
-                DataSaida = DateTime.Parse("2020-02-03 19:00:00"),
-                LugarID = 3,
-                ClienteID = 4,
-                SubAlugado = false
-            }
-        };
-            foreach (Reserva r in reserva)
-            {
-                context.Reserva.Add(r);
-            }
-            context.SaveChanges();
-          */
+              new Reserva
+              {
+                  DataReserva = DateTime.Parse("2020-01-11 09:30:00"),
+                  DataInicio = DateTime.Parse("2020-01-13 15:00:00"),
+                  DataFim = DateTime.Parse("2020-01-14 14:00:00"),
+                  DataSaida = DateTime.Parse("2020-01-14 14:00:00"),
+                  LugarID = 1,
+                  ClienteID = 3,
+                  SubAlugado = false
+              },
+
+              new Reserva
+              {
+                  DataReserva = DateTime.Parse("2020-01-18 15:00:00"),
+                  DataInicio = DateTime.Parse("2020-02-03 08:00:00"),
+                  DataFim = DateTime.Parse("2020-02-03 19:00:00"),
+                  DataSaida = DateTime.Parse("2020-02-03 19:00:00"),
+                  LugarID = 3,
+                  ClienteID = 4,
+                  SubAlugado = false
+              }
+          };
+              foreach (Reserva r in reserva)
+              {
+                  context.Reserva.Add(r);
+              }
+              context.SaveChanges();
+            */
             //-----------------------------------------------------------------------------------------------------------------
 
-            var fatura = new Fatura[]
+            //Este Seed começou a dar erro quando foi colocado o POST FaturaByReservaID
 
-                {
-                    new Fatura { DataFatura = DateTime.Parse("2020-01-05 18:00:00"), PrecoFatura = 33, ReservaID = 1 },
-                    new Fatura { DataFatura = DateTime.Parse("2020-01-04 21:00:00"), PrecoFatura = 30, ReservaID = 2 },
-                    new Fatura { DataFatura = DateTime.Parse("2020-01-14 15:00:00"), PrecoFatura = 230, ReservaID = 3 },
-                    new Fatura { DataFatura = DateTime.Parse("2020-02-03 19:00:00"), PrecoFatura = 110, ReservaID = 4 }
-                };
+            //var fatura = new Fatura[]
 
-            foreach (Fatura f in fatura)
-            {
-                context.Fatura.Add(f);
-            }
-            context.SaveChanges();
+            //    {
+            //        new Fatura { DataFatura = DateTime.Parse("2020-01-05 18:00:00"), PrecoFatura = 33, ReservaID = 1 },
+            //        new Fatura { DataFatura = DateTime.Parse("2020-01-04 21:00:00"), PrecoFatura = 30, ReservaID = 2 },
+            //        new Fatura { DataFatura = DateTime.Parse("2020-01-14 15:00:00"), PrecoFatura = 230, ReservaID = 3 },
+            //        new Fatura { DataFatura = DateTime.Parse("2020-02-03 19:00:00"), PrecoFatura = 110, ReservaID = 4 }
+            //    };
+
+            //foreach (Fatura f in fatura)
+            //{
+            //    context.Fatura.Add(f);
+            //}
+            //context.SaveChanges();
 
             //=================================================================
 
