@@ -74,7 +74,7 @@ namespace ParqueAPICentral.Controllers
         // DELETE: api/reservas/id - Cancelar reserva
 
         [EnableCors]
-        [HttpDelete("{id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Reserva>> CancelarReserva(long id)
         {
             var reserva = await _context.Reserva.FindAsync(id);
@@ -91,27 +91,22 @@ namespace ParqueAPICentral.Controllers
             {
                 string endpoint = BaseUrl + "api/reservas/" + id;
                 var reservaRes = await client.GetAsync(endpoint);
-                List<Reserva> ListaReserva = await reservaRes.Content.ReadAsAsync<List<Reserva>>();
+                var reserva_ = await reservaRes.Content.ReadAsAsync<Reserva>();
 
-                var reserva_ = ListaReserva.FirstOrDefault();
                 var reservaById = reserva_.ReservaID;
-                var reservaByCliente = reserva_.ClienteID;
-              
-                endpoint = BaseUrl + "api/faturas/" + reservaById;
-                var faturaRes = await client.GetAsync(endpoint);
-                List<Fatura> ListaFaturas = await faturaRes.Content.ReadAsAsync<List<Fatura>>();
 
-                var fatura_ = ListaFaturas.FirstOrDefault();
+
+
+                var reservaByCliente = _context.Reserva.Find(reservaById);
+                //var reservaDeCliente = reservaByCliente.ClienteID
+              
+                var fatura_ = _context.Fatura.Find(reservaById); ;
+
                 var faturaPreco = fatura_.PrecoFatura;
 
-                var res = _context.Cliente.FindAsync(reservaByCliente);
+                var res = _context.Cliente.Find(reservaByCliente);
 
-                var response3 = await client.GetAsync(endpoint);
-                List<Cliente> ListaClientes = await response3.Content.ReadAsAsync<List<Cliente>>();
-                var reserva4 = ListaClientes.FirstOrDefault();
-                var cliente_ = reserva4.ClienteID;
 
-                reservaRes = await client.DeleteAsync(endpoint);
             }
 
             await _context.SaveChangesAsync();
