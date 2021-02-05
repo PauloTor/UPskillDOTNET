@@ -31,5 +31,6 @@ namespace ParqueAPICentral.Data
         
 
         public DbSet<ParqueAPICentral.Models.Fatura> Fatura { get; set; }
+        public object Clientes { get; internal set; }
     }
 }
