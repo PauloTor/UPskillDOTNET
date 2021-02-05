@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ParqueAPICentral.Controllers
 {
-/*    [Route("api/Clientes")]
+   /*    [Route("api/Clientes")]
     [ApiController]
     public class ClientesController : ControllerBase
     {
@@ -86,5 +86,6 @@ namespace ParqueAPICentral.Controllers
             return _context.Cliente.Any(e => e.ClienteID == id);
         }
     }
+*/
 }
 
