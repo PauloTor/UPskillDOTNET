@@ -81,8 +81,10 @@ namespace ParqueAPICentral.Controllers
 
             return CreatedAtAction("GetCliente", new { id = cliente.ClienteID }, cliente);
         }
-
+        private bool ClienteExists(long id)
+        {
+            return _context.Cliente.Any(e => e.ClienteID == id);
+        }
     }
-*/
 }
 

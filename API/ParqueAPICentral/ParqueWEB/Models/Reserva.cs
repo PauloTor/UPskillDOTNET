@@ -17,8 +17,6 @@ namespace ParqueAPICentral.Models
         public long ClienteID { get; set; }
         public Cliente Cliente { get; set; }
 
-        public bool SubAlugado { get; set; }
-
         public static implicit operator Reserva(ReservaDto v)
         {
             throw new NotImplementedException();
