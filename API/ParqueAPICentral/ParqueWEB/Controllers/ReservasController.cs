@@ -40,7 +40,6 @@ namespace ParqueAPICentral.Controllers
             var dateTimeFim = DateTime.Parse(DataFim);
             string BaseUrl = "https://localhost:44365/";
             ReservaDto reserva;
-            var ListaLugar = new List<LugarDto>();
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(BaseUrl);
@@ -51,7 +50,7 @@ namespace ParqueAPICentral.Controllers
                 var response = await client.GetAsync(endpoint);
                 response.EnsureSuccessStatusCode();
                 // Lugares disponiveis para criar Reserva
-                ListaLugar = await response.Content.ReadAsAsync<List<LugarDto>>();
+                List<LugarDto> ListaLugar = await response.Content.ReadAsAsync<List<LugarDto>>();
                 long lugar = 0;
 
                 if (ListaLugar.Count != 0)
@@ -79,51 +78,40 @@ namespace ParqueAPICentral.Controllers
         public async Task<ActionResult<Reserva>> CancelarReserva(long id)
         {
             var reserva = await _context.Reserva.FindAsync(id);
-            string BaseUrl = "https://localhost:44365/";
-            var ListaReserva = new List<Reserva>();
-            var ListaFaturas = new List<Fatura>();
-            var ListaClientes = new List<Cliente>();
-            using (HttpClient client = new HttpClient())
-
-            {
-                string endpoint = BaseUrl + "api/reservas/" + id;
-                var response = await client.GetAsync(endpoint);
-                ListaReserva = await response.Content.ReadAsAsync<List<Reserva>>();
-
-
-                var reserva_ = ListaReserva.FirstOrDefault();
-                var temp = reserva_.ReservaID;
-                var temp2 = reserva_.ClienteID;
-                // alteral modelo tirar reservaID clienteID para a reserva
-                //var temp2 = reserva_.ClienteID;
-                
-
-
-                endpoint = BaseUrl + "api/faturas/" + temp;
-                var response2 = await client.GetAsync(endpoint);
-                ListaFaturas = await response2.Content.ReadAsAsync<List<Fatura>>();
-
-                var reserva2 = ListaFaturas.FirstOrDefault();
-                var temp_ = reserva2.PrecoFatura;
-
-
-
-                var p = _context.Cliente.FindAsync(temp2);
-
-
-
-                var response3 = await client.GetAsync(endpoint);
-                ListaClientes = await response3.Content.ReadAsAsync<List<Cliente>>();
-                var reserva4 = ListaClientes.FirstOrDefault();
-                var cliente_ = reserva4.ClienteID
-
-            }
-
-
 
             if (reserva == null)
             {
                 return NotFound();
+            }
+
+            //string PublicoBaseUrl = "https://localhost:44363/";
+            string BaseUrl = "https://localhost:44365/";
+
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = BaseUrl + "api/reservas/" + id;
+                var reservaRes = await client.GetAsync(endpoint);
+                List<Reserva> ListaReserva = await reservaRes.Content.ReadAsAsync<List<Reserva>>();
+
+                var reserva_ = ListaReserva.FirstOrDefault();
+                var reservaById = reserva_.ReservaID;
+                var reservaByCliente = reserva_.ClienteID;
+              
+                endpoint = BaseUrl + "api/faturas/" + reservaById;
+                var faturaRes = await client.GetAsync(endpoint);
+                List<Fatura> ListaFaturas = await faturaRes.Content.ReadAsAsync<List<Fatura>>();
+
+                var fatura_ = ListaFaturas.FirstOrDefault();
+                var faturaPreco = fatura_.PrecoFatura;
+
+                var res = _context.Cliente.FindAsync(reservaByCliente);
+
+                var response3 = await client.GetAsync(endpoint);
+                List<Cliente> ListaClientes = await response3.Content.ReadAsAsync<List<Cliente>>();
+                var reserva4 = ListaClientes.FirstOrDefault();
+                var cliente_ = reserva4.ClienteID;
+
+                reservaRes = await client.DeleteAsync(endpoint);
             }
 
             await _context.SaveChangesAsync();
@@ -131,10 +119,4 @@ namespace ParqueAPICentral.Controllers
         }
     }
 }
-
-
-
-
-
-
 
