@@ -72,7 +72,7 @@ namespace ParqueAPICentral.Controllers
             return NoContent();
         }
 
-        // DELETE: api/reservas/id - Cancelar reserva, nao acabado, em fase de experiencia
+        // DELETE: api/reservas/id - Cancelar reserva
 
         [EnableCors]
         [HttpDelete("{id}")]
@@ -93,7 +93,6 @@ namespace ParqueAPICentral.Controllers
                 return NotFound();
             }
 
-            _context.Reserva.Remove(reserva);
             await _context.SaveChangesAsync();
             return NoContent();                   
         }
