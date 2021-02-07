@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace ParquePrivateAPI.Controllers
 {
-    [Authorize]
+    
     [ApiController]
     [Route("API/Users")]
     public class UsersController : ControllerBase

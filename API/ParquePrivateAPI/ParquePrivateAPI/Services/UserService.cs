@@ -42,7 +42,7 @@ namespace ParquePrivateAPI.Services
 
         public AuthenticateResponse Authenticate(AuthenticateRequest model, string ipAddress)
         {
-
+            // Pesquisa model.username e model.password na lista de usuarios
             var user = _context.Users.FirstOrDefault(x => x.Username == model.Username && x.Password == model.Password);
 
             // return null if user not found

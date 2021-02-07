@@ -3,11 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ParqueAPICentral.Migrations
 {
-<<<<<<< HEAD:API/ParqueAPICentral/ParqueWEB/Migrations/20210205215547_int555.cs
-    public partial class int555 : Migration
-=======
-    public partial class numero_uno : Migration
->>>>>>> ea324b603656c308964d6ef2f3fd279357191eee:API/ParqueAPICentral/ParqueWEB/Migrations/20210205165844_numero_uno.cs
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -39,7 +35,6 @@ namespace ParqueAPICentral.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Parque", x => x.ParqueID);
-<<<<<<< HEAD:API/ParqueAPICentral/ParqueWEB/Migrations/20210205215547_int555.cs
                 });
 
             migrationBuilder.CreateTable(
@@ -56,8 +51,6 @@ namespace ParqueAPICentral.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
-=======
->>>>>>> ea324b603656c308964d6ef2f3fd279357191eee:API/ParqueAPICentral/ParqueWEB/Migrations/20210205165844_numero_uno.cs
                 });
 
             migrationBuilder.CreateTable(
@@ -170,7 +163,6 @@ namespace ParqueAPICentral.Migrations
 
             migrationBuilder.DropTable(
                 name: "Parque");
-<<<<<<< HEAD:API/ParqueAPICentral/ParqueWEB/Migrations/20210205215547_int555.cs
 
             migrationBuilder.DropTable(
                 name: "SubAluguer");
@@ -185,19 +177,6 @@ namespace ParqueAPICentral.Migrations
                 name: "Reserva");
 
             migrationBuilder.DropTable(
-=======
-
-            migrationBuilder.DropTable(
-                name: "SubAluguer");
-
-            migrationBuilder.DropTable(
-                name: "Fatura");
-
-            migrationBuilder.DropTable(
-                name: "Reserva");
-
-            migrationBuilder.DropTable(
->>>>>>> ea324b603656c308964d6ef2f3fd279357191eee:API/ParqueAPICentral/ParqueWEB/Migrations/20210205165844_numero_uno.cs
                 name: "Cliente");
         }
     }

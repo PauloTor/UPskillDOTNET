@@ -1,11 +1,12 @@
-﻿using System;
+﻿using ParqueAPICentral.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ParqueAPICentral.Models
 {
-    public class Cliente
+    public class Cliente : User
     {
         public long ClienteID { get; set; }
 

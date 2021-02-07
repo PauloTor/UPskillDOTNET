@@ -10,13 +10,8 @@ using ParqueAPICentral.Data;
 namespace ParqueAPICentral.Migrations
 {
     [DbContext(typeof(APICentralContext))]
-<<<<<<< HEAD:API/ParqueAPICentral/ParqueWEB/Migrations/20210205215547_int555.Designer.cs
-    [Migration("20210205215547_int555")]
-    partial class int555
-=======
-    [Migration("20210205165844_numero_uno")]
-    partial class numero_uno
->>>>>>> ea324b603656c308964d6ef2f3fd279357191eee:API/ParqueAPICentral/ParqueWEB/Migrations/20210205165844_numero_uno.Designer.cs
+    [Migration("20210206140855_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

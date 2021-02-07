@@ -21,5 +21,13 @@ namespace ParqueAPICentral.Models
         {
             throw new NotImplementedException();
         }
+
+        public Reserva( long reservaid, long clienteid)
+        {
+            ReservaID = reservaid;
+            ClienteID = clienteid;
+            
+        }
+
     }
 }

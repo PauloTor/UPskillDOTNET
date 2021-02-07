@@ -14,111 +14,120 @@ using System.Net.Http.Headers;
 using ParquePrivateAPI.Models;
 using Newtonsoft.Json;
 using System.Text;
+using ParqueAPICentral.Entities;
+using SafetyTourism.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace ParqueAPICentral.Controllers
 {
-
-
-
     [EnableCors("MyAllowSpecificOrigins")]
     [Route("api/Reservas")]
     [ApiController]
     public class ReservasController : ControllerBase
     {
         private readonly APICentralContext _context;
+        private readonly IConfiguration _configure;
+        private readonly string apiBaseUrl;
 
-        public ReservasController(APICentralContext context)
+
+        public ReservasController(APICentralContext context, IConfiguration configuration)
         {
             _context = context;
+            _configure = configuration;
+            apiBaseUrl = _configure.GetValue<string>("WebAPIPrivateBaseUrl");
+        }
+       
+        [EnableCors]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ReservaDto>>> GetReservas()
+        {
+            var ListaReservas = new List<ReservaDto>();
+            using (var client = new HttpClient())
+            {
+                UserInfo user = new UserInfo();
+                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                var responseLogin = await client.PostAsync(apiBaseUrl + "users/authenticate", contentUser);
+                dynamic tokenresponsecontent = await responseLogin.Content.ReadAsAsync<object>();
+                string rtoken = tokenresponsecontent.jwtToken;
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", rtoken);
+                // Route para Lugar por datas
+                string endpoint = apiBaseUrl + "Reservas/";
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                ListaReservas = await response.Content.ReadAsAsync<List<ReservaDto>>();
+            }
+            return ListaReservas;
         }
 
         [EnableCors]
-        [HttpGet("{DataInicio}/{DataFim}")]
-        public async Task<ActionResult<IEnumerable<Reserva>>> PostReservaByData(String DataInicio, String DataFim)
+        [HttpGet("{DataInicio}/{DataFim}/{Cliente}")]
+        public async Task<ActionResult<IEnumerable<Reserva>>> PostReservaByData(String DataInicio, String DataFim, long ClienteID)
         {
             var dateTimeInicio = DateTime.Parse(DataInicio);
             var dateTimeFim = DateTime.Parse(DataFim);
-            string BaseUrl = "https://localhost:44365/";
             ReservaDto reserva;
+            
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(BaseUrl);
-                client.DefaultRequestHeaders.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var cliente = await _context.Cliente.FindAsync(ClienteID);
+                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(cliente), Encoding.UTF8, "application/json");
+                var responseLogin = await client.PostAsync(apiBaseUrl + "users/authenticate", contentUser);
+                dynamic tokenresponsecontent = await responseLogin.Content.ReadAsAsync<object>();
+                string rtoken = tokenresponsecontent.jwtToken;
+
                 // Route para Lugar por datas
-                string endpoint = BaseUrl + "api/Lugares/" + DataInicio + "/" + DataFim;
+                string endpoint = apiBaseUrl + "Lugares/" + DataInicio + "/" + DataFim;
                 var response = await client.GetAsync(endpoint);
                 response.EnsureSuccessStatusCode();
                 // Lugares disponiveis para criar Reserva
                 List<LugarDto> ListaLugar = await response.Content.ReadAsAsync<List<LugarDto>>();
                 long lugar = 0;
-
                 if (ListaLugar.Count != 0)
                 {
-                    // Pega no primeiro da Lista
+                 // Pega no primeiro da Lista
                     var Primeiro = ListaLugar.FirstOrDefault();
                     lugar = Primeiro.LugarID;
                 }
                 var datanow = DateTime.Now;
-                //cria instancia para uma nova reserva
+                //Nova reserva
                 reserva = new ReservaDto(datanow, dateTimeInicio, dateTimeFim, lugar);
                 //Passa a reserva para formato JSON
                 StringContent reserva_ = new StringContent(JsonConvert.SerializeObject(reserva), Encoding.UTF8, "application/json");
-                string endpoint2 = BaseUrl + "API/reservas/";
+                string endpoint2 = apiBaseUrl + "reservas/";
                 // Post de uma nova reserva 
                 var response2 = await client.PostAsync(endpoint2, reserva_);
+                var reserva1 = new Reserva(reserva.ReservaID, ClienteID);
+                _context.Reserva.Add(reserva1);
+                await _context.SaveChangesAsync();
             }
+
             return NoContent();
         }
-
         // DELETE: api/reservas/id - Cancelar reserva
-
-/*        [EnableCors]
+        [EnableCors]
         [HttpGet("{id}")]
         public async Task<ActionResult<Reserva>> CancelarReserva(long id)
         {
             var reserva = await _context.Reserva.FindAsync(id);
-           // public async Task<ActionResult<Reserva>> CancelarReserva(long id)
-        {
-            string endpoint = BaseUrl + "api/reservas/" + id;
-            var reservaRes = await client.GetAsync(endpoint);
-            List<Reserva> ListaReserva = await reservaRes.Content.ReadAsAsync<List<Reserva>>();
-            var reserva_ = await reservaRes.Content.ReadAsAsync<Reserva>();
-
-            var reserva_ = ListaReserva.FirstOrDefault();
-            var reservaById = reserva_.ReservaID;
-            var reservaByCliente = reserva_.ClienteID;
-
-
-
-            var reservaByCliente = _context.Reserva.Find(reservaById);
-            //var reservaDeCliente = reservaByCliente.ClienteID
-
-            endpoint = BaseUrl + "api/faturas/" + reservaById;
-            var faturaRes = await client.GetAsync(endpoint);
-            List<Fatura> ListaFaturas = await faturaRes.Content.ReadAsAsync<List<Fatura>>();
-            var fatura_ = _context.Fatura.Find(reservaById); ;
-
-            var fatura_ = ListaFaturas.FirstOrDefault();
-            var faturaPreco = fatura_.PrecoFatura;
-
-            var res = _context.Cliente.FindAsync(reservaByCliente);
-            var res = _context.Cliente.Find(reservaByCliente);
-
-            var response3 = await client.GetAsync(endpoint);
-            List<Cliente> ListaClientes = await response3.Content.ReadAsAsync<List<Cliente>>();
-            var reserva4 = ListaClientes.FirstOrDefault();
-            var cliente_ = reserva4.ClienteID;
-
-            reservaRes = await client.DeleteAsync(endpoint);
-        }
-
-        await _context.SaveChangesAsync();
+            if (reserva == null)
+            {
+                return NotFound();
+            }
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = apiBaseUrl + "reservas/" + id;
+                var reservaRes = await client.GetAsync(endpoint);
+                var reserva_ = await reservaRes.Content.ReadAsAsync<Reserva>();
+                var reservaById = reserva_.ReservaID;
+                var reservaByCliente = _context.Reserva.Find(reservaById);
+                //var reservaDeCliente = reservaByCliente.ClienteID
+                var fatura_ = _context.Fatura.Find(reservaById); ;
+                var faturaPreco = fatura_.PrecoFatura;
+                var res = _context.Cliente.Find(reservaByCliente);
+            }
+            await _context.SaveChangesAsync();
             return NoContent();
         }
-    
-        */
-        
-        }
+    }
 }
 
