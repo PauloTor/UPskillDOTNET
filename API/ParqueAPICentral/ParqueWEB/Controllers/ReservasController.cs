@@ -118,7 +118,7 @@ namespace ParqueAPICentral.Controllers
                              
                 var reservaRes = await client.GetAsync(endpoint);
                 
-                var reserva_ = await reservaRes.Content.ReadAsAsync<Reserva>();
+                var reserva_ = await reservaRes.Content.ReadAsAsync<Reserva_>();
                
                 var reservaById = reserva_.ReservaID;
                 
