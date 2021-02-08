@@ -6,10 +6,10 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ParqueAPICentral.Models;
 
-namespace ParquePrivateAPI.Models
+namespace ParqueAPICentral.Models
 {
     public class LugarDto
-    {
+    {   
         public long LugarID { get; set; }
         public int Fila { get; set; }
         public int Sector { get; set; }

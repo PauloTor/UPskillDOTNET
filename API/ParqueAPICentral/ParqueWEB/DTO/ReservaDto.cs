@@ -4,13 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using ParquePrivateAPI.Models;
+using ParqueAPICentral.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace ParqueAPICentral.Models
 {
     public class ReservaDto
     {
-        public long ReservaID { get; set; }
+        [Key]
+        public long ReservaDTOID { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]

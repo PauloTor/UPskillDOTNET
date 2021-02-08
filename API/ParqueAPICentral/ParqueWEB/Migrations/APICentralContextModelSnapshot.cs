@@ -21,10 +21,14 @@ namespace ParqueAPICentral.Migrations
 
             modelBuilder.Entity("ParqueAPICentral.Entities.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("bigint")
                         .UseIdentityColumn();
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
@@ -41,33 +45,8 @@ namespace ParqueAPICentral.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
 
-            modelBuilder.Entity("ParqueAPICentral.Models.Cliente", b =>
-                {
-                    b.Property<long>("ClienteID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
-
-                    b.Property<float>("Credito")
-                        .HasColumnType("real");
-
-                    b.Property<string>("EmailCliente")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MetodoPagamento")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NifCliente")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NomeCliente")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ClienteID");
-
-                    b.ToTable("Cliente");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("User");
                 });
 
             modelBuilder.Entity("ParqueAPICentral.Models.Fatura", b =>
@@ -169,6 +148,31 @@ namespace ParqueAPICentral.Migrations
                     b.HasIndex("ReservaID");
 
                     b.ToTable("SubAluguer");
+                });
+
+            modelBuilder.Entity("ParqueAPICentral.Models.Cliente", b =>
+                {
+                    b.HasBaseType("ParqueAPICentral.Entities.User");
+
+                    b.Property<long>("ClienteID")
+                        .HasColumnType("bigint");
+
+                    b.Property<float>("Credito")
+                        .HasColumnType("real");
+
+                    b.Property<string>("EmailCliente")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MetodoPagamento")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NifCliente")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NomeCliente")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("Cliente");
                 });
 
             modelBuilder.Entity("ParqueAPICentral.Models.Fatura", b =>

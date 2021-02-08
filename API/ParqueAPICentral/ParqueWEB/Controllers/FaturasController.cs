@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 using ParqueAPICentral.Data;
 using ParqueAPICentral.Entities;
 using ParqueAPICentral.Models;
-using ParquePrivateAPI.Models;
+
 
 namespace ParqueAPICentral.Controllers
 {
@@ -66,7 +66,7 @@ namespace ParqueAPICentral.Controllers
 
                 var _Reserva = await response.Content.ReadAsAsync<ReservaDto>();
 
-                var reservaIdent = _Reserva.ReservaID;
+                var reservaIdent = _Reserva.ReservaDTOID;
 
                 var _lugar = _Reserva.LugarID;
                 var _dataInicio = _Reserva.DataInicio;

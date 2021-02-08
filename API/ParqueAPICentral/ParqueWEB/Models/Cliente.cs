@@ -1,6 +1,7 @@
 ﻿using ParqueAPICentral.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,6 +9,7 @@ namespace ParqueAPICentral.Models
 {
     public class Cliente : User
     {
+       
         public long ClienteID { get; set; }
 
         public string NomeCliente { get; set; }

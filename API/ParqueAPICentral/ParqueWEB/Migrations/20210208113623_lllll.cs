@@ -3,27 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ParqueAPICentral.Migrations
 {
-    public partial class init : Migration
+    public partial class lllll : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Cliente",
-                columns: table => new
-                {
-                    ClienteID = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    NomeCliente = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmailCliente = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NifCliente = table.Column<int>(type: "int", nullable: false),
-                    MetodoPagamento = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Credito = table.Column<float>(type: "real", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cliente", x => x.ClienteID);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Parque",
                 columns: table => new
@@ -41,12 +24,19 @@ namespace ParqueAPICentral.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Username = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ClienteID = table.Column<long>(type: "bigint", nullable: true),
+                    NomeCliente = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailCliente = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NifCliente = table.Column<int>(type: "int", nullable: true),
+                    MetodoPagamento = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Credito = table.Column<float>(type: "real", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -65,10 +55,10 @@ namespace ParqueAPICentral.Migrations
                 {
                     table.PrimaryKey("PK_Reserva", x => x.ReservaID);
                     table.ForeignKey(
-                        name: "FK_Reserva_Cliente_ClienteID",
+                        name: "FK_Reserva_Users_ClienteID",
                         column: x => x.ClienteID,
-                        principalTable: "Cliente",
-                        principalColumn: "ClienteID",
+                        principalTable: "Users",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -168,16 +158,13 @@ namespace ParqueAPICentral.Migrations
                 name: "SubAluguer");
 
             migrationBuilder.DropTable(
-                name: "Users");
-
-            migrationBuilder.DropTable(
                 name: "Fatura");
 
             migrationBuilder.DropTable(
                 name: "Reserva");
 
             migrationBuilder.DropTable(
-                name: "Cliente");
+                name: "Users");
         }
     }
 }

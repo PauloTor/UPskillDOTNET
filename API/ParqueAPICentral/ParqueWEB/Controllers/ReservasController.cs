@@ -11,12 +11,11 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Authorization;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using ParquePrivateAPI.Models;
 using Newtonsoft.Json;
 using System.Text;
 using ParqueAPICentral.Entities;
-using SafetyTourism.Models;
 using Microsoft.Extensions.Configuration;
+
 
 namespace ParqueAPICentral.Controllers
 {
@@ -96,7 +95,7 @@ namespace ParqueAPICentral.Controllers
                 string endpoint2 = apiBaseUrl + "reservas/";
                 // Post de uma nova reserva 
                 var response2 = await client.PostAsync(endpoint2, reserva_);
-                var reserva1 = new Reserva(reserva.ReservaID, ClienteID);
+                var reserva1 = new Reserva(reserva.ReservaDTOID, ClienteID);
                 _context.Reserva.Add(reserva1);
                 await _context.SaveChangesAsync();
             }

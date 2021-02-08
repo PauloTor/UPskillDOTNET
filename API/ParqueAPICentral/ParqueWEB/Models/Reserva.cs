@@ -9,6 +9,7 @@ namespace ParqueAPICentral.Models
 {
     public class Reserva
     {
+        [Key]
         public long ReservaID { get; set; }
 
         [ForeignKey("ClienteID")]
