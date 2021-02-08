@@ -121,14 +121,15 @@ namespace ParqueAPICentral.Controllers
                 var reserva_ = await reservaRes.Content.ReadAsAsync<Reserva_>();
                
                 var reservaById = reserva_.ReservaID;
-                
-                var reservaByCliente = _context.Reserva.Find(reservaById);
+
+                var cliente = reserva.ClienteID;
                
-                var fatura_ = _context.Fatura.Find(reservaById); ;
-                
+                var fatura_ = _context.Fatura.Where(f => f.ReservaID == reservaById).FirstOrDefault();
+              
                 var faturaPreco = fatura_.PrecoFatura;
-               
-                var res = _context.Cliente.Find(reservaByCliente);
+
+                _context.Entry(cliente).State = EntityState.Modified;
+
             }
             await _context.SaveChangesAsync();
             return NoContent();
