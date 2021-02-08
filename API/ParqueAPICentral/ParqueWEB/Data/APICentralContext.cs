@@ -16,9 +16,7 @@ namespace ParqueAPICentral.Data
 
         public DbSet<ParqueAPICentral.Models.SubAluguer> SubAluguer { get; set; }
 
-        public DbSet<ParqueAPICentral.Models.Cliente> Cliente { get; set; }
-
-       
+        public DbSet<ParqueAPICentral.Models.Cliente> Cliente { get; set; }   
 
         public DbSet<ParqueAPICentral.Models.Parque> Parque { get; set; }
 
@@ -29,6 +27,5 @@ namespace ParqueAPICentral.Data
         public DbSet<ParqueAPICentral.Entities.User> Users { get; set; }
 
         public DbSet<ParqueAPICentral.Models.Fatura> Fatura { get; set; }
-        public object Clientes { get; internal set; }
     }
 }

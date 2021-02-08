@@ -8,25 +8,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ParqueAPICentral.Models
 {
     public class Reserva
-
-
     {
         public long ReservaID { get; set; }
 
         [ForeignKey("ClienteID")]
         public long ClienteID { get; set; }
         public Cliente Cliente { get; set; }
-
-        public static implicit operator Reserva(ReservaDto v)
+        
+        public Reserva(long reservaID, long clienteID)
         {
-            throw new NotImplementedException();
-        }
-
-        public Reserva( long reservaid, long clienteid)
-        {
-            ReservaID = reservaid;
-            ClienteID = clienteid;
-            
+            ReservaID = reservaID;
+            ClienteID = clienteID;
         }
 
     }

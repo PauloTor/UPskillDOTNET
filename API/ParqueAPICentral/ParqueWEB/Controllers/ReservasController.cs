@@ -114,15 +114,21 @@ namespace ParqueAPICentral.Controllers
                 return NotFound();
             }
             using (HttpClient client = new HttpClient())
-            {
+            {             
                 string endpoint = apiBaseUrl + "reservas/" + id;
+                             
                 var reservaRes = await client.GetAsync(endpoint);
+                
                 var reserva_ = await reservaRes.Content.ReadAsAsync<Reserva>();
+               
                 var reservaById = reserva_.ReservaID;
+                
                 var reservaByCliente = _context.Reserva.Find(reservaById);
-                //var reservaDeCliente = reservaByCliente.ClienteID
+               
                 var fatura_ = _context.Fatura.Find(reservaById); ;
+                
                 var faturaPreco = fatura_.PrecoFatura;
+               
                 var res = _context.Cliente.Find(reservaByCliente);
             }
             await _context.SaveChangesAsync();
