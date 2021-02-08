@@ -30,8 +30,8 @@ namespace ParqueAPICentral.Controllers
         {
             _context = context;
             _configure = configuration;
-            apiBaseUrl = _configure.GetValue<string>("WebAPICentralBaseUrl");
-            apiBaseUrl2 = _configure.GetValue<string>("WebAPIPrivateBaseUrl");
+            apiBaseUrl2 = _configure.GetValue<string>("WebAPICentralBaseUrl");
+            apiBaseUrl = _configure.GetValue<string>("WebAPIPrivateBaseUrl");
         }
 
 
@@ -41,8 +41,8 @@ namespace ParqueAPICentral.Controllers
         public async Task<ActionResult<IEnumerable<Fatura>>> PostFaturaByReservaID(long ReservaID)
         {
             var reserva = await _context.Reserva.FindAsync(ReservaID);
-            var ListaReservas = new List<ReservaDto>();
-            var ListaLugares = new List<LugarDto>();
+            var ListaReservas = new List<Reserva_>();
+            var ListaLugares = new List<Lugar>();
             Fatura fatura;
             using (var client = new HttpClient())
 
@@ -64,9 +64,9 @@ namespace ParqueAPICentral.Controllers
                 var response = await client.GetAsync(endpoint);
                 response.EnsureSuccessStatusCode();
 
-                var _Reserva = await response.Content.ReadAsAsync<ReservaDto>();
+                var _Reserva = await response.Content.ReadAsAsync<Reserva_>();
 
-                var reservaIdent = _Reserva.ReservaDTOID;
+                var reservaIdent = _Reserva.ReservaID;
 
                 var _lugar = _Reserva.LugarID;
                 var _dataInicio = _Reserva.DataInicio;
@@ -76,7 +76,7 @@ namespace ParqueAPICentral.Controllers
                 string endpoint2 = apiBaseUrl + "Lugares/" + _lugar;
                 var response2 = await client.GetAsync(endpoint2);
                 response2.EnsureSuccessStatusCode();
-                var _Lugar = await response2.Content.ReadAsAsync<LugarDto>();
+                var _Lugar = await response2.Content.ReadAsAsync<Lugar>();
 
                 //Preco por hora
                 var _preco = _Lugar.Preço;
@@ -93,10 +93,10 @@ namespace ParqueAPICentral.Controllers
                 //cria instancia para uma nova fatura
                 fatura = new Fatura(dataFatura, PrecoFatura, reservaIdent);
                 //Passa a fatura para formato JSON
-                StringContent fatura_ = new StringContent(JsonConvert.SerializeObject(fatura), Encoding.UTF8, "application/json");
-                string endpoint3 = apiBaseUrl2 + "Faturas/";
-                //POST Fatura
-                var response3 = await client.PostAsync(endpoint3, fatura_);
+                //StringContent fatura_ = new StringContent(JsonConvert.SerializeObject(fatura), Encoding.UTF8, "application/json");
+                //string endpoint3 = apiBaseUrl2 + "Faturas/";
+                ////POST Fatura
+               // var response3 = await client.PostAsync(endpoint3, fatura_);
 
                 _context.Fatura.Add(fatura);
                 await _context.SaveChangesAsync();

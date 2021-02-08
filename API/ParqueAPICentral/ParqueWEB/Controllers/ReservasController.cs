@@ -38,9 +38,9 @@ namespace ParqueAPICentral.Controllers
        
         [EnableCors]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ReservaDto>>> GetReservas()
+        public async Task<ActionResult<IEnumerable<Reserva_>>> GetReservas()
         {
-            var ListaReservas = new List<ReservaDto>();
+            var ListaReservas = new List<Reserva_>();
             using (var client = new HttpClient())
             {
                 UserInfo user = new UserInfo();
@@ -53,7 +53,7 @@ namespace ParqueAPICentral.Controllers
                 string endpoint = apiBaseUrl + "Reservas/";
                 var response = await client.GetAsync(endpoint);
                 response.EnsureSuccessStatusCode();
-                ListaReservas = await response.Content.ReadAsAsync<List<ReservaDto>>();
+                ListaReservas = await response.Content.ReadAsAsync<List<Reserva_>>();
             }
             return ListaReservas;
         }
@@ -64,7 +64,7 @@ namespace ParqueAPICentral.Controllers
         {
             var dateTimeInicio = DateTime.Parse(DataInicio);
             var dateTimeFim = DateTime.Parse(DataFim);
-            ReservaDto reserva;
+            Reserva_ reserva;
             
             using (var client = new HttpClient())
             {
@@ -79,7 +79,7 @@ namespace ParqueAPICentral.Controllers
                 var response = await client.GetAsync(endpoint);
                 response.EnsureSuccessStatusCode();
                 // Lugares disponiveis para criar Reserva
-                List<LugarDto> ListaLugar = await response.Content.ReadAsAsync<List<LugarDto>>();
+                List<Lugar> ListaLugar = await response.Content.ReadAsAsync<List<Lugar>>();
                 long lugar = 0;
                 if (ListaLugar.Count != 0)
                 {
@@ -89,13 +89,13 @@ namespace ParqueAPICentral.Controllers
                 }
                 var datanow = DateTime.Now;
                 //Nova reserva
-                reserva = new ReservaDto(datanow, dateTimeInicio, dateTimeFim, lugar);
+                reserva = new Reserva_(datanow, dateTimeInicio, dateTimeFim, lugar);
                 //Passa a reserva para formato JSON
                 StringContent reserva_ = new StringContent(JsonConvert.SerializeObject(reserva), Encoding.UTF8, "application/json");
                 string endpoint2 = apiBaseUrl + "reservas/";
                 // Post de uma nova reserva 
                 var response2 = await client.PostAsync(endpoint2, reserva_);
-                var reserva1 = new Reserva(reserva.ReservaDTOID, ClienteID);
+                var reserva1 = new Reserva(reserva.ReservaID, ClienteID);
                 _context.Reserva.Add(reserva1);
                 await _context.SaveChangesAsync();
             }

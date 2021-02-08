@@ -9,10 +9,10 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace ParqueAPICentral.Models
 {
-    public class ReservaDto
+    public class Reserva_
     {
         [Key]
-        public long ReservaDTOID { get; set; }
+        public long ReservaID { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
@@ -28,11 +28,11 @@ namespace ParqueAPICentral.Models
 
         [ForeignKey("LugarID")]
         public long LugarID { get; set; }        
-        public LugarDto LugarDto { get; set; }
+        public Lugar Lugar { get; set; }
 
 
 
-        public ReservaDto(DateTime datareserva, DateTime datainicio, DateTime datafim,long lugarid)
+        public Reserva_(DateTime datareserva, DateTime datainicio, DateTime datafim,long lugarid)
         {
             DataReserva = datareserva;
             DataInicio = datainicio;
