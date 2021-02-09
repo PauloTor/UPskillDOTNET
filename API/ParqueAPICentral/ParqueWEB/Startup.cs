@@ -37,6 +37,7 @@ namespace ParqueAPICentral
             services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<IClienteRepository, ClienteRepository>();
+            services.AddScoped<ClienteService>();
 
             services.AddScoped<IReservaRepository, ReservaRepository> ();
             services.AddTransient<ReservaService>();
