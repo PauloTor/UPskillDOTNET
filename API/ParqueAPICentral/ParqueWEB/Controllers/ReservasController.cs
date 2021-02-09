@@ -132,7 +132,7 @@ namespace ParqueAPICentral.Controllers
                
                 float precoFatura = fatura_.PrecoFatura;
 
-                cliente_.Deposit(precoFatura);
+                cliente_.Depositar(precoFatura);
 
                 _context.Reserva.Remove(reserva);
 
