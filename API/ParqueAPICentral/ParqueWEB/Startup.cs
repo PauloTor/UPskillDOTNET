@@ -38,14 +38,11 @@ namespace ParqueAPICentral
 
             services.AddScoped<IClienteRepository, ClienteRepository>();
 
-
+            services.AddScoped<IReservaRepository, ReservaRepository> ();
 
 
             services.AddDbContext<APICentralContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("APICentralContext")));
-
-
-
 
         }
 
