@@ -15,7 +15,7 @@ using Newtonsoft.Json;
 using System.Text;
 using ParqueAPICentral.Entities;
 using Microsoft.Extensions.Configuration;
-
+using ParqueAPICentral.DTO;
 
 namespace ParqueAPICentral.Controllers
 {
@@ -35,7 +35,7 @@ namespace ParqueAPICentral.Controllers
             _configure = configuration;
             apiBaseUrl = _configure.GetValue<string>("WebAPIPrivateBaseUrl");
         }
-       
+
         [EnableCors]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Reserva_>>> GetReservas()
@@ -44,16 +44,27 @@ namespace ParqueAPICentral.Controllers
             using (var client = new HttpClient())
             {
                 UserInfo user = new UserInfo();
-                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
-                var responseLogin = await client.PostAsync(apiBaseUrl + "users/authenticate", contentUser);
-                dynamic tokenresponsecontent = await responseLogin.Content.ReadAsAsync<object>();
+                StringContent contentUser = new StringContent(JsonConvert.
+                    SerializeObject(user), Encoding.UTF8, "application/json");
+                
+                var responseLogin = await client.
+                    PostAsync(apiBaseUrl + "users/authenticate", contentUser);
+                
+                dynamic tokenresponsecontent = await responseLogin.
+                    Content.ReadAsAsync<object>();
+                
                 string rtoken = tokenresponsecontent.jwtToken;
+                
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", rtoken);
-                // Route para Lugar por datas
+                
                 string endpoint = apiBaseUrl + "Reservas/";
+                
                 var response = await client.GetAsync(endpoint);
+                
                 response.EnsureSuccessStatusCode();
-                ListaReservas = await response.Content.ReadAsAsync<List<Reserva_>>();
+          
+                ListaReservas = await response.Content.
+                    ReadAsAsync<List<Reserva_>>();
             }
             return ListaReservas;
         }
@@ -65,25 +76,39 @@ namespace ParqueAPICentral.Controllers
             var dateTimeInicio = DateTime.Parse(DataInicio);
             var dateTimeFim = DateTime.Parse(DataFim);
             Reserva_ reserva;
-            
+
             using (var client = new HttpClient())
             {
-                var cliente = await _context.Cliente.FindAsync(ClienteID);
-                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(cliente), Encoding.UTF8, "application/json");
-                var responseLogin = await client.PostAsync(apiBaseUrl + "users/authenticate", contentUser);
-                dynamic tokenresponsecontent = await responseLogin.Content.ReadAsAsync<object>();
+                var cliente = await _context.Cliente.
+                    FindAsync(ClienteID);
+               
+                StringContent contentUser = new StringContent(JsonConvert.
+                    SerializeObject(cliente), Encoding.UTF8, "application/json");
+                
+                var responseLogin = await client.
+                    PostAsync(apiBaseUrl + "users/authenticate", contentUser);
+                
+                dynamic tokenresponsecontent = await responseLogin.Content.
+                    ReadAsAsync<object>();
+                
                 string rtoken = tokenresponsecontent.jwtToken;
 
                 // Route para Lugar por datas
-                string endpoint = apiBaseUrl + "Lugares/" + DataInicio + "/" + DataFim;
+                string endpoint = apiBaseUrl + "Lugares/" + DataInicio + 
+                    "/" + DataFim;
+               
                 var response = await client.GetAsync(endpoint);
+                
                 response.EnsureSuccessStatusCode();
                 // Lugares disponiveis para criar Reserva
-                List<Lugar> ListaLugar = await response.Content.ReadAsAsync<List<Lugar>>();
+                
+                List<Lugar_> ListaLugar = await response.Content.
+                    ReadAsAsync<List<Lugar_>>();
+                
                 long lugar = 0;
                 if (ListaLugar.Count != 0)
                 {
-                 // Pega no primeiro da Lista
+                    // Pega no primeiro da Lista
                     var Primeiro = ListaLugar.FirstOrDefault();
                     lugar = Primeiro.LugarID;
                 }
@@ -91,10 +116,14 @@ namespace ParqueAPICentral.Controllers
                 //Nova reserva
                 reserva = new Reserva_(datanow, dateTimeInicio, dateTimeFim, lugar);
                 //Passa a reserva para formato JSON
-                StringContent reserva_ = new StringContent(JsonConvert.SerializeObject(reserva), Encoding.UTF8, "application/json");
+                
+                StringContent reserva_ = new StringContent(JsonConvert.
+                    SerializeObject(reserva), Encoding.UTF8, "application/json");
+              
                 string endpoint2 = apiBaseUrl + "reservas/";
                 // Post de uma nova reserva 
                 var response2 = await client.PostAsync(endpoint2, reserva_);
+
                 var reserva1 = new Reserva(reserva.ReservaID, ClienteID);
                 _context.Reserva.Add(reserva1);
                 await _context.SaveChangesAsync();
@@ -108,32 +137,76 @@ namespace ParqueAPICentral.Controllers
         public async Task<ActionResult<Reserva>> CancelarReserva(long id)
         {
             var reserva = await _context.Reserva.FindAsync(id);
-            if (reserva == null)
-            {
-                return NotFound();
-            }
+            //if (reserva == null)
+            //{
+            //    return NotFound();
+            //}
             using (HttpClient client = new HttpClient())
-            {             
+            {
                 string endpoint = apiBaseUrl + "reservas/" + id;
-                             
-                var reservaRes = await client.GetAsync(endpoint);
-                
-                var reserva_ = await reservaRes.Content.ReadAsAsync<Reserva_>();
-               
-                var reservaById = reserva_.ReservaID;
 
+                var reservaRes = await client.
+                    GetAsync(endpoint);
+
+                var reserva_ = await reservaRes.Content.
+                    ReadAsAsync<Reserva_>();
+
+                var reservaById = reserva_.ReservaID;
                 var cliente = reserva.ClienteID;
-               
-                var fatura_ = _context.Fatura.Where(f => f.ReservaID == reservaById).FirstOrDefault();
-              
+
+                var cliente_ = _context.Cliente.
+                    Where(c => c.ClienteID == cliente)
+                    .FirstOrDefault();
+
+                var fatura_ = _context.Fatura.
+                    Where(f => f.ReservaID == reservaById).
+                    FirstOrDefault();
+                
                 var faturaPreco = fatura_.PrecoFatura;
 
-                _context.Entry(cliente).State = EntityState.Modified;
+                cliente_.Credito = +faturaPreco;
+                
+                //atualiza cliente com novo credito
+                _context.Entry(cliente_).State = EntityState.Modified;
+                
+                // apaga reserva(API)                
+                var deleteTask = client.DeleteAsync(endpoint);
+                deleteTask.Wait();
+                
+                var result = deleteTask.Result;
+                
+                //Falta apagar reserva da DB
 
+                //if (result.IsSuccessStatusCode)
+                //{
+
+                //    return RedirectToAction("Index");
+                //}
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!clienteExists(cliente_.ClienteID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return NoContent();
             }
-            await _context.SaveChangesAsync();
-            return NoContent();
+        }
+        private bool clienteExists(long id)
+        {
+            return _context.Cliente.Any(e => e.ClienteID == id);
         }
     }
 }
+
 

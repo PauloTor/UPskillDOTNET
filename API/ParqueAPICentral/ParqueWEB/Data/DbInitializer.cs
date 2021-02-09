@@ -25,15 +25,15 @@ namespace ParqueAPICentral.Data
 
             var cliente = new Cliente[]
             {
-                new Cliente { NomeCliente = "Cliente1", EmailCliente = "cliente1@hotmail.com", NifCliente = 111111111, MetodoPagamento = "DD", Credito = 1 },
-                new Cliente { NomeCliente = "Cliente2", EmailCliente = "cliente2@hotmail.com", NifCliente = 222222222, MetodoPagamento = "CartaoCredito", Credito = 0 },
-                new Cliente { NomeCliente = "Cliente3", EmailCliente = "cliente3@hotmail.com", NifCliente = 333333333, MetodoPagamento = "CartaoCredito", Credito = 0 },
-                new Cliente { NomeCliente = "Cliente4", EmailCliente = "cliente4@hotmail.com", NifCliente = 444444444, MetodoPagamento = "CartaoCredito", Credito = 0 },
-                new Cliente { NomeCliente = "Cliente5", EmailCliente = "cliente5@hotmail.com", NifCliente = 555555555, MetodoPagamento = "Paypall", Credito = 0 },
-                new Cliente { NomeCliente = "Cliente6", EmailCliente = "cliente6@hotmail.com", NifCliente = 666666666, MetodoPagamento = "DD", Credito = 0 },
-                new Cliente { NomeCliente = "Cliente6", EmailCliente = "cliente7@hotmail.com", NifCliente = 777777777, MetodoPagamento = "Paypall", Credito = 0 },
-                new Cliente { NomeCliente = "Cliente6", EmailCliente = "cliente8@hotmail.com", NifCliente = 888888888, MetodoPagamento = "Paypall", Credito = 2 },
-                new Cliente { NomeCliente = "Cliente9", EmailCliente = "cliente9@hotmail.com", NifCliente = 999999999, MetodoPagamento = "DD", Credito = 1 }
+                new Cliente { NomeCliente = "Cliente1", EmailCliente = "cliente1@hotmail.com", NifCliente = 111111111, MetodoPagamento = "DD", Credito = 1,Username = "test",  Password = "test"},
+                new Cliente { NomeCliente = "Cliente2", EmailCliente = "cliente2@hotmail.com", NifCliente = 222222222, MetodoPagamento = "CartaoCredito", Credito = 0, Username = "test", Password = "test" },
+                new Cliente { NomeCliente = "Cliente3", EmailCliente = "cliente3@hotmail.com", NifCliente = 333333333, MetodoPagamento = "CartaoCredito", Credito = 0, Username = "test", Password = "test" },
+                new Cliente { NomeCliente = "Cliente4", EmailCliente = "cliente4@hotmail.com", NifCliente = 444444444, MetodoPagamento = "CartaoCredito", Credito = 0, Username = "test", Password = "test" },
+                new Cliente { NomeCliente = "Cliente5", EmailCliente = "cliente5@hotmail.com", NifCliente = 555555555, MetodoPagamento = "Paypall", Credito = 0,Username = "test", Password = "test" },
+                new Cliente { NomeCliente = "Cliente6", EmailCliente = "cliente6@hotmail.com", NifCliente = 666666666, MetodoPagamento = "DD", Credito = 0,Username = "test", Password = "test" },
+                new Cliente { NomeCliente = "Cliente6", EmailCliente = "cliente7@hotmail.com", NifCliente = 777777777, MetodoPagamento = "Paypall", Credito = 0,Username = "test", Password = "test" },
+                new Cliente { NomeCliente = "Cliente6", EmailCliente = "cliente8@hotmail.com", NifCliente = 888888888, MetodoPagamento = "Paypall", Credito = 2,Username = "test", Password = "test" },
+                new Cliente { NomeCliente = "Cliente9", EmailCliente = "cliente9@hotmail.com", NifCliente = 999999999, MetodoPagamento = "DD", Credito = 1,Username = "test", Password = "test" }
             };
 
             foreach (Cliente c in cliente)
@@ -65,7 +65,7 @@ namespace ParqueAPICentral.Data
 
             //===========================================================================================0
             /*  var reserva = new Reserva[]
-  {
+    {
               new Reserva
               {
                   DataReserva = DateTime.Parse("2020-01-01 15:00:00"),
