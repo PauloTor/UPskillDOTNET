@@ -20,9 +20,9 @@ namespace ParqueAPICentral.Models
 
         public string MetodoPagamento { get; set; }
 
-        public decimal Credito { get; set; }
+        public float Credito { get; set; }
 
-        public virtual void Deposit(decimal valor)
+        public virtual void Deposit(float valor)
         {
             Credito += valor;
         }
