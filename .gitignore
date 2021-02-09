@@ -353,3 +353,6 @@ MigrationBackup/
 /API/ParquePublicoAPI/ParquePublicoAPI/Migrations
 /API/ParquePrivateAPI/ParquePrivateAPI/Migrations/20210127140710_initialPrivate.cs
 /API/ParquePrivateAPI/ParquePrivateAPI/Migrations/20210127140710_initialPrivate.Designer.cs
+/API/ParqueAPICentral/ParqueWEB/Migrations/20210208152842_init7.cs
+/API/ParqueAPICentral/ParqueWEB/Migrations/20210208152842_init7.Designer.cs
+/API/ParqueAPICentral/ParqueWEB/Migrations/APICentralContextModelSnapshot.cs
