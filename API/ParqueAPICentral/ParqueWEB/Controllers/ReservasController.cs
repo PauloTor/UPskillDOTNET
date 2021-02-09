@@ -130,11 +130,15 @@ namespace ParqueAPICentral.Controllers
                 
                 var cliente_ = _context.Cliente.Where(c => c.ClienteID == clienteById).FirstOrDefault();
                
-                decimal precoFatura = fatura_.PrecoFatura;
+                float precoFatura = fatura_.PrecoFatura;
 
-                cliente_.Deposit(precoFatura);
+                cliente_.Depositar(precoFatura);
 
                 _context.Reserva.Remove(reserva);
+
+                var deleteTask = client.DeleteAsync(endpoint);
+
+                //deleteTask.Wait();
 
             }
 

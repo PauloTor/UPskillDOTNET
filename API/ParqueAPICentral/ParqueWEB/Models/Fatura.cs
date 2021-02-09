@@ -15,13 +15,13 @@ namespace ParqueAPICentral.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DataFatura { get; set; }
 
-        public decimal PrecoFatura { get; set; }
+        public float PrecoFatura { get; set; }
 
         [ForeignKey("ReservaID")]
         public long ReservaID { get; set; }
         public Reserva Reserva { get; set; }
 
-        public Fatura(DateTime dataFatura, decimal precoFatura, long reservaID)
+        public Fatura(DateTime dataFatura, float precoFatura, long reservaID)
         {
             DataFatura = dataFatura;
             PrecoFatura = precoFatura;
