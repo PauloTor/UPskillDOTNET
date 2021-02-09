@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using ParqueAPICentral.Data;
 using ParqueAPICentral.Helpers;
 using ParqueAPICentral.Services;
-
+using ParqueAPICentral.Repositories;
 
 namespace ParqueAPICentral
 {
@@ -35,6 +35,8 @@ namespace ParqueAPICentral
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IFaturaRepository, FaturaRepository>();
+            services.AddTransient<FaturaService>();
 
 
 
