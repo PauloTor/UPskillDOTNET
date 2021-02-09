@@ -20,6 +20,34 @@ namespace ParqueAPICentral.Models
 
         public string MetodoPagamento { get; set; }
 
-        public float Credito { get; set; }
+        public decimal Credito { get; set; }
+
+        public virtual void Deposit(decimal valor)
+        {
+            Credito += valor;
+        }
+
+        /*private readonly List<Fatura> Operacao = new List<Fatura>();
+
+        public decimal Creditos
+        {
+            get
+            {
+                decimal Creditos = 0;
+                foreach (var item in Operacao)
+                {
+                    Creditos -= item.PrecoFatura;
+                }
+
+                return Credito;
+            }
+        }
+        public decimal DevolverPagamento(decimal credito, decimal precoFatura)
+        {
+            this.Credito = credito;
+            
+            return Credito += precoFatura;
+        }
+        */
     }
 }

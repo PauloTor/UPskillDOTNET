@@ -13,7 +13,7 @@ namespace ParqueAPICentral.Models
         public long LugarID { get; set; }
         public int Fila { get; set; }
         public int Sector { get; set; }
-        public float Preço { get; set; }
+        public decimal Preço { get; set; }
 
         [ForeignKey("ParqueID")]
         public long ParqueID { get; set; }

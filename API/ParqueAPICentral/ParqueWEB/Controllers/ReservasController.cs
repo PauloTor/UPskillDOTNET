@@ -108,10 +108,12 @@ namespace ParqueAPICentral.Controllers
         public async Task<ActionResult<Reserva>> CancelarReserva(long id)
         {
             var reserva = await _context.Reserva.FindAsync(id);
+
             if (reserva == null)
             {
                 return NotFound();
             }
+
             using (HttpClient client = new HttpClient())
             {             
                 string endpoint = apiBaseUrl + "reservas/" + id;
@@ -120,18 +122,24 @@ namespace ParqueAPICentral.Controllers
                 
                 var reserva_ = await reservaRes.Content.ReadAsAsync<Reserva_>();
                
-                var reservaById = reserva_.ReservaID;
+                long reservaById = reserva_.ReservaID;
 
-                var cliente = reserva.ClienteID;
+                long clienteById = reserva.ClienteID;
                
                 var fatura_ = _context.Fatura.Where(f => f.ReservaID == reservaById).FirstOrDefault();
-              
-                var faturaPreco = fatura_.PrecoFatura;
+                
+                var cliente_ = _context.Cliente.Where(c => c.ClienteID == clienteById).FirstOrDefault();
+               
+                decimal precoFatura = fatura_.PrecoFatura;
 
-                _context.Entry(cliente).State = EntityState.Modified;
+                cliente_.Deposit(precoFatura);
+
+                _context.Reserva.Remove(reserva);
 
             }
+
             await _context.SaveChangesAsync();
+
             return NoContent();
         }
     }
