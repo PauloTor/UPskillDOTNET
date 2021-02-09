@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ParquePrivateAPI.Migrations
+namespace ParqueAPICentral.Migrations
 {
-    public partial class initial3 : Migration
+    public partial class ggg : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

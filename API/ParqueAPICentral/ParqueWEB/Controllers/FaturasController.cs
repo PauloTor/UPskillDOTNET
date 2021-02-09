@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using ParqueAPICentral.Data;
+using ParqueAPICentral.DTO;
 using ParqueAPICentral.Entities;
 using ParqueAPICentral.Models;
 
@@ -42,7 +43,7 @@ namespace ParqueAPICentral.Controllers
         {
             var reserva = await _context.Reserva.FindAsync(ReservaID);
             var ListaReservas = new List<Reserva_>();
-            var ListaLugares = new List<Lugar>();
+            var ListaLugares = new List<Lugar_>();
             Fatura fatura;
             using (var client = new HttpClient())
 
@@ -76,7 +77,7 @@ namespace ParqueAPICentral.Controllers
                 string endpoint2 = apiBaseUrl + "Lugares/" + _lugar;
                 var response2 = await client.GetAsync(endpoint2);
                 response2.EnsureSuccessStatusCode();
-                var _Lugar = await response2.Content.ReadAsAsync<Lugar>();
+                var _Lugar = await response2.Content.ReadAsAsync<Lugar_>();
 
                 //Preco por hora
                 var _preco = _Lugar.Preço;

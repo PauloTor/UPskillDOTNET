@@ -10,8 +10,8 @@ using ParquePrivateAPI.Data;
 namespace ParquePrivateAPI.Migrations
 {
     [DbContext(typeof(ParquePrivateAPIContext))]
-    [Migration("20210128225046_Initial")]
-    partial class Initial
+    [Migration("20210209143917_fffdf")]
+    partial class fffdf
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,8 +31,11 @@ namespace ParquePrivateAPI.Migrations
                     b.Property<int>("Fila")
                         .HasColumnType("int");
 
-                    b.Property<long>("ParqueID")
+                    b.Property<long>("NIFParqueID")
                         .HasColumnType("bigint");
+
+                    b.Property<int?>("ParqueNIFParqueID")
+                        .HasColumnType("int");
 
                     b.Property<float>("Preço")
                         .HasColumnType("real");
@@ -42,7 +45,7 @@ namespace ParquePrivateAPI.Migrations
 
                     b.HasKey("LugarID");
 
-                    b.HasIndex("ParqueID");
+                    b.HasIndex("ParqueNIFParqueID");
 
                     b.ToTable("Lugar");
                 });
@@ -67,9 +70,9 @@ namespace ParquePrivateAPI.Migrations
 
             modelBuilder.Entity("ParquePrivateAPI.Models.Parque", b =>
                 {
-                    b.Property<long>("ParqueID")
+                    b.Property<int>("NIFParqueID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Lotacao")
@@ -81,7 +84,7 @@ namespace ParquePrivateAPI.Migrations
                     b.Property<string>("NomeParque")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ParqueID");
+                    b.HasKey("NIFParqueID");
 
                     b.HasIndex("MoradaID");
 
@@ -114,13 +117,35 @@ namespace ParquePrivateAPI.Migrations
                     b.ToTable("Reserva");
                 });
 
+            modelBuilder.Entity("ParquePrivateAPI.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("ParquePrivateAPI.Models.Lugar", b =>
                 {
                     b.HasOne("ParquePrivateAPI.Models.Parque", "Parque")
                         .WithMany()
-                        .HasForeignKey("ParqueID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ParqueNIFParqueID");
                 });
 
             modelBuilder.Entity("ParquePrivateAPI.Models.Parque", b =>
@@ -139,6 +164,50 @@ namespace ParquePrivateAPI.Migrations
                         .HasForeignKey("LugarID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ParquePrivateAPI.Models.User", b =>
+                {
+                    b.OwnsMany("ParquePrivateAPI.Models.RefreshToken", "RefreshTokens", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int")
+                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                            b1.Property<DateTime>("Created")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<string>("CreatedByIp")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<DateTime>("Expires")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<string>("ReplacedByToken")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<DateTime?>("Revoked")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<string>("RevokedByIp")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Token")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<int>("UserId")
+                                .HasColumnType("int");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("UserId");
+
+                            b1.ToTable("RefreshToken");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
                 });
 #pragma warning restore 612, 618
         }

@@ -22,9 +22,9 @@ namespace ParqueAPICentral.Controllers
         {
             _context = context;
         }
-
+    // ORIGINAL    //C:\Users\paulo\Desktop\proj5\PseudoCompany\API\ParqueAPICentral\ParqueWEB\Models\Fatura.cs
         // GET: api/Clientes : Obter Informação de um Cliente
-  //      [Authorize]
+        //      [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes()
         {
