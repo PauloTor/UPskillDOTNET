@@ -79,14 +79,14 @@ namespace ParqueAPICentral.Controllers
                 var _Lugar = await response2.Content.ReadAsAsync<Lugar>();
 
                 //Preco por hora
-                var _preco = _Lugar.Preço;
+                decimal _preco = _Lugar.Preço;
 
                 //Conversão para horas
                 var timeSpan = _dataFim.Subtract(_dataInicio);
                 var horas = timeSpan.Hours;
 
                 //Preço por hora * quantidade de horas
-                var PrecoFatura = horas * _preco;
+                decimal PrecoFatura = horas * _preco;
 
                 var dataFatura = DateTime.Now;
 
