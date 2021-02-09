@@ -124,7 +124,7 @@ namespace ParqueAPICentral.Data
             //var fatura = new Fatura[]
 
             //    {
-            //        new Fatura { DataFatura = DateTime.Parse("2020-01-05 18:00:00"), PrecoFatura = 33, ReservaID = 1 },
+            //        new Fatura { DataFatura = (2020,01,01), PrecoFatura = 33, ReservaID = 1 },
             //        new Fatura { DataFatura = DateTime.Parse("2020-01-04 21:00:00"), PrecoFatura = 30, ReservaID = 2 },
             //        new Fatura { DataFatura = DateTime.Parse("2020-01-14 15:00:00"), PrecoFatura = 230, ReservaID = 3 },
             //        new Fatura { DataFatura = DateTime.Parse("2020-02-03 19:00:00"), PrecoFatura = 110, ReservaID = 4 }

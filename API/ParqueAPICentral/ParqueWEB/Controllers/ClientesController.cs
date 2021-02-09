@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ParqueAPICentral.Controllers
 {
-    [Authorize]
+ //   [Authorize]
     [Route("api/Clientes")]
     [ApiController]
     public class ClientesController : ControllerBase
@@ -24,7 +24,7 @@ namespace ParqueAPICentral.Controllers
         }
 
         // GET: api/Clientes : Obter Informação de um Cliente
-        [Authorize]
+  //      [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes()
         {
