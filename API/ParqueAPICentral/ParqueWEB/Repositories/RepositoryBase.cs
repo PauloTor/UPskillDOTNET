@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ParqueAPICentral.Repositories
 {
-    public class RepositoryBase
+    public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
         protected APICentralContext RepContext { get; set; }
 
