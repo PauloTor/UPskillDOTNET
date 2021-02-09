@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using ParqueAPICentral.Data;
 using ParqueAPICentral.Helpers;
 using ParqueAPICentral.Services;
-
+using ParqueAPICentral.Repositories;
 
 namespace ParqueAPICentral
 {
@@ -36,14 +36,15 @@ namespace ParqueAPICentral
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
 
+            services.AddScoped<IClienteRepository, ClienteRepository>();
+            services.AddScoped<ClienteService>();
 
+            services.AddScoped<IReservaRepository, ReservaRepository> ();
+            services.AddTransient<ReservaService>();
 
 
             services.AddDbContext<APICentralContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("APICentralContext")));
-
-
-
 
         }
 

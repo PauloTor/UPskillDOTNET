@@ -22,21 +22,6 @@ namespace ParqueAPICentral.Models
         public string MetodoPagamento { get; set; }
 
         public float Credito { get; set; }
-
-        public string Username { get; set; }
-
-        [JsonIgnore]
-        public string Password { get; set; }
-
-        //public Cliente(long Clienteid, string nomecliente, string emailcliente, int nifcliente, string metodopagamento, float credito)
-        //{
-        //    ClienteID = Clienteid;
-        //    NomeCliente = nomecliente;
-        //    EmailCliente = emailcliente;
-        //    NifCliente = nifcliente;
-        //    MetodoPagamento = metodopagamento;
-        //    Credito = credito;
-        //}
     }
 }
 
