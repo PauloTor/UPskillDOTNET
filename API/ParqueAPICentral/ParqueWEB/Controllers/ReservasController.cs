@@ -138,7 +138,7 @@ namespace ParqueAPICentral.Controllers
 
                 var deleteTask = client.DeleteAsync(endpoint);
 
-                deleteTask.Wait();
+                //deleteTask.Wait();
 
             }
 

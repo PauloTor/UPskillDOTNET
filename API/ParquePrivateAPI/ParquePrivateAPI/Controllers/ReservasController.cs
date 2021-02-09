@@ -8,12 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using ParquePrivateAPI.Models;
 using ParquePrivateAPI.Data;
 using Microsoft.AspNetCore.Cors;
-//using Microsoft.AspNetCore.Authorization;
-//using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authorization;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace ParquePrivateAPI.Controllers
 { 
-//[Authorize]
+[Authorize]
 [EnableCors("MyAllowSpecificOrigins")]
 [Route("api/Reservas")]
 [ApiController]
@@ -36,7 +36,7 @@ public class ReservasController : ControllerBase
             return await _context.Reserva.Include(r => r.Lugar).Include(l => l.Lugar.Parque).Include(p => p.Lugar.Parque.Morada).ToListAsync();
     }
         // GET: api/Reservas/5
-   // [Authorize]
+    [Authorize]
     [EnableCors]
     [HttpGet("{id}")]
     public async Task<ActionResult<Reserva>> GetReserva(long id)
@@ -56,7 +56,7 @@ public class ReservasController : ControllerBase
     // PUT: api/Reservas/5
     // To protect from overposting attacks, enable the specific properties you want to bind to, for
     // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
- //   [Authorize]
+    [Authorize]
     [EnableCors]
     [HttpPut("{id}")]
     public async Task<IActionResult> PutReserva(long id, Reserva reserva)
@@ -90,7 +90,7 @@ public class ReservasController : ControllerBase
     // POST: api/Reservas
     // To protect from overposting attacks, enable the specific properties you want to bind to, for
     // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-//    [Authorize]
+    [Authorize]
     [EnableCors]
     [HttpPost]
     public async Task<ActionResult<Reserva>> PostReserva(Reserva reserva)
@@ -117,8 +117,8 @@ public class ReservasController : ControllerBase
             }
 
             */
-    // DELETE: api/Reservas/5
- //   [Authorize]
+    //DELETE: api/Reservas/5
+    [Authorize]
     [EnableCors]
     [HttpDelete("{id}")]
     public async Task<ActionResult<Reserva>> DeleteReserva(long id)
