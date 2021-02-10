@@ -17,7 +17,7 @@ namespace ParqueAPICentral.Repositories
 
         public async Task<ActionResult<IEnumerable<Reserva>>> GetAllReservasAsync()
         {
-            return await RepContext.Reserva.Include(r => r.ReservaID).ToListAsync();
+            return await RepContext.Reserva.ToListAsync();
         }
     }
 }

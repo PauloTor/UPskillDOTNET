@@ -16,7 +16,7 @@ using System.Text;
 using ParqueAPICentral.Entities;
 using Microsoft.Extensions.Configuration;
 using ParqueAPICentral.DTO;
-using ParqueAPICentral.Models;
+using ParqueAPICentral.Services;
 
 namespace ParqueAPICentral.Controllers
 {
@@ -26,13 +26,15 @@ namespace ParqueAPICentral.Controllers
     public class ReservasController : ControllerBase
     {
         private readonly APICentralContext _context;
+        private readonly ReservaService _service;
         private readonly IConfiguration _configure;
         private readonly string apiBaseUrl;
 
 
-        public ReservasController(APICentralContext context, IConfiguration configuration)
+        public ReservasController(APICentralContext context, IConfiguration configuration, ReservaService service)
         {
             _context = context;
+            this._service = service;
             _configure = configuration;
             apiBaseUrl = _configure.GetValue<string>("WebAPIPrivateBaseUrl");
         }
@@ -44,22 +46,7 @@ namespace ParqueAPICentral.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Reserva_>>> GetReservas()
         {
-            var ListaReservas = new List<Reserva_>();
-            using (var client = new HttpClient())
-            {
-                UserInfo user = new UserInfo();
-                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
-                var responseLogin = await client.PostAsync(apiBaseUrl + "users/authenticate", contentUser);
-                dynamic tokenresponsecontent = await responseLogin.Content.ReadAsAsync<object>();
-                string rtoken = tokenresponsecontent.jwtToken;
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", rtoken);
-                // Route para Lugar por datas
-                string endpoint = apiBaseUrl + "Reservas/";
-                var response = await client.GetAsync(endpoint);
-                response.EnsureSuccessStatusCode();
-                ListaReservas = await response.Content.ReadAsAsync<List<Reserva_>>();
-            }
-            return ListaReservas;
+            return await this._service.GetAllReservas();
         }
 
         [EnableCors]
