@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿/*using Microsoft.AspNetCore.Mvc;
 using ParqueAPICentral.Models;
 using System;
 using System.Collections.Generic;
@@ -11,5 +11,6 @@ namespace ParqueAPICentral.Repositories
     {
         Task<ActionResult<IEnumerable<Cliente>>>  GetAllClientesAsync();
         Task<ActionResult<Cliente>> FindClienteById(long id);
+        Task<ActionResult<Cliente>> CreateCliente(Cliente cliente);
     }
-}
+}*/

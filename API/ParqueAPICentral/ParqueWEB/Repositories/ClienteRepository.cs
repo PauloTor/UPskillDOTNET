@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿/*using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ParqueAPICentral.Data;
 using ParqueAPICentral.Models;
@@ -22,5 +22,9 @@ namespace ParqueAPICentral.Repositories
         {
             return await RepContext.Cliente.FindAsync(id);
         }
+        public Task<ActionResult<Cliente>> CreateCliente(Cliente cliente)
+        {
+            throw new NotImplementedException();
+        }
     }
-}
+} */

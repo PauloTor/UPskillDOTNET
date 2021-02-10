@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿/*using Microsoft.AspNetCore.Mvc;
 using ParqueAPICentral.Models;
 using ParqueAPICentral.Repositories;
 using System;
@@ -30,9 +30,22 @@ namespace ParqueAPICentral.Services
             return cliente;
 
         }
+        public async Task<ActionResult<Cliente>> CreateCliente(Cliente cliente)
+        {
+            _repo.CreateCliente.Add(cliente);
+            await _repo.SaveChangesAsync();
+
+            return CreatedAtAction("GetCliente", new { id = cliente.ClienteID }, cliente);
+        }
+
+        private ActionResult<Cliente> CreatedAtAction(string v, object p, Cliente cliente)
+        {
+            throw new NotImplementedException();
+        }
+
         private ActionResult<Cliente> NotFound()
         {
             throw new NotImplementedException("O que procura não existe.");
         }
     }
-}
+}*/
