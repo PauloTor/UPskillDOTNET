@@ -93,9 +93,18 @@ namespace ParqueAPICentral.Controllers
                 //Passa a reserva para formato JSON
                 StringContent reserva_ = new StringContent(JsonConvert.SerializeObject(reserva), Encoding.UTF8, "application/json");
                 string endpoint2 = apiBaseUrl + "reservas/";
+                string endpoint3 = apiBaseUrl + "Parque/";
                 // Post de uma nova reserva 
                 var response2 = await client.PostAsync(endpoint2, reserva_);
-                var reserva1 = new Reserva(reserva.ReservaID, ClienteID);
+                //var fatura_ = _context.Fatura.Where(f => f.ReservaID == reservaById).FirstOrDefault();
+                
+                var nif = await client.GetAsync(endpoint3);
+                
+
+                List<Parque> ListaParques = await nif.Content.ReadAsAsync<List<Parque>>();
+                var nif_= ListaParques.FirstOrDefault();
+                var nif__ = nif_.NifParque;
+                var reserva1 = new Reserva(nif__,reserva.ReservaID, ClienteID);
                 _context.Reserva.Add(reserva1);
                 await _context.SaveChangesAsync();
             }

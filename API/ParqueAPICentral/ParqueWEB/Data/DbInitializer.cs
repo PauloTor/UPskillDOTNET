@@ -17,24 +17,24 @@ namespace ParqueAPICentral.Data
         public static void Initialize(APICentralContext context)
         {
 
-            if (context.Parque.Any())
+            if (context.Cliente.Any())
             {
                 return;
             }
 
-            IList<Parque> defaultParque = new List<Parque>();
+            //IList<Parque> defaultParque = new List<Parque>();
 
-            defaultParque.Add(new Parque("Standard 1"));
-            defaultParque.Add(new Parque("Standard 2"));
-            defaultParque.Add(new Parque("Standard 3"));
-            defaultParque.Add(new Parque("Standard 4"));
-            defaultParque.Add(new Parque("Standard 5"));
+            //defaultParque.Add(new Parque("Standard 1"));
+            //defaultParque.Add(new Parque("Standard 2"));
+            //defaultParque.Add(new Parque("Standard 3"));
+            //defaultParque.Add(new Parque("Standard 4"));
+            //defaultParque.Add(new Parque("Standard 5"));
 
-            //            _context.Fatura.Add(fatura);
-            //          await _context.SaveChangesAsync();
-            context.Parque.AddRange(defaultParque);
+            ////            _context.Fatura.Add(fatura);
+            ////          await _context.SaveChangesAsync();
+            //context.Parque.AddRange(defaultParque);
 
-            context.SaveChanges();
+            //context.SaveChanges();
 
 
 
@@ -79,12 +79,12 @@ namespace ParqueAPICentral.Data
 
             IList<Reserva> defaultReserva = new List<Reserva>();
 
-            defaultReserva.Add(new Reserva(1, 2));
-            defaultReserva.Add(new Reserva(2, 1));
-            defaultReserva.Add(new Reserva(3, 2));
-            defaultReserva.Add(new Reserva(2, 2));
-            defaultReserva.Add(new Reserva(2, 4));
-            defaultReserva.Add(new Reserva(4, 2));
+            defaultReserva.Add(new Reserva(11111225222, 2,1));
+            defaultReserva.Add(new Reserva(22222115111, 1,2));
+            defaultReserva.Add(new Reserva(33333341111, 2,3));
+            defaultReserva.Add(new Reserva(22222131111, 2,4));
+            defaultReserva.Add(new Reserva(22223232355, 4,5));
+            defaultReserva.Add(new Reserva(23423445645, 2,2));
 
             context.Reserva.AddRange(defaultReserva);
 

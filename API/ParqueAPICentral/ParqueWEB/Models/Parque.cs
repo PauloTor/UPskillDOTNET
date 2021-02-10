@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace ParqueAPICentral.Models
 {
-    public class Parque
-    {
-        [Key]
-        public long ParqueID { get; set; }
+    //public class Parque
+    //{
+    //    [Key]
+    //    public long ParqueID { get; set; }
 
-        public string NomeParque { get; set; }
+    //    public string NomeParque { get; set; }
 
-        public Parque(string nomeParque)
-        {
-            NomeParque = nomeParque;
-        }
+    //    public Parque(string nomeParque)
+    //    {
+    //        NomeParque = nomeParque;
+    //    }
 
 
-    }
+    //}
 }

@@ -19,7 +19,7 @@ namespace ParqueAPICentral.Data
 
         public DbSet<ParqueAPICentral.Models.Cliente> Cliente { get; set; }   
 
-        public DbSet<ParqueAPICentral.Models.Parque> Parque { get; set; }
+       // public DbSet<ParqueAPICentral.Models.Parque> Parque { get; set; }
 
         public DbSet<ParqueAPICentral.Models.Reserva> Reserva { get; set; }
 
