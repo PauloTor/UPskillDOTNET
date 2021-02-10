@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ParqueAPICentral.Data;
 using ParqueAPICentral.Models;
-
+/*
 namespace ParqueAPICentral.Repositories
 {
     public class ReservaRepository : RepositoryBase<Reserva>, IReservaRepository
@@ -31,3 +31,4 @@ namespace ParqueAPICentral.Repositories
         }
     }
 }
+*/
