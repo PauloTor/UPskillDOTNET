@@ -25,6 +25,11 @@ namespace ParqueAPICentral.Repositories
             await RepContext.SaveChangesAsync();
             return faturaCriada.Entity;
         }
+
+        public Fatura FindFatura(long faturaId)
+        {
+            return RepContext.Fatura.FirstOrDefault(n => n.FaturaID == faturaId);
+        }
     }
 
 }

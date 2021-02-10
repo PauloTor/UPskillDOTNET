@@ -27,6 +27,11 @@ namespace ParqueAPICentral.Services
             return await _repo.CreateFatura(fatura);
         }
 
+        public Fatura FindFaturaByID(long faturaId)
+        {
+            return _repo.FindFatura(faturaId);
+        }
+
     }
 
 }

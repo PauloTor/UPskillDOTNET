@@ -10,5 +10,7 @@ namespace ParqueAPICentral.Repositories
     public interface IFaturaRepository : IRepositoryBase<Fatura>
     {
         Task<Fatura> CreateFatura(Fatura fatura);
+
+        Fatura FindFatura(long faturaId);
     }
 }
