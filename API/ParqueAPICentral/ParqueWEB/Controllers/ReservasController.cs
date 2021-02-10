@@ -33,15 +33,12 @@ namespace ParqueAPICentral.Controllers
 
         public ReservasController(APICentralContext context, IConfiguration configuration, ReservaService service)
         {
-            _context = context;
+            this._context = context;
             this._service = service;
             _configure = configuration;
             apiBaseUrl = _configure.GetValue<string>("WebAPIPrivateBaseUrl");
         }
        
-
-
-
         [EnableCors]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Reserva_>>> GetReservas()
@@ -53,47 +50,9 @@ namespace ParqueAPICentral.Controllers
         [HttpGet("{DataInicio}/{DataFim}/{Cliente}")]
         public async Task<ActionResult<IEnumerable<Reserva>>> PostReservaByData(String DataInicio, String DataFim, long ClienteID)
         {
-            var dateTimeInicio = DateTime.Parse(DataInicio);
-            var dateTimeFim = DateTime.Parse(DataFim);
-            Reserva_ reserva;
-            
-            using (var client = new HttpClient())
-            {
-                var cliente = await _context.Cliente.FindAsync(ClienteID);
-                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(cliente), Encoding.UTF8, "application/json");
-                var responseLogin = await client.PostAsync(apiBaseUrl + "users/authenticate", contentUser);
-                dynamic tokenresponsecontent = await responseLogin.Content.ReadAsAsync<object>();
-                string rtoken = tokenresponsecontent.jwtToken;
-
-                // Route para Lugar por datas
-                string endpoint = apiBaseUrl + "Lugares/" + DataInicio + "/" + DataFim;
-                var response = await client.GetAsync(endpoint);
-                response.EnsureSuccessStatusCode();
-                // Lugares disponiveis para criar Reserva
-                List<Lugar_> ListaLugar = await response.Content.ReadAsAsync<List<Lugar_>>();
-                long lugar = 0;
-                if (ListaLugar.Count != 0)
-                {
-                 // Pega no primeiro da Lista
-                    var Primeiro = ListaLugar.FirstOrDefault();
-                    lugar = Primeiro.LugarID;
-                }
-                var datanow = DateTime.Now;
-                //Nova reserva
-                reserva = new Reserva_(datanow, dateTimeInicio, dateTimeFim, lugar);
-                //Passa a reserva para formato JSON
-                StringContent reserva_ = new StringContent(JsonConvert.SerializeObject(reserva), Encoding.UTF8, "application/json");
-                string endpoint2 = apiBaseUrl + "reservas/";
-                // Post de uma nova reserva 
-                var response2 = await client.PostAsync(endpoint2, reserva_);
-                var parqueID = _context.Parque.FirstOrDefault().ParqueID;
-                var reserva1 = new Reserva(ClienteID,parqueID);
-                _context.Reserva.Add(reserva1);
-                await _context.SaveChangesAsync();
-            }
-
-            return NoContent();
+            return await this._service.PostReservaByData(DataInicio, DataFim, ClienteID);
         }
+
         // DELETE: api/reservas/id - Cancelar reserva
         [EnableCors]
         [HttpGet("{id}")]

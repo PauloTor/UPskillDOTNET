@@ -11,6 +11,8 @@ namespace ParqueAPICentral.Repositories
     {
         Task<ActionResult<IEnumerable<Reserva>>> GetAllReservasAsync();
 
+        Task<ActionResult<IEnumerable<Reserva>>> PostReservaByDataAsync(String DataInicio, String DataFim, long ClienteID);
+
         Task<ActionResult<Reserva>> CancelarReservaAsync(long id);
 
     }
