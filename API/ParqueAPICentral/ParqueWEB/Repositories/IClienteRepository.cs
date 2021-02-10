@@ -10,5 +10,6 @@ namespace ParqueAPICentral.Repositories
     public interface IClienteRepository : IRepositoryBase<Cliente>
     {
         Task<ActionResult<IEnumerable<Cliente>>>  GetAllClientesAsync();
+        Task<ActionResult<Cliente>> FindClienteById(long id);
     }
 }
