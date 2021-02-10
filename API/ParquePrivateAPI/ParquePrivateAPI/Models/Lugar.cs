@@ -16,6 +16,7 @@ namespace ParquePrivateAPI.Models
 
         [ForeignKey("ParqueID")]
         public long ParqueID { get; set; }
-        public  Parque Parque { get; set; }
+        public Parque Parque { get; set; }
+
     }
 }

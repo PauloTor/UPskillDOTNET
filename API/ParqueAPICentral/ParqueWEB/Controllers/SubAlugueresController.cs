@@ -86,7 +86,6 @@ namespace ParqueAPICentral.Controllers
                 await _context.SaveChangesAsync();
 
 
-
                 // disponibiliza reserva
                 var deleteTask = client.DeleteAsync(EndpointReserva+Reservaid);
                 deleteTask.Wait();
