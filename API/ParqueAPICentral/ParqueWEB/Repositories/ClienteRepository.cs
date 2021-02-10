@@ -26,5 +26,9 @@ namespace ParqueAPICentral.Repositories
         {
             throw new NotImplementedException();
         }
+        public async Task<ActionResult<IEnumerable<Cliente>>> UpdateClienteById(long id, Cliente cliente)
+        {
+            return await RepContext.Cliente.ToListAsync();
+        }
     }
 } */

@@ -11,6 +11,7 @@ namespace ParqueAPICentral.Repositories
     {
         Task<ActionResult<IEnumerable<Cliente>>>  GetAllClientesAsync();
         Task<ActionResult<Cliente>> FindClienteById(long id);
-        Task<ActionResult<Cliente>> CreateCliente(Cliente cliente);
+        Task<ActionResult<Cliente>> CreateCliente(Cliente cliente); 
+        Task<ActionResult<IEnumerable<Cliente>>> UpdateClienteById(long id, Cliente cliente);
     }
 }*/
