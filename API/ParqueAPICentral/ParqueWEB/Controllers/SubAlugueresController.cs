@@ -16,7 +16,7 @@ using ParqueAPICentral.Models;
 
 namespace ParqueAPICentral.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/SubAlugueres")]
     [ApiController]
     public class SubAlugueresController : ControllerBase
     {
@@ -38,9 +38,9 @@ namespace ParqueAPICentral.Controllers
         //    return await _context.SubAluguer.ToListAsync();
         //}
 
-        // GET: api/SubAlugueres/5
+        // POST: api/SubAlugueres/{Clienteid}/{Reservaid}/{PrecoHoraid}
         [HttpGet("{Clienteid}/{Reservaid}/{PrecoHoraid}")]
-        public async Task<ActionResult<SubAluguer>> GetSubAluguer(long Clienteid, long Reservaid, float PrecoHora)
+        public async Task<ActionResult<SubAluguer>> CreateSubAluguer(long Clienteid, long Reservaid, float PrecoHoraid)
         {
             var cliente = await _context.Cliente.FindAsync(Clienteid);
 
@@ -66,7 +66,7 @@ namespace ParqueAPICentral.Controllers
                 var LugarReserva = umareserva.ReservaID;
                 // apaga reserva(API)
 
-                precoLugarNovo = new PrecoLugar(LugarReserva, PrecoHora, datainicio, datafim);
+                precoLugarNovo = new PrecoLugar(LugarReserva, PrecoHoraid, datainicio, datafim);
 
                 StringContent reservaJson = new StringContent(JsonConvert.
                     SerializeObject(precoLugarNovo), Encoding.UTF8, "application/json");
@@ -80,7 +80,7 @@ namespace ParqueAPICentral.Controllers
 
                 var datanow = DateTime.Now;
 
-                subAluguer = new SubAluguer(PrecoHora, datanow, datainicio, datafim, Reservaid);
+                subAluguer = new SubAluguer(PrecoHoraid, datanow, datainicio, datafim, Reservaid);
 
                 _context.SubAluguer.Add(subAluguer);
                 await _context.SaveChangesAsync();
