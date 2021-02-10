@@ -44,9 +44,17 @@ namespace ParqueAPICentral.Controllers
 
         // GET Faturas by FaturaID - api/Faturas/5
         [HttpGet("{FaturaID}")]
-        public Fatura GetFatura(long FaturaID)
+        public IActionResult GetFatura(long FaturaID)
         {
-            return this._service.FindFaturaByID(FaturaID);
+            var Fatura = this._service.FindFaturaByID(FaturaID);
+
+            if (Fatura == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(Fatura);
+
         }
 
     }
