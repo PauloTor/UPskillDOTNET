@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ParquePrivateAPI.Migrations
 {
-    public partial class Initial : Migration
+    public partial class asa : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -22,10 +22,26 @@ namespace ParquePrivateAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    Username = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Parque",
                 columns: table => new
                 {
-                    ParqueID = table.Column<long>(nullable: false)
+                    NIFParqueID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     NomeParque = table.Column<string>(nullable: true),
                     Lotacao = table.Column<int>(nullable: false),
@@ -33,12 +49,38 @@ namespace ParquePrivateAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Parque", x => x.ParqueID);
+                    table.PrimaryKey("PK_Parque", x => x.NIFParqueID);
                     table.ForeignKey(
                         name: "FK_Parque_Morada_MoradaID",
                         column: x => x.MoradaID,
                         principalTable: "Morada",
                         principalColumn: "MoradaID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RefreshToken",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Token = table.Column<string>(nullable: true),
+                    Expires = table.Column<DateTime>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false),
+                    CreatedByIp = table.Column<string>(nullable: true),
+                    Revoked = table.Column<DateTime>(nullable: true),
+                    RevokedByIp = table.Column<string>(nullable: true),
+                    ReplacedByToken = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RefreshToken", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RefreshToken_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -51,17 +93,18 @@ namespace ParquePrivateAPI.Migrations
                     Fila = table.Column<int>(nullable: false),
                     Sector = table.Column<int>(nullable: false),
                     Preço = table.Column<float>(nullable: false),
-                    ParqueID = table.Column<long>(nullable: false)
+                    NIFParqueID = table.Column<long>(nullable: false),
+                    ParqueNIFParqueID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Lugar", x => x.LugarID);
                     table.ForeignKey(
-                        name: "FK_Lugar_Parque_ParqueID",
-                        column: x => x.ParqueID,
+                        name: "FK_Lugar_Parque_ParqueNIFParqueID",
+                        column: x => x.ParqueNIFParqueID,
                         principalTable: "Parque",
-                        principalColumn: "ParqueID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "NIFParqueID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -87,14 +130,19 @@ namespace ParquePrivateAPI.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Lugar_ParqueID",
+                name: "IX_Lugar_ParqueNIFParqueID",
                 table: "Lugar",
-                column: "ParqueID");
+                column: "ParqueNIFParqueID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Parque_MoradaID",
                 table: "Parque",
                 column: "MoradaID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RefreshToken_UserId",
+                table: "RefreshToken",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reserva_LugarID",
@@ -105,7 +153,13 @@ namespace ParquePrivateAPI.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "RefreshToken");
+
+            migrationBuilder.DropTable(
                 name: "Reserva");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Lugar");

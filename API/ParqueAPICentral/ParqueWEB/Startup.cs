@@ -35,6 +35,8 @@ namespace ParqueAPICentral
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IFaturaRepository, FaturaRepository>();
+            services.AddTransient<FaturaService>();
 
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<ClienteService>();

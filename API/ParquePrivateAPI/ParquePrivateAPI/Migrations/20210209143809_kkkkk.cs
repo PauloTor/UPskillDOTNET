@@ -2,7 +2,7 @@
 
 namespace ParquePrivateAPI.Migrations
 {
-    public partial class initial3 : Migration
+    public partial class kkkkk : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

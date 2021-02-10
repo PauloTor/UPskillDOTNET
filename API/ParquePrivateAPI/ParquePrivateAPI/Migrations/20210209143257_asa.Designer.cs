@@ -10,8 +10,8 @@ using ParquePrivateAPI.Data;
 namespace ParquePrivateAPI.Migrations
 {
     [DbContext(typeof(ParquePrivateAPIContext))]
-    [Migration("20210201095506_initial3")]
-    partial class initial3
+    [Migration("20210209143257_asa")]
+    partial class asa
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,8 +31,11 @@ namespace ParquePrivateAPI.Migrations
                     b.Property<int>("Fila")
                         .HasColumnType("int");
 
-                    b.Property<long>("ParqueID")
+                    b.Property<long>("NIFParqueID")
                         .HasColumnType("bigint");
+
+                    b.Property<int?>("ParqueNIFParqueID")
+                        .HasColumnType("int");
 
                     b.Property<float>("Preço")
                         .HasColumnType("real");
@@ -42,7 +45,7 @@ namespace ParquePrivateAPI.Migrations
 
                     b.HasKey("LugarID");
 
-                    b.HasIndex("ParqueID");
+                    b.HasIndex("ParqueNIFParqueID");
 
                     b.ToTable("Lugar");
                 });
@@ -67,9 +70,9 @@ namespace ParquePrivateAPI.Migrations
 
             modelBuilder.Entity("ParquePrivateAPI.Models.Parque", b =>
                 {
-                    b.Property<long>("ParqueID")
+                    b.Property<int>("NIFParqueID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Lotacao")
@@ -81,7 +84,7 @@ namespace ParquePrivateAPI.Migrations
                     b.Property<string>("NomeParque")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ParqueID");
+                    b.HasKey("NIFParqueID");
 
                     b.HasIndex("MoradaID");
 
@@ -142,9 +145,7 @@ namespace ParquePrivateAPI.Migrations
                 {
                     b.HasOne("ParquePrivateAPI.Models.Parque", "Parque")
                         .WithMany()
-                        .HasForeignKey("ParqueID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ParqueNIFParqueID");
                 });
 
             modelBuilder.Entity("ParquePrivateAPI.Models.Parque", b =>

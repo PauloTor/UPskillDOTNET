@@ -11,7 +11,8 @@ namespace ParquePrivateAPI.Models
 
     public class Parque
     {
-        public long ParqueID { get; set; }
+        [Key]
+        public int NIFParqueID { get; set; }
 
         public string NomeParque { get; set; }
 
@@ -22,3 +23,15 @@ namespace ParquePrivateAPI.Models
         public Morada Morada { get; set; }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+

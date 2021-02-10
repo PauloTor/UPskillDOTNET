@@ -62,11 +62,11 @@ namespace ParquePrivateAPI.Data
 
                 {
 
-                    new Lugar { Fila = 1, Sector = 1, Preço = 10, ParqueID = 1 },
-                    new Lugar { Fila = 2, Sector = 2, Preço = 11, ParqueID = 1 },
-                    new Lugar { Fila = 3, Sector = 1, Preço = 10, ParqueID = 1 },
-                    new Lugar { Fila = 4, Sector = 2, Preço = 11, ParqueID = 1 },
-                    new Lugar { Fila = 5, Sector = 1, Preço = 10, ParqueID = 1 },
+                    new Lugar { Fila = 1, Sector = 1, Preço = 10, NIFParqueID = 1 },
+                    new Lugar { Fila = 2, Sector = 2, Preço = 11, NIFParqueID = 1 },
+                    new Lugar { Fila = 3, Sector = 1, Preço = 10, NIFParqueID = 1 },
+                    new Lugar { Fila = 4, Sector = 2, Preço = 11, NIFParqueID = 1 },
+                    new Lugar { Fila = 5, Sector = 1, Preço = 10, NIFParqueID = 1 },
                 };
 
             foreach (Lugar s in lugar)
