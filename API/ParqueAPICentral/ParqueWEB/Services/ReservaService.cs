@@ -13,24 +13,26 @@ using ParqueAPICentral.Repositories;
 using Microsoft.Extensions.Configuration;
 using ParqueAPICentral.DTO;
 using ParqueAPICentral.Data;
-
+/*
 namespace ParqueAPICentral.Services
 {
     public class ReservaService
     {
-        private readonly APICentralContext _context;
-        private readonly IReservaRepository _repo;
-        private readonly IConfiguration _configure;
+        //private readonly APICentralContext _context;
+        private readonly IReservaRepository _ReservaRepo;
+        private readonly IClienteRepository _ClienteRepo;
+        //private readonly IConfiguration _configure;
         private readonly string apiBaseUrl;
 
 
-        public ReservaService(APICentralContext context, IReservaRepository repo, IConfiguration configuration)
+        public ReservaService(IReservaRepository reserva, IClienteRepository cliente)
         {
-            this._context = context;
-            this._repo = repo;
-            _configure = configuration;
+            // this._context = context;
+            this._ReservaRepo = reserva;
+            this._ClienteRepo = cliente;
+            //_configure = configuration;
 
-            apiBaseUrl = _configure.GetValue<string>("WebAPIPrivateBaseUrl");
+            //apiBaseUrl = _configure.GetValue<string>("WebAPIPrivateBaseUrl");
         }
 
         public async Task<ActionResult<IEnumerable<Reserva_>>> GetAllReservas()
@@ -51,7 +53,7 @@ namespace ParqueAPICentral.Services
                 response.EnsureSuccessStatusCode();
                 ListaReservas = await response.Content.ReadAsAsync<List<Reserva_>>();
             }
-            return ListaReservas;                    
+            return ListaReservas;
         }
 
         public async Task<ActionResult<IEnumerable<Reserva>>> PostReservaByData(String DataInicio, String DataFim, long ClienteID)
@@ -62,7 +64,7 @@ namespace ParqueAPICentral.Services
 
             using (var client = new HttpClient())
             {
-                var cliente = await _context.Cliente.FindAsync(ClienteID);
+                var cliente = await _ClienteRepo.FindClienteById(ClienteID);
                 StringContent contentUser = new StringContent(JsonConvert.SerializeObject(cliente), Encoding.UTF8, "application/json");
                 var responseLogin = await client.PostAsync(apiBaseUrl + "users/authenticate", contentUser);
                 dynamic tokenresponsecontent = await responseLogin.Content.ReadAsAsync<object>();
@@ -102,7 +104,7 @@ namespace ParqueAPICentral.Services
         {
             throw new NotImplementedException();
         }
-
+        
         public async Task<ActionResult<Reserva>> CancelarReserva(long id)
         {
             var reserva = await _context.Reserva.FindAsync(id);
@@ -155,3 +157,4 @@ namespace ParqueAPICentral.Services
         
     }
 }
+*/
