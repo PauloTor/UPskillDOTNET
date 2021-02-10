@@ -22,6 +22,8 @@ namespace ParquePrivateAPI.Data
 
         public DbSet<ParquePrivateAPI.Models.Parque> Parque { get; set; }
 
+        public DbSet<ParquePrivateAPI.Models.PrecoLugar> PrecoLugar { get; set; }
+
         public DbSet<ParquePrivateAPI.Models.User> Users { get; set; }
     }
 }
