@@ -19,8 +19,20 @@ namespace ParqueAPICentral.Services
         {
             return await this._repo.GetAllClientesAsync();
         }
+        public async Task<ActionResult<Cliente>> FindClienteById(long id)
+        {
+            var cliente = await this._repo.FindById(id);
+           
+            if (cliente == null)
+            {
+                return NotFound();
+            }
+            return cliente;
 
-
-
+        }
+        private ActionResult<Cliente> NotFound()
+        {
+            throw new NotImplementedException("O que procura não existe.");
+        }
     }
 }

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ParqueAPICentral.Controllers
 {
-  //  [Authorize]
+    //  [Authorize]
     [Route("api/Clientes")]
     [ApiController]
     public class ClientesController : ControllerBase
@@ -29,7 +29,11 @@ namespace ParqueAPICentral.Controllers
         {
             return await this._service.GetAllClientes();
         }
-
+        // GET: api/Clientes/5  - Obter Informação de um Cliente por ID
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Cliente>> GetCliente(long id)
+        {
+            return await this._service.FindClienteById(id);
+        }
     }
-
 }
