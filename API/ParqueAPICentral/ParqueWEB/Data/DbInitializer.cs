@@ -9,170 +9,86 @@ using ParqueAPICentral.Models;
 
 namespace ParqueAPICentral.Data
 {
+
     public static class DbInitializer
     {
+
         public static void Initialize(APICentralContext context)
         {
-            //context.Database.EnsureCreated();
 
-            //Look for any Pagamento.
-            if (context.Cliente.Any())
+            if (context.Parque.Any())
             {
-                return;   // DB has been seeded
+                return;
             }
 
-            // ===============================================================
+            IList<Parque> defaultParque = new List<Parque>();
 
-            var cliente = new Cliente[]
-            {
-                new Cliente { NomeCliente = "Cliente1", EmailCliente = "cliente1@hotmail.com", NifCliente = 111111111, MetodoPagamento = "DD", Credito = 1 },
-                new Cliente { NomeCliente = "Cliente2", EmailCliente = "cliente2@hotmail.com", NifCliente = 222222222, MetodoPagamento = "CartaoCredito", Credito = 0 },
-                new Cliente { NomeCliente = "Cliente3", EmailCliente = "cliente3@hotmail.com", NifCliente = 333333333, MetodoPagamento = "CartaoCredito", Credito = 0 },
-                new Cliente { NomeCliente = "Cliente4", EmailCliente = "cliente4@hotmail.com", NifCliente = 444444444, MetodoPagamento = "CartaoCredito", Credito = 0 },
-                new Cliente { NomeCliente = "Cliente5", EmailCliente = "cliente5@hotmail.com", NifCliente = 555555555, MetodoPagamento = "Paypall", Credito = 0 },
-                new Cliente { NomeCliente = "Cliente6", EmailCliente = "cliente6@hotmail.com", NifCliente = 666666666, MetodoPagamento = "DD", Credito = 0 },
-                new Cliente { NomeCliente = "Cliente6", EmailCliente = "cliente7@hotmail.com", NifCliente = 777777777, MetodoPagamento = "Paypall", Credito = 0 },
-                new Cliente { NomeCliente = "Cliente6", EmailCliente = "cliente8@hotmail.com", NifCliente = 888888888, MetodoPagamento = "Paypall", Credito = 2 },
-                new Cliente { NomeCliente = "Cliente9", EmailCliente = "cliente9@hotmail.com", NifCliente = 999999999, MetodoPagamento = "DD", Credito = 1 }
-            };
+            defaultParque.Add(new Parque("Standard 1"));
+            defaultParque.Add(new Parque("Standard 2"));
+            defaultParque.Add(new Parque("Standard 3"));
+            defaultParque.Add(new Parque("Standard 4"));
+            defaultParque.Add(new Parque("Standard 5"));
 
-            foreach (Cliente c in cliente)
-            {
-                context.Cliente.Add(c);
-            }
+            //            _context.Fatura.Add(fatura);
+            //          await _context.SaveChangesAsync();
+            context.Parque.AddRange(defaultParque);
+
             context.SaveChanges();
+            // var defaultUser = new List<User>();
 
-            // ===============================================================
-
-            // ===============================================================
-            /* var parque = new Parque[]
-
-                 {
-                     new Parque { NomeParque = "Boavista Park", Lotacao = 5, MoradaID = 1 },
-                     new Parque { NomeParque = "Lisboa Park", Lotacao = 30, MoradaID = 2},
-                     new Parque { NomeParque = "Aveiro Park", Lotacao = 100, MoradaID = 3},
-                     new Parque { NomeParque = "Gaia Park", Lotacao = 10, MoradaID = 4},
-                     new Parque { NomeParque = "Porto Park", Lotacao = 6, MoradaID = 5}
-                  };
-
-             foreach (Parque p in parque)
-             {
-                 context.Parque.Add(p);
-             }
-             context.SaveChanges();
-            */
-            //=================================================================
-
-            //===========================================================================================0
-            /*  var reserva = new Reserva[]
-  {
-              new Reserva
-              {
-                  DataReserva = DateTime.Parse("2020-01-01 15:00:00"),
-                  DataInicio = DateTime.Parse("2020-01-05 15:00:00"),
-                  DataFim = DateTime.Parse("2020-01-05 18:00:00"),
-                  DataSaida = DateTime.Parse("2020-01-05 18:00:00"),
-                  LugarID = 2,
-                  ClienteID = 1,
-                  SubAlugado = false
-
-              },
-
-              new Reserva
-              {
-                  DataReserva = DateTime.Parse("2020-01-04 11:00:00"),
-                  DataInicio = DateTime.Parse("2020-01-04 18:00:00"),
-                  DataFim = DateTime.Parse("2020-01-04 20:00:00"),
-                  DataSaida = DateTime.Parse("2020-01-04 21:00:00"),
-                  LugarID = 3,
-                  ClienteID = 2,
-                  SubAlugado = false
-              },
-
-              new Reserva
-              {
-                  DataReserva = DateTime.Parse("2020-01-11 09:30:00"),
-                  DataInicio = DateTime.Parse("2020-01-13 15:00:00"),
-                  DataFim = DateTime.Parse("2020-01-14 14:00:00"),
-                  DataSaida = DateTime.Parse("2020-01-14 14:00:00"),
-                  LugarID = 1,
-                  ClienteID = 3,
-                  SubAlugado = false
-              },
-
-              new Reserva
-              {
-                  DataReserva = DateTime.Parse("2020-01-18 15:00:00"),
-                  DataInicio = DateTime.Parse("2020-02-03 08:00:00"),
-                  DataFim = DateTime.Parse("2020-02-03 19:00:00"),
-                  DataSaida = DateTime.Parse("2020-02-03 19:00:00"),
-                  LugarID = 3,
-                  ClienteID = 4,
-                  SubAlugado = false
-              }
-          };
-              foreach (Reserva r in reserva)
-              {
-                  context.Reserva.Add(r);
-              }
-              context.SaveChanges();
-            */
-            //-----------------------------------------------------------------------------------------------------------------
-
-            //Este Seed começou a dar erro quando foi colocado o POST FaturaByReservaID
-
-            //var fatura = new Fatura[]
-
-            //    {
-            //        new Fatura { DataFatura = (2020,01,01), PrecoFatura = 33, ReservaID = 1 },
-            //        new Fatura { DataFatura = DateTime.Parse("2020-01-04 21:00:00"), PrecoFatura = 30, ReservaID = 2 },
-            //        new Fatura { DataFatura = DateTime.Parse("2020-01-14 15:00:00"), PrecoFatura = 230, ReservaID = 3 },
-            //        new Fatura { DataFatura = DateTime.Parse("2020-02-03 19:00:00"), PrecoFatura = 110, ReservaID = 4 }
-            //    };
-
-            //foreach (Fatura f in fatura)
             //{
-            //    context.Fatura.Add(f);
-            //}
-            //context.SaveChanges();
+            //    defaultCliente.Add(new Cliente ( "Cliente1", "cliente1@hotmail.com", 111111111, "DD", 1, "test", "test" );
+            //    defaultCliente.Add(new Cliente { NomeCliente = "Cliente2", EmailCliente = "cliente2@hotmail.com", NifCliente = 222222222, MetodoPagamento = "CartaoCredito", Credito = 0, Username = "test", Password = "test" }) ;
+            //    defaultCliente.Add(new Cliente { NomeCliente = "Cliente3", EmailCliente = "cliente3@hotmail.com", NifCliente = 333333333, MetodoPagamento = "CartaoCredito", Credito = 0, Username = "test", Password = "test" } );
+            //    defaultCliente.Add(new Cliente { NomeCliente = "Cliente4", EmailCliente = "cliente4@hotmail.com", NifCliente = 444444444, MetodoPagamento = "CartaoCredito", Credito = 0, Username = "test", Password = "test" });
+            //    defaultCliente.Add(new Cliente { NomeCliente = "Cliente5", EmailCliente = "cliente5@hotmail.com", NifCliente = 555555555, MetodoPagamento = "Paypall", Credito = 0, Username = "test", Password = "test" });
+            //    defaultCliente.Add(new Cliente { NomeCliente = "Cliente6", EmailCliente = "cliente6@hotmail.com", NifCliente = 666666666, MetodoPagamento = "DD", Credito = 0, Username = "test", Password = "test" });
+            //    defaultCliente.Add(new Cliente { NomeCliente = "Cliente6", EmailCliente = "cliente7@hotmail.com", NifCliente = 777777777, MetodoPagamento = "Paypall", Credito = 0, Username = "test", Password = "test" });
+            //    defaultCliente.Add(new Cliente { NomeCliente = "Cliente6", EmailCliente = "cliente8@hotmail.com", NifCliente = 888888888, MetodoPagamento = "Paypall", Credito = 2, Username = "test", Password = "test" });
+            //    defaultCliente.Add(new Cliente { NomeCliente = "Cliente9", EmailCliente = "cliente9@hotmail.com", NifCliente = 999999999, MetodoPagamento = "DD", Credito = 1, Username = "test", Password = "test" });          
+            //};
 
-            //=================================================================
 
-            var subaluguer = new SubAluguer[]
-                {
-                    new SubAluguer { PrecoSubAluguer = 10, DataSubAluguer = DateTime.Parse("2020-01-01 17:00:00"), DataInicio = DateTime.Parse("2020-01-05 15:00:00"), DataFim = DateTime.Parse("2020-01-05 18:00:00"), ReservaID = 4 },
-                    new SubAluguer { PrecoSubAluguer = 15, DataSubAluguer = DateTime.Parse("2020-01-04 12:00:00"), DataInicio = DateTime.Parse("2020-01-04 18:00:00"), DataFim = DateTime.Parse("2020-01-04 20:00:00"), ReservaID = 3 },
-                    new SubAluguer { PrecoSubAluguer = 20, DataSubAluguer = DateTime.Parse("2020-01-14 14:00:00"), DataInicio = DateTime.Parse("2020-01-13 15:00:00"), DataFim = DateTime.Parse("2020-01-14 14:00:00"), ReservaID = 2 },
-                    new SubAluguer { PrecoSubAluguer = 15, DataSubAluguer = DateTime.Parse("2020-01-25 19:00:00"), DataInicio = DateTime.Parse("2020-02-03 08:00:00"), DataFim = DateTime.Parse("2020-02-03 19:00:00"), ReservaID = 1 },
-                };
+            // eliminar subalugado
 
-            foreach (SubAluguer s in subaluguer)
-            {
-                context.SubAluguer.Add(s);
-            }
+            IList<Reserva> defaultReserva = new List<Reserva>();
+
+            defaultReserva.Add(new Reserva(1, 2));
+            defaultReserva.Add(new Reserva(2, 1));
+            defaultReserva.Add(new Reserva(3, 2));
+            defaultReserva.Add(new Reserva(2, 2));
+            defaultReserva.Add(new Reserva(2, 4));
+            defaultReserva.Add(new Reserva(4, 2));
+
+            context.Reserva.AddRange(defaultReserva);
+
             context.SaveChanges();
 
-            //=================================================================
 
-            var Pagamento = new Pagamento[]
 
-               {
+            IList<Fatura> defaultFatura = new List<Fatura>();
 
-                    new Pagamento { FaturaID = 1 },
-                    new Pagamento { FaturaID = 1 },
-                    new Pagamento { FaturaID = 2 },
-                    new Pagamento { FaturaID = 3 },
-                    new Pagamento { FaturaID = 4 },
-                    new Pagamento { FaturaID = 3},
+            defaultFatura.Add(new Fatura(DateTime.Parse("2020-01-04 21:00:00"), 33, 1));
+            defaultFatura.Add(new Fatura(DateTime.Parse("2021-01-01 20:00:00"), 131, 2));
+            defaultFatura.Add(new Fatura(DateTime.Parse("2019-02-11 21:00:00"), 232, 3));
+            defaultFatura.Add(new Fatura(DateTime.Parse("2120-11-04 21:00:00"), 33, 1));
+            defaultFatura.Add(new Fatura(DateTime.Parse("2021-02-01 05:00:00"), 1131, 2));
+            defaultFatura.Add(new Fatura(DateTime.Parse("2019-02-11 21:00:00"), 2232, 4));
 
-               };
+            context.Fatura.AddRange(defaultFatura);
 
-            foreach (Pagamento s in Pagamento)
-            {
-                context.Pagamento.Add(s);
-            }
             context.SaveChanges();
 
+
+            IList<SubAluguer> defaultSubAluguer = new List<SubAluguer>();
+
+            defaultSubAluguer.Add(new SubAluguer(100, DateTime.Parse("2020-01-01 17:00:00"), DateTime.Parse("2020-01-05 15:00:00"), DateTime.Parse("2020-01-05 18:00:00"), 4));
+            defaultSubAluguer.Add(new SubAluguer(15, DateTime.Parse("2020-01-04 12:00:00"), DateTime.Parse("2020-01-04 18:00:00"), DateTime.Parse("2020-01-04 20:00:00"), 3));
+            defaultSubAluguer.Add(new SubAluguer(20, DateTime.Parse("2020-01-14 14:00:00"), DateTime.Parse("2020-01-13 15:00:00"), DateTime.Parse("2020-01-14 14:00:00"), 2));
+            defaultSubAluguer.Add(new SubAluguer(15, DateTime.Parse("2020-01-25 19:00:00"), DateTime.Parse("2020-02-03 08:00:00"), DateTime.Parse("2020-02-03 19:00:00"), 1));
+
+            context.SubAluguer.AddRange(defaultSubAluguer);
+            context.SaveChanges();
 
 
 
