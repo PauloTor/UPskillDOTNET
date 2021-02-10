@@ -29,5 +29,16 @@ namespace ParqueAPICentral.Models
         [ForeignKey("ReservaID")]
         public long ReservaID { get; set; }
         public Reserva  reserva { get; set; }
+
+
+        public SubAluguer(float precoSubAluguer, DateTime dataSubAluguer, DateTime dataInicio, DateTime dataFim, long reservaID)
+        {
+            PrecoSubAluguer = precoSubAluguer;
+            DataSubAluguer = dataSubAluguer;
+            DataInicio = dataInicio;
+            DataFim = dataFim;
+            ReservaID = reservaID;
+        }
+
     }
 }

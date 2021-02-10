@@ -15,6 +15,7 @@ using Newtonsoft.Json;
 using System.Text;
 using ParqueAPICentral.Entities;
 using Microsoft.Extensions.Configuration;
+using ParqueAPICentral.DTO;
 using ParqueAPICentral.Services;
 
 namespace ParqueAPICentral.Controllers
@@ -66,7 +67,7 @@ namespace ParqueAPICentral.Controllers
                 var response = await client.GetAsync(endpoint);
                 response.EnsureSuccessStatusCode();
                 // Lugares disponiveis para criar Reserva
-                List<Lugar> ListaLugar = await response.Content.ReadAsAsync<List<Lugar>>();
+                List<Lugar_> ListaLugar = await response.Content.ReadAsAsync<List<Lugar_>>();
                 long lugar = 0;
                 if (ListaLugar.Count != 0)
                 {

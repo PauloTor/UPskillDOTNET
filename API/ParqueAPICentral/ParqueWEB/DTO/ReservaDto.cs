@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using ParqueAPICentral.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace ParqueAPICentral.Models
+namespace ParqueAPICentral.DTO
 {
     public class Reserva_
     {
@@ -28,7 +28,7 @@ namespace ParqueAPICentral.Models
 
         [ForeignKey("LugarID")]
         public long LugarID { get; set; }        
-        public Lugar Lugar { get; set; }
+        public Lugar_ Lugar_ { get; set; }
 
 
 

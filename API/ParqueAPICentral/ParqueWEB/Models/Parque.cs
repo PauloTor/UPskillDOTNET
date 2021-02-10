@@ -11,5 +11,12 @@ namespace ParqueAPICentral.Models
         public long ParqueID { get; set; }
 
         public string NomeParque { get; set; }
+
+        public Parque(string nomeParque)
+        {
+            NomeParque = nomeParque;
+        }
+
+
     }
 }
