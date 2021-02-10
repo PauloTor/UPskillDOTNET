@@ -39,6 +39,9 @@ namespace ParqueAPICentral.Controllers
             apiBaseUrl = _configure.GetValue<string>("WebAPIPrivateBaseUrl");
         }
        
+
+
+
         [EnableCors]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Reserva_>>> GetReservas()
@@ -83,7 +86,8 @@ namespace ParqueAPICentral.Controllers
                 string endpoint2 = apiBaseUrl + "reservas/";
                 // Post de uma nova reserva 
                 var response2 = await client.PostAsync(endpoint2, reserva_);
-                var reserva1 = new Reserva(reserva.ReservaID, ClienteID);
+                var parqueID = _context.Parque.FirstOrDefault().ParqueID;
+                var reserva1 = new Reserva(ClienteID,parqueID);
                 _context.Reserva.Add(reserva1);
                 await _context.SaveChangesAsync();
             }

@@ -36,11 +36,19 @@ namespace ParqueAPICentral.Controllers
 
         // POST Faturas by ReservaID - api/Faturas/ReservaID
         [EnableCors]
-        [HttpGet("{ReservaID}")]
+        [HttpGet("Reserva/{ReservaID}")]
         public async Task<ActionResult<Fatura>> PostFaturaByReservaID(long reservaID)
         {
             return await this._service.CreateFaturaByReservaID(reservaID);
         }
 
+        // GET Faturas by FaturaID - api/Faturas/5
+        [HttpGet("{FaturaID}")]
+        public Fatura GetFatura(long FaturaID)
+        {
+            return this._service.FindFaturaByID(FaturaID);
+        }
+
     }
 }
+
