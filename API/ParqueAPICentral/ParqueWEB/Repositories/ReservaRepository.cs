@@ -19,5 +19,10 @@ namespace ParqueAPICentral.Repositories
         {
             return await RepContext.Reserva.ToListAsync();
         }
+
+        public async Task<ActionResult<Reserva>> CancelarReservaAsync(long id)
+        {
+            return await this.RepContext.CancelarReserva(id);
+        }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ParqueAPICentral.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ParqueAPICentral.Data
 {
@@ -23,6 +24,11 @@ namespace ParqueAPICentral.Data
         public DbSet<ParqueAPICentral.Models.Reserva> Reserva { get; set; }
 
         public DbSet<ParqueAPICentral.Models.Pagamento> Pagamento { get; set; }
+
+        internal Task<ActionResult<Reserva>> CancelarReserva(long id)
+        {
+            throw new NotImplementedException();
+        }
 
         public DbSet<ParqueAPICentral.Entities.User> Users { get; set; }
 

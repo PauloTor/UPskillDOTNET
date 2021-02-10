@@ -10,5 +10,8 @@ namespace ParqueAPICentral.Repositories
     public interface IReservaRepository : IRepositoryBase<Reserva>
     {
         Task<ActionResult<IEnumerable<Reserva>>> GetAllReservasAsync();
+
+        Task<ActionResult<Reserva>> CancelarReservaAsync(long id);
+
     }
 }
