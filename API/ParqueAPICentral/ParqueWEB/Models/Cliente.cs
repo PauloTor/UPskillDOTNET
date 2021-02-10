@@ -2,14 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ParqueAPICentral.Models
 {
-    public class Cliente : User
+    public class Cliente
     {
-       
+        [Key]
         public long ClienteID { get; set; }
 
         public string NomeCliente { get; set; }
@@ -22,6 +23,11 @@ namespace ParqueAPICentral.Models
 
         public float Credito { get; set; }
 
+        [ForeignKey("Id")]
+        public long Id { get; set; }
+        public User user { get; set; }
+
+
         public virtual void Depositar(float valor)
         {
             Credito += valor;
@@ -32,21 +38,19 @@ namespace ParqueAPICentral.Models
             Credito -= valor;
         }
 
-        /*private readonly List<Fatura> Operacao = new List<Fatura>();
 
-        public decimal Creditos
+        public Cliente(string nomeCliente, string emailCliente, int nifCliente, string metodoPagamento, float credito,long id)
         {
-            get
-            {
-                decimal Creditos = 0;
-                foreach (var item in Operacao)
-                {
-                    Creditos -= item.PrecoFatura;
-                }
 
-                return Credito;
-            }
+            NomeCliente = nomeCliente;
+            EmailCliente = emailCliente;
+            NifCliente = nifCliente;
+            MetodoPagamento = metodoPagamento;
+            Credito = credito;
+            Id = id;
+
         }
-        */
+
+    }   
     }
-}
+

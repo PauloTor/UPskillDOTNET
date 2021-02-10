@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using ParqueAPICentral.Entities;
 using ParqueAPICentral.Models;
 
 
@@ -34,19 +35,44 @@ namespace ParqueAPICentral.Data
             context.Parque.AddRange(defaultParque);
 
             context.SaveChanges();
-            // var defaultUser = new List<User>();
 
-            //{
-            //    defaultCliente.Add(new Cliente ( "Cliente1", "cliente1@hotmail.com", 111111111, "DD", 1, "test", "test" );
-            //    defaultCliente.Add(new Cliente { NomeCliente = "Cliente2", EmailCliente = "cliente2@hotmail.com", NifCliente = 222222222, MetodoPagamento = "CartaoCredito", Credito = 0, Username = "test", Password = "test" }) ;
-            //    defaultCliente.Add(new Cliente { NomeCliente = "Cliente3", EmailCliente = "cliente3@hotmail.com", NifCliente = 333333333, MetodoPagamento = "CartaoCredito", Credito = 0, Username = "test", Password = "test" } );
-            //    defaultCliente.Add(new Cliente { NomeCliente = "Cliente4", EmailCliente = "cliente4@hotmail.com", NifCliente = 444444444, MetodoPagamento = "CartaoCredito", Credito = 0, Username = "test", Password = "test" });
-            //    defaultCliente.Add(new Cliente { NomeCliente = "Cliente5", EmailCliente = "cliente5@hotmail.com", NifCliente = 555555555, MetodoPagamento = "Paypall", Credito = 0, Username = "test", Password = "test" });
-            //    defaultCliente.Add(new Cliente { NomeCliente = "Cliente6", EmailCliente = "cliente6@hotmail.com", NifCliente = 666666666, MetodoPagamento = "DD", Credito = 0, Username = "test", Password = "test" });
-            //    defaultCliente.Add(new Cliente { NomeCliente = "Cliente6", EmailCliente = "cliente7@hotmail.com", NifCliente = 777777777, MetodoPagamento = "Paypall", Credito = 0, Username = "test", Password = "test" });
-            //    defaultCliente.Add(new Cliente { NomeCliente = "Cliente6", EmailCliente = "cliente8@hotmail.com", NifCliente = 888888888, MetodoPagamento = "Paypall", Credito = 2, Username = "test", Password = "test" });
-            //    defaultCliente.Add(new Cliente { NomeCliente = "Cliente9", EmailCliente = "cliente9@hotmail.com", NifCliente = 999999999, MetodoPagamento = "DD", Credito = 1, Username = "test", Password = "test" });          
-            //};
+
+
+            var user = new User[]
+
+                           {
+
+
+              new User { FirstName = "Test1", LastName = "User11", Username = "test1", Password = "test1" },
+              new User { FirstName = "Test2", LastName = "User22", Username = "test2", Password = "test2" },
+              new User { FirstName = "Test3", LastName = "User33", Username = "test3", Password = "test3" },
+              new User { FirstName = "Test4", LastName = "User44", Username = "test4", Password = "test4" },
+              new User { FirstName = "Test5", LastName = "User55", Username = "test5", Password = "test5" }
+                           };
+
+            foreach (User s in user)
+            {
+                context.Users.Add(s);
+            }
+            context.SaveChanges();
+
+
+
+            var defaultCliente = new List<Cliente>();
+
+            defaultCliente.Add(new Cliente("Cliente1", "cliente1@hotmail.com", 111111111, "DD", 10,1));
+            defaultCliente.Add(new Cliente("Cliente2", "cliente2@hotmail.com", 222222222, "CartaoCredito", 20,2));
+            defaultCliente.Add(new Cliente("Cliente3", "cliente3@hotmail.com", 333333333, "CartaoCredito", 30,3));
+            defaultCliente.Add(new Cliente("Cliente4", "cliente4@hotmail.com", 444444444, "DD", 40,2));
+            defaultCliente.Add(new Cliente("Cliente6", "cliente5@hotmail.com", 555555555, "CartaoCredito", 50,1));
+            defaultCliente.Add(new Cliente("Cliente6", "cliente6@hotmail.com", 666666666, "CartaoCredito", 60,5));
+
+            context.Cliente.AddRange(defaultCliente);
+
+            context.SaveChanges();
+
+
+
 
 
             // eliminar subalugado
