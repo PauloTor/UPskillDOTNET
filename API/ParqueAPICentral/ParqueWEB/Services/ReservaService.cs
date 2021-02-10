@@ -12,18 +12,21 @@ using ParqueAPICentral.Models;
 using ParqueAPICentral.Repositories;
 using Microsoft.Extensions.Configuration;
 using ParqueAPICentral.DTO;
+using ParqueAPICentral.Data;
 
 namespace ParqueAPICentral.Services
 {
     public class ReservaService
     {
+        private readonly APICentralContext _context;
         private readonly IReservaRepository _repo;
         private readonly IConfiguration _configure;
         private readonly string apiBaseUrl;
 
 
-        public ReservaService(IReservaRepository repo, IConfiguration configuration)
+        public ReservaService(APICentralContext context, IReservaRepository repo, IConfiguration configuration)
         {
+            this._context = context;
             this._repo = repo;
             _configure = configuration;
 
@@ -50,5 +53,56 @@ namespace ParqueAPICentral.Services
             }
             return ListaReservas;                    
         }
+
+        public async Task<ActionResult<Reserva>> CancelarReserva(long id)
+        {
+            var reserva = await _context.Reserva.FindAsync(id);
+
+            if (reserva == null)
+            {
+                return NotFound();
+            }
+
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = apiBaseUrl + "reservas/" + id;
+
+                var reservaRes = await client.GetAsync(endpoint);
+
+                var reserva_ = await reservaRes.Content.ReadAsAsync<Reserva_>();
+
+                long reservaById = reserva_.ReservaID;
+
+                long clienteById = reserva.ClienteID;
+
+                var fatura_ = _context.Fatura.Where(f => f.ReservaID == reservaById).FirstOrDefault();
+
+                var cliente_ = _context.Cliente.Where(c => c.ClienteID == clienteById).FirstOrDefault();
+
+                float precoFatura = fatura_.PrecoFatura;
+
+                cliente_.Depositar(precoFatura);
+
+                _context.Reserva.Remove(reserva);
+
+                var deleteTask = client.DeleteAsync(endpoint);
+
+            }
+
+            await _context.SaveChangesAsync();
+
+            return Eliminado();
+        }
+        private ActionResult<Reserva> NotFound()
+        {
+            throw new NotImplementedException("A reserva que procura não existe.");
+        }
+
+        private ActionResult<Reserva> Eliminado()
+        {
+            throw new NotImplementedException("Reserva eliminada.");
+        }
+
+        
     }
 }

@@ -95,42 +95,7 @@ namespace ParqueAPICentral.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Reserva>> CancelarReserva(long id)
         {
-            var reserva = await _context.Reserva.FindAsync(id);
-
-            if (reserva == null)
-            {
-                return NotFound();
-            }
-
-            using (HttpClient client = new HttpClient())
-            {             
-                string endpoint = apiBaseUrl + "reservas/" + id;
-                             
-                var reservaRes = await client.GetAsync(endpoint);
-                
-                var reserva_ = await reservaRes.Content.ReadAsAsync<Reserva_>();
-               
-                long reservaById = reserva_.ReservaID;
-
-                long clienteById = reserva.ClienteID;
-               
-                var fatura_ = _context.Fatura.Where(f => f.ReservaID == reservaById).FirstOrDefault();
-                
-                var cliente_ = _context.Cliente.Where(c => c.ClienteID == clienteById).FirstOrDefault();
-               
-                float precoFatura = fatura_.PrecoFatura;
-
-                cliente_.Depositar(precoFatura);
-
-                _context.Reserva.Remove(reserva);
-
-                var deleteTask = client.DeleteAsync(endpoint);
-
-            }
-
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return await this._service.CancelarReserva(id);
         }
     }
 }
