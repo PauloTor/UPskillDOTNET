@@ -15,7 +15,8 @@ using Newtonsoft.Json;
 using System.Text;
 using ParqueAPICentral.Entities;
 using Microsoft.Extensions.Configuration;
-
+using ParqueAPICentral.DTO;
+using ParqueAPICentral.Services;
 
 namespace ParqueAPICentral.Controllers
 {
@@ -25,37 +26,27 @@ namespace ParqueAPICentral.Controllers
     public class ReservasController : ControllerBase
     {
         private readonly APICentralContext _context;
+        private readonly ReservaService _service;
         private readonly IConfiguration _configure;
         private readonly string apiBaseUrl;
 
 
-        public ReservasController(APICentralContext context, IConfiguration configuration)
+        public ReservasController(APICentralContext context, IConfiguration configuration, ReservaService service)
         {
             _context = context;
+            this._service = service;
             _configure = configuration;
             apiBaseUrl = _configure.GetValue<string>("WebAPIPrivateBaseUrl");
         }
        
+
+
+
         [EnableCors]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Reserva_>>> GetReservas()
         {
-            var ListaReservas = new List<Reserva_>();
-            using (var client = new HttpClient())
-            {
-                UserInfo user = new UserInfo();
-                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
-                var responseLogin = await client.PostAsync(apiBaseUrl + "users/authenticate", contentUser);
-                dynamic tokenresponsecontent = await responseLogin.Content.ReadAsAsync<object>();
-                string rtoken = tokenresponsecontent.jwtToken;
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", rtoken);
-                // Route para Lugar por datas
-                string endpoint = apiBaseUrl + "Reservas/";
-                var response = await client.GetAsync(endpoint);
-                response.EnsureSuccessStatusCode();
-                ListaReservas = await response.Content.ReadAsAsync<List<Reserva_>>();
-            }
-            return ListaReservas;
+            return await this._service.GetAllReservas();
         }
 
         [EnableCors]
@@ -79,7 +70,7 @@ namespace ParqueAPICentral.Controllers
                 var response = await client.GetAsync(endpoint);
                 response.EnsureSuccessStatusCode();
                 // Lugares disponiveis para criar Reserva
-                List<Lugar> ListaLugar = await response.Content.ReadAsAsync<List<Lugar>>();
+                List<Lugar_> ListaLugar = await response.Content.ReadAsAsync<List<Lugar_>>();
                 long lugar = 0;
                 if (ListaLugar.Count != 0)
                 {
@@ -95,7 +86,8 @@ namespace ParqueAPICentral.Controllers
                 string endpoint2 = apiBaseUrl + "reservas/";
                 // Post de uma nova reserva 
                 var response2 = await client.PostAsync(endpoint2, reserva_);
-                var reserva1 = new Reserva(reserva.ReservaID, ClienteID);
+                var parqueID = _context.Parque.FirstOrDefault().ParqueID;
+                var reserva1 = new Reserva(ClienteID,parqueID);
                 _context.Reserva.Add(reserva1);
                 await _context.SaveChangesAsync();
             }

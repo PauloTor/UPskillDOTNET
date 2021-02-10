@@ -6,9 +6,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ParqueAPICentral.Models;
 
-namespace ParqueAPICentral.Models
+namespace ParqueAPICentral.DTO
 {
-    public class Lugar
+    public class Lugar_
     {   
         public long LugarID { get; set; }
         public int Fila { get; set; }
