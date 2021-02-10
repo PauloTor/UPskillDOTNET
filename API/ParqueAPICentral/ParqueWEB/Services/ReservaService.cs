@@ -11,7 +11,7 @@ using ParqueAPICentral.Entities;
 using ParqueAPICentral.Models;
 using ParqueAPICentral.Repositories;
 using Microsoft.Extensions.Configuration;
-
+using ParqueAPICentral.DTO;
 
 namespace ParqueAPICentral.Services
 {
