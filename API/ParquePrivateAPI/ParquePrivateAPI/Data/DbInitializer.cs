@@ -46,7 +46,7 @@ namespace ParquePrivateAPI.Data
                 {
 
 
-            new Parque { NomeParque = " Boavista Park", Lotacao = 5, MoradaID = 1 },
+            new Parque { NifParque =111112222,NomeParque = " Boavista Park", Lotacao = 5, MoradaID = 1 },
              };
 
             foreach (Parque s in parque)
@@ -62,11 +62,11 @@ namespace ParquePrivateAPI.Data
 
                 {
 
-                    new Lugar { Fila = 1, Sector = 1, Preço = 10, NIFParqueID = 1 },
-                    new Lugar { Fila = 2, Sector = 2, Preço = 11, NIFParqueID = 1 },
-                    new Lugar { Fila = 3, Sector = 1, Preço = 10, NIFParqueID = 1 },
-                    new Lugar { Fila = 4, Sector = 2, Preço = 11, NIFParqueID = 1 },
-                    new Lugar { Fila = 5, Sector = 1, Preço = 10, NIFParqueID = 1 },
+                    new Lugar { Fila = 1, Sector = 1, Preço = 10, ParqueID = 1 },
+                    new Lugar { Fila = 2, Sector = 2, Preço = 11, ParqueID = 1 },
+                    new Lugar { Fila = 3, Sector = 1, Preço = 10, ParqueID = 1 },
+                    new Lugar { Fila = 4, Sector = 2, Preço = 11, ParqueID = 1 },
+                    new Lugar { Fila = 5, Sector = 1, Preço = 10, ParqueID = 1 },
                 };
 
             foreach (Lugar s in lugar)

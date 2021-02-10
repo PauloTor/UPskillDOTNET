@@ -12,7 +12,9 @@ namespace ParquePrivateAPI.Models
     public class Parque
     {
         [Key]
-        public int NIFParqueID { get; set; }
+        public long ParqueID { get; set; }
+
+        public long NifParque { get; set; }
 
         public string NomeParque { get; set; }
 

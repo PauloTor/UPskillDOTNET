@@ -10,8 +10,8 @@ using ParquePrivateAPI.Data;
 namespace ParquePrivateAPI.Migrations
 {
     [DbContext(typeof(ParquePrivateAPIContext))]
-    [Migration("20210209143809_kkkkk")]
-    partial class kkkkk
+    [Migration("20210210205628_errr")]
+    partial class errr
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,11 +31,8 @@ namespace ParquePrivateAPI.Migrations
                     b.Property<int>("Fila")
                         .HasColumnType("int");
 
-                    b.Property<long>("NIFParqueID")
+                    b.Property<long>("ParqueID")
                         .HasColumnType("bigint");
-
-                    b.Property<int?>("ParqueNIFParqueID")
-                        .HasColumnType("int");
 
                     b.Property<float>("Preço")
                         .HasColumnType("real");
@@ -45,7 +42,7 @@ namespace ParquePrivateAPI.Migrations
 
                     b.HasKey("LugarID");
 
-                    b.HasIndex("ParqueNIFParqueID");
+                    b.HasIndex("ParqueID");
 
                     b.ToTable("Lugar");
                 });
@@ -70,9 +67,9 @@ namespace ParquePrivateAPI.Migrations
 
             modelBuilder.Entity("ParquePrivateAPI.Models.Parque", b =>
                 {
-                    b.Property<int>("NIFParqueID")
+                    b.Property<long>("ParqueID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Lotacao")
@@ -81,14 +78,46 @@ namespace ParquePrivateAPI.Migrations
                     b.Property<long>("MoradaID")
                         .HasColumnType("bigint");
 
+                    b.Property<long>("NifParque")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("NomeParque")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("NIFParqueID");
+                    b.HasKey("ParqueID");
 
                     b.HasIndex("MoradaID");
 
                     b.ToTable("Parque");
+                });
+
+            modelBuilder.Entity("ParquePrivateAPI.Models.PrecoLugar", b =>
+                {
+                    b.Property<long>("PrecoLugarID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DataFim")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataInicio")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("LugarID")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("LugarID1")
+                        .HasColumnType("bigint");
+
+                    b.Property<float>("Preco")
+                        .HasColumnType("real");
+
+                    b.HasKey("PrecoLugarID");
+
+                    b.HasIndex("LugarID1");
+
+                    b.ToTable("PrecoLugar");
                 });
 
             modelBuilder.Entity("ParquePrivateAPI.Models.Reserva", b =>
@@ -145,7 +174,9 @@ namespace ParquePrivateAPI.Migrations
                 {
                     b.HasOne("ParquePrivateAPI.Models.Parque", "Parque")
                         .WithMany()
-                        .HasForeignKey("ParqueNIFParqueID");
+                        .HasForeignKey("ParqueID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ParquePrivateAPI.Models.Parque", b =>
@@ -155,6 +186,13 @@ namespace ParquePrivateAPI.Migrations
                         .HasForeignKey("MoradaID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ParquePrivateAPI.Models.PrecoLugar", b =>
+                {
+                    b.HasOne("ParquePrivateAPI.Models.Lugar", "Lugar")
+                        .WithMany()
+                        .HasForeignKey("LugarID1");
                 });
 
             modelBuilder.Entity("ParquePrivateAPI.Models.Reserva", b =>

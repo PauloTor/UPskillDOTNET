@@ -42,7 +42,7 @@ namespace ParquePrivateAPI.Controllers
         {
             var parque = await _context.Parque
                         .Include(p => p.Morada)
-                        .FirstOrDefaultAsync(p => p.NIFParqueID == id);
+                        .FirstOrDefaultAsync(p => p.ParqueID == id);
 
             if (parque == null)
             {
@@ -60,7 +60,7 @@ namespace ParquePrivateAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutParque(long id, Parque parque)
         {
-            if (id != parque.NIFParqueID)
+            if (id != parque.ParqueID)
             {
                 return BadRequest();
             }
@@ -97,7 +97,7 @@ namespace ParquePrivateAPI.Controllers
             _context.Parque.Add(parque);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetParque", new { id = parque.NIFParqueID }, parque);
+            return CreatedAtAction("GetParque", new { id = parque.ParqueID }, parque);
         }
 
         // DELETE: api/Parques/5
@@ -120,7 +120,7 @@ namespace ParquePrivateAPI.Controllers
 
         private bool ParqueExists(long id)
         {
-            return _context.Parque.Any(e => e.NIFParqueID == id);
+            return _context.Parque.Any(e => e.ParqueID == id);
         }
     }
 }
