@@ -22,7 +22,7 @@ namespace ParqueAPICentral.Services
         public async Task<ActionResult<Cliente>> FindClienteById(long id)
         {
             var cliente = await this._repo.FindById(id);
-           
+
             if (cliente == null)
             {
                 return NotFound();
@@ -33,6 +33,15 @@ namespace ParqueAPICentral.Services
         private ActionResult<Cliente> NotFound()
         {
             throw new NotImplementedException("O que procura não existe.");
+        }
+        public async Task<ActionResult<IEnumerable<Cliente>>> UpdateClienteById(long id, Cliente cliente)
+        {
+
+            if (cliente == null)
+            {
+                return NotFound();
+            }
+
         }
     }
 }

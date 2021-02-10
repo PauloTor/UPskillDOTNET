@@ -22,5 +22,9 @@ namespace ParqueAPICentral.Repositories
         {
             return await RepContext.Cliente.FindAsync(id);
         }
+        public async Task<ActionResult<IEnumerable<Cliente>>> UpdateClienteById(long id, Cliente cliente)
+        {
+            return await RepContext.Cliente.ToListAsync();
+        }
     }
 }
