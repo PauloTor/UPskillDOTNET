@@ -10,8 +10,8 @@ using ParqueAPICentral.Data;
 namespace ParqueAPICentral.Migrations
 {
     [DbContext(typeof(APICentralContext))]
-    [Migration("20210210230146_jjjjjjjj")]
-    partial class jjjjjjjj
+    [Migration("20210211095355_ino")]
+    partial class ino
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
