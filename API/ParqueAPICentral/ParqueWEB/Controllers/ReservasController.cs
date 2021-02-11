@@ -59,7 +59,7 @@ namespace ParqueAPICentral.Controllers
         }
 
         [EnableCors]
-        [HttpGet("{DataInicio}/{DataFim}/{Cliente}")]
+        [HttpGet("{DataInicio}/{DataFim}/{ClienteID}")]
         public async Task<ActionResult<IEnumerable<Reserva_>>> PostReservaByData(String DataInicio, String DataFim, long ClienteID)
         {
             var dateTimeInicio = DateTime.Parse(DataInicio);
@@ -68,8 +68,8 @@ namespace ParqueAPICentral.Controllers
 
             using (var client = new HttpClient())
             {
-                var cliente = await _context.Cliente.FindAsync(ClienteID);
-                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(cliente), Encoding.UTF8, "application/json");
+                UserInfo user = new UserInfo();
+                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
                 var responseLogin = await client.PostAsync(apiBaseUrl + "users/authenticate", contentUser);
                 dynamic tokenresponsecontent = await responseLogin.Content.ReadAsAsync<object>();
                 string rtoken = tokenresponsecontent.jwtToken;
@@ -81,30 +81,38 @@ namespace ParqueAPICentral.Controllers
                 // Lugares disponiveis para criar Reserva
                 List<Lugar_> ListaLugar = await response.Content.ReadAsAsync<List<Lugar_>>();
                 long lugar = 0;
-                if (ListaLugar.Count != 0)
+                if (ListaLugar.Count == 0)
                 {
-                    // Pega no primeiro da Lista
-                    var Primeiro = ListaLugar.FirstOrDefault();
-                    lugar = Primeiro.LugarID;
+                    return NotFound();
                 }
+                // Pega no primeiro da Lista
+                var Primeiro = ListaLugar.FirstOrDefault();
+                lugar = Primeiro.LugarID;
+
                 var datanow = DateTime.Now;
                 //Nova reserva
                 reserva = new Reserva_(datanow, dateTimeInicio, dateTimeFim, lugar);
                 //Passa a reserva para formato JSON
                 StringContent reserva_ = new StringContent(JsonConvert.SerializeObject(reserva), Encoding.UTF8, "application/json");
                 string endpoint2 = apiBaseUrl + "reservas/";
-                string endpoint3 = apiBaseUrl + "Parque/";
+                string endpoint3 = apiBaseUrl + "Parques/";
                 // Post de uma nova reserva 
                 var response2 = await client.PostAsync(endpoint2, reserva_);
+
+                var response3 = await client.GetAsync(endpoint2);
+                List<Reserva_> ListaLugarUltimo = await response3.Content.ReadAsAsync<List<Reserva_>>();
+                var reservaid_ = ListaLugarUltimo.LastOrDefault();
+                long reservaid = reservaid_.ReservaID;
+
                 //var fatura_ = _context.Fatura.Where(f => f.ReservaID == reservaById).FirstOrDefault();
-                
+
                 var nif = await client.GetAsync(endpoint3);
                 
 
                 List<Parque> ListaParques = await nif.Content.ReadAsAsync<List<Parque>>();
                 var nif_= ListaParques.FirstOrDefault();
                 var nif__ = nif_.NifParque;
-                var reserva1 = new Reserva(nif__,reserva.ReservaID, ClienteID);
+                var reserva1 = new Reserva(nif__,reservaid, ClienteID);
                 _context.Reserva.Add(reserva1);
                 await _context.SaveChangesAsync();
             }
@@ -116,8 +124,11 @@ namespace ParqueAPICentral.Controllers
         [EnableCors]
         [HttpGet("{id}")]
         public async Task<ActionResult<Reserva>> CancelarReserva(long id)
-        {
-            var reserva = await _context.Reserva.FindAsync(id);
+        {                   
+
+            var reserva = _context.Reserva.Where(f => f.ReservaAPI == id).FirstOrDefault();
+
+
 
             if (reserva == null)
             {
@@ -144,9 +155,9 @@ namespace ParqueAPICentral.Controllers
 
                 cliente_.Depositar(precoFatura);
 
-                //_context.Reserva.Remove(reserva);
+                _context.Reserva.Remove(reserva);
 
-                //var deleteTask = client.DeleteAsync(endpoint);
+                var deleteTask = client.DeleteAsync(endpoint);
 
             }
 

@@ -71,7 +71,7 @@ namespace ParqueAPICentral.Controllers
                 StringContent reservaJson = new StringContent(JsonConvert.
                     SerializeObject(precoLugarNovo), Encoding.UTF8, "application/json");
                 
-                string endpoint2 = apiBaseUrl + "PrecoLugar/";
+                string endpoint2 = apiBaseUrl + "PrecoLugares/";
                 // Post de uma nova reserva 
 
 
