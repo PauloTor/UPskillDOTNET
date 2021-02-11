@@ -117,7 +117,8 @@ namespace ParqueAPICentral.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Reserva>> CancelarReserva(long id)
         {
-            var reserva = await _context.Reserva.FindAsync(id);
+            //var reserva = await _context.Reserva.FindAsync(id);
+            var reserva = _context.Reserva.Where(r => r.ReservaAPI == id).FirstOrDefault();
 
             if (reserva == null)
             {
@@ -144,9 +145,9 @@ namespace ParqueAPICentral.Controllers
 
                 cliente_.Depositar(precoFatura);
 
-                //_context.Reserva.Remove(reserva);
+                _context.Reserva.Remove(reserva);
 
-                //var deleteTask = client.DeleteAsync(endpoint);
+                var deleteTask = client.DeleteAsync(endpoint);
 
             }
 

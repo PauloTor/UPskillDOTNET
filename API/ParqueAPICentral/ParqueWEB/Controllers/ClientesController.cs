@@ -90,6 +90,22 @@ namespace ParqueAPICentral.Controllers
         {
             return _context.Cliente.Any(e => e.ClienteID == id);
         }
+        // DELETE: api/Clientes/5
+        //[Authorize]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCliente(long id)
+        {
+            var cliente = await _context.Cliente.FindAsync(id);
+            if (cliente == null)
+            {
+                return NotFound();
+            }
+
+            _context.Cliente.Remove(cliente);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }
     /*//  [Authorize]
