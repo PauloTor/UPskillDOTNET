@@ -59,7 +59,7 @@ namespace ParqueAPICentral.Controllers
         }
 
         [EnableCors]
-        [HttpGet("{DataInicio}/{DataFim}/{Cliente}")]
+        [HttpPost("{DataInicio}/{DataFim}/{ClienteID}")]
         public async Task<ActionResult<IEnumerable<Reserva_>>> PostReservaByData(String DataInicio, String DataFim, long ClienteID)
         {
             var dateTimeInicio = DateTime.Parse(DataInicio);
