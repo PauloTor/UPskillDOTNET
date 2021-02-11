@@ -117,12 +117,12 @@ namespace ParqueAPICentral.Controllers
                 await _context.SaveChangesAsync();
             }
 
-            return NoContent();
+            return CreatedAtAction("PostReserva", new { id = reserva.ReservaID }, reserva);
         }
     
 
     // DELETE: api/reservas/id - Cancelar reserva
-    [EnableCors]
+        [EnableCors]
         [HttpGet("{id}")]
         public async Task<ActionResult<Reserva>> CancelarReserva(long id)
         {                   
