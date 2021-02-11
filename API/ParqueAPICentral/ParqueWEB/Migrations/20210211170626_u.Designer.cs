@@ -10,8 +10,8 @@ using ParqueAPICentral.Data;
 namespace ParqueAPICentral.Migrations
 {
     [DbContext(typeof(APICentralContext))]
-    [Migration("20210211095355_ino")]
-    partial class ino
+    [Migration("20210211170626_u")]
+    partial class u
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -70,12 +70,12 @@ namespace ParqueAPICentral.Migrations
                     b.Property<string>("NomeCliente")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("userId")
+                    b.Property<long?>("UserId")
                         .HasColumnType("bigint");
 
                     b.HasKey("ClienteID");
 
-                    b.HasIndex("userId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Cliente");
                 });
@@ -133,6 +133,9 @@ namespace ParqueAPICentral.Migrations
                     b.Property<long>("NifParqueAPI")
                         .HasColumnType("bigint");
 
+                    b.Property<bool>("Publico")
+                        .HasColumnType("bit");
+
                     b.Property<long>("ReservaAPI")
                         .HasColumnType("bigint");
 
@@ -174,11 +177,11 @@ namespace ParqueAPICentral.Migrations
 
             modelBuilder.Entity("ParqueAPICentral.Models.Cliente", b =>
                 {
-                    b.HasOne("ParqueAPICentral.Entities.User", "user")
+                    b.HasOne("ParqueAPICentral.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("userId");
+                        .HasForeignKey("UserId");
 
-                    b.Navigation("user");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ParqueAPICentral.Models.Fatura", b =>

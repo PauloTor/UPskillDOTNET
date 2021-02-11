@@ -26,14 +26,17 @@ namespace ParqueAPICentral.Controllers
     {
         private readonly APICentralContext _context;
         private readonly IConfiguration _configure;
-        private readonly string apiBaseUrl;
+        private readonly string apiBaseUrlPrivado;
+        private readonly string apiBaseUrlPublico;
+        private string UrlToUse;
 
 
         public ReservasController(APICentralContext context, IConfiguration configuration)
         {
             _context = context;
             _configure = configuration;
-            apiBaseUrl = _configure.GetValue<string>("WebAPIPrivateBaseUrl");
+            apiBaseUrlPrivado = _configure.GetValue<string>("WebAPIPrivateBaseUrl");
+            apiBaseUrlPublico = _configure.GetValue<string>("WebAPIPublicBaseUrl");
         }
 
         [EnableCors]
@@ -45,12 +48,12 @@ namespace ParqueAPICentral.Controllers
             {
                 UserInfo user = new UserInfo();
                 StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
-                var responseLogin = await client.PostAsync(apiBaseUrl + "users/authenticate", contentUser);
+                var responseLogin = await client.PostAsync(apiBaseUrlPrivado + "users/authenticate", contentUser);
                 dynamic tokenresponsecontent = await responseLogin.Content.ReadAsAsync<object>();
                 string rtoken = tokenresponsecontent.jwtToken;
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", rtoken);
                 // Route para Lugar por datas
-                string endpoint = apiBaseUrl + "Reservas/";
+                string endpoint = apiBaseUrlPrivado + "Reservas/";
                 var response = await client.GetAsync(endpoint);
                 response.EnsureSuccessStatusCode();
                 ListaReservas = await response.Content.ReadAsAsync<List<Reserva_>>();
@@ -70,12 +73,12 @@ namespace ParqueAPICentral.Controllers
             {
                 var cliente = await _context.Cliente.FindAsync(ClienteID);
                 StringContent contentUser = new StringContent(JsonConvert.SerializeObject(cliente), Encoding.UTF8, "application/json");
-                var responseLogin = await client.PostAsync(apiBaseUrl + "users/authenticate", contentUser);
+                var responseLogin = await client.PostAsync(apiBaseUrlPrivado + "users/authenticate", contentUser);
                 dynamic tokenresponsecontent = await responseLogin.Content.ReadAsAsync<object>();
                 string rtoken = tokenresponsecontent.jwtToken;
 
                 // Route para Lugar por datas
-                string endpoint = apiBaseUrl + "Lugares/" + DataInicio + "/" + DataFim;
+                string endpoint = apiBaseUrlPrivado + "Lugares/" + DataInicio + "/" + DataFim;
                 var response = await client.GetAsync(endpoint);
                 response.EnsureSuccessStatusCode();
                 // Lugares disponiveis para criar Reserva
@@ -92,8 +95,8 @@ namespace ParqueAPICentral.Controllers
                 reserva = new Reserva_(datanow, dateTimeInicio, dateTimeFim, lugar);
                 //Passa a reserva para formato JSON
                 StringContent reserva_ = new StringContent(JsonConvert.SerializeObject(reserva), Encoding.UTF8, "application/json");
-                string endpoint2 = apiBaseUrl + "reservas/";
-                string endpoint3 = apiBaseUrl + "Parque/";
+                string endpoint2 = apiBaseUrlPrivado + "reservas/";
+                string endpoint3 = apiBaseUrlPrivado + "Parque/";
                 // Post de uma nova reserva 
                 var response2 = await client.PostAsync(endpoint2, reserva_);
                 //var fatura_ = _context.Fatura.Where(f => f.ReservaID == reservaById).FirstOrDefault();
@@ -114,12 +117,12 @@ namespace ParqueAPICentral.Controllers
 
         // DELETE: api/reservas/id - Cancelar reserva
         [EnableCors]
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Reserva>> CancelarReserva(long id)
+        [HttpGet("{id}/{nif}")]
+        public async Task<ActionResult<Reserva>> CancelarReserva(long id, long nif)
         {
-            //var reserva = await _context.Reserva.FindAsync(id);
-            var reserva = _context.Reserva.Where(r => r.ReservaAPI == id).FirstOrDefault();
-
+            
+            var reserva = _context.Reserva.Where(r => r.ReservaAPI == id).Where(r => r.NifParqueAPI == nif).FirstOrDefault();
+            
             if (reserva == null)
             {
                 return NotFound();
@@ -127,23 +130,37 @@ namespace ParqueAPICentral.Controllers
 
             using (HttpClient client = new HttpClient())
             {
-                string endpoint = apiBaseUrl + "reservas/" + id;
+                var parque = reserva.Publico;
+
+                if (parque == false)
+                {
+                    UrlToUse = apiBaseUrlPrivado;
+                }
+                else
+                {
+                    UrlToUse = apiBaseUrlPublico;
+                }
+
+                string endpoint = UrlToUse + "reservas/" + id;
 
                 var reservaRes = await client.GetAsync(endpoint);
 
                 var reserva_ = await reservaRes.Content.ReadAsAsync<Reserva_>();
 
-                long reservaById = reserva_.ReservaID;
+                long reservaById = reserva.ReservaID;
 
                 long clienteById = reserva.ClienteID;
 
-                var fatura_ = _context.Fatura.Where(f => f.ReservaID == reservaById).FirstOrDefault();
-
                 var cliente_ = _context.Cliente.Where(c => c.ClienteID == clienteById).FirstOrDefault();
 
-                float precoFatura = fatura_.PrecoFatura;
+                var fatura_ = _context.Fatura.Where(f => f.ReservaID == reservaById).FirstOrDefault();
 
-                cliente_.Depositar(precoFatura);
+                if (fatura_ != null)
+                {
+                    float precoFatura = fatura_.PrecoFatura;
+
+                    cliente_.Depositar(precoFatura);
+                }                
 
                 _context.Reserva.Remove(reserva);
 

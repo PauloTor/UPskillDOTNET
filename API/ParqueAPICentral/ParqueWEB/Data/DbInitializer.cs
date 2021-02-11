@@ -79,12 +79,12 @@ namespace ParqueAPICentral.Data
 
             IList<Reserva> defaultReserva = new List<Reserva>();
 
-            defaultReserva.Add(new Reserva(11111225222, 2,1));
+            defaultReserva.Add(new Reserva(11111225222, 2,3));
             defaultReserva.Add(new Reserva(22222115111, 1,2));
-            defaultReserva.Add(new Reserva(33333341111, 2,3));
-            defaultReserva.Add(new Reserva(22222131111, 2,4));
+            defaultReserva.Add(new Reserva(33333341111, 4,3));
+            defaultReserva.Add(new Reserva(22222131111, 3,1));
             defaultReserva.Add(new Reserva(22223232355, 4,5));
-            defaultReserva.Add(new Reserva(23423445645, 2,2));
+            defaultReserva.Add(new Reserva(23423445645, 5,4));
 
             context.Reserva.AddRange(defaultReserva);
 
@@ -95,11 +95,11 @@ namespace ParqueAPICentral.Data
             IList<Fatura> defaultFatura = new List<Fatura>();
 
             defaultFatura.Add(new Fatura(DateTime.Parse("2020-01-04 21:00:00"), 33, 1));
-            defaultFatura.Add(new Fatura(DateTime.Parse("2021-01-01 20:00:00"), 131, 2));
-            defaultFatura.Add(new Fatura(DateTime.Parse("2019-02-11 21:00:00"), 232, 3));
-            defaultFatura.Add(new Fatura(DateTime.Parse("2120-11-04 21:00:00"), 33, 1));
-            defaultFatura.Add(new Fatura(DateTime.Parse("2021-02-01 05:00:00"), 1131, 2));
-            defaultFatura.Add(new Fatura(DateTime.Parse("2019-02-11 21:00:00"), 2232, 4));
+            defaultFatura.Add(new Fatura(DateTime.Parse("2021-01-01 20:00:00"), 13, 2));
+            defaultFatura.Add(new Fatura(DateTime.Parse("2019-02-11 21:00:00"), 2, 3));
+            defaultFatura.Add(new Fatura(DateTime.Parse("2120-11-04 21:00:00"), 3, 4));
+            defaultFatura.Add(new Fatura(DateTime.Parse("2021-02-01 05:00:00"), 11, 5));
+            defaultFatura.Add(new Fatura(DateTime.Parse("2019-02-11 21:00:00"), 23, 6));
 
             context.Fatura.AddRange(defaultFatura);
 

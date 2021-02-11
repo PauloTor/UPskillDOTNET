@@ -23,9 +23,9 @@ namespace ParqueAPICentral.Models
         public long ClienteID { get; set; }
         public Cliente Cliente { get; set; }
 
-        
-       
-        
+        public bool Publico { get; set; }
+
+
         public Reserva(long nifParqueAPI, long reservaAPI, long clienteID)
         {
             NifParqueAPI = nifParqueAPI;

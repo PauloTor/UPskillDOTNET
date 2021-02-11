@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ParqueAPICentral.Migrations
 {
-    public partial class ino : Migration
+    public partial class u : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -35,14 +35,14 @@ namespace ParqueAPICentral.Migrations
                     MetodoPagamento = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Credito = table.Column<float>(type: "real", nullable: false),
                     Id = table.Column<long>(type: "bigint", nullable: false),
-                    userId = table.Column<long>(type: "bigint", nullable: true)
+                    UserId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cliente", x => x.ClienteID);
                     table.ForeignKey(
-                        name: "FK_Cliente_Users_userId",
-                        column: x => x.userId,
+                        name: "FK_Cliente_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -56,7 +56,8 @@ namespace ParqueAPICentral.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     NifParqueAPI = table.Column<long>(type: "bigint", nullable: false),
                     ReservaAPI = table.Column<long>(type: "bigint", nullable: false),
-                    ClienteID = table.Column<long>(type: "bigint", nullable: false)
+                    ClienteID = table.Column<long>(type: "bigint", nullable: false),
+                    Publico = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -133,9 +134,9 @@ namespace ParqueAPICentral.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cliente_userId",
+                name: "IX_Cliente_UserId",
                 table: "Cliente",
-                column: "userId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Fatura_ReservaID",
