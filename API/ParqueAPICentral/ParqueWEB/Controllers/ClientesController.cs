@@ -30,7 +30,7 @@ namespace ParqueAPICentral.Controllers
         public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes()
         {
             return await _context.Cliente.ToListAsync();
-        } 
+        }
 
         // GET: api/Clientes/5  - Obter Informação de um Cliente por ID
         [HttpGet("{id}")]
@@ -48,7 +48,7 @@ namespace ParqueAPICentral.Controllers
 
         // PUT: api/Clientes/5 -  Actualizar informação de um Cliente pelo seu ID
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPost("Cliente/{ClienteID}{NomeCliente}{EmailCliente}/{NifCliente}/{MetodoPagamento}/{Credito}")]
         public async Task<IActionResult> PutCliente(long id, Cliente cliente)
         {
             if (id != cliente.ClienteID)
@@ -78,7 +78,7 @@ namespace ParqueAPICentral.Controllers
         }
         // POST: api/Clientes : Criação de um Cliente
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
+        [HttpPost("Cliente/{NomeCliente}{EmailCliente}/{NifCliente}/{MetodoPagamento}/{Credito}")]
         public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
         {
             _context.Cliente.Add(cliente);
