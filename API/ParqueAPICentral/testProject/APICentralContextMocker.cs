@@ -23,9 +23,10 @@ namespace testProject
 
         public static void Seed()
         {
-            dbContext.Cliente.Add(new Cliente { ClienteID = 1, NomeCliente = "Victor Duarte", EmailCliente = "upskill1@upskill.pt", NifCliente = 123456789, MetodoPagamento = "PayPal", Credito = 15, Id = 1 });
-            dbContext.Cliente.Add(new Cliente { ClienteID = 2, NomeCliente = "Pedro Casimiro", EmailCliente = "upskill2@upskill.pt", NifCliente = 112345678, MetodoPagamento = "MB", Credito = 5, Id = 2 });
-            dbContext.Cliente.Add(new Cliente { ClienteID = 3, NomeCliente = "Leandro Caetano", EmailCliente = "upskill3@upskill.pt", NifCliente = 122345678, MetodoPagamento = "PayPal", Credito = 0, Id = 3 });
+            dbContext.Cliente.Add(new Cliente ("Victor Duarte", "upskill1@upskill.pt", 123456789, "PayPal", 15, 1));
+            dbContext.Cliente.Add(new Cliente ("Pedro Casimiro", "upskill2@upskill.pt", 112345678, "MB", 5, 2));
+            dbContext.Cliente.Add(new Cliente ("Leandro Caetano", "upskill3@upskill.pt", 122345678, "PayPal", 0, 3));
+
 
             dbContext.SaveChanges();
         }

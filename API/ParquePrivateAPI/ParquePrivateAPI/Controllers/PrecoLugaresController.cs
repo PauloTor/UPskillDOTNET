@@ -1,13 +1,15 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using ParquePrivateAPI.Data;
-using ParquePrivateAPI.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ParquePrivateAPI.Models;
+using ParquePrivateAPI.Data;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace ParquePrivateAPI.Controllers
 {

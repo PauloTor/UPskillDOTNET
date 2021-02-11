@@ -32,7 +32,7 @@ namespace testProject
         }
 
         [Fact]
-        public async Task PostLugares_ShouldCreateLugaresAsync()
+        public async Task PostClientes_ShouldCreateClientesAsync()
         {
             Thread.Sleep(2300);
             //Arrange
@@ -40,7 +40,7 @@ namespace testProject
             var testController = new ClientesController(testContext);
 
             //Act
-            var result = await testController.PostCliente(new Cliente { ClienteID = 4, NomeCliente = "Paulo Silva", EmailCliente = "upskill4@upskill.pt", NifCliente = 123345678, MetodoPagamento = "DD", Credito = 0, Id = 4 });
+            var result = await testController.PostCliente(new Cliente ("Paulo Silva", "upskill4@upskill.pt", 123345678, "DD", 0, 4));
             var get = await testController.GetCliente(4);
 
             //Assert
@@ -73,7 +73,7 @@ namespace testProject
             Assert.Equal(1, items.ClienteID);
             Assert.Equal("Victor Duarte", items.NomeCliente);
             Assert.Equal("upskill1@upskill.pt", items.EmailCliente);
-            Assert.Equal(6, items.NifCliente);
+            Assert.Equal(123456789, items.NifCliente);
             Assert.Equal("DD", items.MetodoPagamento);
             Assert.Equal(15, items.Credito);
             Assert.Equal(1, items.Id);
