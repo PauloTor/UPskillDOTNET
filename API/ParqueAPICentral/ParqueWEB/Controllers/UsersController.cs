@@ -15,7 +15,7 @@ namespace ParqueAPICentral.Controllers
         {
             _userService = userService;
         }
-
+        [AllowAnonymous]
         [HttpPost("authenticate")]
         public IActionResult Authenticate(AuthenticateRequest model)
         {
@@ -27,7 +27,7 @@ namespace ParqueAPICentral.Controllers
             return Ok(response);
         }
 
-        [Authorize]
+ 
         [HttpGet]
         public IActionResult GetAll()
         {

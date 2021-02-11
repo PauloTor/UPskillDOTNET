@@ -34,9 +34,9 @@ namespace ParqueAPICentral.Controllers
             apiBaseUrl = _configure.GetValue<string>("WebAPIPrivateBaseUrl");
         }
 
-        // POST Faturas by ReservaID - api/Faturas/ReservaID
+        // POST Faturas by ReservaID - api/Faturas/Reserva/ReservaID
         [EnableCors]
-        [HttpGet("Reserva/{ReservaID}")]
+        [HttpPost("Reserva/{ReservaID}")]
         public async Task<ActionResult<Fatura>> PostFaturaByReservaID(long reservaID)
         {
             return await this._service.CreateFaturaByReservaID(reservaID);

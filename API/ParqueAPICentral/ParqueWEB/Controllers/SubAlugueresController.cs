@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using ParqueAPICentral.Data;
 using ParqueAPICentral.DTO;
+using ParqueAPICentral.Entities;
 using ParqueAPICentral.Models;
 
 namespace ParqueAPICentral.Controllers
@@ -50,6 +51,12 @@ namespace ParqueAPICentral.Controllers
 
             using (HttpClient client = new HttpClient())
             {
+                UserInfo user = new UserInfo();
+                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                var responseLogin = await client.PostAsync(apiBaseUrl + "users/authenticate", contentUser);
+                dynamic tokenresponsecontent = await responseLogin.Content.ReadAsAsync<object>();
+                string rtoken = tokenresponsecontent.jwtToken;
+
                 string EndpointReserva = apiBaseUrl + "Reservas/" ;
                 var response = await client.GetAsync(EndpointReserva);
                 response.EnsureSuccessStatusCode();
@@ -71,7 +78,7 @@ namespace ParqueAPICentral.Controllers
                 StringContent reservaJson = new StringContent(JsonConvert.
                     SerializeObject(precoLugarNovo), Encoding.UTF8, "application/json");
                 
-                string endpoint2 = apiBaseUrl + "PrecoLugar/";
+                string endpoint2 = apiBaseUrl + "PrecoLugares/";
                 // Post de uma nova reserva 
 
 
@@ -89,10 +96,6 @@ namespace ParqueAPICentral.Controllers
                 // disponibiliza reserva
                 var deleteTask = client.DeleteAsync(EndpointReserva+Reservaid);
                 deleteTask.Wait();
-
-
-                
-                
                 
                 
                 //return await _context.SubAluguer.ToListAsync();
