@@ -356,3 +356,11 @@ MigrationBackup/
 /API/ParqueAPICentral/ParqueWEB/Migrations/20210208152842_init7.cs
 /API/ParqueAPICentral/ParqueWEB/Migrations/20210208152842_init7.Designer.cs
 /API/ParqueAPICentral/ParqueWEB/Migrations/APICentralContextModelSnapshot.cs
+/API/ParquePrivateAPI/ParquePrivateAPI/Migrations/20210210141552_init12.cs
+/API/ParquePrivateAPI/ParquePrivateAPI/Migrations/20210210141552_init12.Designer.cs
+/API/ParqueAPICentral/ParqueWEB/Migrations/20210210143322_init12.cs
+/API/ParqueAPICentral/ParqueWEB/Migrations/20210210143322_init12.Designer.cs
+/API/ParqueAPICentral/ParqueWEB/Migrations/20210211095715_in12Fev.cs
+/API/ParqueAPICentral/ParqueWEB/Migrations/20210211095715_in12Fev.Designer.cs
+/API/ParquePrivateAPI/ParquePrivateAPI/Migrations/20210211095950_inti11fev.cs
+/API/ParquePrivateAPI/ParquePrivateAPI/Migrations/20210211095950_inti11fev.Designer.cs
