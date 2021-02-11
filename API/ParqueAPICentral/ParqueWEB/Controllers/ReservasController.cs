@@ -64,6 +64,12 @@ namespace ParqueAPICentral.Controllers
         {
             var dateTimeInicio = DateTime.Parse(DataInicio);
             var dateTimeFim = DateTime.Parse(DataFim);
+
+            if (dateTimeInicio > dateTimeFim)
+            {
+                return NotFound();
+            }
+
             Reserva_ reserva;
 
             using (var client = new HttpClient())
@@ -103,32 +109,35 @@ namespace ParqueAPICentral.Controllers
                 List<Reserva_> ListaLugarUltimo = await response3.Content.ReadAsAsync<List<Reserva_>>();
                 var reservaid_ = ListaLugarUltimo.LastOrDefault();
                 long reservaid = reservaid_.ReservaID;
-
                 //var fatura_ = _context.Fatura.Where(f => f.ReservaID == reservaById).FirstOrDefault();
-
                 var nif = await client.GetAsync(endpoint3);
-
-
                 List<Parque> ListaParques = await nif.Content.ReadAsAsync<List<Parque>>();
                 var nif_ = ListaParques.FirstOrDefault();
                 var nif__ = nif_.NifParque;
                 var reserva1 = new Reserva(nif__, reservaid, ClienteID);
                 _context.Reserva.Add(reserva1);
-                await _context.SaveChangesAsync();
-            }
 
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
+            }
             return NoContent();
         }
     
 
     // DELETE: api/reservas/id - Cancelar reserva
-    [EnableCors]
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Reserva>> CancelarReserva(long id)
+        [EnableCors]
+        [HttpGet("{id}/{nifParque")]
+        public async Task<ActionResult<Reserva>> CancelarReserva(long id,long nifParque )
         {                   
 
-            var reserva = _context.Reserva.Where(f => f.ReservaAPI == id).FirstOrDefault();
-
+            var reserva = _context.Reserva.Where(f => f.ReservaAPI == id).Where(f => f.NifParqueAPI == nifParque).FirstOrDefault();
+            var reservaByID = reserva.ReservaID;
 
 
             if (reserva == null)
@@ -144,11 +153,11 @@ namespace ParqueAPICentral.Controllers
 
                 var reserva_ = await reservaRes.Content.ReadAsAsync<Reserva_>();
 
-                long reservaById = reserva_.ReservaID;
+                //long reservaById = reserva_.ReservaID;
 
                 long clienteById = reserva.ClienteID;
 
-                var fatura_ = _context.Fatura.Where(f => f.ReservaID == reservaById).FirstOrDefault();
+                var fatura_ = _context.Fatura.Where(f => f.ReservaID == reservaByID).FirstOrDefault();
 
                 var cliente_ = _context.Cliente.Where(c => c.ClienteID == clienteById).FirstOrDefault();
 
@@ -166,5 +175,7 @@ namespace ParqueAPICentral.Controllers
 
             return NoContent();
         }
+
+      
     }
 }
