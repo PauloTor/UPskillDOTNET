@@ -10,8 +10,8 @@ using ParquePrivateAPI.Data;
 namespace ParquePrivateAPI.Migrations
 {
     [DbContext(typeof(ParquePrivateAPIContext))]
-    [Migration("20210210205628_errr")]
-    partial class errr
+    [Migration("20210210231817_ffffff")]
+    partial class ffffff
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -190,7 +190,7 @@ namespace ParquePrivateAPI.Migrations
 
             modelBuilder.Entity("ParquePrivateAPI.Models.PrecoLugar", b =>
                 {
-                    b.HasOne("ParquePrivateAPI.Models.Lugar", "Lugar")
+                    b.HasOne("ParquePrivateAPI.Models.Lugar", "lugar")
                         .WithMany()
                         .HasForeignKey("LugarID1");
                 });

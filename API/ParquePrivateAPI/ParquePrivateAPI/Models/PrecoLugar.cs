@@ -12,12 +12,12 @@ namespace ParquePrivateAPI.Models
         [Key]
         public long PrecoLugarID { get; set; }
 
-        [ForeignKey("LugarID")]
-        public int LugarID { get; set; }
         public float Preco { get; set; }
 
-        public Lugar Lugar { get; set; }
-        
+        [ForeignKey("LugarID")]
+        public long LugarID { get; set; }
+        public Lugar lugar { get; set; }
+
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DataInicio { get; set; }
@@ -25,8 +25,6 @@ namespace ParquePrivateAPI.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DataFim { get; set; }
-
-
 
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ParquePrivateAPI.Migrations
 {
-    public partial class errr : Migration
+    public partial class hhhh : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -114,8 +114,8 @@ namespace ParquePrivateAPI.Migrations
                     PrecoLugarID = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LugarID = table.Column<int>(nullable: false),
-                    Preco = table.Column<float>(nullable: false),
                     LugarID1 = table.Column<long>(nullable: true),
+                    Preco = table.Column<float>(nullable: false),
                     DataInicio = table.Column<DateTime>(nullable: false),
                     DataFim = table.Column<DateTime>(nullable: false)
                 },

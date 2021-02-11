@@ -11,7 +11,8 @@ using System.Threading.Tasks;
 
 namespace ParquePrivateAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [EnableCors("MyAllowSpecificOrigins")]
+    [Route("api/PrecoLugares")]
     [ApiController]
     public class PrecoLugaresController : ControllerBase
     {
@@ -23,10 +24,8 @@ namespace ParquePrivateAPI.Controllers
                 _context = context;
             }
 
-
-            [Authorize]
-            [EnableCors]
-            [HttpPost]
+           [EnableCors("MyAllowSpecificOrigins")]
+           [HttpPost]
             public async Task<ActionResult<PrecoLugar>> PostPrecoLugar(PrecoLugar precoLugar)
             {
                 _context.PrecoLugar.Add(precoLugar);
@@ -34,9 +33,5 @@ namespace ParquePrivateAPI.Controllers
 
                 return NoContent();
             }
-
-
-
-
-        }
+         }
     }
