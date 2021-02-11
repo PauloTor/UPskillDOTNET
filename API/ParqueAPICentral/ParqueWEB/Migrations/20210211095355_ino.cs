@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ParqueAPICentral.Migrations
 {
-    public partial class jjjjjjjj : Migration
+    public partial class ino : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
