@@ -59,7 +59,7 @@ namespace ParqueAPICentral.Controllers
         }
 
         [EnableCors]
-        [HttpGet("{DataInicio}/{DataFim}/{ClienteID}")]
+        [HttpPost("{DataInicio}/{DataFim}/{ClienteID}")]
         public async Task<ActionResult<IEnumerable<Reserva_>>> PostReservaByData(String DataInicio, String DataFim, long ClienteID)
         {
             var dateTimeInicio = DateTime.Parse(DataInicio);
@@ -107,21 +107,22 @@ namespace ParqueAPICentral.Controllers
                 //var fatura_ = _context.Fatura.Where(f => f.ReservaID == reservaById).FirstOrDefault();
 
                 var nif = await client.GetAsync(endpoint3);
-                
+
 
                 List<Parque> ListaParques = await nif.Content.ReadAsAsync<List<Parque>>();
-                var nif_= ListaParques.FirstOrDefault();
+                var nif_ = ListaParques.FirstOrDefault();
                 var nif__ = nif_.NifParque;
-                var reserva1 = new Reserva(nif__,reservaid, ClienteID);
+                var reserva1 = new Reserva(nif__, reservaid, ClienteID);
                 _context.Reserva.Add(reserva1);
                 await _context.SaveChangesAsync();
             }
 
             return NoContent();
         }
+    
 
-        // DELETE: api/reservas/id - Cancelar reserva
-        [EnableCors]
+    // DELETE: api/reservas/id - Cancelar reserva
+    [EnableCors]
         [HttpGet("{id}")]
         public async Task<ActionResult<Reserva>> CancelarReserva(long id)
         {                   
