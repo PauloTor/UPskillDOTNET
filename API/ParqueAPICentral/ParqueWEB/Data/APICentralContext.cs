@@ -27,11 +27,6 @@ namespace ParqueAPICentral.Data
 
         public DbSet<ParqueAPICentral.Models.Pagamento> Pagamento { get; set; }
 
-        internal Task<ActionResult<Reserva>> CancelarReserva(long id)
-        {
-            throw new NotImplementedException();
-        }
-
         public DbSet<ParqueAPICentral.Entities.User> Users { get; set; }
 
         public DbSet<ParqueAPICentral.Models.Fatura> Fatura { get; set; }
