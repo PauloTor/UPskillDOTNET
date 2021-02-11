@@ -133,7 +133,7 @@ namespace ParqueAPICentral.Controllers
     // DELETE: api/reservas/id - Cancelar reserva
     [EnableCors]
         [HttpGet("{id}")]
-        public async Task<ActionResult<Reserva>> CancelarReserva(long id)
+        public async Task<ActionResult<Reserva>> CancelarReserva(long id,lo)
         {                   
 
             var reserva = _context.Reserva.Where(f => f.ReservaAPI == id).Where(f => f.NifParqueAPI == nifParque).FirstOrDefault();
