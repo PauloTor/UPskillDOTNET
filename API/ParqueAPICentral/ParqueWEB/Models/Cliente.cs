@@ -52,5 +52,5 @@ namespace ParqueAPICentral.Models
         }
 
     }   
-    }
+}
 
