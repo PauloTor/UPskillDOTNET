@@ -79,12 +79,12 @@ namespace ParqueAPICentral.Controllers
             {
                 UserInfo user = new UserInfo();
                 StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
-                var responseLogin = await client.PostAsync(apiBaseUrl + "users/authenticate", contentUser);
+                var responseLogin = await client.PostAsync(apiBaseUrlPrivado + "users/authenticate", contentUser);
                 dynamic tokenresponsecontent = await responseLogin.Content.ReadAsAsync<object>();
                 string rtoken = tokenresponsecontent.jwtToken;
 
                 // Route para Lugar por datas
-                string endpoint = apiBaseUrl + "Lugares/" + DataInicio + "/" + DataFim;
+                string endpoint = apiBaseUrlPrivado + "Lugares/" + DataInicio + "/" + DataFim;
                 var response = await client.GetAsync(endpoint);
                 response.EnsureSuccessStatusCode();
                 // Lugares disponiveis para criar Reserva
@@ -103,8 +103,8 @@ namespace ParqueAPICentral.Controllers
                 reserva = new Reserva_(datanow, dateTimeInicio, dateTimeFim, lugar);
                 //Passa a reserva para formato JSON
                 StringContent reserva_ = new StringContent(JsonConvert.SerializeObject(reserva), Encoding.UTF8, "application/json");
-                string endpoint2 = apiBaseUrl + "reservas/";
-                string endpoint3 = apiBaseUrl + "Parques/";
+                string endpoint2 = apiBaseUrlPrivado + "reservas/";
+                string endpoint3 = apiBaseUrlPrivado + "Parques/";
                 // Post de uma nova reserva 
                 var response2 = await client.PostAsync(endpoint2, reserva_);
 
