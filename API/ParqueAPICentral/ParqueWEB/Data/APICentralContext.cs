@@ -10,6 +10,8 @@ namespace ParqueAPICentral.Data
 {
     public class APICentralContext : DbContext
     {
+        internal object cliente;
+
         public APICentralContext (DbContextOptions<APICentralContext> options)
             : base(options)
         {
