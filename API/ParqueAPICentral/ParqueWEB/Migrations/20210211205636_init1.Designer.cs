@@ -10,8 +10,8 @@ using ParqueAPICentral.Data;
 namespace ParqueAPICentral.Migrations
 {
     [DbContext(typeof(APICentralContext))]
-    [Migration("20210211170626_u")]
-    partial class u
+    [Migration("20210211205636_init1")]
+    partial class init1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -153,6 +153,9 @@ namespace ParqueAPICentral.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
+                    b.Property<long>("ClienteID")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("DataFim")
                         .HasColumnType("datetime2");
 
@@ -165,12 +168,9 @@ namespace ParqueAPICentral.Migrations
                     b.Property<float>("PrecoSubAluguer")
                         .HasColumnType("real");
 
-                    b.Property<long>("ReservaID")
-                        .HasColumnType("bigint");
-
                     b.HasKey("SubAluguerID");
 
-                    b.HasIndex("ReservaID");
+                    b.HasIndex("ClienteID");
 
                     b.ToTable("SubAluguer");
                 });
@@ -219,13 +219,13 @@ namespace ParqueAPICentral.Migrations
 
             modelBuilder.Entity("ParqueAPICentral.Models.SubAluguer", b =>
                 {
-                    b.HasOne("ParqueAPICentral.Models.Reserva", "reserva")
+                    b.HasOne("ParqueAPICentral.Models.Cliente", "cliente")
                         .WithMany()
-                        .HasForeignKey("ReservaID")
+                        .HasForeignKey("ClienteID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("reserva");
+                    b.Navigation("cliente");
                 });
 #pragma warning restore 612, 618
         }

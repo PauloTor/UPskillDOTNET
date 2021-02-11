@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ParqueAPICentral.Migrations
 {
-    public partial class u : Migration
+    public partial class init1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -71,6 +71,29 @@ namespace ParqueAPICentral.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SubAluguer",
+                columns: table => new
+                {
+                    SubAluguerID = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PrecoSubAluguer = table.Column<float>(type: "real", nullable: false),
+                    DataSubAluguer = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataFim = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ClienteID = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubAluguer", x => x.SubAluguerID);
+                    table.ForeignKey(
+                        name: "FK_SubAluguer_Cliente_ClienteID",
+                        column: x => x.ClienteID,
+                        principalTable: "Cliente",
+                        principalColumn: "ClienteID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Fatura",
                 columns: table => new
                 {
@@ -85,29 +108,6 @@ namespace ParqueAPICentral.Migrations
                     table.PrimaryKey("PK_Fatura", x => x.FaturaID);
                     table.ForeignKey(
                         name: "FK_Fatura_Reserva_ReservaID",
-                        column: x => x.ReservaID,
-                        principalTable: "Reserva",
-                        principalColumn: "ReservaID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SubAluguer",
-                columns: table => new
-                {
-                    SubAluguerID = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PrecoSubAluguer = table.Column<float>(type: "real", nullable: false),
-                    DataSubAluguer = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataFim = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ReservaID = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SubAluguer", x => x.SubAluguerID);
-                    table.ForeignKey(
-                        name: "FK_SubAluguer_Reserva_ReservaID",
                         column: x => x.ReservaID,
                         principalTable: "Reserva",
                         principalColumn: "ReservaID",
@@ -154,9 +154,9 @@ namespace ParqueAPICentral.Migrations
                 column: "ClienteID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SubAluguer_ReservaID",
+                name: "IX_SubAluguer_ClienteID",
                 table: "SubAluguer",
-                column: "ReservaID");
+                column: "ClienteID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

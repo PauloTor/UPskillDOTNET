@@ -32,16 +32,12 @@ namespace ParqueAPICentral.Controllers
             apiBaseUrl = _configure.GetValue<string>("WebAPIPrivateBaseUrl");
         }
 
-        //// GET: api/SubAlugueres
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<SubAluguer>>> GetSubAluguer()
-        //{
-        //    return await _context.SubAluguer.ToListAsync();
-        //}
-
+        
         // POST: api/SubAlugueres/{Clienteid}/{Reservaid}/{PrecoHoraid}
         [HttpGet("{Clienteid}/{Reservaid}/{PrecoHoraid}")]
-        public async Task<ActionResult<SubAluguer>> CreateSubAluguer(long Clienteid, long Reservaid, float PrecoHoraid)
+   //     
+        public async Task<ActionResult<IEnumerable<SubAluguer>>> PostSubAluguer(long Clienteid, long Reservaid, float PrecoHoraid)
+
         {
             var cliente = await _context.Cliente.FindAsync(Clienteid);
 
@@ -52,20 +48,36 @@ namespace ParqueAPICentral.Controllers
             using (HttpClient client = new HttpClient())
             {
                 UserInfo user = new UserInfo();
-                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
-                var responseLogin = await client.PostAsync(apiBaseUrl + "users/authenticate", contentUser);
-                dynamic tokenresponsecontent = await responseLogin.Content.ReadAsAsync<object>();
+                StringContent contentUser = new StringContent(JsonConvert.
+                    SerializeObject(user), Encoding.UTF8, "application/json");
+                
+
+                var responseLogin = await client.
+                    PostAsync(apiBaseUrl + "users/authenticate", contentUser);
+                
+                dynamic tokenresponsecontent = await responseLogin.Content.
+                    ReadAsAsync<object>();
+                
                 string rtoken = tokenresponsecontent.jwtToken;
 
                 string EndpointReserva = apiBaseUrl + "Reservas/" ;
+                
                 var response = await client.GetAsync(EndpointReserva);
+                
                 response.EnsureSuccessStatusCode();
         
                 List<Reserva_> ListaReservas = await response.Content.
                     ReadAsAsync<List<Reserva_>>();
 
-                var umareserva = ListaReservas.Where(r => r.ReservaID == Reservaid).
+                var umareserva = ListaReservas.
+                    Where(r => r.ReservaID == Reservaid).
                     FirstOrDefault();
+
+                if (umareserva == null)
+                {
+                    return NotFound();
+                }
+
 
                 var datainicio = umareserva.DataInicio;
                 var datafim = umareserva.DataFim;
@@ -83,24 +95,31 @@ namespace ParqueAPICentral.Controllers
 
 
                 // cria novo preco para lugar
-                var response2 = await client.PostAsync(endpoint2, reservaJson);
+                var response2 = await client.
+                    PostAsync(endpoint2, reservaJson);
 
                 var datanow = DateTime.Now;
 
-                subAluguer = new SubAluguer(PrecoHoraid, datanow, datainicio, datafim, Reservaid);
+                subAluguer = new SubAluguer(PrecoHoraid, datanow, datainicio, datafim, Clienteid);
 
                 _context.SubAluguer.Add(subAluguer);
-                await _context.SaveChangesAsync();
-
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
 
                 // disponibiliza reserva
                 var deleteTask = client.DeleteAsync(EndpointReserva+Reservaid);
                 deleteTask.Wait();
                 
                 
-                //return await _context.SubAluguer.ToListAsync();
+                return await _context.SubAluguer.ToListAsync();
 
-                return NoContent();
+                //return NoContent();
             }
 
         }

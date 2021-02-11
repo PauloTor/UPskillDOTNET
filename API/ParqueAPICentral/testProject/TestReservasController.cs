@@ -67,7 +67,7 @@ namespace testProject
             var testController = new ReservasController(testContext, configuration);
 
             //Act
-            var result = await testController.CancelarReserva(1);
+            var result = await testController.CancelarReserva(1,11111);
             var get = await testController.GetReservas();
 
             //Assert
