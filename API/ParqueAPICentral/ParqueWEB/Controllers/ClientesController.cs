@@ -46,9 +46,35 @@ namespace ParqueAPICentral.Controllers
             return cliente;
         }
 
-        // PUT: api/Clientes/5 -  Actualizar informação de um Cliente pelo seu ID
+        // PUT: api/Clientes/{ClienteID}/{NomeCliente}{EmailCliente}/{NifCliente}/{MetodoPagamento}/{Credito}/{UserID} - Actualizar informação de um Cliente
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost("Cliente/{ClienteID}{NomeCliente}{EmailCliente}/{NifCliente}/{MetodoPagamento}/{Credito}")]
+        [HttpPut("{ClienteID}/{NomeCliente}{EmailCliente}/{NifCliente}/{MetodoPagamento}/{Credito}/{UserID}")]
+        public async Task<IActionResult> PutCliente(long ClienteID, string NomeCliente, string EmailCliente, int NifCliente, string MetodoPagamento, float Credito, long UserID)
+        {
+            var cliente = _context.Cliente.FirstOrDefault(n => n.ClienteID == ClienteID);
+
+            if (cliente == null)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(cliente).State = EntityState.Modified;
+
+            cliente.NomeCliente = NomeCliente;
+            cliente.EmailCliente = EmailCliente;
+            cliente.NifCliente = NifCliente;
+            cliente.MetodoPagamento = MetodoPagamento;
+            cliente.Credito = Credito;
+            cliente.Id = UserID;
+
+            await _context.SaveChangesAsync();
+
+            return Ok(cliente);
+        }
+        /*
+         // PUT: api/Clientes/5 -  Actualizar informação de um Cliente pelo seu ID
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
         public async Task<IActionResult> PutCliente(long id, Cliente cliente)
         {
             if (id != cliente.ClienteID)
@@ -72,13 +98,23 @@ namespace ParqueAPICentral.Controllers
                 {
                     throw;
                 }
-            }
+            }*/
 
-            return NoContent();
+        // POST: api/Clientes/{NomeCliente}/{EmailCliente}/{NifCliente}/{MetodoPagamento}/{Credito}/{UserID} : Criação de um Cliente
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost("{NomeCliente}/{EmailCliente}/{NifCliente}/{MetodoPagamento}/{Credito}/{UserID}")]
+        public async Task<ActionResult<Cliente>> PostCliente(string NomeCliente, string EmailCliente, int NifCliente, string MetodoPagamento, float Credito, long UserID)
+        {
+            Cliente cliente = new Cliente(NomeCliente, EmailCliente, NifCliente, MetodoPagamento, Credito, UserID);
+            _context.Cliente.Add(cliente);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetCliente", new { id = cliente.ClienteID }, cliente);
         }
+        /*
         // POST: api/Clientes : Criação de um Cliente
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost("Cliente/{NomeCliente}{EmailCliente}/{NifCliente}/{MetodoPagamento}/{Credito}")]
+        [HttpPost]
         public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
         {
             _context.Cliente.Add(cliente);
@@ -89,7 +125,8 @@ namespace ParqueAPICentral.Controllers
         private bool ClienteExists(long id)
         {
             return _context.Cliente.Any(e => e.ClienteID == id);
-        }
+        }*/
+
         // DELETE: api/Clientes/5
         //[Authorize]
         [HttpDelete("{id}")]

@@ -31,7 +31,7 @@ namespace testProject
             Assert.Equal(3, items.Count);
         }
 
-        [Fact]
+        /*[Fact]
         public async Task PostClientes_ShouldCreateClientesAsync()
         {
             Thread.Sleep(2300);
@@ -78,7 +78,7 @@ namespace testProject
             Assert.Equal(15, items.Credito);
             Assert.Equal(1, items.Id);
             Assert.IsType<NoContentResult>(result);
-        }
+        }*/
 
         [Fact]
         public async Task DeleteClientebyIDAsync_ShouldDeleteCliente1Async()
