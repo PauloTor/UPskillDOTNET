@@ -35,6 +35,10 @@ namespace ParqueAPICentral.Models
             ClienteID = clienteID;
 
         }
+        public Reserva()
+        {
+
+        }
 
     }
 }
