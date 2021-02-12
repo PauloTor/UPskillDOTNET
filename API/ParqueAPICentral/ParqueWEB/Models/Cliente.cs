@@ -27,7 +27,6 @@ namespace ParqueAPICentral.Models
         public long Id { get; set; }
         public User User { get; set; }
 
-
         public virtual void Depositar(float valor)
         {
             Credito += valor;
@@ -38,17 +37,14 @@ namespace ParqueAPICentral.Models
             Credito -= valor;
         }
 
-
         public Cliente(string nomeCliente, string emailCliente, int nifCliente, string metodoPagamento, float credito,long id)
         {
-
             NomeCliente = nomeCliente;
             EmailCliente = emailCliente;
             NifCliente = nifCliente;
             MetodoPagamento = metodoPagamento;
             Credito = credito;
             Id = id;
-
         }
 
     }   

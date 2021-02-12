@@ -14,7 +14,5 @@ namespace ParqueAPICentral.Models
         public string CodigoPostal { get; set; }
 
         public int Lotacao { get; set; } 
-
-
     }
 }

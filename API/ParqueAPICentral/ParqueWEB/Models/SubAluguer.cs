@@ -30,7 +30,6 @@ namespace ParqueAPICentral.Models
         public long ClienteID { get; set; }
         public Cliente Cliente { get; set; }
 
-
         public SubAluguer(float precoSubAluguer, DateTime dataSubAluguer, DateTime dataInicio, DateTime dataFim, long clienteID)
         {
             PrecoSubAluguer = precoSubAluguer;

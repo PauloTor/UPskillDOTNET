@@ -18,26 +18,19 @@ namespace ParqueAPICentral.Models
         public long ParqueID { get; set; }
         public Parque Parque { get; set; }       
 
-
         [ForeignKey("ClienteID")]
         public long ClienteID { get; set; }
         public Cliente Cliente { get; set; }
 
-        public bool Publico { get; set; }
-
-
         public Reserva(long parqueID, long reservaAPI, long clienteID)
         {
             ParqueID = parqueID;
-
             ReservaAPI = reservaAPI;
-
             ClienteID = clienteID;
-
         }
+
         public Reserva()
         {
-
         }
 
     }

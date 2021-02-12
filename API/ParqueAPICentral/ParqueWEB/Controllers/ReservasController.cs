@@ -26,17 +26,11 @@ namespace ParqueAPICentral.Controllers
     {
         private readonly APICentralContext _context;
         private readonly IConfiguration _configure;
-        private readonly string apiBaseUrlPrivado;
-        private readonly string apiBaseUrlPublico;
-        private string UrlToUse;
-
 
         public ReservasController(APICentralContext context, IConfiguration configuration)
         {
             _context = context;
             _configure = configuration;
-            apiBaseUrlPrivado = _configure.GetValue<string>("WebAPIPrivateBaseUrl");
-            apiBaseUrlPublico = _configure.GetValue<string>("WebAPIPublicBaseUrl");
         }
 
         //GET: api/reservas/parqueID/id - Reservas de um Parque por ReservaID
@@ -90,7 +84,7 @@ namespace ParqueAPICentral.Controllers
             }
             return listaReservas;
         }
-
+        /*
         [EnableCors]
         [HttpPost("{DataInicio}/{DataFim}/{ClienteID}")]
         public async Task<ActionResult<IEnumerable<Reserva_>>> PostReservaByData(String DataInicio, String DataFim, long ClienteID)
@@ -161,7 +155,7 @@ namespace ParqueAPICentral.Controllers
             }
             return NoContent();
         }
-
+        */
         // DELETE: api/reservas/cancelar/parqueID/id - Cancelar reserva
         [EnableCors]
         [HttpGet("{parqueID}/{id}")]
@@ -179,8 +173,6 @@ namespace ParqueAPICentral.Controllers
 
             using (HttpClient client = new HttpClient())
             {
-                var parquePublico = reserva.Publico;
-
                 string endpoint = parque.Url + "reservas/" + "cancelar/" + id;
 
                 var reservaRes = await client.GetAsync(endpoint);

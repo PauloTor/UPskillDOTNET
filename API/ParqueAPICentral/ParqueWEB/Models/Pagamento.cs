@@ -12,7 +12,6 @@ namespace ParqueAPICentral.Models
 
         [ForeignKey("FaturaID")]
         public long FaturaID { get; set; }
-
         public Fatura Fatura { get; set; }
     }
 }
