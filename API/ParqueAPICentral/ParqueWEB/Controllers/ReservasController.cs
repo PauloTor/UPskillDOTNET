@@ -37,8 +37,6 @@ namespace ParqueAPICentral.Controllers
         [Route("{parqueID}/{id}")]
         public async Task<ActionResult<Reserva_>> GetReservasById(long parqueID, long id)
         {
-            //var listaReservas = new List<Reserva_>();
-
             var parque = await _context.Parque.FirstOrDefaultAsync(p => p.ParqueID == parqueID);
 
             Reserva_ reserva_;
