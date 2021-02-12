@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ParquePublicoAPI.Data;
 using ParquePublicoAPI.Models;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace ParquePublicoAPI.Controllers
 {
@@ -31,6 +32,7 @@ namespace ParquePublicoAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Reserva>>> GetReserva()
         {
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
             return await _context.Reserva.Include(r => r.Lugar).Include(l => l.Lugar.Rua).ToListAsync();
         }
 
