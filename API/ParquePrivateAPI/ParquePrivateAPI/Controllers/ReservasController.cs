@@ -118,10 +118,10 @@ public class ReservasController : ControllerBase
             }
 
             */
-    //DELETE: api/Reservas/5
+    //DELETE: api/Reservas/cancelar/5
     [Authorize]
     [EnableCors]
-    [HttpDelete("{id}")]
+    [HttpDelete("cancelar/{id}")]
     public async Task<ActionResult<Reserva>> DeleteReserva(long id)
     {
         var reserva = await _context.Reserva.FindAsync(id);

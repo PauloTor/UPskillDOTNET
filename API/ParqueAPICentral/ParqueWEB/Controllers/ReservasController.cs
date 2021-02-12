@@ -162,14 +162,16 @@ namespace ParqueAPICentral.Controllers
             return NoContent();
         }
 
-        // DELETE: api/reservas/delete/id - Cancelar reserva
+        // DELETE: api/reservas/cancelar/parqueID/id - Cancelar reserva
         [EnableCors]
         [HttpGet("{parqueID}/{id}")]
         public async Task<ActionResult<Reserva>> CancelarReserva(long parqueID, long id)
         {
             
             var reserva = _context.Reserva.Where(r => r.ReservaAPI == id).Where(r => r.ParqueID == parqueID).FirstOrDefault();
-            
+
+            var parque = await _context.Parque.FirstOrDefaultAsync(p => p.ParqueID == parqueID);
+
             if (reserva == null)
             {
                 return NotFound();
@@ -179,16 +181,7 @@ namespace ParqueAPICentral.Controllers
             {
                 var parquePublico = reserva.Publico;
 
-                if (parquePublico == false)
-                {
-                    UrlToUse = apiBaseUrlPrivado;
-                }
-                else
-                {
-                    UrlToUse = apiBaseUrlPublico;
-                }
-
-                string endpoint = UrlToUse + "reservas/" + "delete/" + id;
+                string endpoint = parque.Url + "reservas/" + "cancelar/" + id;
 
                 var reservaRes = await client.GetAsync(endpoint);
 
