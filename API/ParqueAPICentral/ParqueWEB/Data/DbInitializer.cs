@@ -83,12 +83,12 @@ namespace ParqueAPICentral.Data
 
             IList<Reserva> defaultReserva = new List<Reserva>
             {
-                new Reserva(11111225222, 2, 3),
-                new Reserva(22222115111, 1, 2),
-                new Reserva(33333341111, 4, 3),
-                new Reserva(22222131111, 3, 1),
-                new Reserva(22223232355, 4, 5),
-                new Reserva(23423445645, 5, 4)
+                new Reserva(2, 1, 3),
+                new Reserva(3, 1, 2),
+                new Reserva(3, 2, 3),
+                new Reserva(1, 1, 5),
+                new Reserva(1, 2, 1),
+                new Reserva(2, 2, 4)
             };
 
             context.Reserva.AddRange(defaultReserva);
@@ -120,6 +120,7 @@ namespace ParqueAPICentral.Data
             };
 
             context.SubAluguer.AddRange(defaultSubAluguer);
+
             context.SaveChanges();
         }
     }
