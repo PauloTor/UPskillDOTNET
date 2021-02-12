@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ParquePrivateAPI.Controllers
 {
-   // [Authorize]
+    [Authorize]
     [EnableCors("MyAllowSpecificOrigins")]
     [Route("api/Parques")]
     [ApiController]
@@ -26,7 +26,7 @@ namespace ParquePrivateAPI.Controllers
         }
 
         // GET: api/Parques
-       // [Authorize]
+        [Authorize]
         [EnableCors("MyAllowSpecificOrigins")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Parque>>> GetParque()

@@ -13,12 +13,12 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ParquePrivateAPI.Controllers
 {
+    [Authorize]
     [EnableCors("MyAllowSpecificOrigins")]
     [Route("api/PrecoLugares")]
     [ApiController]
-    public class PrecoLugaresController : ControllerBase
-    {
-      
+        public class PrecoLugaresController : ControllerBase
+        {     
             private readonly ParquePrivateAPIContext _context;
 
             public PrecoLugaresController(ParquePrivateAPIContext context)
@@ -26,14 +26,15 @@ namespace ParquePrivateAPI.Controllers
                 _context = context;
             }
 
-           [EnableCors("MyAllowSpecificOrigins")]
-           [HttpPost]
-            public async Task<ActionResult<PrecoLugar>> PostPrecoLugar(PrecoLugar precoLugar)
+    [Authorize]
+    [EnableCors("MyAllowSpecificOrigins")]
+    [HttpPost]
+        public async Task<ActionResult<PrecoLugar>> PostPrecoLugar(PrecoLugar precoLugar)
             {
                 _context.PrecoLugar.Add(precoLugar);
                 await _context.SaveChangesAsync();
 
                 return NoContent();
             }
-         }
+        }
     }
