@@ -22,39 +22,6 @@ namespace ParquePrivateAPI.Data
             }
 
 
-            var morada = new Morada[]
-
-                {
-                    new Morada
-                    {
-
-                        Rua = " Rua da Boavista",
-                        CodigoPostal = "5002 - 456"
-                    },
-                };
-
-
-            foreach (Morada s in morada)
-            {
-                context.Morada.Add(s);
-            }
-            context.SaveChanges();
-
-           // ===============================================================
-            var parque = new Parque[]
-
-                {
-
-
-            new Parque { NifParque =111112222,NomeParque = " Boavista Park", Lotacao = 5, MoradaID = 1 },
-             };
-
-            foreach (Parque s in parque)
-            {
-                context.Parque.Add(s);
-            }
-            context.SaveChanges();
-
             //=================================================================
 
 
@@ -62,11 +29,11 @@ namespace ParquePrivateAPI.Data
 
                 {
 
-                    new Lugar { Fila = 1, Sector = 1, Preço = 10, ParqueID = 1 },
-                    new Lugar { Fila = 2, Sector = 2, Preço = 11, ParqueID = 1 },
-                    new Lugar { Fila = 3, Sector = 1, Preço = 10, ParqueID = 1 },
-                    new Lugar { Fila = 4, Sector = 2, Preço = 11, ParqueID = 1 },
-                    new Lugar { Fila = 5, Sector = 1, Preço = 10, ParqueID = 1 },
+                    new Lugar { Fila = 1, Sector = 1, Preço = 10},
+                    new Lugar { Fila = 2, Sector = 2, Preço = 11},
+                    new Lugar { Fila = 3, Sector = 1, Preço = 10},
+                    new Lugar { Fila = 4, Sector = 2, Preço = 11 },
+                    new Lugar { Fila = 5, Sector = 1, Preço = 10 },
                 };
 
             foreach (Lugar s in lugar)

@@ -33,7 +33,8 @@ public class ReservasController : ControllerBase
     public async Task<ActionResult<IEnumerable<Reserva>>> GetReserva()
     {
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-            return await _context.Reserva.Include(r => r.Lugar).Include(l => l.Lugar.Parque).Include(p => p.Lugar.Parque.Morada).ToListAsync();
+            return await _context.Reserva.
+                ToListAsync();
     }
     // GET: api/Reservas/5
     [Authorize]
@@ -42,7 +43,7 @@ public class ReservasController : ControllerBase
     public async Task<ActionResult<Reserva>> GetReserva(long id)
     {
         var reserva = await _context.Reserva
-                     .Include(r => r.Lugar).Include(l => l.Lugar.Parque).Include(p => p.Lugar.Parque.Morada)
+                     .Include(r => r.Lugar)
                      .FirstOrDefaultAsync(r => r.ReservaID == id);
 
         if (reserva == null)
