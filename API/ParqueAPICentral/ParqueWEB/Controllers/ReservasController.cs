@@ -39,26 +39,29 @@ namespace ParqueAPICentral.Controllers
             apiBaseUrlPublico = _configure.GetValue<string>("WebAPIPublicBaseUrl");
         }
 
+        //GET Todas as reservas de um parque
         [EnableCors]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Reserva_>>> GetReservas()
+        [Route("{id}")]
+        public async Task<ActionResult<IEnumerable<Reserva_>>> GetReservasByParque(long id)
         {
-            var ListaReservas = new List<Reserva_>();
+            var listaReservas = new List<Reserva_>();
+
+            var parque =  await _context.Parque.FirstOrDefaultAsync(p => p.ParqueID == id);
+
             using (var client = new HttpClient())
             {
-                UserInfo user = new UserInfo();
-                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
-                var responseLogin = await client.PostAsync(apiBaseUrlPrivado + "users/authenticate", contentUser);
-                dynamic tokenresponsecontent = await responseLogin.Content.ReadAsAsync<object>();
-                string rtoken = tokenresponsecontent.jwtToken;
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", rtoken);
-                // Route para Lugar por datas
-                string endpoint = apiBaseUrlPrivado + "Reservas/";
+                string endpoint = parque.Url + "reservas/";
+
                 var response = await client.GetAsync(endpoint);
-                response.EnsureSuccessStatusCode();
-                ListaReservas = await response.Content.ReadAsAsync<List<Reserva_>>();
+
+                dynamic tokenresponsecontent = await response.Content.ReadAsAsync<object>();
+
+                string rtoken = tokenresponsecontent.jwtToken;
+
+                listaReservas = await response.Content.ReadAsAsync<List<Reserva_>>();
             }
-            return ListaReservas;
+            return listaReservas;
         }
 
         [EnableCors]
@@ -116,7 +119,7 @@ namespace ParqueAPICentral.Controllers
                 var nif = await client.GetAsync(endpoint3);
                 List<Parque> ListaParques = await nif.Content.ReadAsAsync<List<Parque>>();
                 var nif_ = ListaParques.FirstOrDefault();
-                var nif__ = nif_.NifParque;
+                var nif__ = nif_.NIFParque;
                 var reserva1 = new Reserva(nif__, reservaid, ClienteID);
                 _context.Reserva.Add(reserva1);
 
