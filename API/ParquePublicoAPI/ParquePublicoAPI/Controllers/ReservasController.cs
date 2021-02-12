@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-//using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +12,7 @@ using ParquePublicoAPI.Models;
 
 namespace ParquePublicoAPI.Controllers
 {
-   // [Authorize]
+    [Authorize]
     [EnableCors("MyAllowSpecificOrigins")]
     [Route("api/Reservas")]
     [ApiController]
@@ -26,7 +26,7 @@ namespace ParquePublicoAPI.Controllers
         }
 
         // GET: api/Reservas
-     //   [Authorize]
+        [Authorize]
         [EnableCors("MyAllowSpecificOrigins")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Reserva>>> GetReserva()
@@ -35,7 +35,7 @@ namespace ParquePublicoAPI.Controllers
         }
 
         // GET: api/Reservas/5
-     //   [Authorize]
+        [Authorize]
         [EnableCors]
         [HttpGet("{id}")]
         public async Task<ActionResult<Reserva>> GetReserva(long id)
@@ -54,7 +54,7 @@ namespace ParquePublicoAPI.Controllers
 
         // PUT: api/Reservas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-     //   [Authorize]
+        [Authorize]
         [EnableCors]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutReserva(long id, Reserva reserva)
@@ -87,7 +87,7 @@ namespace ParquePublicoAPI.Controllers
 
         // POST: api/Reservas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-     //   [Authorize]
+        [Authorize]
         [EnableCors]
         [HttpPost]
         public async Task<ActionResult<Reserva>> PostReserva(Reserva reserva)
@@ -99,7 +99,7 @@ namespace ParquePublicoAPI.Controllers
         }
 
         // DELETE: api/Reservas/5
-     //   [Authorize]
+        [Authorize]
         [EnableCors]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteReserva(long id)

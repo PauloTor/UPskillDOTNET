@@ -30,7 +30,7 @@ namespace testProject
 
             //Act
             // var result = await testController.CreateSubAluguer(new SubAluguer(15, DateTime.Parse("2019-01-01 15:00:00"), DateTime.Parse("2019-01-05 15:00:00"), DateTime.Parse("2019-01-05 16:00:00"), 1));
-            var result = await testController.CreateSubAluguer(1,1,11); //só para eliminar o erro
+            var result = await testController.PostSubAluguer(1,1,11); //só para eliminar o erro
             //Assert
             Assert.IsType<Reserva>(result.Value);
              Assert.IsType<CreatedAtActionResult>(result.Result);
