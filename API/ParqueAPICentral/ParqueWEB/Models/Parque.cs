@@ -25,6 +25,10 @@ namespace ParqueAPICentral.Models
         public long MoradaID { get; set; }
         public Morada Morada {get;set;}
         
+        public Parque()
+        {
+        }
+
         public Parque(string nomeParque, long nifParque, int lotacao, string url, long moradaId)
         {
             NomeParque = nomeParque;

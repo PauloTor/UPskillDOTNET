@@ -3,10 +3,24 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ParqueAPICentral.Migrations
 {
-    public partial class sucker : Migration
+    public partial class on : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Morada",
+                columns: table => new
+                {
+                    MoradaID = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Rua = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CodigoPostal = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Morada", x => x.MoradaID);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
@@ -21,6 +35,29 @@ namespace ParqueAPICentral.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Parque",
+                columns: table => new
+                {
+                    ParqueID = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NomeParque = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NIFParque = table.Column<long>(type: "bigint", nullable: false),
+                    Lotacao = table.Column<int>(type: "int", nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MoradaID = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Parque", x => x.ParqueID);
+                    table.ForeignKey(
+                        name: "FK_Parque_Morada_MoradaID",
+                        column: x => x.MoradaID,
+                        principalTable: "Morada",
+                        principalColumn: "MoradaID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -54,10 +91,9 @@ namespace ParqueAPICentral.Migrations
                 {
                     ReservaID = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NifParqueAPI = table.Column<long>(type: "bigint", nullable: false),
                     ReservaAPI = table.Column<long>(type: "bigint", nullable: false),
-                    ClienteID = table.Column<long>(type: "bigint", nullable: false),
-                    Publico = table.Column<bool>(type: "bit", nullable: false)
+                    ParqueID = table.Column<long>(type: "bigint", nullable: false),
+                    ClienteID = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -67,6 +103,12 @@ namespace ParqueAPICentral.Migrations
                         column: x => x.ClienteID,
                         principalTable: "Cliente",
                         principalColumn: "ClienteID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Reserva_Parque_ParqueID",
+                        column: x => x.ParqueID,
+                        principalTable: "Parque",
+                        principalColumn: "ParqueID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -149,9 +191,19 @@ namespace ParqueAPICentral.Migrations
                 column: "FaturaID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Parque_MoradaID",
+                table: "Parque",
+                column: "MoradaID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Reserva_ClienteID",
                 table: "Reserva",
                 column: "ClienteID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reserva_ParqueID",
+                table: "Reserva",
+                column: "ParqueID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SubAluguer_ClienteID",
@@ -177,7 +229,13 @@ namespace ParqueAPICentral.Migrations
                 name: "Cliente");
 
             migrationBuilder.DropTable(
+                name: "Parque");
+
+            migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Morada");
         }
     }
 }

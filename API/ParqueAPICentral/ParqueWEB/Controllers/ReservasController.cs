@@ -25,12 +25,10 @@ namespace ParqueAPICentral.Controllers
     public class ReservasController : ControllerBase
     {
         private readonly APICentralContext _context;
-        private readonly IConfiguration _configure;
 
-        public ReservasController(APICentralContext context, IConfiguration configuration)
+        public ReservasController(APICentralContext context)
         {
             _context = context;
-            _configure = configuration;
         }
 
         //GET: api/reservas/parqueID/id - Reservas de um Parque por ReservaID
@@ -50,10 +48,6 @@ namespace ParqueAPICentral.Controllers
                 string endpoint = parque.Url + "reservas/" + id;
 
                 var response = await client.GetAsync(endpoint);
-
-                dynamic tokenresponsecontent = await response.Content.ReadAsAsync<object>();
-
-                string rtoken = tokenresponsecontent.jwtToken;
 
                 reserva_ = await response.Content.ReadAsAsync<Reserva_>();
             }
@@ -75,10 +69,6 @@ namespace ParqueAPICentral.Controllers
                 string endpoint = parque.Url + "reservas/";
 
                 var response = await client.GetAsync(endpoint);
-
-                dynamic tokenresponsecontent = await response.Content.ReadAsAsync<object>();
-
-                string rtoken = tokenresponsecontent.jwtToken;
 
                 listaReservas = await response.Content.ReadAsAsync<List<Reserva_>>();
             }
@@ -158,10 +148,9 @@ namespace ParqueAPICentral.Controllers
         */
         // DELETE: api/reservas/cancelar/parqueID/id - Cancelar reserva
         [EnableCors]
-        [HttpGet("{parqueID}/{id}")]
+        [HttpGet("cancelar/{parqueID}/{id}")]
         public async Task<ActionResult<Reserva>> CancelarReserva(long parqueID, long id)
-        {
-            
+        {           
             var reserva = _context.Reserva.Where(r => r.ReservaAPI == id).Where(r => r.ParqueID == parqueID).FirstOrDefault();
 
             var parque = await _context.Parque.FirstOrDefaultAsync(p => p.ParqueID == parqueID);

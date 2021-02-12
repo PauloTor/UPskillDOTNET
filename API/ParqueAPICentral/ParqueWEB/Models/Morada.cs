@@ -13,10 +13,10 @@ namespace ParqueAPICentral.Models
 
         public string CodigoPostal { get; set; }
 
-        public Morada(string rua, string postal)
+        public Morada(string rua, string codigoPostal)
         {
             Rua = rua;
-            CodigoPostal = postal;
+            CodigoPostal = codigoPostal;
         }
     }
 }

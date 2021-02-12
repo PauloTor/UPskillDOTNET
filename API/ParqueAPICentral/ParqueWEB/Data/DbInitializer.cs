@@ -22,11 +22,26 @@ namespace ParqueAPICentral.Data
                 return;
             }
 
+
+            var morada = new List<Morada>
+            {
+                new Morada("Rua da Boavista 184", "4400-224 Porto"),
+                new Morada("Praça da Vida 83", "4428-108 Porto"),
+                new Morada("Rua do Poste", "5267-123 Maia")
+            };
+
+            foreach (Morada m in morada)
+            {
+                context.Morada.Add(m);
+            }
+            context.SaveChanges();
+
+
             var parque = new List<Parque>
             {
                 new Parque("Aparkai 1", 1234, 10, "https://localhost:44365/api/", 1),
                 new Parque("Aparkai 2", 1234, 4, "https://localhost:44365/api/", 2),
-                new Parque("Municipal", 4444, 22, "https://localhost:44339/api/", 0)
+                new Parque("Municipal", 4444, 22, "https://localhost:44339/api/", 3)
             };
 
             foreach (Parque p in parque)
@@ -35,19 +50,6 @@ namespace ParqueAPICentral.Data
             }
             context.SaveChanges();
 
-
-            var morada = new List<Morada>
-            {
-                new Morada("Rua da Boavista 184", "4400-224"),
-                new Morada("Praça da Vida 83", "4428-108"),
-                new Morada("Rua do Poste", "5267-123")
-            };
-
-            foreach (Morada m in morada)
-            {
-                context.Morada.Add(m);
-            }
-            context.SaveChanges();
 
             var user = new User[]
             {

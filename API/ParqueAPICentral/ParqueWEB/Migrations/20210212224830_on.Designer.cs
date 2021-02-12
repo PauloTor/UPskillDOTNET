@@ -10,8 +10,8 @@ using ParqueAPICentral.Data;
 namespace ParqueAPICentral.Migrations
 {
     [DbContext(typeof(APICentralContext))]
-    [Migration("20210212092150_sucker")]
-    partial class sucker
+    [Migration("20210212224830_on")]
+    partial class on
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -103,6 +103,24 @@ namespace ParqueAPICentral.Migrations
                     b.ToTable("Fatura");
                 });
 
+            modelBuilder.Entity("ParqueAPICentral.Models.Morada", b =>
+                {
+                    b.Property<long>("MoradaID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("CodigoPostal")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Rua")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MoradaID");
+
+                    b.ToTable("Morada");
+                });
+
             modelBuilder.Entity("ParqueAPICentral.Models.Pagamento", b =>
                 {
                     b.Property<long>("PagamentoID")
@@ -120,6 +138,35 @@ namespace ParqueAPICentral.Migrations
                     b.ToTable("Pagamento");
                 });
 
+            modelBuilder.Entity("ParqueAPICentral.Models.Parque", b =>
+                {
+                    b.Property<long>("ParqueID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("Lotacao")
+                        .HasColumnType("int");
+
+                    b.Property<long>("MoradaID")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("NIFParque")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("NomeParque")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ParqueID");
+
+                    b.HasIndex("MoradaID");
+
+                    b.ToTable("Parque");
+                });
+
             modelBuilder.Entity("ParqueAPICentral.Models.Reserva", b =>
                 {
                     b.Property<long>("ReservaID")
@@ -130,11 +177,8 @@ namespace ParqueAPICentral.Migrations
                     b.Property<long>("ClienteID")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("NifParqueAPI")
+                    b.Property<long>("ParqueID")
                         .HasColumnType("bigint");
-
-                    b.Property<bool>("Publico")
-                        .HasColumnType("bit");
 
                     b.Property<long>("ReservaAPI")
                         .HasColumnType("bigint");
@@ -142,6 +186,8 @@ namespace ParqueAPICentral.Migrations
                     b.HasKey("ReservaID");
 
                     b.HasIndex("ClienteID");
+
+                    b.HasIndex("ParqueID");
 
                     b.ToTable("Reserva");
                 });
@@ -206,6 +252,17 @@ namespace ParqueAPICentral.Migrations
                     b.Navigation("Fatura");
                 });
 
+            modelBuilder.Entity("ParqueAPICentral.Models.Parque", b =>
+                {
+                    b.HasOne("ParqueAPICentral.Models.Morada", "Morada")
+                        .WithMany()
+                        .HasForeignKey("MoradaID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Morada");
+                });
+
             modelBuilder.Entity("ParqueAPICentral.Models.Reserva", b =>
                 {
                     b.HasOne("ParqueAPICentral.Models.Cliente", "Cliente")
@@ -214,18 +271,26 @@ namespace ParqueAPICentral.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ParqueAPICentral.Models.Parque", "Parque")
+                        .WithMany()
+                        .HasForeignKey("ParqueID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Cliente");
+
+                    b.Navigation("Parque");
                 });
 
             modelBuilder.Entity("ParqueAPICentral.Models.SubAluguer", b =>
                 {
-                    b.HasOne("ParqueAPICentral.Models.Cliente", "cliente")
+                    b.HasOne("ParqueAPICentral.Models.Cliente", "Cliente")
                         .WithMany()
                         .HasForeignKey("ClienteID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("cliente");
+                    b.Navigation("Cliente");
                 });
 #pragma warning restore 612, 618
         }
