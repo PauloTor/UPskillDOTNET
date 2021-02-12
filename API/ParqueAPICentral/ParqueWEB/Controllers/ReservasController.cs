@@ -39,15 +39,15 @@ namespace ParqueAPICentral.Controllers
             apiBaseUrlPublico = _configure.GetValue<string>("WebAPIPublicBaseUrl");
         }
 
-        //GET Todas as reservas de um parque
+        //GET: api/reservas/parqueID - Todas as reservas de um parque
         [EnableCors]
         [HttpGet]
-        [Route("{id}")]
-        public async Task<ActionResult<IEnumerable<Reserva_>>> GetReservasByParque(long id)
+        [Route("{parqueID}")]
+        public async Task<ActionResult<IEnumerable<Reserva_>>> GetReservasByParque(long parqueID)
         {
             var listaReservas = new List<Reserva_>();
 
-            var parque =  await _context.Parque.FirstOrDefaultAsync(p => p.ParqueID == id);
+            var parque =  await _context.Parque.FirstOrDefaultAsync(p => p.ParqueID == parqueID);
 
             using (var client = new HttpClient())
             {
@@ -135,13 +135,13 @@ namespace ParqueAPICentral.Controllers
             return NoContent();
         }
 
-        // DELETE: api/reservas/id - Cancelar reserva
+        // DELETE: api/reservas/delete/id - Cancelar reserva
         [EnableCors]
-        [HttpGet("{id}/{nif}")]
-        public async Task<ActionResult<Reserva>> CancelarReserva(long id, long nif)
+        [HttpGet("{parqueID}/{id}")]
+        public async Task<ActionResult<Reserva>> CancelarReserva(long parqueID, long id)
         {
             
-            var reserva = _context.Reserva.Where(r => r.ReservaAPI == id).Where(r => r.NifParqueAPI == nif).FirstOrDefault();
+            var reserva = _context.Reserva.Where(r => r.ReservaAPI == id).Where(r => r.ParqueID == parqueID).FirstOrDefault();
             
             if (reserva == null)
             {
@@ -161,7 +161,7 @@ namespace ParqueAPICentral.Controllers
                     UrlToUse = apiBaseUrlPublico;
                 }
 
-                string endpoint = UrlToUse + "reservas/" + id;
+                string endpoint = UrlToUse + "reservas/" + "delete/" + id;
 
                 var reservaRes = await client.GetAsync(endpoint);
 
