@@ -147,9 +147,9 @@ namespace ParqueAPICentral.Controllers
 
             using (HttpClient client = new HttpClient())
             {
-                var parque = reserva.Publico;
+                var parquePublico = reserva.Publico;
 
-                if (parque == false)
+                if (parquePublico == false)
                 {
                     UrlToUse = apiBaseUrlPrivado;
                 }
