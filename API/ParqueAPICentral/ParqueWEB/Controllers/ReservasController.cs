@@ -39,7 +39,34 @@ namespace ParqueAPICentral.Controllers
             apiBaseUrlPublico = _configure.GetValue<string>("WebAPIPublicBaseUrl");
         }
 
-        //GET: api/reservas/parqueID - Todas as reservas de um parque
+        //GET: api/reservas/parqueID/id - Reservas de um Parque por ReservaID
+        [EnableCors]
+        [HttpGet]
+        [Route("{parqueID}/{id}")]
+        public async Task<ActionResult<Reserva_>> GetReservasById(long parqueID, long id)
+        {
+            //var listaReservas = new List<Reserva_>();
+
+            var parque = await _context.Parque.FirstOrDefaultAsync(p => p.ParqueID == parqueID);
+
+            Reserva_ reserva_;
+
+            using (var client = new HttpClient())
+            {
+                string endpoint = parque.Url + "reservas/" + id;
+
+                var response = await client.GetAsync(endpoint);
+
+                dynamic tokenresponsecontent = await response.Content.ReadAsAsync<object>();
+
+                string rtoken = tokenresponsecontent.jwtToken;
+
+                reserva_ = await response.Content.ReadAsAsync<Reserva_>();
+            }
+            return reserva_;
+        }
+
+        //GET: api/reservas/parqueID - Todas as Reservas de um Parque
         [EnableCors]
         [HttpGet]
         [Route("{parqueID}")]
