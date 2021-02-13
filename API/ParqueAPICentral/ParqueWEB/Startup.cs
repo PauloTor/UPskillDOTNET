@@ -28,8 +28,17 @@ namespace ParqueAPICentral
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-            services.AddCors();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("MyAllowSpecificOrigins",
+                builder =>
+                {
+                    builder.WithOrigins("https://localhost:4200",
+                                        "https://myDeployedWebSite")
+                                        .AllowAnyHeader()
+                                        .AllowAnyMethod();
+                    services.AddControllersWithViews();
+
             services.AddControllers();
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
@@ -69,11 +78,7 @@ namespace ParqueAPICentral
 
             app.UseRouting();
 
-
-            app.UseCors(x => x
-              .AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader());
+            app.UseCors("MyAllowSpecificOrigins");
 
             app.UseAuthorization();
             app.UseMiddleware<JwtMiddleware>();
@@ -85,7 +90,6 @@ namespace ParqueAPICentral
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllers();
             }
-
 
             );
         }

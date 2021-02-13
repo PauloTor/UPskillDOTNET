@@ -17,6 +17,7 @@ using ParqueAPICentral.Services;
 
 namespace ParqueAPICentral.Controllers
 {
+    [EnableCors("MyAllowSpecificOrigins")]
     [Route("api/Faturas")]
     [ApiController]
     public class FaturasController : ControllerBase
@@ -135,6 +136,7 @@ namespace ParqueAPICentral.Controllers
         }
 
         // GET Faturas by FaturaID - api/Faturas/5 - sem services ou repositories
+        [EnableCors]
         [HttpGet("{FaturaID}")]
         public async Task<ActionResult<Fatura>> GetFatura(long FaturaID)
         {
