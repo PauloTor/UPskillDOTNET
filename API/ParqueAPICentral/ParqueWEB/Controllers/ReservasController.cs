@@ -72,7 +72,8 @@ namespace ParqueAPICentral.Controllers
             }
             return listaReservas;
         }
-        /*
+
+        /* INSERIR LOTAÇAO
         [EnableCors]
         [HttpPost("{DataInicio}/{DataFim}/{ClienteID}")]
         public async Task<ActionResult<IEnumerable<Reserva_>>> PostReservaByData(String DataInicio, String DataFim, long ClienteID)
@@ -144,6 +145,7 @@ namespace ParqueAPICentral.Controllers
             return NoContent();
         }
         */
+
         // DELETE: api/reservas/cancelar/parqueID/id - Cancelar reserva
         [EnableCors]
         [HttpGet("cancelar/{parqueID}/{id}")]
@@ -157,7 +159,6 @@ namespace ParqueAPICentral.Controllers
             {
                 return NotFound();
             }
-
             using (HttpClient client = new HttpClient())
             {
                 string endpoint = parque.Url + "reservas/" + "cancelar/" + id;
@@ -180,13 +181,10 @@ namespace ParqueAPICentral.Controllers
 
                     cliente_.Depositar(precoFatura);
                 }                
-
                 _context.Reserva.Remove(reserva);
 
                 var deleteTask = client.DeleteAsync(endpoint);
-
             }
-
             await _context.SaveChangesAsync();
 
             return NoContent();
