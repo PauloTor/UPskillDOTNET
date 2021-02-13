@@ -27,15 +27,6 @@ namespace ParqueAPICentral.Models
         public long Id { get; set; }
         public User User { get; set; }
 
-        public virtual void Depositar(float valor)
-        {
-            Credito += valor;
-        }
-
-        public virtual void Pagar(float valor)
-        {
-            Credito -= valor;
-        }
 
         public Cliente(string nomeCliente, string emailCliente, int nifCliente, string metodoPagamento, float credito,long id)
         {
@@ -47,6 +38,33 @@ namespace ParqueAPICentral.Models
             Id = id;
         }
 
+        public virtual void Depositar(float valor)
+        {
+            if (valor < 0)
+            {
+                throw new Exception("Não é possível depositar uma quantia negativa.");
+            }
+            else
+            {
+                Credito += valor;
+            }
+        }
+
+        public virtual void Pagar(float valor)
+        {
+            if (valor < 0)
+            {
+                throw new Exception("A quantia a pagar deve ter um valor positivo.");
+            }
+            else
+            {
+                Credito -= valor;
+            }
+            if (Credito < 0)
+            {
+                throw new Exception("O crédito não permite efetuar a operação.");
+            }
+        }
     }   
 }
 
