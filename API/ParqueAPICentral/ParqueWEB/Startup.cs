@@ -39,24 +39,26 @@ namespace ParqueAPICentral
                                         .AllowAnyMethod();
                     services.AddControllersWithViews();
 
-            services.AddControllers();
-            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+                    services.AddControllers();
+                    services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
-            // configure DI for application services
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IFaturaRepository, FaturaRepository>();
-            services.AddTransient<FaturaService>();
+                    // configure DI for application services
+                    services.AddScoped<IUserService, UserService>();
+                    services.AddScoped<IFaturaRepository, FaturaRepository>();
+                    services.AddTransient<FaturaService>();
 
-            //services.AddScoped<IClienteRepository, ClienteRepository>();
-            //services.AddScoped<ClienteService>();
+                    //services.AddScoped<IClienteRepository, ClienteRepository>();
+                    //services.AddScoped<ClienteService>();
 
-            //services.AddScoped<IReservaRepository, ReservaRepository> ();
-            //services.AddTransient<ReservaService>();
+                    //services.AddScoped<IReservaRepository, ReservaRepository> ();
+                    //services.AddTransient<ReservaService>();
 
 
-            services.AddDbContext<APICentralContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("APICentralContext")));
+                    services.AddDbContext<APICentralContext>(options =>
+                            options.UseSqlServer(Configuration.GetConnectionString("APICentralContext")));
 
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
