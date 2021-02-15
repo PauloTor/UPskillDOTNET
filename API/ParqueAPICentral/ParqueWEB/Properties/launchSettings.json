@@ -11,7 +11,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/Reservas/2025-02-01T11:00:00/2028-02-01T11:00:00/2/2",
+      "launchUrl": "api/Reservas/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

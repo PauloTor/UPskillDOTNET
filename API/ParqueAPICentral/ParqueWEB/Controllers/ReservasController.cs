@@ -31,41 +31,38 @@ namespace ParqueAPICentral.Controllers
         {
             _context = context;
         }
-        /// <summary>
-        /// ////////////////
-        /// </summary>
-        /// <param name="parqueID"></param>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        //GET: api/reservas/parqueID/id - Reservas de um Parque por ReservaID
+
+        // GET: api/Reservas
         [EnableCors]
         [HttpGet]
-        [Route("~/reservasid/{parqueID}/{id}")]
-        public async Task<ActionResult<Reserva_>> GetReservasById(long parqueID, long id)
+        public async Task<ActionResult<IEnumerable<Reserva>>> GetReservasTodas()
         {
-            var parque = await _context.Parque.FirstOrDefaultAsync(p => p.ParqueID == parqueID);
+            return await _context.Reserva.
+                ToListAsync();
+        }
 
-            Reserva_ reserva_;
+        // GET: api/Reservas/id
+        [EnableCors]
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Reserva>> GetReservaById(long id)
+        {
+            var reserva = await _context.Reserva.Where(r => r.ReservaID == id).FirstOrDefaultAsync();
 
-            using (var client = new HttpClient())
+            if (reserva == null)
             {
-                string endpoint = parque.Url + "reservas/" + id;
-
-                var response = await client.GetAsync(endpoint);
-
-                reserva_ = await response.Content.ReadAsAsync<Reserva_>();
+                return NotFound();
             }
-            return reserva_;
+            return reserva;
         }
         /// <summary>
         /// //////////////////////
         /// </summary>
         /// <param name="parqueID"></param>
         /// <returns></returns>
-        //GET: api/reservas/parqueID - Todas as Reservas de um Parque
+        //GET: api/reservas/get/parqueID - Todas as Reservas de um Parque
         [EnableCors]
         [HttpGet]
-        [Route("/getreserva/{parqueID}")]
+        [Route("get/{parqueID}")]
         public async Task<ActionResult<IEnumerable<Reserva_>>> GetReservasByParque(long parqueID)
         {
             var listaReservas = new List<Reserva_>();
@@ -81,6 +78,36 @@ namespace ParqueAPICentral.Controllers
                 listaReservas = await response.Content.ReadAsAsync<List<Reserva_>>();
             }
             return listaReservas;
+        }
+        /// <summary>
+        /// ////////////////
+        /// </summary>
+        /// <param name="parqueID"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        //GET: api/reservas/get/parqueID/id - Reservas de um Parque por ReservaID
+        [EnableCors]
+        [HttpGet]
+        [Route("get/{parqueID}/{id}")]
+        public async Task<ActionResult<Reserva_>> GetReservasById(long parqueID, long id)
+        {
+            var parque = await _context.Parque.FirstOrDefaultAsync(p => p.ParqueID == parqueID);
+
+            Reserva_ reserva_;
+
+            using (var client = new HttpClient())
+            {
+                string endpoint = parque.Url + "reservas/" + id;
+
+                var response = await client.GetAsync(endpoint);
+
+                reserva_ = await response.Content.ReadAsAsync<Reserva_>();
+            }
+            if (reserva_ == null)
+            {
+                return NotFound();
+            }
+            return reserva_;
         }
         /// <summary>
         /// ////////////////////////
@@ -146,7 +173,7 @@ namespace ParqueAPICentral.Controllers
         /// <returns></returns>
         // DELETE: api/reservas/cancelar/parqueID/id - Cancelar reserva
         [EnableCors]
-        [HttpGet("~cancelar/{parqueID}/{id}")]
+        [HttpGet("cancelar/{parqueID}/{id}")]
         public async Task<ActionResult<Reserva>> CancelarReserva(long parqueID, long id)
         {
             var reserva = _context.Reserva.Where(r => r.ReservaAPI == id).Where(r => r.ParqueID == parqueID).FirstOrDefault();
@@ -238,7 +265,7 @@ namespace ParqueAPICentral.Controllers
         /// <param name="parqueid"></param>
         /// <returns></returns>
         [EnableCors]
-        [HttpGet("ultimareserva/{ParqueID}")]
+        [HttpGet("ultima/{ParqueID}")]
         public async Task<ActionResult<Reserva_>> GetUltimaReservaPrivate(long parqueid)
         {
             var parque = await _context.Parque.FirstOrDefaultAsync(p => p.ParqueID == parqueid);
@@ -269,7 +296,7 @@ namespace ParqueAPICentral.Controllers
         /// <param name="parqueid"></param>
         /// <param name="clienteid"></param>
         [EnableCors]
-        [HttpGet("criarreservacentral/{reservaid}/{parqueid}/{cliente}")]
+        [HttpGet("post/{reservaid}/{parqueid}/{cliente}")]
 
         public async void CriarReservaCentral(long reservaid, long parqueid, long clienteid)
         {
@@ -293,6 +320,8 @@ namespace ParqueAPICentral.Controllers
         /// ////////////////////////////
         /// </summary>
         /// <param name="reserva"></param>
+        /// 
+        [HttpGet("cancelar/central")]
         public async void ApagarReservaCentral(Reserva reserva)
         {
             _context.Reserva.Remove(reserva);

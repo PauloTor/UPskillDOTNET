@@ -37,6 +37,7 @@ namespace ParqueAPICentral.Controllers
         {
             SubAluguer subAluguer = new SubAluguer(ResevaID, Preco);
             _context.SubAluguer.Add(subAluguer);
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetSubAluguer", new { id = subAluguer.SubAluguerID }, subAluguer);
