@@ -37,10 +37,9 @@ namespace ParqueAPICentral.Controllers
         /// <param name="parqueID"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        //GET: api/reservas/parqueID/id - Reservas de um Parque por ReservaID
+        //GET: api/reservas/reservasid/{parqueID}/{id} - Reservas de um Parque por ReservaID
         [EnableCors]
-        [HttpGet]
-        [Route("~/reservasid/{parqueID}/{id}")]
+        [HttpGet("reservasid/{parqueID}/{id}")]
         public async Task<ActionResult<Reserva_>> GetReservasById(long parqueID, long id)
         {
             var parque = await _context.Parque.FirstOrDefaultAsync(p => p.ParqueID == parqueID);
@@ -62,10 +61,9 @@ namespace ParqueAPICentral.Controllers
         /// </summary>
         /// <param name="parqueID"></param>
         /// <returns></returns>
-        //GET: api/reservas/parqueID - Todas as Reservas de um Parque
+        //GET: api/getreserva/{parqueID} - Todas as Reservas de um Parque
         [EnableCors]
-        [HttpGet]
-        [Route("/getreserva/{parqueID}")]
+        [HttpGet("getreserva/{parqueID}")]
         public async Task<ActionResult<IEnumerable<Reserva_>>> GetReservasByParque(long parqueID)
         {
             var listaReservas = new List<Reserva_>();
@@ -90,8 +88,10 @@ namespace ParqueAPICentral.Controllers
         /// <param name="ClienteID"></param>
         /// <param name="parqueid"></param>
         /// <returns></returns>
+        /// 
+
         [EnableCors]
-        [HttpGet("{DataInicio}/{DataFim}/{ClienteID}/{ParqueID}")]
+        [HttpPost("{DataInicio}/{DataFim}/{ClienteID}/{ParqueID}/{lugarId}")]
         public async Task<ActionResult<Reserva_>> PostReservaByData(String DataInicio, String DataFim, long ClienteID, long parqueid)
         {
             if (DateTime.Parse(DataInicio) > DateTime.Parse(DataFim))
@@ -144,9 +144,9 @@ namespace ParqueAPICentral.Controllers
         /// <param name="parqueID"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        // DELETE: api/reservas/cancelar/parqueID/id - Cancelar reserva
+        // DELETE: api/reservas/cancelar/{parqueID}/{idReservaAPI} - Cancelar reserva
         [EnableCors]
-        [HttpGet("~cancelar/{parqueID}/{id}")]
+        [HttpDelete("cancelar/{parqueID}/{id}")]
         public async Task<ActionResult<Reserva>> CancelarReserva(long parqueID, long id)
         {
             var reserva = _context.Reserva.Where(r => r.ReservaAPI == id).Where(r => r.ParqueID == parqueID).FirstOrDefault();
