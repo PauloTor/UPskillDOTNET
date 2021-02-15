@@ -39,5 +39,9 @@ namespace ParqueAPICentral.Models
         {
         }
 
+        public virtual void ParaSubAlugar(bool alugar)
+        {
+            ParaSubAluguer = alugar;
+        }
     }
 }

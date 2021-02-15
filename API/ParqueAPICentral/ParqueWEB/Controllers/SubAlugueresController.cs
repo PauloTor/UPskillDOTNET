@@ -66,9 +66,7 @@ namespace ParqueAPICentral.Controllers
 
             var reserva = _context.Reserva.Where(r => r.ReservaID == reservaID).FirstOrDefault();
 
-            var reservaPSA = reserva.ParaSubAluguer;
-
-            reservaPSA = true;
+            reserva.ParaSubAlugar(true);
 
             await _context.SaveChangesAsync();
 
