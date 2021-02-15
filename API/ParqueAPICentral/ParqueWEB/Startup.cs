@@ -28,26 +28,37 @@ namespace ParqueAPICentral
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-            services.AddCors();
-            services.AddControllers();
-            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.AddCors(options =>
+            {
+                options.AddPolicy("MyAllowSpecificOrigins",
+                builder =>
+                {
+                    builder.WithOrigins("https://localhost:4200",
+                                        "https://myDeployedWebSite")
+                                        .AllowAnyHeader()
+                                        .AllowAnyMethod();
+                    services.AddControllersWithViews();
 
-            // configure DI for application services
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IFaturaRepository, FaturaRepository>();
-            services.AddTransient<FaturaService>();
+                    services.AddControllers();
+                    services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
-            //services.AddScoped<IClienteRepository, ClienteRepository>();
-            //services.AddScoped<ClienteService>();
+                    // configure DI for application services
+                    services.AddScoped<IUserService, UserService>();
+                    services.AddScoped<IFaturaRepository, FaturaRepository>();
+                    services.AddTransient<FaturaService>();
 
-            //services.AddScoped<IReservaRepository, ReservaRepository> ();
-            //services.AddTransient<ReservaService>();
+                    //services.AddScoped<IClienteRepository, ClienteRepository>();
+                    //services.AddScoped<ClienteService>();
+
+                    //services.AddScoped<IReservaRepository, ReservaRepository> ();
+                    //services.AddTransient<ReservaService>();
 
 
-            services.AddDbContext<APICentralContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("APICentralContext")));
+                    services.AddDbContext<APICentralContext>(options =>
+                            options.UseSqlServer(Configuration.GetConnectionString("APICentralContext")));
 
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,11 +80,7 @@ namespace ParqueAPICentral
 
             app.UseRouting();
 
-
-            app.UseCors(x => x
-              .AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader());
+            app.UseCors("MyAllowSpecificOrigins");
 
             app.UseAuthorization();
             app.UseMiddleware<JwtMiddleware>();
@@ -85,7 +92,6 @@ namespace ParqueAPICentral
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllers();
             }
-
 
             );
         }

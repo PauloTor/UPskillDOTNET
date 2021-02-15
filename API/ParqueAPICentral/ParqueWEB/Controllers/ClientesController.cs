@@ -9,10 +9,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 
 namespace ParqueAPICentral.Controllers
 {
-    // [Authorize]
+    //[Authorize]
+    [EnableCors("MyAllowSpecificOrigins")]
     [Route("api/Clientes")]
     [ApiController]
     public class ClientesController : ControllerBase
@@ -26,6 +28,7 @@ namespace ParqueAPICentral.Controllers
 
         // GET: api/Clientes : Obter Informação de um Cliente
         //      [Authorize]
+        [EnableCors("MyAllowSpecificOrigins")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes()
         {
@@ -33,6 +36,7 @@ namespace ParqueAPICentral.Controllers
         }
 
         // GET: api/Clientes/5  - Obter Informação de um Cliente por ID
+        [EnableCors]
         [HttpGet("{id}")]
         public async Task<ActionResult<Cliente>> GetCliente(long id)
         {
@@ -48,6 +52,7 @@ namespace ParqueAPICentral.Controllers
 
         // PUT: api/Clientes/{ClienteID}/{NomeCliente}{EmailCliente}/{NifCliente}/{MetodoPagamento}/{Credito}/{UserID} - Actualizar informação de um Cliente
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [EnableCors]
         [HttpPut("{ClienteID}/{NomeCliente}/{EmailCliente}/{NifCliente}/{MetodoPagamento}/{Credito}/{UserID}")]
         public async Task<IActionResult> PutCliente(long ClienteID, string NomeCliente, string EmailCliente, int NifCliente, string MetodoPagamento, float Credito, long UserID)
         {
@@ -74,6 +79,7 @@ namespace ParqueAPICentral.Controllers
 
         // PUT: api/Clientes/5 -  Actualizar informação de um Cliente pelo seu ID
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [EnableCors]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCliente(long id, Cliente cliente)
         {
@@ -99,6 +105,7 @@ namespace ParqueAPICentral.Controllers
         }
         // POST: api/Clientes/{NomeCliente}/{EmailCliente}/{NifCliente}/{MetodoPagamento}/{Credito}/{UserID} : Criação de um Cliente
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [EnableCors]
         [HttpPost("{NomeCliente}/{EmailCliente}/{NifCliente}/{MetodoPagamento}/{Credito}/{UserID}")]
         public async Task<ActionResult<Cliente>> PostCliente(string NomeCliente, string EmailCliente, int NifCliente, string MetodoPagamento, float Credito, long UserID)
         {
@@ -108,9 +115,10 @@ namespace ParqueAPICentral.Controllers
 
             return CreatedAtAction("GetCliente", new { id = cliente.ClienteID }, cliente);
         }
-        
+
         // POST: api/Clientes : Criação de um Cliente
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [EnableCors]
         [HttpPost]
         public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
         {
@@ -119,9 +127,10 @@ namespace ParqueAPICentral.Controllers
 
             return CreatedAtAction("PostCliente", new { id = cliente.ClienteID }, cliente);
         }
-        
+
         // DELETE: api/Clientes/5
         //[Authorize]
+        [EnableCors]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCliente(long id)
         {

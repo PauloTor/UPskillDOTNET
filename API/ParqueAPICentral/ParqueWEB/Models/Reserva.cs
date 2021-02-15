@@ -12,32 +12,25 @@ namespace ParqueAPICentral.Models
         [Key]
         public long ReservaID { get; set; }
 
-       //// unique
-        public long NifParqueAPI { get; set; }
-
-        //// unique
         public long ReservaAPI { get; set; }
 
+        [ForeignKey("ParqueID")]
+        public long ParqueID { get; set; }
+        public Parque Parque { get; set; }       
 
         [ForeignKey("ClienteID")]
         public long ClienteID { get; set; }
         public Cliente Cliente { get; set; }
 
-        public bool Publico { get; set; }
-
-
-        public Reserva(long nifParqueAPI, long reservaAPI, long clienteID)
+        public Reserva(long parqueID, long reservaAPI, long clienteID)
         {
-            NifParqueAPI = nifParqueAPI;
-
+            ParqueID = parqueID;
             ReservaAPI = reservaAPI;
-
             ClienteID = clienteID;
-
         }
+
         public Reserva()
         {
-
         }
 
     }

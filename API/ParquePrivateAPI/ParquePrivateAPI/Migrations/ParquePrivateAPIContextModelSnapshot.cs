@@ -29,9 +29,6 @@ namespace ParquePrivateAPI.Migrations
                     b.Property<int>("Fila")
                         .HasColumnType("int");
 
-                    b.Property<long>("ParqueID")
-                        .HasColumnType("bigint");
-
                     b.Property<float>("Preço")
                         .HasColumnType("real");
 
@@ -40,79 +37,7 @@ namespace ParquePrivateAPI.Migrations
 
                     b.HasKey("LugarID");
 
-                    b.HasIndex("ParqueID");
-
                     b.ToTable("Lugar");
-                });
-
-            modelBuilder.Entity("ParquePrivateAPI.Models.Morada", b =>
-                {
-                    b.Property<long>("MoradaID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CodigoPostal")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Rua")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("MoradaID");
-
-                    b.ToTable("Morada");
-                });
-
-            modelBuilder.Entity("ParquePrivateAPI.Models.Parque", b =>
-                {
-                    b.Property<long>("ParqueID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Lotacao")
-                        .HasColumnType("int");
-
-                    b.Property<long>("MoradaID")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("NifParque")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("NomeParque")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ParqueID");
-
-                    b.HasIndex("MoradaID");
-
-                    b.ToTable("Parque");
-                });
-
-            modelBuilder.Entity("ParquePrivateAPI.Models.PrecoLugar", b =>
-                {
-                    b.Property<long>("PrecoLugarID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DataFim")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DataInicio")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long>("LugarID")
-                        .HasColumnType("bigint");
-
-                    b.Property<float>("Preco")
-                        .HasColumnType("real");
-
-                    b.HasKey("PrecoLugarID");
-
-                    b.HasIndex("LugarID");
-
-                    b.ToTable("PrecoLugar");
                 });
 
             modelBuilder.Entity("ParquePrivateAPI.Models.Reserva", b =>
@@ -163,33 +88,6 @@ namespace ParquePrivateAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("ParquePrivateAPI.Models.Lugar", b =>
-                {
-                    b.HasOne("ParquePrivateAPI.Models.Parque", "Parque")
-                        .WithMany()
-                        .HasForeignKey("ParqueID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ParquePrivateAPI.Models.Parque", b =>
-                {
-                    b.HasOne("ParquePrivateAPI.Models.Morada", "Morada")
-                        .WithMany()
-                        .HasForeignKey("MoradaID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ParquePrivateAPI.Models.PrecoLugar", b =>
-                {
-                    b.HasOne("ParquePrivateAPI.Models.Lugar", "lugar")
-                        .WithMany()
-                        .HasForeignKey("LugarID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("ParquePrivateAPI.Models.Reserva", b =>

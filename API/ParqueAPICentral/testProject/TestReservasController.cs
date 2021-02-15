@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using NotFoundResult = Microsoft.AspNetCore.Mvc.NotFoundResult;
 using Xunit;
 using Microsoft.Extensions.Configuration;
-
+/*
 namespace testProject
 {
     public class TestReservasController
@@ -76,3 +76,4 @@ namespace testProject
         }
     }
 }
+*/

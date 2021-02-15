@@ -14,9 +14,7 @@ namespace ParquePrivateAPI.Models
         public int Sector { get; set; }
         public float Preço { get; set; }
 
-        [ForeignKey("ParqueID")]
-        public long ParqueID { get; set; }
-        public Parque Parque { get; set; }
+       
 
     }
 }

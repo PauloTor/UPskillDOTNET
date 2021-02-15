@@ -56,7 +56,7 @@ namespace testProject
             var testController = new LugaresController(testContext);
 
             //Act
-            var result = await testController.PostLugar(new Lugar { LugarID = 11, Fila = 2, Sector = 1, Preço = 5, ParqueID = 1 });
+            var result = await testController.PostLugar(new Lugar { LugarID = 11, Fila = 2, Sector = 1, Preço = 5 });
             var get = await testController.GetLugar(6);
 
             //Assert
@@ -78,7 +78,6 @@ namespace testProject
             lugar.Fila = 2;
             lugar.Sector = 1;
             lugar.Preço = 6;
-            lugar.ParqueID = 1;
             var result = await testController.PutLugar(lugar.LugarID, lugar);
             var getresult = await testController.GetLugar(1);
             
@@ -88,7 +87,6 @@ namespace testProject
             Assert.Equal(2, items.Fila);
             Assert.Equal(1, items.Sector);
             Assert.Equal(6, items.Preço);
-            Assert.Equal(1, items.ParqueID);
             Assert.IsType<NoContentResult>(result);
         }
 

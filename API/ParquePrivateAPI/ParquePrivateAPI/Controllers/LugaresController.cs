@@ -35,7 +35,7 @@ namespace ParquePrivateAPI.Controllers
         public async Task<ActionResult<IEnumerable<Lugar>>> GetLugar()
         {
             //JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-            return await _context.Lugar.Include(l => l.Parque).Include(p => p.Parque.Morada).ToListAsync();
+            return await _context.Lugar.ToListAsync();
         }
 
         // GET: api/Lugares/5
@@ -45,7 +45,6 @@ namespace ParquePrivateAPI.Controllers
         public async Task<ActionResult<Lugar>> GetLugar(long id)
         {
             var lugar = await _context.Lugar
-                        .Include(l => l.Parque).Include(p => p.Parque.Morada)
                         .FirstOrDefaultAsync(l => l.LugarID == id);
 
             if (lugar == null)
@@ -148,7 +147,7 @@ namespace ParquePrivateAPI.Controllers
                                                 || (n.DataFim > dateTimeFim && n.DataInicio < dateTimeInicio && dateTimeInicio < n.DataFim))
                                                     .Select(n => n.LugarID).ToList();
 
-            var lugaresDisponiveis = await _context.Lugar.Include(n => n.Parque).Where(n => !reservasTimeFrame.Contains(n.LugarID)).ToListAsync();
+            var lugaresDisponiveis = await _context.Lugar.Where(n => !reservasTimeFrame.Contains(n.LugarID)).ToListAsync();
 
          
 

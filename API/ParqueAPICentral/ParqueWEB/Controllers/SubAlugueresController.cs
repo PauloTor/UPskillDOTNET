@@ -14,9 +14,11 @@ using ParqueAPICentral.Data;
 using ParqueAPICentral.DTO;
 using ParqueAPICentral.Entities;
 using ParqueAPICentral.Models;
+using Microsoft.AspNetCore.Cors;
 
 namespace ParqueAPICentral.Controllers
 {
+    [EnableCors("MyAllowSpecificOrigins")]
     [Route("api/SubAlugueres")]
     [ApiController]
     public class SubAlugueresController : ControllerBase
@@ -32,8 +34,9 @@ namespace ParqueAPICentral.Controllers
             apiBaseUrl = _configure.GetValue<string>("WebAPIPrivateBaseUrl");
         }
 
-        
+
         // POST: api/SubAlugueres/{Clienteid}/{Reservaid}/{PrecoHoraid}
+        [EnableCors]
         [HttpGet("{Clienteid}/{Reservaid}/{PrecoHoraid}")]
    //     
         public async Task<ActionResult<IEnumerable<SubAluguer>>> PostSubAluguer(long Clienteid, long Reservaid, float PrecoHoraid)

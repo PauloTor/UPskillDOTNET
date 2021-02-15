@@ -100,10 +100,10 @@ namespace ParquePublicoAPI.Controllers
             return CreatedAtAction("GetReserva", new { id = reserva.ReservaID }, reserva);
         }
 
-        // DELETE: api/Reservas/5
+        // DELETE: api/Reservas/cancelar/5
         [Authorize]
         [EnableCors]
-        [HttpDelete("{id}")]
+        [HttpDelete("cancelar/{id}")]
         public async Task<IActionResult> DeleteReserva(long id)
         {
             var reserva = await _context.Reserva.FindAsync(id);
