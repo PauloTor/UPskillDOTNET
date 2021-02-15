@@ -129,12 +129,12 @@ namespace ParqueAPICentral.Controllers
                     throw;
                 }
             }
-            return NoContent();
+            return Ok(reserva);
         }
 
-        // DELETE: api/reservas/id - Cancelar reserva
+        // DELETE: api/reservas/ReservaAPI/NifParque - Cancelar reserva
         [EnableCors]
-        [HttpGet("{id}/{nif}")]
+        [HttpDelete("{id}/{nif}")]
         public async Task<ActionResult<Reserva>> CancelarReserva(long id, long nif)
         {
             

@@ -79,12 +79,12 @@ namespace ParqueAPICentral.Controllers
         {
             var clienteDb = _context.Cliente.FirstOrDefault(n => n.ClienteID == id);
 
-            if (id != cliente.ClienteID)
+            if (id != clienteDb.ClienteID)
             {
                 return BadRequest();
             }
 
-            _context.Entry(cliente).State = EntityState.Modified;
+            _context.Entry(clienteDb).State = EntityState.Modified;
 
             clienteDb.NomeCliente = cliente.NomeCliente;
             clienteDb.EmailCliente = cliente.EmailCliente;
@@ -95,7 +95,7 @@ namespace ParqueAPICentral.Controllers
 
             await _context.SaveChangesAsync();
         
-            return Ok(cliente);
+            return Ok(clienteDb);
         }
         // POST: api/Clientes/{NomeCliente}/{EmailCliente}/{NifCliente}/{MetodoPagamento}/{Credito}/{UserID} : Criação de um Cliente
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
