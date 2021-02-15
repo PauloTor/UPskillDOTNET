@@ -12,31 +12,21 @@ namespace ParqueAPICentral.Models
     {
         public long SubAluguerID { get; set; }
 
-        public float PrecoSubAluguer { get; set; }
-
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime DataSubAluguer { get; set; }
-
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime DataInicio { get; set; }
-
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime DataFim { get; set; }
+        public float Preco { get; set; }
 
         [ForeignKey("ReservaID")]
-        public long ClienteID { get; set; }
-        public Cliente Cliente { get; set; }
+        public long ReservaID { get; set; }
+        public Reserva Reserva { get; set; }
 
-        public SubAluguer(float precoSubAluguer, DateTime dataSubAluguer, DateTime dataInicio, DateTime dataFim, long clienteID)
+
+        public SubAluguer(long reservaID, float preco)
         {
-            PrecoSubAluguer = precoSubAluguer;
-            DataSubAluguer = dataSubAluguer;
-            DataInicio = dataInicio;
-            DataFim = dataFim;
-            ClienteID = clienteID;
+            Preco = preco;
+            ReservaID = reservaID;
+        }
+
+        public SubAluguer()
+        {
         }
 
     }
