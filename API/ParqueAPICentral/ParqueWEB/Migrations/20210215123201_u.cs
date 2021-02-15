@@ -141,9 +141,6 @@ namespace ParqueAPICentral.Migrations
                     SubAluguerID = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Preco = table.Column<float>(type: "real", nullable: false),
-                    DataSubAluguer = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataFim = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ReservaID = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>

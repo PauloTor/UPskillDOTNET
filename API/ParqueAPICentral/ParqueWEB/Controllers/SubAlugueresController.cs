@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 using ParqueAPICentral.Data;
 using ParqueAPICentral.DTO;
 using ParqueAPICentral.Entities;
@@ -29,13 +27,40 @@ namespace ParqueAPICentral.Controllers
         {
             _context = context;
         }
-      
-        // POST: api/SubAlugueres/{reservaID}/{preco}/
+
+
+        // GET: api/SubAlugueres
         [EnableCors]
-        [HttpPost("{reservaID}/{preco}")]
-        public async Task<ActionResult<Cliente>> PostSubAluguer(long ResevaID, float Preco)
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<SubAluguer>>> GetSubAlugueresTodos()
         {
-            SubAluguer subAluguer = new SubAluguer(ResevaID, Preco);
+            return await _context.SubAluguer.
+                ToListAsync();
+        }
+
+
+        // GET: api/SubAlugueres/id
+        [EnableCors]
+        [HttpGet("{id}")]
+        public async Task<ActionResult<SubAluguer>> GetSubAlugueresById(long id)
+        {
+            var subAluguer = await _context.SubAluguer.Where(r => r.SubAluguerID == id).FirstOrDefaultAsync();
+
+            if (subAluguer == null)
+            {
+                return NotFound();
+            }
+            return subAluguer;
+        }
+
+
+        // POST: api/SubAlugueres/post/{reservaID}/{preco}/
+        [EnableCors]
+        [HttpPost]
+        public async Task<ActionResult<SubAluguer>> PostSubAluguer()
+        {
+            SubAluguer subAluguer = new SubAluguer();
+
             _context.SubAluguer.Add(subAluguer);
 
             await _context.SaveChangesAsync();
