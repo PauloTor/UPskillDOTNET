@@ -54,14 +54,21 @@ namespace ParqueAPICentral.Controllers
         }
 
 
-        // POST: api/SubAlugueres/post/{reservaID}/{preco}/
+        // POST: api/SubAlugueres/{reservaID}/{preco}
         [EnableCors]
-        [HttpPost]
-        public async Task<ActionResult<SubAluguer>> PostSubAluguer()
+        [HttpPost("{reservaID}/{preco}")]
+
+        public async Task<ActionResult<SubAluguer>> PostSubAluguer(long reservaID, float preco)
         {
-            SubAluguer subAluguer = new SubAluguer();
+            SubAluguer subAluguer = new SubAluguer(reservaID, preco);
 
             _context.SubAluguer.Add(subAluguer);
+
+            var reserva = _context.Reserva.Where(r => r.ReservaID == reservaID).FirstOrDefault();
+
+            var reservaPSA = reserva.ParaSubAluguer;
+
+            reservaPSA = true;
 
             await _context.SaveChangesAsync();
 

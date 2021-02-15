@@ -299,7 +299,7 @@ namespace ParqueAPICentral.Controllers
         /// <param name="parqueid"></param>
         /// <param name="clienteid"></param>
         [EnableCors]
-        [HttpPost("post/{reservaid}/{parqueid}/{cliente}")]
+        [HttpPost("{reservaid}/{parqueid}/{cliente}")]
 
         public async void CriarReservaCentral(long reservaid, long parqueid, long clienteid)
         {
