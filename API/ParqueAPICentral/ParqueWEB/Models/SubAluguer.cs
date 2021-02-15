@@ -12,7 +12,7 @@ namespace ParqueAPICentral.Models
     {
         public long SubAluguerID { get; set; }
 
-        public float PrecoHora { get; set; }
+        public float Preco { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
@@ -31,9 +31,9 @@ namespace ParqueAPICentral.Models
         public Reserva Reserva { get; set; }
 
 
-        public SubAluguer(float precoHora, DateTime dataSubAluguer, DateTime dataInicio, DateTime dataFim, long reservaID)
+        public SubAluguer(float preco, DateTime dataSubAluguer, DateTime dataInicio, DateTime dataFim, long reservaID)
         {
-            PrecoHora = precoHora;
+            Preco = preco;
             DataSubAluguer = dataSubAluguer;
             DataInicio = dataInicio;
             DataFim = dataFim;
