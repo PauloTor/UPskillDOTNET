@@ -189,5 +189,82 @@ namespace ParqueAPICentral.Controllers
 
             return NoContent();
         }
+
+        /// <summary>
+        /// ////////////////////
+        /// </summary>
+        /// <param name="parqueid"></param>
+        /// <returns></returns>
+        [EnableCors]
+        [HttpGet("ultimareserva/{ParqueID}")]
+        public async Task<ActionResult<Reserva_>> GetUltimaReservaPrivate(long parqueid)
+        {
+            var parque = await _context.Parque.FirstOrDefaultAsync(p => p.ParqueID == parqueid);
+            Reserva_ reserva;
+            using (HttpClient client = new HttpClient())
+            {
+                var rtoken = await GetToken(parque.Url + "users/authenticate");
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", rtoken);
+
+                var response3 = await client.
+                   GetAsync(parque.Url + "reservas/");
+
+                List<Reserva_> ListaLugarUltimo = await response3.
+                 Content.ReadAsAsync<List<Reserva_>>();
+
+                reserva = ListaLugarUltimo.
+                OrderByDescending(r => r.ReservaID).FirstOrDefault();
+
+            }
+            return reserva;
+        }
+
+
+        /// <summary>
+        /// /////////////////////////
+        /// </summary>
+        /// <param name="reservaid"></param>
+        /// <param name="parqueid"></param>
+        /// <param name="clienteid"></param>
+        [EnableCors]
+        [HttpGet("criarreservacentral/{parqueid}/{reservaid}/{cliente}")]
+
+        public async void CriarReservaCentral(long reservaid, long parqueid, long clienteid)
+        {
+            var reserva1 = new Reserva(reservaid, parqueid, clienteid);
+            _context.Reserva.Add(reserva1);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+
+            //alterar return
+            return;
+
+        }
+        /// <summary>
+        /// ////////////////////////////
+        /// </summary>
+        /// <param name="reserva"></param>
+        public async void ApagarReservaCentral(Reserva reserva)
+        {
+            _context.Reserva.Remove(reserva);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+            //alterar return
+            return;
+        }
     }
 }
