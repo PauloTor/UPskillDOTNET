@@ -108,7 +108,7 @@ namespace ParqueAPICentral.Controllers
                 var parkingLots = await (GetLugaresDisponiveis(DataInicio, DataFim, parqueid));
                 var i = parkingLots.Value.FirstOrDefault();
 
-                if (DateTime.Parse(DataInicio) > DateTime.Parse(DataFim))
+                if ((DateTime.Parse(DataInicio) > DateTime.Parse(DataFim)) || (parkingLots.Value.Count()==0))
                 {
                     return NotFound();
                 }
@@ -228,11 +228,7 @@ namespace ParqueAPICentral.Controllers
                 var response = await client.GetAsync(parque.Url + "Lugares/" + DataInicio + "/" + DataFim);
                 response.EnsureSuccessStatusCode();
                 var ListaLugar = await response.Content.ReadAsAsync<List<Lugar_>>();
-                if (ListaLugar.Count == 0)
-                {
-                    return NotFound();
-                }
-
+                
                 return ListaLugar;
             }
         }
@@ -273,7 +269,7 @@ namespace ParqueAPICentral.Controllers
         /// <param name="parqueid"></param>
         /// <param name="clienteid"></param>
         [EnableCors]
-        [HttpGet("criarreservacentral/{parqueid}/{reservaid}/{cliente}")]
+        [HttpGet("criarreservacentral/{reservaid}/{parqueid}/{cliente}")]
 
         public async void CriarReservaCentral(long reservaid, long parqueid, long clienteid)
         {
