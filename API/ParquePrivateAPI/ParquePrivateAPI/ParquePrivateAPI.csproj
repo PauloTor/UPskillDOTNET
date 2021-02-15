@@ -5,6 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\**" />
+    <Content Remove="Migrations\**" />
+    <EmbeddedResource Remove="Migrations\**" />
+    <None Remove="Migrations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Migrations\20210214223620_int1.cs" />
+    <Compile Include="Migrations\20210214223620_int1.Designer.cs" />
+    <Compile Include="Migrations\ParquePrivateAPIContextModelSnapshot.cs" />
     <Compile Remove="Migrations\20210215093300_initPrivate15fev.cs" />
     <Compile Remove="Migrations\20210215093300_initPrivate15fev.Designer.cs" />
   </ItemGroup>
