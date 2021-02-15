@@ -117,8 +117,10 @@ namespace ParqueAPICentral.Controllers
         /// <param name="ClienteID"></param>
         /// <param name="parqueid"></param>
         /// <returns></returns>
+        /// 
+
         [EnableCors]
-        [HttpPost("{DataInicio}/{DataFim}/{ClienteID}/{ParqueID}")]
+        [HttpPost("{DataInicio}/{DataFim}/{ClienteID}/{ParqueID}/{lugarId}")]
         public async Task<ActionResult<Reserva_>> PostReservaByData(String DataInicio, String DataFim, long ClienteID, long parqueid)
         {
             if (DateTime.Parse(DataInicio) > DateTime.Parse(DataFim))

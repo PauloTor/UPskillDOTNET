@@ -22,6 +22,9 @@ namespace ParqueAPICentral.Models
         public long ClienteID { get; set; }
         public Cliente Cliente { get; set; }
 
+        public long LugarID { get; set; }
+
+
         public bool ParaSubAluguer { get; set; }
 
 
