@@ -142,7 +142,7 @@ namespace ParqueAPICentral.Controllers
                     throw;
                 }
             }
-            return NoContent();
+            return Ok(reserva);
         }
         */
 
