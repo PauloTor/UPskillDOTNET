@@ -31,12 +31,9 @@ namespace ParqueAPICentral.Models
         public Reserva Reserva { get; set; }
 
 
-        public SubAluguer(float preco, DateTime dataSubAluguer, DateTime dataInicio, DateTime dataFim, long reservaID)
+        public SubAluguer(long reservaID, float preco)
         {
             Preco = preco;
-            DataSubAluguer = dataSubAluguer;
-            DataInicio = dataInicio;
-            DataFim = dataFim;
             ReservaID = reservaID;
         }
 

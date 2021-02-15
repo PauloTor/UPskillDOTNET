@@ -115,10 +115,8 @@ namespace ParqueAPICentral.Data
 
             IList<SubAluguer> defaultSubAluguer = new List<SubAluguer>
             {
-                new SubAluguer(100, DateTime.Parse("2020-01-01 17:00:00"), DateTime.Parse("2020-01-05 15:00:00"), DateTime.Parse("2020-01-05 18:00:00"), 4),
-                new SubAluguer(15, DateTime.Parse("2020-01-04 12:00:00"), DateTime.Parse("2020-01-04 18:00:00"), DateTime.Parse("2020-01-04 20:00:00"), 3),
-                new SubAluguer(20, DateTime.Parse("2020-01-14 14:00:00"), DateTime.Parse("2020-01-13 15:00:00"), DateTime.Parse("2020-01-14 14:00:00"), 2),
-                new SubAluguer(15, DateTime.Parse("2020-01-25 19:00:00"), DateTime.Parse("2020-02-03 08:00:00"), DateTime.Parse("2020-02-03 19:00:00"), 1)
+                new SubAluguer(3, 12),
+                new SubAluguer(5, 8),
             };
 
             context.SubAluguer.AddRange(defaultSubAluguer);

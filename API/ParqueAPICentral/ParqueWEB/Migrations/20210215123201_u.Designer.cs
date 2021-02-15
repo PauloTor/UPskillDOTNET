@@ -10,8 +10,8 @@ using ParqueAPICentral.Data;
 namespace ParqueAPICentral.Migrations
 {
     [DbContext(typeof(APICentralContext))]
-    [Migration("20210214233639_jj")]
-    partial class jj
+    [Migration("20210215123201_u")]
+    partial class u
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -177,6 +177,9 @@ namespace ParqueAPICentral.Migrations
                     b.Property<long>("ClienteID")
                         .HasColumnType("bigint");
 
+                    b.Property<bool>("ParaSubAluguer")
+                        .HasColumnType("bit");
+
                     b.Property<long>("ParqueID")
                         .HasColumnType("bigint");
 
@@ -199,9 +202,6 @@ namespace ParqueAPICentral.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
-                    b.Property<long>("ClienteID")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime>("DataFim")
                         .HasColumnType("datetime2");
 
@@ -211,12 +211,15 @@ namespace ParqueAPICentral.Migrations
                     b.Property<DateTime>("DataSubAluguer")
                         .HasColumnType("datetime2");
 
-                    b.Property<float>("PrecoSubAluguer")
+                    b.Property<float>("Preco")
                         .HasColumnType("real");
+
+                    b.Property<long>("ReservaID")
+                        .HasColumnType("bigint");
 
                     b.HasKey("SubAluguerID");
 
-                    b.HasIndex("ClienteID");
+                    b.HasIndex("ReservaID");
 
                     b.ToTable("SubAluguer");
                 });
@@ -284,13 +287,13 @@ namespace ParqueAPICentral.Migrations
 
             modelBuilder.Entity("ParqueAPICentral.Models.SubAluguer", b =>
                 {
-                    b.HasOne("ParqueAPICentral.Models.Cliente", "Cliente")
+                    b.HasOne("ParqueAPICentral.Models.Reserva", "Reserva")
                         .WithMany()
-                        .HasForeignKey("ClienteID")
+                        .HasForeignKey("ReservaID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Cliente");
+                    b.Navigation("Reserva");
                 });
 #pragma warning restore 612, 618
         }
