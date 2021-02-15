@@ -12,7 +12,7 @@ namespace ParqueAPICentral.Models
     {
         public long SubAluguerID { get; set; }
 
-        public float PrecoSubAluguer { get; set; }
+        public float PrecoHora { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
@@ -27,16 +27,17 @@ namespace ParqueAPICentral.Models
         public DateTime DataFim { get; set; }
 
         [ForeignKey("ReservaID")]
-        public long ClienteID { get; set; }
-        public Cliente Cliente { get; set; }
+        public long ReservaID { get; set; }
+        public Reserva Reserva { get; set; }
 
-        public SubAluguer(float precoSubAluguer, DateTime dataSubAluguer, DateTime dataInicio, DateTime dataFim, long clienteID)
+
+        public SubAluguer(float precoHora, DateTime dataSubAluguer, DateTime dataInicio, DateTime dataFim, long reservaID)
         {
-            PrecoSubAluguer = precoSubAluguer;
+            PrecoHora = precoHora;
             DataSubAluguer = dataSubAluguer;
             DataInicio = dataInicio;
             DataFim = dataFim;
-            ClienteID = clienteID;
+            ReservaID = reservaID;
         }
 
     }
