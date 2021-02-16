@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using ParqueAPICentral.Data;
@@ -133,6 +134,15 @@ namespace ParqueAPICentral.Controllers
                 return NoContent();
             }
 
+        }
+
+        // GET: api/Faturas : Obter Informação de Faturas
+        //      [Authorize]
+        [EnableCors("MyAllowSpecificOrigins")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Fatura>>> GetFaturas()
+        {
+            return await _context.Fatura.ToListAsync();
         }
 
         // GET Faturas by FaturaID - api/Faturas/5 - sem services ou repositories
