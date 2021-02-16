@@ -24,7 +24,6 @@ namespace ParqueAPICentral.Models
 
         public long LugarID { get; set; }
 
-
         public bool ParaSubAluguer { get; set; }
 
 
@@ -33,6 +32,13 @@ namespace ParqueAPICentral.Models
             ParqueID = parqueID;
             ReservaAPI = reservaAPI;
             ClienteID = clienteID;
+        }
+        public Reserva(long parqueID, long reservaAPI, long clienteID, long lugarId)
+        {
+            ParqueID = parqueID;
+            ReservaAPI = reservaAPI;
+            ClienteID = clienteID;
+            LugarID = lugarId;
         }
 
         public Reserva()

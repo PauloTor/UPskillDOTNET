@@ -18,6 +18,9 @@ namespace ParqueAPICentral.Models
         public long ReservaID { get; set; }
         public Reserva Reserva { get; set; }
 
+        public bool Reservado { get; set; }
+        
+        public string NovoCliente { get; set; }
 
         public SubAluguer(long reservaID, float preco)
         {
