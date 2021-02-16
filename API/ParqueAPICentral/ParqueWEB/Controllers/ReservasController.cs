@@ -252,7 +252,6 @@ namespace ParqueAPICentral.Controllers
         /// <param name="apiBaseUrlPrivado"></param>
         /// <returns></returns>
         [EnableCors]
-        [HttpGet("{apiBaseUrlPrivado}")]
         public async Task<string> GetToken(string apiBaseUrlPrivado)
         {
             using (HttpClient client = new HttpClient())
@@ -380,7 +379,6 @@ namespace ParqueAPICentral.Controllers
         /// <param name="parqueid"></param>
         /// <returns></returns>
         [EnableCors]
-        [HttpGet("ultima/{ParqueID}")]
         public async Task<ActionResult<Reserva_>> GetUltimaReservaPrivate(long parqueid)
         {
             var parque = await _context.Parque.FirstOrDefaultAsync(p => p.ParqueID == parqueid);
@@ -434,7 +432,6 @@ namespace ParqueAPICentral.Controllers
         /// </summary>
         /// <param name="reserva"></param>
         /// 
-        [HttpDelete("cancelar/central")]
         public async void ApagarReservaCentral(Reserva reserva)
         {
             _context.Reserva.Remove(reserva);

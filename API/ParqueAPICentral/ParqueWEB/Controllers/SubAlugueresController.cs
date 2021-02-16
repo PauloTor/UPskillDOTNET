@@ -61,17 +61,13 @@ namespace ParqueAPICentral.Controllers
         {
             SubAluguer subAluguer = new SubAluguer() { ReservaID = reservaID, Preco = preco };
 
-            var reserva = _context.Reserva.FirstOrDefault(r => r.ReservaID == reservaID);
+            var reserva = _context.Reserva.Where(r => r.ReservaID == reservaID).FirstOrDefault();
 
-            reserva.ParaSubAluguer = true;
+            reserva.ParaSubAlugar(true);
 
             _context.Reserva.Update(reserva);
 
             _context.SubAluguer.Add(subAluguer);
-
-            var reserva = _context.Reserva.Where(r => r.ReservaID == reservaID).FirstOrDefault();
-
-            reserva.ParaSubAlugar(true);
 
             await _context.SaveChangesAsync();
 
