@@ -124,5 +124,27 @@ public class ReservasController : ControllerBase
     {
         return _context.Reserva.Any(e => e.ReservaID == id);
     }
-}
+
+        // GET: api/Reservas/data1,data2 Pesquisar Reservas por datas
+        [Authorize]
+        [EnableCors]
+        [HttpGet("{dateInicio}/{dateFim}")]
+        public async Task<ActionResult<IEnumerable<Reserva>>> GetReservaByData(string dateInicio, string dateFim)
+        {
+            var dateTimeInicio = DateTime.Parse(dateInicio);
+            var dateTimeFim = DateTime.Parse(dateFim);
+
+            //validar datas
+
+            if (dateTimeInicio >= dateTimeFim)
+            {
+                return BadRequest();
+            }
+
+            var reservas = await _context.Reserva.Where(n => n.DataInicio == dateTimeInicio && n.DataFim == dateTimeFim).ToListAsync();
+                      
+            return reservas;
+        }
+
+    }
 }
