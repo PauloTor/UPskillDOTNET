@@ -32,14 +32,15 @@ namespace ParqueAPICentral.Controllers
             _context = context;
         }
 
+
         // GET: api/Reservas
         [EnableCors]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Reserva>>> GetReservasTodas()
         {
-            return await _context.Reserva.
-                ToListAsync();
+            return await _context.Reserva.ToListAsync();
         }
+
 
         // GET: api/Reservas/id
         [EnableCors]
@@ -202,12 +203,12 @@ namespace ParqueAPICentral.Controllers
         /// <param name="parqueID"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        // DELETE: api/reservas/parqueID/id - Cancelar reserva
+        // DELETE: api/reservas/parqueID/reservaId - Cancelar reserva e devolver credito
         [EnableCors]
-        [HttpDelete("{parqueID}/{id}")]
-        public async Task<ActionResult<Reserva>> CancelarReserva(long parqueID, long id)
+        [HttpDelete("{parqueID}/{reservaID}")]
+        public async Task<ActionResult<Reserva>> CancelarReserva(long parqueID, long reservaID)
         {
-            var reserva = _context.Reserva.Where(r => r.ReservaAPI == id).Where(r => r.ParqueID == parqueID).FirstOrDefault();
+            var reserva = _context.Reserva.Where(r => r.ReservaAPI == reservaID).Where(r => r.ParqueID == parqueID).FirstOrDefault();
 
             var parque = await _context.Parque.FirstOrDefaultAsync(p => p.ParqueID == parqueID);
 
@@ -217,7 +218,7 @@ namespace ParqueAPICentral.Controllers
             }
             using (HttpClient client = new HttpClient())
             {
-                string endpoint = parque.Url + "reservas/" + "cancelar/" + id;
+                string endpoint = parque.Url + "reservas/" + "cancelar/" + reservaID;
 
                 var reservaRes = await client.GetAsync(endpoint);
 

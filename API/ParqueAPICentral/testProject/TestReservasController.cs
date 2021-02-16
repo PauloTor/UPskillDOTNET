@@ -21,9 +21,6 @@ namespace testProject
         {
             Thread.Sleep(3000);
             //Arrange
-            IConfiguration configuration = new ConfigurationBuilder()
-                 .AddJsonFile("appsettings.json")
-                 .Build();
             var testContext = APICentralContextMocker.GetAPICentralContext("DBTest4GetAllReservas");
             var theController = new ReservasController(testContext, configuration);
 
@@ -40,9 +37,6 @@ namespace testProject
         //{
         //    Thread.Sleep(3200);
         //    //Arrange
-        //    IConfiguration configuration = new ConfigurationBuilder()
-        //         .AddJsonFile("appsettings.json")
-        //         .Build();
         //    var testContext = APICentralContextMocker.GetAPICentralContext("DBTest4PostReservas");
         //    var testController = new ReservasController(testContext, configuration);
 
@@ -60,9 +54,6 @@ namespace testProject
         {
             Thread.Sleep(3400);
             //Arrange
-            IConfiguration configuration = new ConfigurationBuilder()
-                 .AddJsonFile("appsettings.json")
-                 .Build();
             var testContext = APICentralContextMocker.GetAPICentralContext("DBTest4DeleteReserva");
             var testController = new ReservasController(testContext, configuration);
 
