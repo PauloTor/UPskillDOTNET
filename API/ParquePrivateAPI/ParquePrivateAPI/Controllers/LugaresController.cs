@@ -13,7 +13,7 @@ using System.IdentityModel.Tokens.Jwt;
 
 namespace ParquePrivateAPI.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [EnableCors("MyAllowSpecificOrigins")]
     [Route("api/Lugares")]
     [ApiController]
@@ -29,7 +29,7 @@ namespace ParquePrivateAPI.Controllers
 
         // GET: api/Lugares
 
-        [Authorize]
+        //[Authorize]
         [EnableCors("MyAllowSpecificOrigins")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Lugar>>> GetLugar()
@@ -39,7 +39,7 @@ namespace ParquePrivateAPI.Controllers
         }
 
         // GET: api/Lugares/5
-        [Authorize]
+        //[Authorize]
         [EnableCors]
         [HttpGet("{id}")]
         public async Task<ActionResult<Lugar>> GetLugar(long id)
@@ -58,7 +58,7 @@ namespace ParquePrivateAPI.Controllers
         // PUT: api/Lugares/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [Authorize]
+        //[Authorize]
         [EnableCors]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutLugar(long id, Lugar lugar)
@@ -92,7 +92,7 @@ namespace ParquePrivateAPI.Controllers
         // POST: api/Lugares
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [Authorize]
+        //[Authorize]
         [EnableCors]
         [HttpPost]
         public async Task<ActionResult<Lugar>> PostLugar(Lugar lugar)
@@ -104,7 +104,7 @@ namespace ParquePrivateAPI.Controllers
         }
 
         // DELETE: api/Lugares/5
-        [Authorize]
+        //[Authorize]
         [EnableCors]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Lugar>> DeleteLugar(long id)
@@ -127,7 +127,7 @@ namespace ParquePrivateAPI.Controllers
         }
 
         // GET: api/Lugares/data1,data2 Pesquisar lugares sem reserva
-        [Authorize]
+        //[Authorize]
         [EnableCors]
         [HttpGet("{dateInicio}/{dateFim}")]
         public async Task<ActionResult<IEnumerable<Lugar>>> GetLugaresSemReserva(string dateInicio, string dateFim)
