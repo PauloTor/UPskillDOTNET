@@ -49,6 +49,7 @@ namespace ParqueAPICentral.Controllers
 
             var qrInfo = ("Parque: " + reserva.Parque.NomeParque
                    + "\n Morada: " + reserva.Parque.Morada.Rua
+                   + "\n Reserva: " + reserva.ReservaID
                    + "\n Lugar: " + reservaDTO.LugarID
                    + "\n Data de Inicio: " + reservaDTO.DataInicio
                    + "\n Data de Fim: " + reservaDTO.DataFim);
