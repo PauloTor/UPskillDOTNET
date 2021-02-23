@@ -38,7 +38,7 @@ namespace ParqueAPICentral.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Reserva>>> GetReservasTodas()
         {
-            return await _context.Reserva.ToListAsync();
+            return await _context.Reserva.Include(r => r.Cliente).Include(r => r.Parque).ToListAsync();
         }
 
 
@@ -47,7 +47,7 @@ namespace ParqueAPICentral.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Reserva>> GetReservaById(long id)
         {
-            var reserva = await _context.Reserva.Where(r => r.ReservaID == id).FirstOrDefaultAsync();
+            var reserva = await _context.Reserva.Where(r => r.ReservaID == id).Include(r => r.Cliente).Include(r => r.Parque).FirstOrDefaultAsync();
 
             if (reserva == null)
             {
@@ -134,67 +134,63 @@ namespace ParqueAPICentral.Controllers
             }
             var parque = await _context.Parque.FirstOrDefaultAsync(p => p.ParqueID == parqueid);
 
-            using (var client = new HttpClient())
+            using var client = new HttpClient();
+            var rtoken = await GetToken(parque.Url + "users/authenticate");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", rtoken);
+
+            var parkingLots = await (GetLugaresDisponiveisComSubAlugueres(DataInicio, DataFim, parqueid));
+            var i = parkingLots.Value.FirstOrDefault(p => p.LugarID == lugarId && p.ParqueId == parqueid);
+
+            if ((DateTime.Parse(DataInicio) > DateTime.Parse(DataFim)) || (!parkingLots.Value.Any()))
             {
-                var rtoken = await GetToken(parque.Url + "users/authenticate");
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", rtoken);
+                return NotFound("Data inválida");
+            }
 
-                var parkingLots = await (GetLugaresDisponiveisComSubAlugueres(DataInicio, DataFim, parqueid));
-                var i = parkingLots.Value.FirstOrDefault(p => p.LugarID == lugarId && p.parqueId == parqueid);
+            if (i == null)
+            {
+                return NotFound("Lugar não disponivel para ser reservado");
+            }
 
-                if ((DateTime.Parse(DataInicio) > DateTime.Parse(DataFim)) || (parkingLots.Value.Count()==0))
+            if (i.SubReservado == false)
+            {
+                var reserva = new Reserva_(DateTime.Now, DateTime.Parse(DataInicio), DateTime.Parse(DataFim), i.LugarID);
+
+                StringContent reserva_ = new StringContent(JsonConvert.
+                    SerializeObject(reserva), Encoding.UTF8, "application/json");
+
+                var response2 = await client.
+                    PostAsync(parque.Url + "reservas/", reserva_);
+
+                var UltimaReserva = await GetUltimaReservaPrivate(parqueid);
+
+                try
                 {
-                    return NotFound("Data inválida");
+                    CriarReservaCentral(parque.ParqueID, UltimaReserva.Value.ReservaID, ClienteID, lugarId);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Couldn't retrieve entities: {ex.Message}");
                 }
 
-                if (i == null)
-                {
-                    return NotFound("Lugar não disponivel para ser reservado");
-                }
 
-                if (i.subReservado == false)
-                {
-                    var reserva = new Reserva_(DateTime.Now, DateTime.Parse(DataInicio), DateTime.Parse(DataFim), i.LugarID);
+                return CreatedAtAction(nameof(PostReservaByData),
+                new { id = reserva.ReservaID }, reserva);
+            }
 
-                    StringContent reserva_ = new StringContent(JsonConvert.
-                        SerializeObject(reserva), Encoding.UTF8, "application/json");
+            else
+            {
+                var sub = _context.SubAluguer.FirstOrDefault(n => n.SubAluguerID == i.SubAluguerId);
 
-                    var response2 = await client.
-                        PostAsync(parque.Url + "reservas/", reserva_);
+                sub.Reservado = true;
+                sub.NovoCliente = ClienteID.ToString();
 
-                    var UltimaReserva = await GetUltimaReservaPrivate(parqueid);
+                _context.SubAluguer.Update(sub);
 
-                    try
-                    {
-                        CriarReservaCentral(parque.ParqueID, UltimaReserva.Value.ReservaID, ClienteID, lugarId);
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new Exception($"Couldn't retrieve entities: {ex.Message}");
-                    }
+                _context.SaveChanges();
 
+                return CreatedAtAction(nameof(PostReservaByData),
+               new { id = sub.SubAluguerID }, sub);
 
-                    return CreatedAtAction(nameof(PostReservaByData),
-                    new { id = reserva.ReservaID }, reserva);
-                }
-
-                else
-                {
-                    var sub = _context.SubAluguer.FirstOrDefault(n => n.SubAluguerID == i.subAluguerId);
-
-                    sub.Reservado = true;
-                    sub.NovoCliente = ClienteID.ToString();
-
-                    _context.SubAluguer.Update(sub);
-
-                    _context.SaveChanges();
-
-                    return CreatedAtAction(nameof(PostReservaByData),
-                   new { id = sub.SubAluguerID }, sub);
-
-                }
-
-               
             }
         }
         /// <summary>
@@ -254,17 +250,14 @@ namespace ParqueAPICentral.Controllers
         [EnableCors]
         public async Task<string> GetToken(string apiBaseUrlPrivado)
         {
-            using (HttpClient client = new HttpClient())
-            {
+            using HttpClient client = new HttpClient();
+            UserInfo user = new UserInfo();
+            StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+            var responseLogin = await client.PostAsync(apiBaseUrlPrivado, contentUser);
+            dynamic tokenresponsecontent = await responseLogin.Content.ReadAsAsync<object>();
+            string rtoken = tokenresponsecontent.jwtToken;
 
-                UserInfo user = new UserInfo();
-                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
-                var responseLogin = await client.PostAsync(apiBaseUrlPrivado, contentUser);
-                dynamic tokenresponsecontent = await responseLogin.Content.ReadAsAsync<object>();
-                string rtoken = tokenresponsecontent.jwtToken;
-
-                return rtoken;
-            }
+            return rtoken;
         }
         /// <summary>
         /// /////////////////
@@ -277,17 +270,15 @@ namespace ParqueAPICentral.Controllers
         private async Task<IEnumerable<Lugar_>> GetLugaresDisponiveis(String DataInicio, String DataFim, long parqueID)
         {
             var parque = await _context.Parque.FirstOrDefaultAsync(p => p.ParqueID == parqueID);
-            using (var client = new HttpClient())
-            {
-                var rtoken = await GetToken(parque.Url + "users/authenticate");
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", rtoken);
+            using var client = new HttpClient();
+            var rtoken = await GetToken(parque.Url + "users/authenticate");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", rtoken);
 
-                var response = await client.GetAsync(parque.Url + "Lugares/" + DataInicio + "/" + DataFim);
-                response.EnsureSuccessStatusCode();
-                var ListaLugar = await response.Content.ReadAsAsync<List<Lugar_>>();
-                
-                return ListaLugar;
-            }
+            var response = await client.GetAsync(parque.Url + "Lugares/" + DataInicio + "/" + DataFim);
+            response.EnsureSuccessStatusCode();
+            var ListaLugar = await response.Content.ReadAsAsync<List<Lugar_>>();
+
+            return ListaLugar;
         }
 
         //GET Lugares disponíveis de ParqueID by Data1 e Data2
@@ -296,80 +287,76 @@ namespace ParqueAPICentral.Controllers
         public async Task<ActionResult<IEnumerable<LugarReserva>>> GetLugaresDisponiveisComSubAlugueres(String DataInicio, String DataFim, long parqueID)
         {
             var parque = await _context.Parque.FirstOrDefaultAsync(p => p.ParqueID == parqueID);
-            using (var client = new HttpClient())
+            using var client = new HttpClient();
+            var rtoken = await GetToken(parque.Url + "users/authenticate");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", rtoken);
+
+            var response = await client.GetAsync(parque.Url + "Reservas/" + DataInicio + "/" + DataFim);
+            response.EnsureSuccessStatusCode();
+            var listaReservas = await response.Content.ReadAsAsync<List<Reserva_>>();
+
+            var reservas = await _context.Reserva.ToListAsync();
+
+            var subAluguer = await _context.SubAluguer.ToListAsync();
+
+            var lugaresNaoSubAlugados = new List<(long, float, long)>();
+
+            foreach (var reserva in reservas)
             {
-
-                var rtoken = await GetToken(parque.Url + "users/authenticate");
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", rtoken);
-
-                var response = await client.GetAsync(parque.Url + "Reservas/" + DataInicio + "/" + DataFim);
-                response.EnsureSuccessStatusCode();
-                var listaReservas = await response.Content.ReadAsAsync<List<Reserva_>>();
-
-                var reservas = await _context.Reserva.ToListAsync();
-
-                var subAluguer = await _context.SubAluguer.ToListAsync();
-
-                var lugaresNaoSubAlugados = new List<(long, float, long)>();
-
-                foreach (var reserva in reservas)
+                foreach (var reservaOriginal in listaReservas)
                 {
-                    foreach (var reservaOriginal in listaReservas)
+                    if (reservaOriginal.ReservaID == reserva.ReservaAPI && reserva.ParqueID == parqueID && reserva.ParaSubAluguer)
                     {
-                        if (reservaOriginal.ReservaID == reserva.ReservaAPI && reserva.ParqueID == parqueID && reserva.ParaSubAluguer)
+                        var sub = subAluguer.FirstOrDefault(s => s.ReservaID == reserva.ReservaID);
+
+                        if (sub.Reservado == false)
                         {
-                            var sub = subAluguer.FirstOrDefault(s => s.ReservaID == reserva.ReservaID);
+                            lugaresNaoSubAlugados.Add((reserva.LugarID, sub.Preco, sub.SubAluguerID));
 
-                            if (sub.Reservado == false)
-                            {
-                                lugaresNaoSubAlugados.Add((reserva.LugarID, sub.Preco, sub.SubAluguerID));
-
-                                break;
-                            }
+                            break;
                         }
                     }
                 }
-
-                var response2 = await client.GetAsync(parque.Url + "Lugares/");
-                response2.EnsureSuccessStatusCode();
-                var listaLugares = await response2.Content.ReadAsAsync<List<Lugar_>>();
-
-                var lugaresNaoReservados = new List<LugarReserva>();
-
-                foreach (var lug in listaLugares)
-                {
-                    foreach (var lugN in lugaresNaoSubAlugados)
-                    {
-                        if (lug.LugarID == lugN.Item1)
-                        {
-                            lugaresNaoReservados.Add(new LugarReserva
-                            {
-                                Fila = lug.Fila,
-                                LugarID = lug.LugarID,
-                                Preço = lugN.Item2,
-                                Sector = lug.Sector,
-                                subReservado = true,
-                                parqueId = parqueID,
-                                subAluguerId = lugN.Item3
-                            });
-                        }
-                    }
-                }
-
-                lugaresNaoReservados.AddRange((await GetLugaresDisponiveis(DataInicio, DataFim, parqueID))
-                    .Select(l => new LugarReserva { Fila = l.Fila, LugarID = l.LugarID, Preço = l.Preço, Sector = l.Sector, subReservado = false, parqueId = parqueID}));
-
-                return lugaresNaoReservados;
-
             }
+
+            var response2 = await client.GetAsync(parque.Url + "Lugares/");
+            response2.EnsureSuccessStatusCode();
+            var listaLugares = await response2.Content.ReadAsAsync<List<Lugar_>>();
+
+            var lugaresNaoReservados = new List<LugarReserva>();
+
+            foreach (var lug in listaLugares)
+            {
+                foreach (var lugN in lugaresNaoSubAlugados)
+                {
+                    if (lug.LugarID == lugN.Item1)
+                    {
+                        lugaresNaoReservados.Add(new LugarReserva
+                        {
+                            Fila = lug.Fila,
+                            LugarID = lug.LugarID,
+                            Preço = lugN.Item2,
+                            Sector = lug.Sector,
+                            SubReservado = true,
+                            ParqueId = parqueID,
+                            SubAluguerId = lugN.Item3
+                        });
+                    }
+                }
+            }
+
+            lugaresNaoReservados.AddRange((await GetLugaresDisponiveis(DataInicio, DataFim, parqueID))
+                .Select(l => new LugarReserva { Fila = l.Fila, LugarID = l.LugarID, Preço = l.Preço, Sector = l.Sector, SubReservado = false, ParqueId = parqueID }));
+
+            return lugaresNaoReservados;
         }
 
         public class LugarReserva: Lugar_
         {
-            public bool subReservado { get; set; }
+            public bool SubReservado { get; set; }
 
-            public long parqueId { get; set; }
-            public long subAluguerId { get; internal set; }
+            public long ParqueId { get; set; }
+            public long SubAluguerId { get; internal set; }
         }
 
         
