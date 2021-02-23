@@ -8,21 +8,50 @@ using System.IO;
 using QRCoder;
 using ParqueAPICentral.DTO;
 using ParqueAPICentral.Models;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using Microsoft.AspNetCore.Cors;
+using System.Net.Http;
+using ParqueAPICentral.Data;
 
 namespace ParqueAPICentral.Controllers
 {
+    [EnableCors("MyAllowSpecificOrigins")]
+    [Route("api/qrcodes")]
+    [ApiController]
     public class QRCoderController : ControllerBase
     {
+        private readonly APICentralContext _context;
 
-        public ActionResult<byte[]> QRcoder(Reserva_ reserva_, Reserva reserva)
+        public QRCoderController(APICentralContext context)
         {
+            _context = context;
+        }
+
+
+        [EnableCors]
+        [HttpPost("{reservaByID}")]
+        public async Task<ActionResult<byte[]>> QRcoder(Reserva reserva)
+        {
+            long reservaByID = reserva.ReservaID;
+
+            long parqueByID = reserva.ParqueID;
+
+            var parque = _context.Parque.FirstOrDefault(p => p.ParqueID == parqueByID);
+
+            var reserva_ = _context.Reserva.Where(f => f.ReservaAPI == reservaByID && f.ParqueID == parqueByID).FirstOrDefault();
+
+            using HttpClient client = new HttpClient();
+
+            string endpoint = parque.Url + "reservas/" + reserva;
+
+            var reservaRes = await client.GetAsync(endpoint);
+
+            var reservaDTO = await reservaRes.Content.ReadAsAsync<Reserva_>();
+
             var qrInfo = ("Parque: " + reserva.Parque.NomeParque
-                + "\n Morada: " + reserva.Parque.Morada.Rua
-                + "\n Lugar: " + reserva_.LugarID
-                + "\n Data de Inicio: " + reserva_.DataInicio
-                + "\n Data de Fim: " + reserva_.DataFim);
+                   + "\n Morada: " + reserva.Parque.Morada.Rua
+                   + "\n Lugar: " + reservaDTO.LugarID
+                   + "\n Data de Inicio: " + reservaDTO.DataInicio
+                   + "\n Data de Fim: " + reservaDTO.DataFim);
 
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
 
