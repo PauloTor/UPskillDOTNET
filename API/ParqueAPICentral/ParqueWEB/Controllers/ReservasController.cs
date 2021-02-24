@@ -19,6 +19,8 @@ using ParqueAPICentral.DTO;
 using QRCoder;
 using System.Drawing;
 using System.IO;
+using System.Net.Mail;
+using System.Net;
 
 namespace ParqueAPICentral.Controllers
 {
@@ -131,7 +133,7 @@ namespace ParqueAPICentral.Controllers
 
         //Post Reservas by {DataInicio}/{DataFim}/{ClienteID}/{ParqueID}/{lugarId}
         [EnableCors]
-        [HttpPost("{DataInicio}/{DataFim}/{ClienteID}/{ParqueID}/{lugarId}")]
+        [HttpGet("{DataInicio}/{DataFim}/{ClienteID}/{ParqueID}/{lugarId}")]
         public async Task<ActionResult<Reserva_>> PostReservaByData(String DataInicio, String DataFim, long ClienteID, long parqueid, long lugarId)
         {
             var clienteOriginal = _context.Cliente.Where(c => c.ClienteID == ClienteID).FirstOrDefault();
@@ -180,11 +182,11 @@ namespace ParqueAPICentral.Controllers
                     throw new Exception($"Couldn't retrieve entities: {ex.Message}");
                 }
 
-               await _context.GerarQRcode(reserva);
+                //await GerarQRcode(reserva);
 
-                //var qrcode = QRCoderController.GerarQRcode(reserva);
+                //var qrcode = GerarQRcode(reserva);
 
-                //EmailController.EnviarEmail(qrcode.Result.Value, ClienteID, reserva.ReservaID);
+                await EnviarEmail(ClienteID, reserva.ReservaID);
 
                 return CreatedAtAction(nameof(PostReservaByData),
 
@@ -468,6 +470,8 @@ namespace ParqueAPICentral.Controllers
             //alterar return
             return;
         }
+
+
         public async Task<ActionResult<byte[]>> GerarQRcode(Reserva_ reserva)
         {
             long reservaByID = reserva.ReservaID;
@@ -514,5 +518,35 @@ namespace ParqueAPICentral.Controllers
             return stream.ToArray();
         }
 
+
+        public async Task EnviarEmail(long clienteID, long reservaID)
+        {
+            var cliente = _context.Cliente.Where(c => c.ClienteID == clienteID).FirstOrDefault();
+
+            string remetente = "pseudocompany2020@gmail.com";
+
+            string destinatario = cliente.EmailCliente;
+
+            //var qrcode = new Attachment(new MemoryStream(qr), "QRCode", "imagem/png");
+
+            using MailMessage mail = new MailMessage(remetente, destinatario)
+            {
+                Subject = "Comfirmação da reserva nº " + reservaID,
+                Body = "Código QR em anexo."
+            };
+
+            //mail.Attachments.Add(qrcode);
+            mail.IsBodyHtml = false;
+            SmtpClient smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                EnableSsl = true
+            };
+
+            NetworkCredential networkCredential = new NetworkCredential(remetente, "PseudoPark255");
+            smtp.Credentials = networkCredential;
+            smtp.Port = 587;
+            smtp.Send(mail);
+        }
     }
 }

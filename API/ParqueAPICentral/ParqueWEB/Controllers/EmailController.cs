@@ -7,34 +7,34 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using ParqueAPICentral.Data;
 
+//CONTROLLER PARA TESTE DE ENVIO DE EMAIL - a funcionar
+
 namespace ParqueAPICentral.Controllers
 {
+    [EnableCors("MyAllowSpecificOrigins")]
+    [Route("api/Email")]
+    [ApiController]
     public class EmailController : ControllerBase
     {
-        private readonly APICentralContext _context;
-
-        public EmailController(APICentralContext context)
+        [EnableCors]
+        [HttpGet]
+        public void EnviarEmail()
         {
-            _context = context;
-        }
-
-        public void EnviarEmail(byte[] qr, long clienteID, long reservaID)
-        {
-            var cliente = _context.Cliente.Where(c => c.ClienteID == clienteID).FirstOrDefault();
+            //var cliente = _context.Cliente.Where(c => c.ClienteID == clienteID).FirstOrDefault();
 
             string remetente = "pseudocompany2020@gmail.com";
 
-            string destinatario = cliente.EmailCliente;
+            string destinatario = "leandro555eagle@gmail.com";
 
-            var qrcode = new Attachment(new MemoryStream(qr), "QRCode", "imagem/png");
+            //var qrcode = new Attachment(new MemoryStream(qr), "QRCode", "imagem/png");
 
             using MailMessage mail = new MailMessage(remetente, destinatario)
             {
-                Subject = "Comfirmação da reserva nº " + reservaID,
+                Subject = "Comfirmação da reserva nº ",
                 Body = "Código QR em anexo."
             };
 
-            mail.Attachments.Add(qrcode);
+           // mail.Attachments.Add(qrcode);
             mail.IsBodyHtml = false;
             SmtpClient smtp = new SmtpClient
             {
