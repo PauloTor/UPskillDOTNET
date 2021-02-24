@@ -16,6 +16,9 @@ using System.Text;
 using ParqueAPICentral.Entities;
 using Microsoft.Extensions.Configuration;
 using ParqueAPICentral.DTO;
+using QRCoder;
+using System.Drawing;
+using System.IO;
 
 namespace ParqueAPICentral.Controllers
 {
@@ -28,11 +31,11 @@ namespace ParqueAPICentral.Controllers
         //private readonly EmailController _email;
         //private readonly QRCoderController _qrcoder;
 
-        public ReservasController(APICentralContext context/*, EmailController email, QRCoderController qrcoder*/)
+        public ReservasController(APICentralContext context/*, EmailController email*/)
         {
             _context = context;
             //_email = email;
-            //_qrcoder = qrcoder;
+           // _qrcoder = qrcoder;
         }
 
 
@@ -176,7 +179,7 @@ namespace ParqueAPICentral.Controllers
                     throw new Exception($"Couldn't retrieve entities: {ex.Message}");
                 }
 
-                //await QRCoderController.GerarQRcode(reserva);
+               await _context.GerarQRcode(reserva);
 
                 //var qrcode = QRCoderController.GerarQRcode(reserva);
 
@@ -453,5 +456,51 @@ namespace ParqueAPICentral.Controllers
             //alterar return
             return;
         }
+        public async Task<ActionResult<byte[]>> GerarQRcode(Reserva_ reserva)
+        {
+            long reservaByID = reserva.ReservaID;
+
+            var reservaCentral = _context.Reserva.Where(f => f.ReservaAPI == reservaByID).FirstOrDefault();
+
+            long parqueByID = reservaCentral.ParqueID;
+
+            var parque = _context.Parque.FirstOrDefault(p => p.ParqueID == parqueByID);
+
+            using HttpClient client = new HttpClient();
+
+            string endpoint = parque.Url + "reservas/" + reserva;
+
+            var reservaRes = await client.GetAsync(endpoint);
+
+            var reservaDTO = await reservaRes.Content.ReadAsAsync<Reserva_>();
+
+            var qrInfo = ("Parque: " + reservaCentral.Parque.NomeParque
+                   + "\n Morada: " + reservaCentral.Parque.Morada.Rua
+                   + "\n Reserva: " + reserva.ReservaID
+                   + "\n Lugar: " + reservaDTO.LugarID
+                   + "\n Data de Inicio: " + reservaDTO.DataInicio
+                   + "\n Data de Fim: " + reservaDTO.DataFim);
+
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(qrInfo, QRCodeGenerator.ECCLevel.Q);
+
+            QRCode qrCode = new QRCode(qrCodeData);
+
+            Bitmap qrCodeImage = qrCode.GetGraphic(20);
+
+            return BitmapToBytes(qrCodeImage);
+        }
+
+
+        private static byte[] BitmapToBytes(Bitmap img)
+        {
+            using MemoryStream stream = new MemoryStream();
+
+            img.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+
+            return stream.ToArray();
+        }
+
     }
 }
