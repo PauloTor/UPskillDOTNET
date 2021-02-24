@@ -3,10 +3,11 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using ParqueAPICentral.Data;
 
-namespace CentralAPI.Services.Services
+namespace ParqueAPICentral.Controllers
 {
     public class EmailController : ControllerBase
     {
@@ -21,7 +22,7 @@ namespace CentralAPI.Services.Services
         {
             var cliente = _context.Cliente.Where(c => c.ClienteID == clienteID).FirstOrDefault();
 
-            string remetente = "pseudocompany@gmail.com";
+            string remetente = "pseudocompany2020@gmail.com";
 
             string destinatario = cliente.EmailCliente.ToString();
 
@@ -41,7 +42,7 @@ namespace CentralAPI.Services.Services
                 EnableSsl = true
             };
 
-            NetworkCredential networkCredential = new NetworkCredential(remetente, "123456");
+            NetworkCredential networkCredential = new NetworkCredential(remetente, "PseudoPark255");
             smtp.Credentials = networkCredential;
             smtp.Port = 25;
             smtp.Send(mail);
