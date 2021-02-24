@@ -31,7 +31,7 @@ namespace ParqueAPICentral.Controllers
     {
         private readonly APICentralContext _context;
 
-        public ReservasController(APICentralContext context/*, EmailController email*/)
+        public ReservasController(APICentralContext context)
         {
             _context = context;
         }
