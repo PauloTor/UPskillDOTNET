@@ -1,4 +1,4 @@
-﻿/*using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ParqueAPICentral.Models;
 using ParqueAPICentral.Repositories;
 using System;
@@ -19,42 +19,47 @@ namespace ParqueAPICentral.Services
         {
             return await this._repo.GetAllClientesAsync();
         }
-        public async Task<ActionResult<Cliente>> FindClienteById(long id)
+        public async Task<ActionResult<Cliente>> GetClienteById(long id)
         {
-            var cliente = await this._repo.FindById(id);
-
-            if (cliente == null)
-            {
-                return NotFound();
-            }
-            return cliente;
-
+            //if (await GetClienteById(id) == null)
+            //{
+            //    return NotFound();
+            //}
+            return await this._repo.FindClienteById(id);
         }
         public async Task<ActionResult<Cliente>> CreateCliente(Cliente cliente)
         {
-            _repo.CreateCliente.Add(cliente);
-            await _repo.SaveChangesAsync();
-
-            return CreatedAtAction("GetCliente", new { id = cliente.ClienteID }, cliente);
+            return await _repo.CreateCliente(cliente);
         }
-
-        private ActionResult<Cliente> CreatedAtAction(string v, object p, Cliente cliente)
+        public async Task<ActionResult<Cliente>> UpdateCliente(Cliente cliente)
         {
-            throw new NotImplementedException();
+            //if (cliente == null)
+            //{
+            //    return NotFound();
+            //}
+            return await _repo.UpdateCliente(cliente);
         }
-
-        private ActionResult<Cliente> NotFound()
+        public async Task<ActionResult<Cliente>> DeleteCliente(long id)
         {
-            throw new NotImplementedException("O que procura não existe.");
+            return await _repo.DeleteCliente(id);
         }
-        public async Task<ActionResult<IEnumerable<Cliente>>> UpdateClienteById(long id, Cliente cliente)
-        {
+        //private ActionResult<Cliente> CreatedAtAction(string v, object p, Cliente cliente)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-            if (cliente == null)
-            {
-                return NotFound();
-            }
+        //private ActionResult<Cliente> NotFound()
+        //{
+        //    throw new NotImplementedException("O que procura não existe.");
+        //}
+        //public async Task<ActionResult<IEnumerable<Cliente>>> UpdateClienteById(long id, Cliente cliente)
+        //{
 
-        }
+        //    if (cliente == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //}
     }
-}*/
+}

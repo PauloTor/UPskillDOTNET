@@ -1,4 +1,4 @@
-﻿/*using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ParqueAPICentral.Data;
 using ParqueAPICentral.Models;
@@ -22,13 +22,23 @@ namespace ParqueAPICentral.Repositories
         {
             return await RepContext.Cliente.FindAsync(id);
         }
-        public Task<ActionResult<Cliente>> CreateCliente(Cliente cliente)
+        public async Task<ActionResult<Cliente>> CreateCliente(Cliente cliente)
         {
-            throw new NotImplementedException();
+            return await AddAsync(cliente);
         }
-        public async Task<ActionResult<IEnumerable<Cliente>>> UpdateClienteById(long id, Cliente cliente)
+        public async Task<ActionResult<Cliente>> DeleteCliente(long id)
         {
-            return await RepContext.Cliente.ToListAsync();
+            var cliente = GetAll().FirstOrDefault(u => u.ClienteID == id);
+
+            await DeleteAsync(cliente); 
+
+            return cliente;
+        }
+        public async Task<ActionResult<Cliente>> UpdateCliente(Cliente cliente)
+        {
+            await UpdateAsync(cliente);
+
+            return cliente;
         }
     }
-} */
+} 

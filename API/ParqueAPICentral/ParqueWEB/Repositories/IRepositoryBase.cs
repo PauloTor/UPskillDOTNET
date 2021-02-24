@@ -16,6 +16,7 @@ namespace ParqueAPICentral.Repositories
         Task<ActionResult<T>> Create(T entity);
         Task<IActionResult> DeleteById(long id);
         Task<IActionResult> DeleteByCod(long id);
+        Task<T> AddAsync(T entity);
         Task<ActionResult<IEnumerable<T>>> GetAllAsync();
     }
 }
