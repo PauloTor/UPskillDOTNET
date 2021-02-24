@@ -182,11 +182,9 @@ namespace ParqueAPICentral.Controllers
                     throw new Exception($"Couldn't retrieve entities: {ex.Message}");
                 }
 
-                //await GerarQRcode(reserva);
+                var qrCode = GerarQRcode(UltimaReserva.Value);
 
-                //var qrcode = GerarQRcode(reserva);
-
-                await EnviarEmail(ClienteID, reserva.ReservaID);
+                EnviarEmail(qrCode.Result.Value, ClienteID, UltimaReserva.Value.ReservaID);
 
                 return CreatedAtAction(nameof(PostReservaByData),
 
@@ -221,7 +219,7 @@ namespace ParqueAPICentral.Controllers
 
                 //var qrcode = _qrcoder.GerarQRcode(reserva);
 
-                //_email.EnviarEmail(qrcode.Result.Value, ClienteID, sub.ReservaID);
+                //await EnviarEmail(ClienteID, sub.ReservaID);
 
                 return CreatedAtAction(nameof(PostReservaByData),
 
@@ -474,28 +472,10 @@ namespace ParqueAPICentral.Controllers
 
         public async Task<ActionResult<byte[]>> GerarQRcode(Reserva_ reserva)
         {
-            long reservaByID = reserva.ReservaID;
-
-            var reservaCentral = _context.Reserva.Where(f => f.ReservaAPI == reservaByID).FirstOrDefault();
-
-            long parqueByID = reservaCentral.ParqueID;
-
-            var parque = _context.Parque.FirstOrDefault(p => p.ParqueID == parqueByID);
-
-            using HttpClient client = new HttpClient();
-
-            string endpoint = parque.Url + "reservas/" + reserva;
-
-            var reservaRes = await client.GetAsync(endpoint);
-
-            var reservaDTO = await reservaRes.Content.ReadAsAsync<Reserva_>();
-
-            var qrInfo = ("Parque: " + reservaCentral.Parque.NomeParque
-                   + "\n Morada: " + reservaCentral.Parque.Morada.Rua
-                   + "\n Reserva: " + reserva.ReservaID
-                   + "\n Lugar: " + reservaDTO.LugarID
-                   + "\n Data de Inicio: " + reservaDTO.DataInicio
-                   + "\n Data de Fim: " + reservaDTO.DataFim);
+            var qrInfo = ("Reserva: " + reserva.ReservaID
+                   + "\n Lugar: " + reserva.LugarID
+                   + "\n Data de Inicio: " + reserva.DataInicio
+                   + "\n Data de Fim: " + reserva.DataFim);
 
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
 
@@ -519,23 +499,23 @@ namespace ParqueAPICentral.Controllers
         }
 
 
-        public async Task EnviarEmail(long clienteID, long reservaID)
+        public async Task EnviarEmail(byte[] qrCode, long ClienteID, long ReservaID)
         {
-            var cliente = _context.Cliente.Where(c => c.ClienteID == clienteID).FirstOrDefault();
+            var cliente = await _context.Cliente.Where(c => c.ClienteID == ClienteID).FirstOrDefaultAsync();
 
             string remetente = "pseudocompany2020@gmail.com";
 
             string destinatario = cliente.EmailCliente;
 
-            //var qrcode = new Attachment(new MemoryStream(qr), "QRCode", "imagem/png");
+            var qrcode = new Attachment(new MemoryStream(qrCode), "QRCode", "image/png");
 
             using MailMessage mail = new MailMessage(remetente, destinatario)
             {
-                Subject = "Comfirmação da reserva nº " + reservaID,
-                Body = "Código QR em anexo."
+                Subject = "Confirmação da reserva nº " + ReservaID,
+                Body = "A sua reserva está confirmada.\n\nO código QR relativo à sua reserva encontra-se em anexo."
             };
 
-            //mail.Attachments.Add(qrcode);
+            mail.Attachments.Add(qrcode);
             mail.IsBodyHtml = false;
             SmtpClient smtp = new SmtpClient
             {
