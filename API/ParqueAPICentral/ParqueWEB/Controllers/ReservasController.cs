@@ -134,6 +134,8 @@ namespace ParqueAPICentral.Controllers
         [HttpPost("{DataInicio}/{DataFim}/{ClienteID}/{ParqueID}/{lugarId}")]
         public async Task<ActionResult<Reserva_>> PostReservaByData(String DataInicio, String DataFim, long ClienteID, long parqueid, long lugarId)
         {
+            var clienteOriginal = _context.Cliente.Where(c => c.ClienteID == ClienteID).FirstOrDefault();
+
             if (DateTime.Parse(DataInicio) > DateTime.Parse(DataFim))
             {
                 return NotFound();
@@ -156,7 +158,6 @@ namespace ParqueAPICentral.Controllers
             {
                 return NotFound("Lugar não disponivel para ser reservado");
             }
-
 
             if (i.SubReservado == false)
             {
@@ -188,7 +189,6 @@ namespace ParqueAPICentral.Controllers
                 return CreatedAtAction(nameof(PostReservaByData),
 
                 new { id = reserva.ReservaID }, reserva);
-
             }
 
             else
@@ -196,7 +196,20 @@ namespace ParqueAPICentral.Controllers
                 var sub = _context.SubAluguer.FirstOrDefault(n => n.SubAluguerID == i.SubAluguerId);
 
                 sub.Reservado = true;
-                sub.NovoCliente = ClienteID.ToString();
+
+                var clienteSub = sub.NovoCliente;
+
+                clienteSub = ClienteID.ToString();
+
+                long longClienteSub = Convert.ToInt64(clienteSub);
+
+                float preco = sub.Preco;
+
+                var clienteNovo = _context.Cliente.Where(c => c.ClienteID == longClienteSub).FirstOrDefault();
+
+                clienteNovo.Pagar(preco);
+
+                clienteOriginal.Depositar(preco);
 
                 _context.SubAluguer.Update(sub);
 
@@ -211,10 +224,9 @@ namespace ParqueAPICentral.Controllers
                 return CreatedAtAction(nameof(PostReservaByData),
 
                 new { id = sub.SubAluguerID }, sub);
-
-            }
-            
+            }            
         }
+
         /// <summary>
         /// //////////////////////////
         /// </summary>

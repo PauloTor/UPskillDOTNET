@@ -24,9 +24,9 @@ namespace ParqueAPICentral.Controllers
 
             string remetente = "pseudocompany2020@gmail.com";
 
-            string destinatario = cliente.EmailCliente.ToString();
+            string destinatario = cliente.EmailCliente;
 
-            var qrcode = new Attachment(new MemoryStream(qr), "QRCode", "image/png");
+            var qrcode = new Attachment(new MemoryStream(qr), "QRCode", "imagem/png");
 
             using MailMessage mail = new MailMessage(remetente, destinatario)
             {
@@ -44,7 +44,7 @@ namespace ParqueAPICentral.Controllers
 
             NetworkCredential networkCredential = new NetworkCredential(remetente, "PseudoPark255");
             smtp.Credentials = networkCredential;
-            smtp.Port = 25;
+            smtp.Port = 587;
             smtp.Send(mail);
         }
     }
