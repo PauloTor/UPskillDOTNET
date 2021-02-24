@@ -30,15 +30,12 @@ namespace ParqueAPICentral.Controllers
     public class ReservasController : ControllerBase
     {
         private readonly APICentralContext _context;
-        //private readonly EmailController _email;
-        //private readonly QRCoderController _qrcoder;
 
         public ReservasController(APICentralContext context/*, EmailController email*/)
         {
             _context = context;
-            //_email = email;
-           // _qrcoder = qrcoder;
         }
+
 
 
         // GET: api/Reservas
@@ -48,6 +45,7 @@ namespace ParqueAPICentral.Controllers
         {
             return await _context.Reserva.Include(r => r.Cliente).Include(r => r.Parque).ToListAsync();
         }
+
 
 
         // GET: api/Reservas/id
@@ -63,11 +61,9 @@ namespace ParqueAPICentral.Controllers
             }
             return reserva;
         }
-        /// <summary>
-        /// //////////////////////
-        /// </summary>
-        /// <param name="parqueID"></param>
-        /// <returns></returns>
+
+
+
         //GET: api/reservas/parque/parqueID - Todas as Reservas de um Parque
         [EnableCors]
         [HttpGet]
@@ -88,12 +84,9 @@ namespace ParqueAPICentral.Controllers
             }
             return listaReservas;
         }
-        /// <summary>
-        /// ////////////////
-        /// </summary>
-        /// <param name="parqueID"></param>
-        /// <param name="id"></param>
-        /// <returns></returns>
+
+
+
         //GET: api/reservas/parque/parqueID/id - Reservas de um Parque por ReservaID
         [EnableCors]
         [HttpGet]
@@ -118,20 +111,10 @@ namespace ParqueAPICentral.Controllers
             }
             return reserva_;
         }
-        /// <summary>
-        /// ////////////////////////
-        /// </summary>
-        /// <param name="DataInicio"></param>
-        /// <param name="DataFim"></param>
-        /// <param name="ClienteID"></param>
-        /// <param name="parqueid"></param>
-        /// <returns></returns>
-        /// 
 
 
 
-
-        //Post Reservas by {DataInicio}/{DataFim}/{ClienteID}/{ParqueID}/{lugarId}
+        //POST: Reservas by {DataInicio}/{DataFim}/{ClienteID}/{ParqueID}/{lugarId}
         [EnableCors]
         [HttpGet("{DataInicio}/{DataFim}/{ClienteID}/{ParqueID}/{lugarId}")]
         public async Task<ActionResult<Reserva_>> PostReservaByData(String DataInicio, String DataFim, long ClienteID, long parqueid, long lugarId)
@@ -227,12 +210,8 @@ namespace ParqueAPICentral.Controllers
             }            
         }
 
-        /// <summary>
-        /// //////////////////////////
-        /// </summary>
-        /// <param name="parqueID"></param>
-        /// <param name="id"></param>
-        /// <returns></returns>
+
+
         // DELETE: api/reservas/parqueID/reservaId - Cancelar reserva e devolver credito
         [EnableCors]
         [HttpDelete("{parqueID}/{reservaID}")]
@@ -276,11 +255,9 @@ namespace ParqueAPICentral.Controllers
 
             return NoContent();
         }
-        /// <summary>
-        /// ////////////////////
-        /// </summary>
-        /// <param name="apiBaseUrlPrivado"></param>
-        /// <returns></returns>
+
+
+
         [EnableCors]
         public async Task<string> GetToken(string apiBaseUrlPrivado)
         {
@@ -293,13 +270,8 @@ namespace ParqueAPICentral.Controllers
 
             return rtoken;
         }
-        /// <summary>
-        /// /////////////////
-        /// </summary>
-        /// <param name="DataInicio"></param>
-        /// <param name="DataFim"></param>
-        /// <param name="parqueID"></param>
-        /// <returns></returns>
+
+
        
         private async Task<IEnumerable<Lugar_>> GetLugaresDisponiveis(String DataInicio, String DataFim, long parqueID)
         {
@@ -314,6 +286,8 @@ namespace ParqueAPICentral.Controllers
 
             return ListaLugar;
         }
+
+
 
         //GET Lugares disponíveis de ParqueID by Data1 e Data2
         [EnableCors]
@@ -385,6 +359,8 @@ namespace ParqueAPICentral.Controllers
             return lugaresNaoReservados;
         }
 
+
+
         public class LugarReserva: Lugar_
         {
             public bool SubReservado { get; set; }
@@ -393,12 +369,8 @@ namespace ParqueAPICentral.Controllers
             public long SubAluguerId { get; internal set; }
         }
 
-        
-        /// <summary>
-        /// ////////////////////
-        /// </summary>
-        /// <param name="parqueid"></param>
-        /// <returns></returns>
+
+
         [EnableCors]
         public async Task<ActionResult<Reserva_>> GetUltimaReservaPrivate(long parqueid)
         {
@@ -423,12 +395,6 @@ namespace ParqueAPICentral.Controllers
         }
 
 
-        /// <summary>
-        /// /////////////////////////
-        /// </summary>
-        /// <param name="reservaid"></param>
-        /// <param name="parqueid"></param>
-        /// <param name="clienteid"></param>
       
         public async void CriarReservaCentral(long reservaid, long parqueid, long clienteid, long lugarId)
         {
@@ -448,11 +414,9 @@ namespace ParqueAPICentral.Controllers
             return;
 
         }
-        /// <summary>
-        /// ////////////////////////////
-        /// </summary>
-        /// <param name="reserva"></param>
-        /// 
+
+
+
         public async void ApagarReservaCentral(Reserva reserva)
         {
             _context.Reserva.Remove(reserva);
@@ -470,12 +434,13 @@ namespace ParqueAPICentral.Controllers
         }
 
 
+
         public ActionResult<byte[]> GerarQRcode(Reserva_ reserva)
         {
             var qrInfo = ("Reserva: " + reserva.ReservaID
-                   + "\n Lugar: " + reserva.LugarID
-                   + "\n Data de Inicio: " + reserva.DataInicio
-                   + "\n Data de Fim: " + reserva.DataFim);
+                   + "\nLugar: " + reserva.LugarID
+                   + "\nData de Inicio: " + reserva.DataInicio
+                   + "\nData de Fim: " + reserva.DataFim);
 
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
 
@@ -488,7 +453,6 @@ namespace ParqueAPICentral.Controllers
             return BitmapToBytes(qrCodeImage);
         }
 
-
         private static byte[] BitmapToBytes(Bitmap img)
         {
             using MemoryStream stream = new MemoryStream();
@@ -497,6 +461,7 @@ namespace ParqueAPICentral.Controllers
 
             return stream.ToArray();
         }
+
 
 
         public async Task EnviarEmail(byte[] qrCode, long ClienteID, long ReservaID)
