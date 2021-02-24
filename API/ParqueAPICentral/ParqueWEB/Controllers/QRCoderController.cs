@@ -14,9 +14,6 @@ using ParqueAPICentral.Data;
 
 namespace ParqueAPICentral.Controllers
 {
-    [EnableCors("MyAllowSpecificOrigins")]
-    [Route("api/qrcodes")]
-    [ApiController]
     public class QRCoderController : ControllerBase
     {
         private readonly APICentralContext _context;
@@ -27,17 +24,15 @@ namespace ParqueAPICentral.Controllers
         }
 
 
-        [EnableCors]
-        [HttpPost("{reservaByID}")]
-        public async Task<ActionResult<byte[]>> QRcoder(Reserva reserva)
+        public async Task<ActionResult<byte[]>> GerarQRcode(Reserva_ reserva)
         {
             long reservaByID = reserva.ReservaID;
 
-            long parqueByID = reserva.ParqueID;
+            var reservaCentral = _context.Reserva.Where(f => f.ReservaAPI == reservaByID).FirstOrDefault();
+
+            long parqueByID = reservaCentral.ParqueID;
 
             var parque = _context.Parque.FirstOrDefault(p => p.ParqueID == parqueByID);
-
-            var reserva_ = _context.Reserva.Where(f => f.ReservaAPI == reservaByID && f.ParqueID == parqueByID).FirstOrDefault();
 
             using HttpClient client = new HttpClient();
 
@@ -47,8 +42,8 @@ namespace ParqueAPICentral.Controllers
 
             var reservaDTO = await reservaRes.Content.ReadAsAsync<Reserva_>();
 
-            var qrInfo = ("Parque: " + reserva.Parque.NomeParque
-                   + "\n Morada: " + reserva.Parque.Morada.Rua
+            var qrInfo = ("Parque: " + reservaCentral.Parque.NomeParque
+                   + "\n Morada: " + reservaCentral.Parque.Morada.Rua
                    + "\n Reserva: " + reserva.ReservaID
                    + "\n Lugar: " + reservaDTO.LugarID
                    + "\n Data de Inicio: " + reservaDTO.DataInicio

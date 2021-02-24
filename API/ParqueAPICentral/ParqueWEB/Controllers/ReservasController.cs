@@ -17,7 +17,6 @@ using ParqueAPICentral.Entities;
 using Microsoft.Extensions.Configuration;
 using ParqueAPICentral.DTO;
 
-
 namespace ParqueAPICentral.Controllers
 {
     [EnableCors("MyAllowSpecificOrigins")]
@@ -26,10 +25,14 @@ namespace ParqueAPICentral.Controllers
     public class ReservasController : ControllerBase
     {
         private readonly APICentralContext _context;
+        //private readonly EmailController _email;
+        //private readonly QRCoderController _qrcoder;
 
-        public ReservasController(APICentralContext context)
+        public ReservasController(APICentralContext context/*, EmailController email, QRCoderController qrcoder*/)
         {
             _context = context;
+            //_email = email;
+            //_qrcoder = qrcoder;
         }
 
 
@@ -151,6 +154,7 @@ namespace ParqueAPICentral.Controllers
                 return NotFound("Lugar não disponivel para ser reservado");
             }
 
+
             if (i.SubReservado == false)
             {
                 var reserva = new Reserva_(DateTime.Now, DateTime.Parse(DataInicio), DateTime.Parse(DataFim), i.LugarID);
@@ -172,9 +176,16 @@ namespace ParqueAPICentral.Controllers
                     throw new Exception($"Couldn't retrieve entities: {ex.Message}");
                 }
 
+                //await QRCoderController.GerarQRcode(reserva);
+
+                //var qrcode = QRCoderController.GerarQRcode(reserva);
+
+                //EmailController.EnviarEmail(qrcode.Result.Value, ClienteID, reserva.ReservaID);
 
                 return CreatedAtAction(nameof(PostReservaByData),
+
                 new { id = reserva.ReservaID }, reserva);
+
             }
 
             else
@@ -188,10 +199,18 @@ namespace ParqueAPICentral.Controllers
 
                 _context.SaveChanges();
 
+                //await _qrcoder.GerarQRcode(reserva);
+
+                //var qrcode = _qrcoder.GerarQRcode(reserva);
+
+                //_email.EnviarEmail(qrcode.Result.Value, ClienteID, sub.ReservaID);
+
                 return CreatedAtAction(nameof(PostReservaByData),
-               new { id = sub.SubAluguerID }, sub);
+
+                new { id = sub.SubAluguerID }, sub);
 
             }
+            
         }
         /// <summary>
         /// //////////////////////////
