@@ -184,7 +184,7 @@ namespace ParqueAPICentral.Controllers
 
                 var qrCode = GerarQRcode(UltimaReserva.Value);
 
-                EnviarEmail(qrCode.Result.Value, ClienteID, UltimaReserva.Value.ReservaID);
+                await EnviarEmail(qrCode.Value, ClienteID, UltimaReserva.Value.ReservaID);
 
                 return CreatedAtAction(nameof(PostReservaByData),
 
@@ -470,7 +470,7 @@ namespace ParqueAPICentral.Controllers
         }
 
 
-        public async Task<ActionResult<byte[]>> GerarQRcode(Reserva_ reserva)
+        public ActionResult<byte[]> GerarQRcode(Reserva_ reserva)
         {
             var qrInfo = ("Reserva: " + reserva.ReservaID
                    + "\n Lugar: " + reserva.LugarID
