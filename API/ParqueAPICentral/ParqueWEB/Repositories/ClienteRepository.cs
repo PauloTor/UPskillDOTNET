@@ -40,5 +40,16 @@ namespace ParqueAPICentral.Repositories
 
             return cliente;
         }
+        //public async Task<ActionResult<Cliente>> UpdateClienteById(Cliente cliente, long Id)
+        //{
+        //    await UpdateByIdAsync(cliente, id);
+
+        //    return cliente;
+        //}
+
+        public async Task<bool> FindClienteAny(long id)
+        {
+            return await GetAll().Where(p => p.ClienteID == id).AnyAsync();
+        }
     }
 } 

@@ -26,7 +26,7 @@ namespace ParqueAPICentral.Controllers
 
         // GET: api/Clientes : Obter Informação dos Clientes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes()
+        public async Task<ActionResult<IEnumerable<Cliente>>> Get_Clientes()
         {
             return await this._service.GetAllClientes();
         }
