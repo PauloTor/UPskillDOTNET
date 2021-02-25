@@ -119,8 +119,6 @@ namespace ParqueAPICentral.Controllers
         [HttpGet("{DataInicio}/{DataFim}/{ClienteID}/{ParqueID}/{lugarId}")]
         public async Task<ActionResult<Reserva_>> PostReservaByData(String DataInicio, String DataFim, long ClienteID, long parqueid, long lugarId)
         {
-            //var clienteOriginal = _context.Cliente.Where(c => c.ClienteID == ClienteID).FirstOrDefault();
-
             if (DateTime.Parse(DataInicio) > DateTime.Parse(DataFim))
             {
                 return NotFound();
@@ -136,6 +134,8 @@ namespace ParqueAPICentral.Controllers
 
             var UltimaReserva = await GetUltimaReservaPrivate(parqueid);
 
+            var reserva = new Reserva_(DateTime.Now, DateTime.Parse(DataInicio), DateTime.Parse(DataFim), i.LugarID);
+
             if ((DateTime.Parse(DataInicio) > DateTime.Parse(DataFim)) || (!parkingLots.Value.Any()))
             {
                 return NotFound("Data inválida");
@@ -148,7 +148,6 @@ namespace ParqueAPICentral.Controllers
 
             if (i.SubReservado == false)
             {
-                var reserva = new Reserva_(DateTime.Now, DateTime.Parse(DataInicio), DateTime.Parse(DataFim), i.LugarID);
 
                 StringContent reserva_ = new StringContent(JsonConvert.
                     SerializeObject(reserva), Encoding.UTF8, "application/json");
@@ -180,9 +179,9 @@ namespace ParqueAPICentral.Controllers
 
                 var subId = sub.ReservaID;
 
-                var reserva = _context.Reserva.Where(r => r.ReservaID == subId).FirstOrDefault();
+                var reservaC = _context.Reserva.Where(r => r.ReservaID == subId).FirstOrDefault();
 
-                var reservaOriginalCliente = reserva.ClienteID;
+                var reservaOriginalCliente = reservaC.ClienteID;
 
                 var clienteOriginal = _context.Cliente.Where(r => r.ClienteID == reservaOriginalCliente).FirstOrDefault();
 
@@ -198,15 +197,15 @@ namespace ParqueAPICentral.Controllers
 
                 sub.NovoCliente = ClienteID;
 
-                reserva.ParaSubAluguer = false;
+                reservaC.ParaSubAluguer = false;
 
                 _context.SubAluguer.Update(sub);
 
                 _context.SaveChanges();
 
-                //var qrCode = GerarQRcode(UltimaReserva.Value);
+                var qrCode = GerarQRcode(reserva);
 
-                //await EnviarEmail(qrCode.Value, ClienteID, UltimaReserva.Value.ReservaID);
+                await EnviarEmail(qrCode.Value, ClienteID, reservaC.ReservaID);
 
                 return CreatedAtAction(nameof(PostReservaByData),
 
