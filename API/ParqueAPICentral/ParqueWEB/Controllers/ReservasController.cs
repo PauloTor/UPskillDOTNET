@@ -134,6 +134,8 @@ namespace ParqueAPICentral.Controllers
             var parkingLots = await (GetLugaresDisponiveisComSubAlugueres(DataInicio, DataFim, parqueid));
             var i = parkingLots.Value.FirstOrDefault(p => p.LugarID == lugarId && p.ParqueId == parqueid);
 
+            var UltimaReserva = await GetUltimaReservaPrivate(parqueid);
+
             if ((DateTime.Parse(DataInicio) > DateTime.Parse(DataFim)) || (!parkingLots.Value.Any()))
             {
                 return NotFound("Data inválida");
@@ -153,8 +155,6 @@ namespace ParqueAPICentral.Controllers
 
                 var response2 = await client.
                     PostAsync(parque.Url + "reservas/", reserva_);
-
-                var UltimaReserva = await GetUltimaReservaPrivate(parqueid);
 
                 try
                 {
@@ -400,7 +400,7 @@ namespace ParqueAPICentral.Controllers
         }
 
 
-      
+
         public async void CriarReservaCentral(long reservaid, long parqueid, long clienteid, long lugarId)
         {
             var reserva1 = new Reserva(reservaid, parqueid, clienteid, lugarId);
@@ -442,10 +442,10 @@ namespace ParqueAPICentral.Controllers
 
         public ActionResult<byte[]> GerarQRcode(Reserva_ reserva)
         {
-            var qrInfo = ("Reserva: " + reserva.ReservaID
+            var qrInfo = "Reserva: " + reserva.ReservaID
                    + "\nLugar: " + reserva.LugarID
                    + "\nData de Inicio: " + reserva.DataInicio
-                   + "\nData de Fim: " + reserva.DataFim);
+                   + "\nData de Fim: " + reserva.DataFim;
 
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
 
@@ -457,6 +457,7 @@ namespace ParqueAPICentral.Controllers
 
             return BitmapToBytes(qrCodeImage);
         }
+
 
         private static byte[] BitmapToBytes(Bitmap img)
         {

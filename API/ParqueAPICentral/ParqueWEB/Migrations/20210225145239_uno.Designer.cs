@@ -11,7 +11,7 @@ namespace ParqueAPICentral.Migrations
 {
     [DbContext(typeof(APICentralContext))]
     [Migration("20210225145239_uno")]
-    partial class uno
+    partial class Uno
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
