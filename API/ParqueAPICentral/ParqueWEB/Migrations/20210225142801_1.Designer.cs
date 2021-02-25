@@ -10,7 +10,7 @@ using ParqueAPICentral.Data;
 namespace ParqueAPICentral.Migrations
 {
     [DbContext(typeof(APICentralContext))]
-    [Migration("20210225102039_1")]
+    [Migration("20210225142801_1")]
     partial class _1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -205,8 +205,8 @@ namespace ParqueAPICentral.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
-                    b.Property<string>("NovoCliente")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long>("NovoCliente")
+                        .HasColumnType("bigint");
 
                     b.Property<float>("Preco")
                         .HasColumnType("real");

@@ -144,7 +144,7 @@ namespace ParqueAPICentral.Migrations
                     Preco = table.Column<float>(type: "real", nullable: false),
                     ReservaID = table.Column<long>(type: "bigint", nullable: false),
                     Reservado = table.Column<bool>(type: "bit", nullable: false),
-                    NovoCliente = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    NovoCliente = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {

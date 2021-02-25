@@ -119,7 +119,7 @@ namespace ParqueAPICentral.Controllers
         [HttpGet("{DataInicio}/{DataFim}/{ClienteID}/{ParqueID}/{lugarId}")]
         public async Task<ActionResult<Reserva_>> PostReservaByData(String DataInicio, String DataFim, long ClienteID, long parqueid, long lugarId)
         {
-            var clienteOriginal = _context.Cliente.Where(c => c.ClienteID == ClienteID).FirstOrDefault();
+            //var clienteOriginal = _context.Cliente.Where(c => c.ClienteID == ClienteID).FirstOrDefault();
 
             if (DateTime.Parse(DataInicio) > DateTime.Parse(DataFim))
             {
@@ -178,17 +178,23 @@ namespace ParqueAPICentral.Controllers
             {
                 var sub = _context.SubAluguer.FirstOrDefault(n => n.SubAluguerID == i.SubAluguerId);
 
+                var subId = sub.ReservaID;
+
+                var reserva = _context.Reserva.Where(r => r.ReservaID == subId).FirstOrDefault();
+
+                var reservaOriginalCliente = reserva.ClienteID;
+
+                var clienteOriginal = _context.Cliente.Where(r => r.ClienteID == reservaOriginalCliente).FirstOrDefault();
+
                 sub.Reservado = true;
 
-                var clienteSub = sub.NovoCliente;
+                reserva.ParaSubAluguer = false;
 
-                clienteSub = ClienteID.ToString();
-
-                long longClienteSub = Convert.ToInt64(clienteSub);
+                var clienteSub = ClienteID;
 
                 float preco = sub.Preco;
 
-                var clienteNovo = _context.Cliente.Where(c => c.ClienteID == longClienteSub).FirstOrDefault();
+                var clienteNovo = _context.Cliente.Where(c => c.ClienteID == clienteSub).FirstOrDefault();
 
                 clienteNovo.Pagar(preco);
 
@@ -315,6 +321,7 @@ namespace ParqueAPICentral.Controllers
                 {
                     if (reservaOriginal.ReservaID == reserva.ReservaAPI && reserva.ParqueID == parqueID && reserva.ParaSubAluguer)
                     {
+                        // nao esta a encontrar apenas 1 objecto
                         var sub = subAluguer.FirstOrDefault(s => s.ReservaID == reserva.ReservaID);
 
                         if (sub.Reservado == false)
