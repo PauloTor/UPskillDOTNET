@@ -69,6 +69,7 @@ namespace ParqueAPICentral.Controllers
         //}
 
         // POST Faturas by ReservaID - api/Faturas/ReservaID - sem Services e Repositories
+        //[Authorize(Policy = "Roles")]
         [EnableCors]
         [HttpPost("{ReservaID}")]
         public async Task<ActionResult<IEnumerable<Fatura>>> PostFaturaByReserva(long ReservaID)
@@ -137,7 +138,7 @@ namespace ParqueAPICentral.Controllers
         }
 
         // GET: api/Faturas : Obter Informação de Faturas
-        //      [Authorize]
+        [Authorize(Policy = "Roles")]
         [EnableCors("MyAllowSpecificOrigins")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Fatura>>> GetFaturas()
@@ -146,6 +147,7 @@ namespace ParqueAPICentral.Controllers
         }
 
         // GET Faturas by FaturaID - api/Faturas/5 - sem services ou repositories
+        [Authorize(Policy = "Roles")]
         [EnableCors]
         [HttpGet("{FaturaID}")]
         public async Task<ActionResult<Fatura>> GetFatura(long FaturaID)

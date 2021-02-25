@@ -24,6 +24,7 @@ using System.Net;
 
 namespace ParqueAPICentral.Controllers
 {
+    //[Authorize(Policy = "Roles")]
     [EnableCors("MyAllowSpecificOrigins")]
     [Route("api/Reservas")]
     [ApiController]
@@ -39,6 +40,7 @@ namespace ParqueAPICentral.Controllers
 
 
         // GET: api/Reservas
+        [Authorize(Policy = "Roles")]
         [EnableCors]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Reserva>>> GetReservasTodas()
@@ -49,6 +51,7 @@ namespace ParqueAPICentral.Controllers
 
 
         // GET: api/Reservas/id
+        [Authorize(Policy = "Roles")]
         [EnableCors]
         [HttpGet("{id}")]
         public async Task<ActionResult<Reserva>> GetReservaById(long id)
@@ -65,6 +68,7 @@ namespace ParqueAPICentral.Controllers
 
 
         //GET: api/reservas/parque/parqueID - Todas as Reservas de um Parque
+        [Authorize(Policy = "Admin")]
         [EnableCors]
         [HttpGet]
         [Route("parque/{parqueID}")]
@@ -88,6 +92,7 @@ namespace ParqueAPICentral.Controllers
 
 
         //GET: api/reservas/parque/parqueID/id - Reservas de um Parque por ReservaID
+        [Authorize(Policy = "Admin")]
         [EnableCors]
         [HttpGet]
         [Route("parque/{parqueID}/{id}")]
@@ -115,6 +120,7 @@ namespace ParqueAPICentral.Controllers
 
 
         //POST: Reservas by {DataInicio}/{DataFim}/{ClienteID}/{ParqueID}/{lugarId}
+        [Authorize(Policy = "User")]
         [EnableCors]
         [HttpGet("{DataInicio}/{DataFim}/{ClienteID}/{ParqueID}/{lugarId}")]
         public async Task<ActionResult<Reserva_>> PostReservaByData(String DataInicio, String DataFim, long ClienteID, long parqueid, long lugarId)
@@ -217,6 +223,7 @@ namespace ParqueAPICentral.Controllers
 
 
         // DELETE: api/reservas/parqueID/reservaIdAPI - Cancelar reserva e devolver credito
+        [Authorize(Policy = "Roles")]
         [EnableCors]
         [HttpGet("{parqueID}/{reservaID}")]
         public async Task<ActionResult<Reserva>> CancelarReserva(long parqueID, long reservaID)
@@ -294,6 +301,7 @@ namespace ParqueAPICentral.Controllers
 
 
         //GET Lugares disponíveis de ParqueID by Data1 e Data2
+        [Authorize(Policy = "Roles")]
         [EnableCors]
         [HttpGet("LugaresDisponiveis/{DataInicio}/{DataFim}/{ParqueID}")]
         public async Task<ActionResult<IEnumerable<LugarReserva>>> GetLugaresDisponiveisComSubAlugueres(String DataInicio, String DataFim, long parqueID)
