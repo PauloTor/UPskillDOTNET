@@ -60,12 +60,14 @@ namespace ParqueAPICentral.Models
                 throw new Exception("A quantia a pagar deve ter um valor positivo.");
             }
             else
-            {
-                Cofre.Entrada(valor);
+            {                
                 Credito -= valor;
+                Cofre.Entrada(valor);
             }
             if (Credito < 0)
             {
+                Cofre.Saida(valor);
+                Credito += valor;
                 throw new Exception("O crédito não permite efetuar a operação.");
             }
         }
