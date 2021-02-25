@@ -186,29 +186,27 @@ namespace ParqueAPICentral.Controllers
 
                 var clienteOriginal = _context.Cliente.Where(r => r.ClienteID == reservaOriginalCliente).FirstOrDefault();
 
-                sub.Reservado = true;
-
-                reserva.ParaSubAluguer = false;
-
-                var clienteSub = ClienteID;
-
                 float preco = sub.Preco;
 
-                var clienteNovo = _context.Cliente.Where(c => c.ClienteID == clienteSub).FirstOrDefault();
+                var clienteNovo = _context.Cliente.Where(c => c.ClienteID == ClienteID).FirstOrDefault();
 
                 clienteNovo.Pagar(preco);
 
                 clienteOriginal.Depositar(preco);
 
+                sub.Reservado = true;
+
+                sub.NovoCliente = ClienteID;
+
+                reserva.ParaSubAluguer = false;
+
                 _context.SubAluguer.Update(sub);
 
                 _context.SaveChanges();
 
-                //await _qrcoder.GerarQRcode(reserva);
+                //var qrCode = GerarQRcode(UltimaReserva.Value);
 
-                //var qrcode = _qrcoder.GerarQRcode(reserva);
-
-                //await EnviarEmail(ClienteID, sub.ReservaID);
+                //await EnviarEmail(qrCode.Value, ClienteID, UltimaReserva.Value.ReservaID);
 
                 return CreatedAtAction(nameof(PostReservaByData),
 
