@@ -115,8 +115,8 @@ namespace ParqueAPICentral.Data
 
             IList<SubAluguer> defaultSubAluguer = new List<SubAluguer>
             {
-                new SubAluguer(3, 12),
-                new SubAluguer(5, 8),
+                new SubAluguer(3, 12, false),
+                new SubAluguer(1, 8, false),
             };
 
             context.SubAluguer.AddRange(defaultSubAluguer);

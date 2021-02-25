@@ -24,24 +24,23 @@ using System.Net;
 
 namespace ParqueAPICentral.Controllers
 {
+    //[Authorize(Policy = "Roles")]
     [EnableCors("MyAllowSpecificOrigins")]
     [Route("api/Reservas")]
     [ApiController]
     public class ReservasController : ControllerBase
     {
         private readonly APICentralContext _context;
-        //private readonly EmailController _email;
-        //private readonly QRCoderController _qrcoder;
 
-        public ReservasController(APICentralContext context/*, EmailController email*/)
+        public ReservasController(APICentralContext context)
         {
             _context = context;
-            //_email = email;
-           // _qrcoder = qrcoder;
         }
 
 
+
         // GET: api/Reservas
+        [Authorize(Policy = "Roles")]
         [EnableCors]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Reserva>>> GetReservasTodas()
@@ -50,7 +49,9 @@ namespace ParqueAPICentral.Controllers
         }
 
 
+
         // GET: api/Reservas/id
+        [Authorize(Policy = "Roles")]
         [EnableCors]
         [HttpGet("{id}")]
         public async Task<ActionResult<Reserva>> GetReservaById(long id)
@@ -63,12 +64,11 @@ namespace ParqueAPICentral.Controllers
             }
             return reserva;
         }
-        /// <summary>
-        /// //////////////////////
-        /// </summary>
-        /// <param name="parqueID"></param>
-        /// <returns></returns>
+
+
+
         //GET: api/reservas/parque/parqueID - Todas as Reservas de um Parque
+        [Authorize(Policy = "Admin")]
         [EnableCors]
         [HttpGet]
         [Route("parque/{parqueID}")]
@@ -88,13 +88,11 @@ namespace ParqueAPICentral.Controllers
             }
             return listaReservas;
         }
-        /// <summary>
-        /// ////////////////
-        /// </summary>
-        /// <param name="parqueID"></param>
-        /// <param name="id"></param>
-        /// <returns></returns>
+
+
+
         //GET: api/reservas/parque/parqueID/id - Reservas de um Parque por ReservaID
+        [Authorize(Policy = "Admin")]
         [EnableCors]
         [HttpGet]
         [Route("parque/{parqueID}/{id}")]
@@ -118,26 +116,15 @@ namespace ParqueAPICentral.Controllers
             }
             return reserva_;
         }
-        /// <summary>
-        /// ////////////////////////
-        /// </summary>
-        /// <param name="DataInicio"></param>
-        /// <param name="DataFim"></param>
-        /// <param name="ClienteID"></param>
-        /// <param name="parqueid"></param>
-        /// <returns></returns>
-        /// 
 
 
 
-
-        //Post Reservas by {DataInicio}/{DataFim}/{ClienteID}/{ParqueID}/{lugarId}
+        //POST: Reservas by {DataInicio}/{DataFim}/{ClienteID}/{ParqueID}/{lugarId}
+        [Authorize(Policy = "User")]
         [EnableCors]
         [HttpGet("{DataInicio}/{DataFim}/{ClienteID}/{ParqueID}/{lugarId}")]
         public async Task<ActionResult<Reserva_>> PostReservaByData(String DataInicio, String DataFim, long ClienteID, long parqueid, long lugarId)
         {
-            var clienteOriginal = _context.Cliente.Where(c => c.ClienteID == ClienteID).FirstOrDefault();
-
             if (DateTime.Parse(DataInicio) > DateTime.Parse(DataFim))
             {
                 return NotFound();
@@ -151,6 +138,10 @@ namespace ParqueAPICentral.Controllers
             var parkingLots = await (GetLugaresDisponiveisComSubAlugueres(DataInicio, DataFim, parqueid));
             var i = parkingLots.Value.FirstOrDefault(p => p.LugarID == lugarId && p.ParqueId == parqueid);
 
+            var UltimaReserva = await GetUltimaReservaPrivate(parqueid);
+
+            var reserva = new Reserva_(DateTime.Now, DateTime.Parse(DataInicio), DateTime.Parse(DataFim), i.LugarID);
+
             if ((DateTime.Parse(DataInicio) > DateTime.Parse(DataFim)) || (!parkingLots.Value.Any()))
             {
                 return NotFound("Data inválida");
@@ -163,15 +154,12 @@ namespace ParqueAPICentral.Controllers
 
             if (i.SubReservado == false)
             {
-                var reserva = new Reserva_(DateTime.Now, DateTime.Parse(DataInicio), DateTime.Parse(DataFim), i.LugarID);
 
                 StringContent reserva_ = new StringContent(JsonConvert.
                     SerializeObject(reserva), Encoding.UTF8, "application/json");
 
                 var response2 = await client.
                     PostAsync(parque.Url + "reservas/", reserva_);
-
-                var UltimaReserva = await GetUltimaReservaPrivate(parqueid);
 
                 try
                 {
@@ -182,11 +170,9 @@ namespace ParqueAPICentral.Controllers
                     throw new Exception($"Couldn't retrieve entities: {ex.Message}");
                 }
 
-                //await GerarQRcode(reserva);
+                var qrCode = GerarQRcode(UltimaReserva.Value);
 
-                //var qrcode = GerarQRcode(reserva);
-
-                await EnviarEmail(ClienteID, reserva.ReservaID);
+                await EnviarEmail(qrCode.Value, ClienteID, UltimaReserva.Value.ReservaID);
 
                 return CreatedAtAction(nameof(PostReservaByData),
 
@@ -197,31 +183,35 @@ namespace ParqueAPICentral.Controllers
             {
                 var sub = _context.SubAluguer.FirstOrDefault(n => n.SubAluguerID == i.SubAluguerId);
 
-                sub.Reservado = true;
+                var subId = sub.ReservaID;
 
-                var clienteSub = sub.NovoCliente;
+                var reservaC = _context.Reserva.Where(r => r.ReservaID == subId).FirstOrDefault();
 
-                clienteSub = ClienteID.ToString();
+                var reservaOriginalCliente = reservaC.ClienteID;
 
-                long longClienteSub = Convert.ToInt64(clienteSub);
+                var clienteOriginal = _context.Cliente.Where(r => r.ClienteID == reservaOriginalCliente).FirstOrDefault();
 
                 float preco = sub.Preco;
 
-                var clienteNovo = _context.Cliente.Where(c => c.ClienteID == longClienteSub).FirstOrDefault();
+                var clienteNovo = _context.Cliente.Where(c => c.ClienteID == ClienteID).FirstOrDefault();
 
                 clienteNovo.Pagar(preco);
 
                 clienteOriginal.Depositar(preco);
 
+                sub.Reservado = true;
+
+                sub.NovoCliente = ClienteID;
+
+                reservaC.ParaSubAluguer = false;
+
                 _context.SubAluguer.Update(sub);
 
                 _context.SaveChanges();
 
-                //await _qrcoder.GerarQRcode(reserva);
+                var qrCode = GerarQRcode(reserva);
 
-                //var qrcode = _qrcoder.GerarQRcode(reserva);
-
-                //_email.EnviarEmail(qrcode.Result.Value, ClienteID, sub.ReservaID);
+                await EnviarEmail(qrCode.Value, ClienteID, reservaC.ReservaID);
 
                 return CreatedAtAction(nameof(PostReservaByData),
 
@@ -229,15 +219,12 @@ namespace ParqueAPICentral.Controllers
             }            
         }
 
-        /// <summary>
-        /// //////////////////////////
-        /// </summary>
-        /// <param name="parqueID"></param>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        // DELETE: api/reservas/parqueID/reservaId - Cancelar reserva e devolver credito
+
+
+        // DELETE: api/reservas/parqueID/reservaIdAPI - Cancelar reserva e devolver credito
+        [Authorize(Policy = "Roles")]
         [EnableCors]
-        [HttpDelete("{parqueID}/{reservaID}")]
+        [HttpGet("{parqueID}/{reservaID}")]
         public async Task<ActionResult<Reserva>> CancelarReserva(long parqueID, long reservaID)
         {
             var reserva = _context.Reserva.Where(r => r.ReservaAPI == reservaID).Where(r => r.ParqueID == parqueID).FirstOrDefault();
@@ -278,11 +265,9 @@ namespace ParqueAPICentral.Controllers
 
             return NoContent();
         }
-        /// <summary>
-        /// ////////////////////
-        /// </summary>
-        /// <param name="apiBaseUrlPrivado"></param>
-        /// <returns></returns>
+
+
+
         [EnableCors]
         public async Task<string> GetToken(string apiBaseUrlPrivado)
         {
@@ -295,13 +280,8 @@ namespace ParqueAPICentral.Controllers
 
             return rtoken;
         }
-        /// <summary>
-        /// /////////////////
-        /// </summary>
-        /// <param name="DataInicio"></param>
-        /// <param name="DataFim"></param>
-        /// <param name="parqueID"></param>
-        /// <returns></returns>
+
+
        
         private async Task<IEnumerable<Lugar_>> GetLugaresDisponiveis(String DataInicio, String DataFim, long parqueID)
         {
@@ -317,7 +297,10 @@ namespace ParqueAPICentral.Controllers
             return ListaLugar;
         }
 
+
+
         //GET Lugares disponíveis de ParqueID by Data1 e Data2
+        [Authorize(Policy = "Roles")]
         [EnableCors]
         [HttpGet("LugaresDisponiveis/{DataInicio}/{DataFim}/{ParqueID}")]
         public async Task<ActionResult<IEnumerable<LugarReserva>>> GetLugaresDisponiveisComSubAlugueres(String DataInicio, String DataFim, long parqueID)
@@ -343,6 +326,7 @@ namespace ParqueAPICentral.Controllers
                 {
                     if (reservaOriginal.ReservaID == reserva.ReservaAPI && reserva.ParqueID == parqueID && reserva.ParaSubAluguer)
                     {
+                        // nao esta a encontrar apenas 1 objecto
                         var sub = subAluguer.FirstOrDefault(s => s.ReservaID == reserva.ReservaID);
 
                         if (sub.Reservado == false)
@@ -387,6 +371,8 @@ namespace ParqueAPICentral.Controllers
             return lugaresNaoReservados;
         }
 
+
+
         public class LugarReserva: Lugar_
         {
             public bool SubReservado { get; set; }
@@ -395,12 +381,8 @@ namespace ParqueAPICentral.Controllers
             public long SubAluguerId { get; internal set; }
         }
 
-        
-        /// <summary>
-        /// ////////////////////
-        /// </summary>
-        /// <param name="parqueid"></param>
-        /// <returns></returns>
+
+
         [EnableCors]
         public async Task<ActionResult<Reserva_>> GetUltimaReservaPrivate(long parqueid)
         {
@@ -425,13 +407,7 @@ namespace ParqueAPICentral.Controllers
         }
 
 
-        /// <summary>
-        /// /////////////////////////
-        /// </summary>
-        /// <param name="reservaid"></param>
-        /// <param name="parqueid"></param>
-        /// <param name="clienteid"></param>
-      
+
         public async void CriarReservaCentral(long reservaid, long parqueid, long clienteid, long lugarId)
         {
             var reserva1 = new Reserva(reservaid, parqueid, clienteid, lugarId);
@@ -450,11 +426,9 @@ namespace ParqueAPICentral.Controllers
             return;
 
         }
-        /// <summary>
-        /// ////////////////////////////
-        /// </summary>
-        /// <param name="reserva"></param>
-        /// 
+
+
+
         public async void ApagarReservaCentral(Reserva reserva)
         {
             _context.Reserva.Remove(reserva);
@@ -472,30 +446,13 @@ namespace ParqueAPICentral.Controllers
         }
 
 
-        public async Task<ActionResult<byte[]>> GerarQRcode(Reserva_ reserva)
+
+        public ActionResult<byte[]> GerarQRcode(Reserva_ reserva)
         {
-            long reservaByID = reserva.ReservaID;
-
-            var reservaCentral = _context.Reserva.Where(f => f.ReservaAPI == reservaByID).FirstOrDefault();
-
-            long parqueByID = reservaCentral.ParqueID;
-
-            var parque = _context.Parque.FirstOrDefault(p => p.ParqueID == parqueByID);
-
-            using HttpClient client = new HttpClient();
-
-            string endpoint = parque.Url + "reservas/" + reserva;
-
-            var reservaRes = await client.GetAsync(endpoint);
-
-            var reservaDTO = await reservaRes.Content.ReadAsAsync<Reserva_>();
-
-            var qrInfo = ("Parque: " + reservaCentral.Parque.NomeParque
-                   + "\n Morada: " + reservaCentral.Parque.Morada.Rua
-                   + "\n Reserva: " + reserva.ReservaID
-                   + "\n Lugar: " + reservaDTO.LugarID
-                   + "\n Data de Inicio: " + reservaDTO.DataInicio
-                   + "\n Data de Fim: " + reservaDTO.DataFim);
+            var qrInfo = "Reserva: " + reserva.ReservaID
+                   + "\nLugar: " + reserva.LugarID
+                   + "\nData de Inicio: " + reserva.DataInicio
+                   + "\nData de Fim: " + reserva.DataFim;
 
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
 
@@ -519,23 +476,24 @@ namespace ParqueAPICentral.Controllers
         }
 
 
-        public async Task EnviarEmail(long clienteID, long reservaID)
+
+        public async Task EnviarEmail(byte[] qrCode, long ClienteID, long ReservaID)
         {
-            var cliente = _context.Cliente.Where(c => c.ClienteID == clienteID).FirstOrDefault();
+            var cliente = await _context.Cliente.Where(c => c.ClienteID == ClienteID).FirstOrDefaultAsync();
 
             string remetente = "pseudocompany2020@gmail.com";
 
             string destinatario = cliente.EmailCliente;
 
-            //var qrcode = new Attachment(new MemoryStream(qr), "QRCode", "imagem/png");
+            var qrcode = new Attachment(new MemoryStream(qrCode), "QRCode", "image/png");
 
             using MailMessage mail = new MailMessage(remetente, destinatario)
             {
-                Subject = "Comfirmação da reserva nº " + reservaID,
-                Body = "Código QR em anexo."
+                Subject = "Confirmação da reserva nº " + ReservaID,
+                Body = "A sua reserva está confirmada.\n\nO código QR relativo à sua reserva encontra-se em anexo."
             };
 
-            //mail.Attachments.Add(qrcode);
+            mail.Attachments.Add(qrcode);
             mail.IsBodyHtml = false;
             SmtpClient smtp = new SmtpClient
             {

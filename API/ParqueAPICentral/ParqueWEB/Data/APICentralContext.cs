@@ -32,14 +32,5 @@ namespace ParqueAPICentral.Data
 
         public DbSet<ParqueAPICentral.Models.Morada> Morada { get; set; }
 
-        internal Task<ActionResult<Cliente>> CreatCliente(string nomeCliente, string emailCliente, int nifCliente, string metodoPagamento, float credito, long userID)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal Task GerarQRcode(Reserva_ reserva)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

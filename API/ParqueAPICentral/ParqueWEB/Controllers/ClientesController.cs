@@ -11,9 +11,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
 
+
 namespace ParqueAPICentral.Controllers
 {
-    //  [Authorize]
+    [Authorize(Policy = "Admin")]
     [Route("api/Clientes")]
     [ApiController]
     public class ClientesController : ControllerBase
@@ -25,13 +26,15 @@ namespace ParqueAPICentral.Controllers
         }
 
         // GET: api/Clientes : Obter Informação dos Clientes
+        [Authorize(Policy = "Admin")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes()
+        public async Task<ActionResult<IEnumerable<Cliente>>> Get_Clientes()
         {
             return await this._service.GetAllClientes();
         }
 
         // GET: api/Clientes/5  - Obter Informação de um Cliente por ID
+        [Authorize(Policy = "Admin")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Cliente>> GetClienteById(long id)
         {
@@ -39,7 +42,7 @@ namespace ParqueAPICentral.Controllers
         }
 
         // POST: api/Clientes : Criação de um Cliente
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Policy = "Admin")]
         [EnableCors]
         [HttpPost]
         public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
@@ -47,7 +50,7 @@ namespace ParqueAPICentral.Controllers
             return await this._service.CreateCliente(cliente);
         }
         // PUT: api/Clientes/{ClienteID}/{NomeCliente}{EmailCliente}/{NifCliente}/{MetodoPagamento}/{Credito}/{UserID} - Actualizar informação de um Cliente
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Policy = "Admin")]
         [EnableCors]
         [HttpPut("{id}")]
         public async Task<ActionResult<Cliente>> PutCliente(Cliente cliente)
@@ -55,7 +58,7 @@ namespace ParqueAPICentral.Controllers
             return await this._service.UpdateCliente(cliente);
         }
         // DELETE: api/Clientes/5
-        //        //[Authorize]
+        [Authorize(Policy = "Admin")]
         [EnableCors]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Cliente>> DeleteCliente(long id)

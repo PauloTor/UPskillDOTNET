@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Cors;
 
 namespace ParqueAPICentral.Controllers
 {
+    [Authorize(Policy = "Roles")]
     [EnableCors("MyAllowSpecificOrigins")]
     [Route("api/SubAlugueres")]
     [ApiController]
@@ -30,6 +31,7 @@ namespace ParqueAPICentral.Controllers
 
 
         // GET: api/SubAlugueres
+        [Authorize(Policy = "Roles")]
         [EnableCors]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SubAluguer>>> GetSubAlugueresTodos()
@@ -40,6 +42,7 @@ namespace ParqueAPICentral.Controllers
 
 
         // GET: api/SubAlugueres/id
+        [Authorize(Policy = "Roles")]
         [EnableCors]
         [HttpGet("{id}")]
         public async Task<ActionResult<SubAluguer>> GetSubAlugueresById(long id)
@@ -55,6 +58,7 @@ namespace ParqueAPICentral.Controllers
 
 
         // POST: api/SubAlugueres/{reservaID}/{preco}/
+        [Authorize(Policy = "User")]
         [EnableCors]
         [HttpPost("{reservaID}/{preco}")]
         public async Task<ActionResult<SubAluguer>> PostSubAluguer(long reservaID, float preco)
