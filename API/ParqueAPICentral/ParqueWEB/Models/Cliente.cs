@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using ParqueAPICentral.Models;
 
 namespace ParqueAPICentral.Models
 {
@@ -38,7 +39,8 @@ namespace ParqueAPICentral.Models
             Id = id;
         }
 
-        public virtual void Depositar(float valor)
+
+        public void Depositar(float valor)
         {
             if (valor < 0)
             {
@@ -46,11 +48,12 @@ namespace ParqueAPICentral.Models
             }
             else
             {
+                Cofre.Saida(valor);
                 Credito += valor;
             }
         }
 
-        public virtual void Pagar(float valor)
+        public void Pagar(float valor)
         {
             if (valor < 0)
             {
@@ -58,6 +61,7 @@ namespace ParqueAPICentral.Models
             }
             else
             {
+                Cofre.Entrada(valor);
                 Credito -= valor;
             }
             if (Credito < 0)

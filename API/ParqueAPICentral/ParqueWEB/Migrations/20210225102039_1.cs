@@ -142,7 +142,9 @@ namespace ParqueAPICentral.Migrations
                     SubAluguerID = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Preco = table.Column<float>(type: "real", nullable: false),
-                    ReservaID = table.Column<long>(type: "bigint", nullable: false)
+                    ReservaID = table.Column<long>(type: "bigint", nullable: false),
+                    Reservado = table.Column<bool>(type: "bit", nullable: false),
+                    NovoCliente = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

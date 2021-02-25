@@ -14,7 +14,7 @@ using Xunit;
 namespace testProject
 {
     public class TestClientesController
-    {
+    {/*
         [Fact]
         public async Task GetAllClientesAsync_ShouldReturnAllClientesAsync()
         {
@@ -79,7 +79,7 @@ namespace testProject
             Assert.Equal(1, items.Id);
             Assert.IsType<NoContentResult>(result);
         }*/
-
+        /*
         [Fact]
         public async Task DeleteClientebyIDAsync_ShouldDeleteCliente1Async()
         {
@@ -95,6 +95,6 @@ namespace testProject
             //Assert
             Assert.IsType<NotFoundResult>(get.Result);
             //Assert.IsType<NoContentResult>(result);
-        }
+        }*/
     }
 }
