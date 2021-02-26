@@ -5,7 +5,12 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParqueAPICentral", "ParqueWEB\ParqueAPICentral.csproj", "{2A6EED81-8A62-4C63-A0A5-F94F93B3D37F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testProject", "testProject\testProject.csproj", "{16B8FAFF-F3AA-4486-9E1D-DDD7B744173B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "testProject", "testProject\testProject.csproj", "{16B8FAFF-F3AA-4486-9E1D-DDD7B744173B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{01587F25-D86F-463C-99F1-276F3B8090B7}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
