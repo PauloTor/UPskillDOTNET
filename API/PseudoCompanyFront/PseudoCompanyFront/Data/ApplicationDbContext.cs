@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using PseudoCompanyFront.Models;
 
 namespace PseudoCompanyFront.Data
 {
@@ -12,5 +13,6 @@ namespace PseudoCompanyFront.Data
             : base(options)
         {
         }
+        public DbSet<PseudoCompanyFront.Models.Reserva> Reserva { get; set; }
     }
 }

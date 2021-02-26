@@ -40,7 +40,7 @@ namespace ParqueAPICentral.Controllers
 
 
         // GET: api/Reservas
-        [Authorize(Policy = "Roles")]
+        //[Authorize(Policy = "Roles")]
         [EnableCors]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Reserva>>> GetReservasTodas()
@@ -51,7 +51,7 @@ namespace ParqueAPICentral.Controllers
 
 
         // GET: api/Reservas/id
-        [Authorize(Policy = "Roles")]
+        //[Authorize(Policy = "Roles")]
         [EnableCors]
         [HttpGet("{id}")]
         public async Task<ActionResult<Reserva>> GetReservaById(long id)
@@ -68,7 +68,7 @@ namespace ParqueAPICentral.Controllers
 
 
         //GET: api/reservas/parque/parqueID - Todas as Reservas de um Parque
-        [Authorize(Policy = "Admin")]
+        //[Authorize(Policy = "Admin")]
         [EnableCors]
         [HttpGet]
         [Route("parque/{parqueID}")]
@@ -92,7 +92,7 @@ namespace ParqueAPICentral.Controllers
 
 
         //GET: api/reservas/parque/parqueID/id - Reservas de um Parque por ReservaID
-        [Authorize(Policy = "Admin")]
+        //[Authorize(Policy = "Admin")]
         [EnableCors]
         [HttpGet]
         [Route("parque/{parqueID}/{id}")]
