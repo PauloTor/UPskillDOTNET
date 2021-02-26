@@ -12,5 +12,7 @@ namespace PseudoCompanyFront.Data
             : base(options)
         {
         }
+        public DbSet<PseudoCompanyFront.Models.Cliente> Cliente { get; set; }
+
     }
 }
