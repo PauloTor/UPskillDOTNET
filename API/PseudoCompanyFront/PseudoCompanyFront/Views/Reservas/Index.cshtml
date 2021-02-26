@@ -1,0 +1,47 @@
+﻿@model IEnumerable<PseudoCompanyFront.Models.Reserva>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ParqueID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LugarID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClienteID)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ParqueID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LugarID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClienteID)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ReservaID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ReservaID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ReservaID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
