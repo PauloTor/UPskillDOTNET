@@ -13,6 +13,8 @@ using ParqueAPICentral.Data;
 using ParqueAPICentral.Helpers;
 using ParqueAPICentral.Services;
 using ParqueAPICentral.Repositories;
+using Microsoft.AspNetCore.Authorization;
+using ParqueAPICentral.Authorization;
 
 namespace ParqueAPICentral
 {
@@ -48,6 +50,20 @@ namespace ParqueAPICentral
             services.AddDbContext<APICentralContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("APICentralContext")));
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminPolicy", policy => policy.RequireClaim("Admin"));
+                options.AddPolicy("UserPolicy", policy => policy.RequireClaim("User"));
+                options.AddPolicy("UserOperatorPolicy", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                });
+                options.AddPolicy("Roles", policy =>
+                {
+                    policy.Requirements.Add(new ClaimsRequirement("Admin", "User"));
+                });
+            });
+            services.AddSingleton<IAuthorizationHandler, ClaimsRequirementHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
