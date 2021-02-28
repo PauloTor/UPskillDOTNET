@@ -19,8 +19,8 @@ namespace ParqueAPICentral.Services
             this._serviceR = serviceR;
         }
 
-        public FaturaService()
-        { }
+        //public FaturaService()
+        //{ }
         //=============================================>>>>   reservacentral
         public async Task<ActionResult<Fatura>> CreateFaturaByReservaID(long ReservaID)
         {

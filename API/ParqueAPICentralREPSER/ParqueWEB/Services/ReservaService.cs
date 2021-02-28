@@ -58,12 +58,8 @@ namespace ParqueAPICentral.Services
             {
                 UserInfo user = new UserInfo();
                 StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
-                var Request = new HttpRequestMessage(HttpMethod.Get, parque.Value.Url + "reservas/");
-                
                 try
                 {
-                    var responsetest = await client.SendAsync(Request);
-                    responsetest.EnsureSuccessStatusCode();
                     var responseLogin = await client.PostAsync(parque.Value.Url + "users/authenticate", contentUser);
                     dynamic tokenresponsecontent = await responseLogin.Content.ReadAsAsync<object>();
                     string rtoken = tokenresponsecontent.jwtToken;
@@ -72,34 +68,16 @@ namespace ParqueAPICentral.Services
                     var response = await client.GetAsync(endpoint);
                     response.EnsureSuccessStatusCode();
                     ListaReservas = await response.Content.ReadAsAsync<List<ReservaPrivateDTO>>();
-                    //data = await response.Content.ReadFromJsonAsync<Abc>();
                     return ListaReservas;
                 }
-                catch (HttpRequestException) 
+                catch (HttpRequestException)
                 {
-                    return NotFound("API do Parque "+ parque.Value.NomeParque+ " nao conectada");
+                    return NotFound("API do Parque " + parque.Value.NomeParque + " nao conectada");
                 }
-                
-                //try
-                //{
-                //    var responsetest = await client.GetAsync(parque.Value.Url+ "reservas");
-                //}
-                //catch (HTTPException ex)
-                //{
-                //      throw ex;
-                //}
-                //var responseLogin = await client.PostAsync(parque.Value.Url + "users/authenticate", contentUser);
 
-                //dynamic tokenresponsecontent = await responseLogin.Content.ReadAsAsync<object>();
-                //string rtoken = tokenresponsecontent.jwtToken;
-                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", rtoken);
-                //string endpoint = parque.Value.Url + "Reservas/";
-                //var response = await client.GetAsync(endpoint);
-                //response.EnsureSuccessStatusCode();
-                //ListaReservas = await response.Content.ReadAsAsync<List<ReservaPrivateDTO>>();
-               
+
             }
-            
+
         }        //========================================================================>>reservaAPI
         public async Task<ActionResult<Reserva>> CancelarReserva(long parqueID, long reservaAPIID)
         {
@@ -110,130 +88,145 @@ namespace ParqueAPICentral.Services
             using (HttpClient client = new HttpClient())
             {
                 string endpoint = parque.Value.Url + "reservas/cancelar/" + reservaAPIID;
-                var reservaRes = await client.GetAsync(endpoint);
-                var reserva_ = await reservaRes.Content.ReadAsAsync<ReservaPrivateDTO>();
-                long reservaById = reserva_.ReservaID;
-                var ReservaCentral = _serviceR.GetAllReservasCentralAsync().Result.Value.Where(r => r.ParqueID == parqueID).Where(rr => rr.ReservaAPI == reservaAPIID).FirstOrDefault();
-                var cliente_ = await _serviceC.GetClienteById(ReservaCentral.ClienteID);
-
-                //alterar na factura para encontrar por reserva   
-                var fatura = _serviceF.GetAllFaturas().Result.Value.Where(f => f.ReservaID == ReservaCentral.ReservaID).FirstOrDefault();
-
-                if (fatura != null)
+                try
                 {
-                    float precoFatura = fatura.PrecoFatura;
+                    var reservaRes = await client.GetAsync(endpoint);
+                    var reserva_ = await reservaRes.Content.ReadAsAsync<ReservaPrivateDTO>();
+                    long reservaById = reserva_.ReservaID;
+                    var ReservaCentral = _serviceR.GetAllReservasCentralAsync().Result.Value.Where(r => r.ParqueID == parqueID).Where(rr => rr.ReservaAPI == reservaAPIID).FirstOrDefault();
+                    var cliente_ = await _serviceC.GetClienteById(ReservaCentral.ClienteID);
+                    //alterar na factura para encontrar por reserva   
+                    var fatura = _serviceF.GetAllFaturas().Result.Value.Where(f => f.ReservaID == ReservaCentral.ReservaID).FirstOrDefault();
 
-                    //nao acrescenta valor ===>>>>
-                    await _serviceC.UpdatePagamentoCliente(cliente_.Value.ClienteID, -1 * precoFatura);
+                    if (fatura != null)
+                    {
+                        float precoFatura = fatura.PrecoFatura;
+
+                        //nao acrescenta valor ===>>>>
+                        await _serviceC.UpdatePagamentoCliente(cliente_.Value.ClienteID, -1 * precoFatura);
+                    }
+
+                    var deleteTask = client.DeleteAsync(endpoint);
+
+
+                    return reservaCentral;
+
+                }
+                catch (HttpRequestException)
+                {
+                    return NotFound("API do Parque " + parque.Value.NomeParque + " nao conectada");
                 }
 
-                var deleteTask = client.DeleteAsync(endpoint);
             }
-
-            return reservaCentral;
         }
         public async Task<ActionResult<ReservaPrivateDTO>> PostReservaByData(String DataInicio, String DataFim, long ClienteID, long parqueid)
         {
             var parque = await _service.GetParqueById(parqueid);
             using (var client = new HttpClient())
             {
-                var rtoken = await GetToken(parque.Value.Url + "users/authenticate");
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", rtoken);
-                var i = _serviceL.GetLugaresDisponiveisComSubAlugueres(DataInicio, DataFim, parqueid).Result.Value.FirstOrDefault();
-                var reserva = new ReservaPrivateDTO(DateTime.Now, DateTime.Parse(DataInicio), DateTime.Parse(DataFim), i.LugarID);
-
-                //var lugarEscolhido = await _serviceL.(parkingLots); //criar lista nos lugares
-
-                //var i = parkingLots.Value.FirstOrDefault(p => p.LugarID == lugarId && p.ParqueId == parqueid);
-
-                //var i = parkingLots.Value.FirstOrDefault(p => p.LugarID == lugarescolhido && p.parqueId == parqueid);
-
-                if ((DateTime.Parse(DataInicio) > DateTime.Parse(DataFim)))
+                try
                 {
-                    return NotFound("Data inválida");
+                    var rtoken = await GetToken(parque.Value.Url + "users/authenticate");
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", rtoken);
+                    var i = _serviceL.GetLugaresDisponiveisComSubAlugueres(DataInicio, DataFim, parqueid).Result.Value.FirstOrDefault();
+                    var reserva = new ReservaPrivateDTO(DateTime.Now, DateTime.Parse(DataInicio), DateTime.Parse(DataFim), i.LugarID);
+
+
+
+                    //var lugarEscolhido = await _serviceL.(parkingLots); //criar lista nos lugares
+
+                    //var i = parkingLots.Value.FirstOrDefault(p => p.LugarID == lugarId && p.ParqueId == parqueid);
+
+                    //var i = parkingLots.Value.FirstOrDefault(p => p.LugarID == lugarescolhido && p.parqueId == parqueid);
+
+                    if ((DateTime.Parse(DataInicio) > DateTime.Parse(DataFim)))
+                    {
+                        return NotFound("Data inválida");
+                    }
+
+                    if (i == null)
+                    {
+                        return NotFound("Lugar não disponivel para ser reservado");
+                    }
+
+                    if (i.subReservado == false)
+                    {
+                        StringContent reserva_ = new StringContent(JsonConvert.
+                            SerializeObject(reserva), Encoding.UTF8, "application/json");
+                        var response2 = await client.
+                            PostAsync(parque.Value.Url + "reservas/", reserva_);
+                        var UltimaReservaAPI = await GetUltimaReservaPrivate(parqueid);
+                        var reservaCentral = new Reserva(parqueid, UltimaReservaAPI.Value.ReservaID, ClienteID, i.LugarID);
+                        await _serviceR.CriarReservaCentral(reservaCentral);
+                        var qrCode = GerarQRcode(UltimaReservaAPI.Value);
+                        await EnviarEmail(qrCode.Value, ClienteID, UltimaReservaAPI.Value.ReservaID);
+
+                        return CreatedAtAction(nameof(PostReservaByData), new { id = reserva.ReservaID }, reserva);
+                    }
+
+                    else
+                    {
+                        var sub = _serviceS.GetAllSubAluguerAsync().Result.Value.Where(n => n.SubAluguerID == i.subAluguerId).FirstOrDefault();
+                        var reservaC = _serviceR.GetAllReservasCentralAsync().Result.Value.Where(r => r.ReservaID == sub.ReservaID).FirstOrDefault();
+                        sub.Reservado = true;
+                        sub.NovoCliente = ClienteID;
+                        await _serviceS.UpdateSubAluguer(sub);
+
+                        //depositar cliente da reservacentral
+                        await _serviceC.UpdatePagamentoCliente(reservaC.ClienteID, sub.Preco);
+                        //pagamento do cliente que aluga
+                        await _serviceC.UpdatePagamentoCliente(sub.NovoCliente, sub.Preco);
+                        reservaC.ParaSubAluguer = false;
+                        await _serviceR.UpdateReserva(reservaC);
+
+                        var qrCode = GerarQRcode(reserva);
+                        await EnviarEmail(qrCode.Value, ClienteID, reservaC.ReservaID);
+
+                        return CreatedAtAction(nameof(PostReservaByData),
+                     new { id = sub.SubAluguerID }, sub);
+
+                    }
                 }
-
-                if (i == null)
+                catch (HttpRequestException)
                 {
-                    return NotFound("Lugar não disponivel para ser reservado");
-                }
-
-                if (i.subReservado == false)
-                {
-                    StringContent reserva_ = new StringContent(JsonConvert.
-                        SerializeObject(reserva), Encoding.UTF8, "application/json");
-                    var response2 = await client.
-                        PostAsync(parque.Value.Url + "reservas/", reserva_);
-                    var UltimaReservaAPI = await GetUltimaReservaPrivate(parqueid);
-                    var reservaCentral = new Reserva(parqueid, UltimaReservaAPI.Value.ReservaID, ClienteID, i.LugarID);
-                    await _serviceR.CriarReservaCentral(reservaCentral);
-                    var qrCode = GerarQRcode(UltimaReservaAPI.Value);
-                    await EnviarEmail(qrCode.Value, ClienteID, UltimaReservaAPI.Value.ReservaID);
-
-                    return CreatedAtAction(nameof(PostReservaByData), new { id = reserva.ReservaID }, reserva);
-                }
-
-                else
-                {
-                    var sub = _serviceS.GetAllSubAluguerAsync().Result.Value.Where(n => n.SubAluguerID == i.subAluguerId).FirstOrDefault();
-                    var reservaC = _serviceR.GetAllReservasCentralAsync().Result.Value.Where(r => r.ReservaID == sub.ReservaID).FirstOrDefault();
-                    sub.Reservado = true;
-                    sub.NovoCliente = ClienteID;
-                    await _serviceS.UpdateSubAluguer(sub);
-
-                    //depositar cliente da reservacentral
-                    await _serviceC.UpdatePagamentoCliente(reservaC.ClienteID, sub.Preco);
-                    //pagamento do cliente que aluga
-                    await _serviceC.UpdatePagamentoCliente(sub.NovoCliente, sub.Preco);
-                    reservaC.ParaSubAluguer = false;
-                    await _serviceR.UpdateReserva(reservaC);
-                    
-                    var qrCode = GerarQRcode(reserva);
-                    await EnviarEmail(qrCode.Value, ClienteID, reservaC.ReservaID);
-
-                    return CreatedAtAction(nameof(PostReservaByData),
-                 new { id = sub.SubAluguerID }, sub);
-
+                    return NotFound("API do Parque " + parque.Value.NomeParque + " nao conectada");
                 }
 
             }
         }
 
         //GET Lugares disponíveis de ParqueID by Data1 e Data2
-                  
+
         public async Task<ActionResult<ReservaPrivateDTO>> GetUltimaReservaPrivate(long parqueid)
         {
             var parque = await _service.GetParqueById(parqueid);
             ReservaPrivateDTO reserva;
             using (HttpClient client = new HttpClient())
             {
-                var rtoken = await GetToken(parque.Value.Url + "users/authenticate");
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", rtoken);
+                try
+                {
+                    var rtoken = await GetToken(parque.Value.Url + "users/authenticate");
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", rtoken);
 
-                var response3 = await client.
-                   GetAsync(parque.Value.Url + "reservas/");
+                    var response3 = await client.
+                       GetAsync(parque.Value.Url + "reservas/");
 
-                List<ReservaPrivateDTO> ListaLugarUltimo = await response3.
-                 Content.ReadAsAsync<List<ReservaPrivateDTO>>();
+                    List<ReservaPrivateDTO> ListaLugarUltimo = await response3.
+                     Content.ReadAsAsync<List<ReservaPrivateDTO>>();
 
-                reserva = ListaLugarUltimo.
-                OrderByDescending(r => r.ReservaID).FirstOrDefault();
+                    reserva = ListaLugarUltimo.
+                    OrderByDescending(r => r.ReservaID).FirstOrDefault();
 
+
+                    return reserva;
+                }
+                catch (HttpRequestException)
+                {
+                    return NotFound("API do Parque " + parque.Value.NomeParque + " nao conectada");
+                }
             }
-            return reserva;
         }
-
-        public bool ValidaDatas(string DataInicio, string DataFim)
-        {
-
-            if (DateTime.Parse(DataInicio) > DateTime.Parse(DataFim))
-            {
-                return true; ///mensagem datas invalidas
-
-            }
-
-            return false;  // return action voltar a introduzir datas
-        }
+        
         public async Task<string> GetToken(string apiBaseUrlPrivado)
         {
             using (HttpClient client = new HttpClient())
@@ -242,7 +235,7 @@ namespace ParqueAPICentral.Services
                 UserInfo user = new UserInfo();
                 StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
                 var responseLogin = await client.PostAsync(apiBaseUrlPrivado, contentUser);
-                
+
                 dynamic tokenresponsecontent = await responseLogin.Content.ReadAsAsync<object>();
                 string rtoken = tokenresponsecontent.jwtToken;
 
