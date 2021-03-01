@@ -64,25 +64,20 @@ namespace PseudoCompanyFront.Controllers
 
         // CREATE GET
 
-        //public async Task<IActionResult> Create()
-        //{
-        //    var listaVirus = new List<Virus>();
-        //    using (HttpClient client = new HttpClient())
-        //    {
-        //        UserInfo user = new UserInfo();
-        //        StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
-        //        var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
-        //        UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
-        //        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
-        //        string endpoint = apiBaseUrl + "/virus";
-        //        var response = await client.GetAsync(endpoint);
-        //        response.EnsureSuccessStatusCode();
-        //        listaVirus = await response.Content.ReadAsAsync<List<Virus>>();
-        //    }
-        //    return View();
-        //}
+        public async Task<IActionResult> Create()
+        {
+            var listaClientes = new List<Cliente>();
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = apiBaseUrl + "/Clientes";
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                listaClientes = await response.Content.ReadAsAsync<List<Cliente>>();
+            }
+            return View();
+        }
 
-        //CREATE POST
+        //POST Clientes/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[Authorize(Roles = "Funcionario,Administrador")]
@@ -93,11 +88,6 @@ namespace PseudoCompanyFront.Controllers
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    //UserInfo user = new UserInfo();
-                    //StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
-                    //var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
-                    //UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
-                    //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
                     StringContent content = new StringContent(JsonConvert.SerializeObject(cliente), Encoding.UTF8, "application/json");
                     string endpoint = apiBaseUrl + "/Cliente";
                     var response = await client.PostAsync(endpoint, content);

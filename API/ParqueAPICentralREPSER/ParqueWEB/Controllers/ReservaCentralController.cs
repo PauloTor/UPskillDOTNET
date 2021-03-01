@@ -54,8 +54,7 @@ namespace ParqueAPICentral.Controllers
         public async Task<ActionResult<Reserva>> GetAllClienteByReservasCentralAsync(long ParqueID, long id)
         {
 
-            var h = 1;
-            return await this._service.GetAllClienteByReservasCentral(ParqueID, id);
+        return await this._service.GetAllClienteByReservasCentral(ParqueID, id);
         }
 
         [EnableCors]

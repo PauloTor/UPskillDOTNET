@@ -41,14 +41,16 @@ namespace ParqueAPICentral.Controllers
         [HttpGet("ReservasParque/{id}")]
         public async Task<ActionResult<IEnumerable<ReservaPrivateDTO>>> GetReservasPorParque(long id)
         {
-            var a = 1;
+           
 
             return await this._service.GetAllReservasByParque(id);
         }
 
+        [EnableCors]
+        [HttpGet("Reservas")]
         public async Task<ActionResult<IEnumerable<ReservaPrivateDTO>>> GetReservasPorParqueporcliente(long id)
         {
-            var a = 1;
+           
 
             return await this._service.GetAllReservasByParque(id);
         }
@@ -78,25 +80,15 @@ namespace ParqueAPICentral.Controllers
         [EnableCors]
         public async Task<string> GetToken(string apiBaseUrlPrivado)
         {
-            using (HttpClient client = new HttpClient())
-            {
+            using HttpClient client = new HttpClient();
+            UserInfo user = new UserInfo();
+            StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+            var responseLogin = await client.PostAsync(apiBaseUrlPrivado, contentUser);
+            dynamic tokenresponsecontent = await responseLogin.Content.ReadAsAsync<object>();
+            string rtoken = tokenresponsecontent.jwtToken;
 
-                UserInfo user = new UserInfo();
-                StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
-                var responseLogin = await client.PostAsync(apiBaseUrlPrivado, contentUser);
-                dynamic tokenresponsecontent = await responseLogin.Content.ReadAsAsync<object>();
-                string rtoken = tokenresponsecontent.jwtToken;
-
-                return rtoken;
-            }
+            return rtoken;
         }
-
-
-
-
-
-
-
 
 
     }
