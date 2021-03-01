@@ -62,7 +62,7 @@ namespace PseudoCompanyFront.Controllers
             return View(cliente);
         }
 
-        // CREATE GET
+        //GET: Doencas/Create
 
         public async Task<IActionResult> Create()
         {
@@ -93,6 +93,29 @@ namespace PseudoCompanyFront.Controllers
                     var response = await client.PostAsync(endpoint, content);
                 }
                 return RedirectToAction(nameof(Index));
+            }
+            return View(cliente);
+        }
+
+        //GET: Clientes/Delete/5
+        //[Authorize(Roles = "Funcionario,Administrador")]
+        public async Task<IActionResult> Delete(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Cliente cliente;
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = apiBaseUrl + "/Clientes/" + id;
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                cliente = await response.Content.ReadAsAsync<Cliente>();
+            }
+            if (cliente == null)
+            {
+                return NotFound();
             }
             return View(cliente);
         }
