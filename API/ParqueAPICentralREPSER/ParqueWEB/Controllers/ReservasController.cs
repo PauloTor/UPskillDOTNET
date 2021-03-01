@@ -46,6 +46,8 @@ namespace ParqueAPICentral.Controllers
             return await this._service.GetAllReservasByParque(id);
         }
 
+        [EnableCors]
+        [HttpGet("Reservas")]
         public async Task<ActionResult<IEnumerable<ReservaPrivateDTO>>> GetReservasPorParqueporcliente(long id)
         {
            
