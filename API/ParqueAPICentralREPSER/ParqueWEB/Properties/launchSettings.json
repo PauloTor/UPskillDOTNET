@@ -12,10 +12,10 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       //"launchUrl": "api/LugaresDisponiveis/2020-02-01T11:00:00/2120-02-01T11:00:00/2",
-      //"launchUrl": "api/post/2020-02-01T11:00:00/2120-02-01T11:00:00/2/2",
+      "launchUrl": "api/Clientes",
 
       //"launchUrl": "api/apagar/1/1",
-      "launchUrl": "api/ReservasParque/2",
+      //"launchUrl": "api/SubAlugueres",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
