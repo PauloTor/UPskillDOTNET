@@ -38,7 +38,7 @@ namespace ParqueAPICentral.Controllers
         [HttpGet("LugaresDisponiveis/{DataInicio}/{DataFim}/{ParqueID}")]
         public async Task<ActionResult<IEnumerable<LugarReserva>>> GetLugaresDisponiveisComSubAlugueres(String DataInicio, String DataFim, long parqueID)
         {
-            var t = 1;
+           
             return await _service.GetLugaresDisponiveisComSubAlugueres(DataInicio, DataFim, parqueID);
         }
 
