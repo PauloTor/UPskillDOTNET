@@ -15,5 +15,9 @@ namespace PseudoCompanyFront.Data
         }
         public DbSet<PseudoCompanyFront.Models.Reserva> Reserva { get; set; }
         public DbSet<PseudoCompanyFront.Models.Cliente> Clientes { get; set; }
+        public DbSet<PseudoCompanyFront.Models.ParqueDTO> ParquesDTO { get; set; }
+        public DbSet<PseudoCompanyFront.Models.MoradaDTO> MoradasDTO { get; set; }
+
+        public DbSet<PseudoCompanyFront.Models.RuaDTO> RuasDTO { get; set; }
     }
 }
