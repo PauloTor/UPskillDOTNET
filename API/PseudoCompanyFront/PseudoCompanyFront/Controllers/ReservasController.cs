@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using PseudoCompanyFront.Data;
 using PseudoCompanyFront.Models;
 
@@ -14,23 +15,26 @@ namespace PseudoCompanyFront.Controllers
 
     public class ReservasController : Controller
     {
+        private readonly IConfiguration _configure;
+        private readonly string apiBaseUrl;
+
+        // Construtor do controller
+        public ReservasController(IConfiguration configuration)
+        {
+            _configure = configuration;
+            apiBaseUrl = _configure.GetValue<string>("WebAPIBaseUrl");
+        }
 
         // GET: Reservas
-        public ActionResult Index()
+        public async Task<ActionResult> IndexAsync()
         {
-            using var client = new HttpClient
+            using HttpClient client = new HttpClient();
+            string endpoint = apiBaseUrl + "/ReservasCentral";
+            var response = await client.GetAsync(endpoint);
+
+            if (response.IsSuccessStatusCode)
             {
-                BaseAddress = new Uri("https://localhost:44330/api/ReservasParque/1")
-            };
-
-            var responseTask = client.GetAsync(client.BaseAddress);
-            responseTask.Wait();
-
-            var result = responseTask.Result;
-
-            if (result.IsSuccessStatusCode)
-            {
-                var readTask = result.Content.ReadAsAsync<IEnumerable<Reserva>>();
+                var readTask = response.Content.ReadAsAsync<IEnumerable<Reserva>>();
                 readTask.Wait();
 
                 IEnumerable<Reserva> reservas = readTask.Result;
@@ -44,17 +48,20 @@ namespace PseudoCompanyFront.Controllers
             }
         }
 
-        /*
+
         // GET: Reservas/Details/5
-        public async Task<IActionResult> Details(long? id)
+        public async Task<IActionResult> DetailsAsync(long? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var reserva = await _context.Reserva
-                .FirstOrDefaultAsync(m => m.ReservaID == id);
+            using HttpClient client = new HttpClient();
+            string endpoint = apiBaseUrl + "/ReservasCentral/" + id;
+            var response = await client.GetAsync(endpoint);
+            var reserva = await response.Content.ReadAsAsync<Reserva>();
+
             if (reserva == null)
             {
                 return NotFound();
@@ -62,7 +69,7 @@ namespace PseudoCompanyFront.Controllers
 
             return View(reserva);
         }
-
+        /*
         // GET: Reservas/Create
         public IActionResult Create()
         {
