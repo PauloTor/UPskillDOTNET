@@ -27,19 +27,16 @@ namespace ParqueAPICentral.Controllers
             this._service = service;
         }
 
-
         // GET: api/Clientes : Obter Informação de um Cliente
        // [Authorize]
         [EnableCors]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Cliente>>> Get_Clientes()
         {
-            var a = 1;
+         
             return await this._service.GetAllClientes();
         }
         
-
-
             //// GET: api/Clientes/5  - Obter Informação de um Cliente por ID
         [EnableCors]
         [HttpGet("{id}")]
@@ -71,8 +68,7 @@ namespace ParqueAPICentral.Controllers
 
             return await _service.UpdatePagamentoCliente(clienteID, valor);
         }
-
-        
+               
 
         //public async Task<bool> ClienteExists(long id)
         //{

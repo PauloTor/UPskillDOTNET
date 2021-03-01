@@ -55,8 +55,7 @@ namespace ParqueAPICentral.Controllers
 
         public async Task<bool> ParqueExist(long id)
         {
-            var r = 1;
-            return await _service.ParqueExist(id);
+        return await _service.ParqueExist(id);
         }
     }
 }
