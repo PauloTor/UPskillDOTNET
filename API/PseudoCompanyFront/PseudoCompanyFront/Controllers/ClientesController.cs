@@ -62,7 +62,7 @@ namespace PseudoCompanyFront.Controllers
             return View(cliente);
         }
 
-        //GET: Doencas/Create
+        //GET: Clientes/Create
 
         public async Task<IActionResult> Create()
         {
@@ -134,42 +134,33 @@ namespace PseudoCompanyFront.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        ////EDIT GET
+        //EDIT GET
         //[Authorize(Roles = "Funcionario,Administrador")]
-        //public async Task<IActionResult> Edit(long? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    Cliente cliente;
-        //    using (HttpClient client = new HttpClient())
-        //    {
-        //        string endpoint = apiBaseUrl + "/recomendacoes/" + id;
-        //        var response = await client.GetAsync(endpoint);
-        //        response.EnsureSuccessStatusCode();
-        //        Cliente = await response.Content.ReadAsAsync<Cliente>();
-        //    }
-        //    if (cliente == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    var listaZonas = new List<Zona>();
-        //    using (HttpClient client = new HttpClient())
-        //    {
-        //        UserInfo user = new UserInfo();
-        //        StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
-        //        var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
-        //        UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
-        //        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
-        //        string endpoint = apiBaseUrl + "/zonas";
-        //        var response = await client.GetAsync(endpoint);
-        //        response.EnsureSuccessStatusCode();
-        //        listaZonas = await response.Content.ReadAsAsync<List<Zona>>();
-        //    }
-        //    PopulateZonasDropDownList(listaZonas, id);
-        //    return View(recomendacao);
-        //}
+        public async Task<IActionResult> Edit(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Cliente cliente;
+            using (HttpClient client = new HttpClient())
+            {
+                //UserInfo user = new UserInfo();
+                //StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                //var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
+                //UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
+                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
+                string endpoint = apiBaseUrl + "/Clientes/" + id;
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                cliente = await response.Content.ReadAsAsync<Cliente>();
+            }
+            if (cliente == null)
+            {
+                return NotFound();
+            }
+            return View(cliente);
+        }
 
         //EDIT POST
         [HttpPost]
