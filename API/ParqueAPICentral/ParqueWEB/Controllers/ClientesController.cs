@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Cors;
 
 namespace ParqueAPICentral.Controllers
 {
-    [Authorize(Policy = "Admin")]
+    //[Authorize(Policy = "User")]
     [Route("api/Clientes")]
     [ApiController]
     public class ClientesController : ControllerBase
@@ -26,7 +26,7 @@ namespace ParqueAPICentral.Controllers
         }
 
         // GET: api/Clientes : Obter Informação dos Clientes
-        [Authorize(Policy = "Admin")]
+        //[Authorize(Policy = "Admin")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Cliente>>> Get_Clientes()
         {
@@ -34,7 +34,7 @@ namespace ParqueAPICentral.Controllers
         }
 
         // GET: api/Clientes/5  - Obter Informação de um Cliente por ID
-        [Authorize(Policy = "Admin")]
+        //[Authorize(Policy = "Admin")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Cliente>> GetClienteById(long id)
         {
@@ -42,7 +42,7 @@ namespace ParqueAPICentral.Controllers
         }
 
         // POST: api/Clientes : Criação de um Cliente
-        [Authorize(Policy = "Admin")]
+        //[Authorize(Policy = "Admin")]
         [EnableCors]
         [HttpPost]
         public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
@@ -50,7 +50,7 @@ namespace ParqueAPICentral.Controllers
             return await this._service.CreateCliente(cliente);
         }
         // PUT: api/Clientes/{ClienteID}/{NomeCliente}{EmailCliente}/{NifCliente}/{MetodoPagamento}/{Credito}/{UserID} - Actualizar informação de um Cliente
-        [Authorize(Policy = "Admin")]
+        //[Authorize(Policy = "Admin")]
         [EnableCors]
         [HttpPut("{id}")]
         public async Task<ActionResult<Cliente>> PutCliente(Cliente cliente)
@@ -58,7 +58,7 @@ namespace ParqueAPICentral.Controllers
             return await this._service.UpdateCliente(cliente);
         }
         // DELETE: api/Clientes/5
-        [Authorize(Policy = "Admin")]
+        //[Authorize(Policy = "Admin")]
         [EnableCors]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Cliente>> DeleteCliente(long id)
