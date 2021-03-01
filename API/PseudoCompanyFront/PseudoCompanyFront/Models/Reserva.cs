@@ -15,6 +15,6 @@ namespace PseudoCompanyFront.Models
 
         public long ClienteID { get; set; }
 
-        public Reserva reserva { get; }
+        public Reserva Reservas { get; }
     }
 }

@@ -11,36 +11,37 @@ using PseudoCompanyFront.Models;
 
 namespace PseudoCompanyFront.Controllers
 {
-    [Route("Reservas")]
-    [ApiController]
+
     public class ReservasController : Controller
     {
 
-        // GET: Student
+        // GET: Reservas
         public ActionResult Index()
         {
-            IEnumerable<Reserva> reservas = null;
-
-            using (var client = new HttpClient())
+            using var client = new HttpClient
             {
-                client.BaseAddress = new Uri("https://localhost:44330/api/Reservas");
-                var responseTask = client.GetAsync(client.BaseAddress);
-                responseTask.Wait();
+                BaseAddress = new Uri("https://localhost:44330/api/ReservasParque/1")
+            };
 
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<IList<Reserva>>();
-                    readTask.Wait();
+            var responseTask = client.GetAsync(client.BaseAddress);
+            responseTask.Wait();
 
-                    reservas = readTask.Result;
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
-                }
+            var result = responseTask.Result;
+
+            if (result.IsSuccessStatusCode)
+            {
+                var readTask = result.Content.ReadAsAsync<IEnumerable<Reserva>>();
+                readTask.Wait();
+
+                IEnumerable<Reserva> reservas = readTask.Result;
+
+                return View(reservas);
             }
-            return View(reservas);
+
+            else
+            {
+                return BadRequest("Server error. Please contact administrator.");
+            }
         }
 
         /*
@@ -135,38 +136,29 @@ namespace PseudoCompanyFront.Controllers
             return View(reserva);
         }
 
-        // GET: Reservas/Delete/5
-        public async Task<IActionResult> Delete(long? id)
+
+        
+        // DELETE: Reservas/Delete/5
+        public ActionResult Delete()
         {
-            if (id == null)
+            using (var client = new HttpClient())
             {
-                return NotFound();
+                client.BaseAddress = new Uri("https://localhost:44330/api/Reservas/Cancelar");
+                var responseTask = client.GetAsync(client.BaseAddress);
+                responseTask.Wait();
+
+                var result = responseTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    var readTask = result.Content.ReadAsAsync<IList<Reserva>>();
+                    readTask.Wait();
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
+                }
             }
-
-            var reserva = await _context.Reserva
-                .FirstOrDefaultAsync(m => m.ReservaID == id);
-            if (reserva == null)
-            {
-                return NotFound();
-            }
-
-            return View(reserva);
-        }
-
-        // POST: Reservas/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(long id)
-        {
-            var reserva = await _context.Reserva.FindAsync(id);
-            _context.Reserva.Remove(reserva);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool ReservaExists(long id)
-        {
-            return _context.Reserva.Any(e => e.ReservaID == id);
+            return NoContent();
         }*/
     }
 }
