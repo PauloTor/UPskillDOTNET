@@ -122,7 +122,7 @@ namespace ParqueAPICentral.Controllers
         //POST: Reservas by {DataInicio}/{DataFim}/{ClienteID}/{ParqueID}/{lugarId}
         [Authorize(Policy = "User")]
         [EnableCors]
-        [HttpGet("{DataInicio}/{DataFim}/{ClienteID}/{ParqueID}/{lugarId}")]
+        [HttpPost("{DataInicio}/{DataFim}/{ClienteID}/{ParqueID}/{lugarId}")]
         public async Task<ActionResult<Reserva_>> PostReservaByData(String DataInicio, String DataFim, long ClienteID, long parqueid, long lugarId)
         {
             if (DateTime.Parse(DataInicio) > DateTime.Parse(DataFim))
@@ -224,7 +224,7 @@ namespace ParqueAPICentral.Controllers
         // DELETE: api/reservas/parqueID/reservaIdAPI - Cancelar reserva e devolver credito
         [Authorize(Policy = "Roles")]
         [EnableCors]
-        [HttpGet("{parqueID}/{reservaID}")]
+        [HttpDelete("{parqueID}/{reservaID}")]
         public async Task<ActionResult<Reserva>> CancelarReserva(long parqueID, long reservaID)
         {
             var reserva = _context.Reserva.Where(r => r.ReservaAPI == reservaID).Where(r => r.ParqueID == parqueID).FirstOrDefault();
