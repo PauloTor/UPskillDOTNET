@@ -367,3 +367,4 @@ MigrationBackup/
 /API/ParqueAPICentral/ParqueWEB/Migrations
 /API/PseudoCompanyFront/PseudoCompanyFront/Data/Migrations/20210224224059_p.Designer.cs
 /API/PseudoCompanyFront/PseudoCompanyFront/Data/Migrations/20210224224059_p.cs
+*.cs

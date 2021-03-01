@@ -133,6 +133,71 @@ namespace PseudoCompanyFront.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+
+        ////EDIT GET
+        //[Authorize(Roles = "Funcionario,Administrador")]
+        //public async Task<IActionResult> Edit(long? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    Cliente cliente;
+        //    using (HttpClient client = new HttpClient())
+        //    {
+        //        string endpoint = apiBaseUrl + "/recomendacoes/" + id;
+        //        var response = await client.GetAsync(endpoint);
+        //        response.EnsureSuccessStatusCode();
+        //        Cliente = await response.Content.ReadAsAsync<Cliente>();
+        //    }
+        //    if (cliente == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    var listaZonas = new List<Zona>();
+        //    using (HttpClient client = new HttpClient())
+        //    {
+        //        UserInfo user = new UserInfo();
+        //        StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+        //        var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
+        //        UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
+        //        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
+        //        string endpoint = apiBaseUrl + "/zonas";
+        //        var response = await client.GetAsync(endpoint);
+        //        response.EnsureSuccessStatusCode();
+        //        listaZonas = await response.Content.ReadAsAsync<List<Zona>>();
+        //    }
+        //    PopulateZonasDropDownList(listaZonas, id);
+        //    return View(recomendacao);
+        //}
+
+        //EDIT POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //[Authorize(Roles = "Funcionario,Administrador")]
+        public async Task<IActionResult> Edit(long id, [Bind("ClienteID,NomeCliente,EmailCliente,NifCliente,MetodoPagamento,Credito")] Cliente cliente)
+        {
+            if (id != cliente.Id)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    //UserInfo user = new UserInfo();
+                    //StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                    //var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
+                    //UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
+                    //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
+                    StringContent content = new StringContent(JsonConvert.SerializeObject(cliente), Encoding.UTF8, "application/json");
+                    string endpoint = apiBaseUrl + "/Clientes/" + id;
+                    var response = await client.PutAsync(endpoint, content);
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(cliente);
+        }
     }
 }
 
