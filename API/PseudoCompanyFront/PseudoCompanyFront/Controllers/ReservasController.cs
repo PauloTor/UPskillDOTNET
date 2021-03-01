@@ -18,12 +18,12 @@ namespace PseudoCompanyFront.Controllers
         private readonly IConfiguration _configure;
         private readonly string apiBaseUrl;
 
-        // Construtor do controller
         public ReservasController(IConfiguration configuration)
         {
             _configure = configuration;
             apiBaseUrl = _configure.GetValue<string>("WebAPIBaseUrl");
         }
+
 
         // GET: Reservas
         public async Task<ActionResult> IndexAsync()
@@ -69,103 +69,41 @@ namespace PseudoCompanyFront.Controllers
 
             return View(reserva);
         }
-        /*
+        
+
         // GET: Reservas/Create
         public IActionResult Create()
         {
             return View();
         }
 
+
         // POST: Reservas/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ReservaID,ParqueID,LugarID,ClienteID")] Reserva reserva)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(reserva);
-                await _context.SaveChangesAsync();
+                using HttpClient client = new HttpClient();
+                string endpoint = apiBaseUrl + "/Post";
+                var response = await client.GetAsync(endpoint);
+
                 return RedirectToAction(nameof(Index));
             }
             return View(reserva);
         }
 
-        // GET: Reservas/Edit/5
-        public async Task<IActionResult> Edit(long? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var reserva = await _context.Reserva.FindAsync(id);
-            if (reserva == null)
-            {
-                return NotFound();
-            }
-            return View(reserva);
-        }
-
-        // POST: Reservas/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("ReservaID,ParqueID,LugarID,ClienteID")] Reserva reserva)
-        {
-            if (id != reserva.ReservaID)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(reserva);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ReservaExists(reserva.ReservaID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(reserva);
-        }
-
-
-        
+    
         // DELETE: Reservas/Delete/5
-        public ActionResult Delete()
+        public async Task<IActionResult> Delete(long id)
         {
-            using (var client = new HttpClient())
+            using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:44330/api/Reservas/Cancelar");
-                var responseTask = client.GetAsync(client.BaseAddress);
-                responseTask.Wait();
-
-                var result = responseTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    var readTask = result.Content.ReadAsAsync<IList<Reserva>>();
-                    readTask.Wait();
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Server error. Please contact administrator.");
-                }
+                string endpoint = apiBaseUrl + "/Cancelar/" + id;
+                var response = await client.DeleteAsync(endpoint);
             }
-            return NoContent();
-        }*/
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
