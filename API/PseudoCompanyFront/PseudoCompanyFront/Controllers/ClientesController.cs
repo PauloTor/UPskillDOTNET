@@ -62,7 +62,7 @@ namespace PseudoCompanyFront.Controllers
             return View(cliente);
         }
 
-        //GET: Doencas/Create
+        //GET: Clientes/Create
 
         public async Task<IActionResult> Create()
         {
@@ -132,6 +132,62 @@ namespace PseudoCompanyFront.Controllers
                 var response = await client.DeleteAsync(endpoint);
             }
             return RedirectToAction(nameof(Index));
+        }
+
+        //EDIT GET
+        //[Authorize(Roles = "Funcionario,Administrador")]
+        public async Task<IActionResult> Edit(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Cliente cliente;
+            using (HttpClient client = new HttpClient())
+            {
+                //UserInfo user = new UserInfo();
+                //StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                //var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
+                //UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
+                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
+                string endpoint = apiBaseUrl + "/Clientes/" + id;
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                cliente = await response.Content.ReadAsAsync<Cliente>();
+            }
+            if (cliente == null)
+            {
+                return NotFound();
+            }
+            return View(cliente);
+        }
+
+        //EDIT POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //[Authorize(Roles = "Funcionario,Administrador")]
+        public async Task<IActionResult> Edit(long id, [Bind("ClienteID,NomeCliente,EmailCliente,NifCliente,MetodoPagamento,Credito")] Cliente cliente)
+        {
+            if (id != cliente.Id)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    //UserInfo user = new UserInfo();
+                    //StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                    //var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
+                    //UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
+                    //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
+                    StringContent content = new StringContent(JsonConvert.SerializeObject(cliente), Encoding.UTF8, "application/json");
+                    string endpoint = apiBaseUrl + "/Clientes/" + id;
+                    var response = await client.PutAsync(endpoint, content);
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(cliente);
         }
     }
 }
