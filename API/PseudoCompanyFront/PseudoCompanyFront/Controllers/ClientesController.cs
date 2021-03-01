@@ -62,7 +62,7 @@ namespace PseudoCompanyFront.Controllers
             return View(cliente);
         }
 
-        // CREATE GET
+        //GET: Doencas/Create
 
         public async Task<IActionResult> Create()
         {
@@ -95,6 +95,43 @@ namespace PseudoCompanyFront.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(cliente);
+        }
+
+        //GET: Clientes/Delete/5
+        //[Authorize(Roles = "Funcionario,Administrador")]
+        public async Task<IActionResult> Delete(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Cliente cliente;
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = apiBaseUrl + "/Clientes/" + id;
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                cliente = await response.Content.ReadAsAsync<Cliente>();
+            }
+            if (cliente == null)
+            {
+                return NotFound();
+            }
+            return View(cliente);
+        }
+
+        //POST: Clientes/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        //[Authorize(Roles = "Funcionario,Administrador")]
+        public async Task<IActionResult> DeleteConfirmed(long id)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = apiBaseUrl + "/Clientes/" + id;
+                var response = await client.DeleteAsync(endpoint);
+            }
+            return RedirectToAction(nameof(Index));
         }
     }
 }
