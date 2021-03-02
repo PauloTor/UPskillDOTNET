@@ -14,9 +14,9 @@ namespace ParqueAPICentral.Models
         public long ClienteID { get; set; }
 
         public string NomeCliente { get; set; }
-      
-        public string EmailCliente { get; set; }
         
+        public string EmailCliente { get; set; }
+
         public int NifCliente { get; set; }
 
         public string MetodoPagamento { get; set; }
