@@ -16,11 +16,11 @@ namespace PseudoCompanyFront.Models
         public string NomeCliente { get; set; }
 
         [Required]
-        [DataType(DataType.EmailAddress)]
+        [RegularExpression(@"^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-‌​]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$", ErrorMessage = "O Email não é valido")]
         public string EmailCliente { get; set; }
 
         [Required]
-        [RegularExpression(@"^\\d{9}$", ErrorMessage = "NIF length must be 9 numbers")]
+        [RegularExpression(@"^\d{9}$", ErrorMessage = "O NIF deve ser composto por 9 números")] 
         public int NifCliente { get; set; }
 
         public string MetodoPagamento { get; set; }
@@ -32,3 +32,7 @@ namespace PseudoCompanyFront.Models
         public User User { get; set; }
     }
 }
+
+
+//[Required]
+//[RegularExpression(@"^\\d{9}$", ErrorMessage = "NIF length must be 9 numbers")] 

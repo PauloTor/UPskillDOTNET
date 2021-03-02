@@ -89,7 +89,7 @@ namespace PseudoCompanyFront.Controllers
                 using (HttpClient client = new HttpClient())
                 {
                     StringContent content = new StringContent(JsonConvert.SerializeObject(cliente), Encoding.UTF8, "application/json");
-                    string endpoint = apiBaseUrl + "/Cliente";
+                    string endpoint = apiBaseUrl + "/Clientes";
                     var response = await client.PostAsync(endpoint, content);
                 }
                 return RedirectToAction(nameof(Index));
