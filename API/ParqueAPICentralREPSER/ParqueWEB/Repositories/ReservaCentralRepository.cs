@@ -48,9 +48,9 @@ namespace ParqueAPICentral.Repositories
             return await RepContext.Reserva.Where(r => r.ReservaID == ReservaID).FirstOrDefaultAsync();
         }
         
-        public async Task<ActionResult<Reserva>> DeleteReservaCentral(long ParqueID, long id)
+        public async Task<ActionResult<Reserva>> DeleteReservaCentral(long id)
         {
-            var reserva = GetAll().Where(d => d.ParqueID == ParqueID).Where(d => d.ReservaAPI == id).ToList().FirstOrDefault();
+            var reserva = GetReservaByIdAsync(id).Result.Value;
 
             return await DeleteAsync(reserva);
         }

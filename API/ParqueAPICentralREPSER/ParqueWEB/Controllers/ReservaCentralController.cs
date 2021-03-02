@@ -59,11 +59,11 @@ namespace ParqueAPICentral.Controllers
 
         [EnableCors]
         [HttpDelete("{ParqueID}/{id}")]
-        public async Task<ActionResult<Reserva>> DeleteReservaCentral(long ParqueID ,long id)
+        public async Task<ActionResult<Reserva>> DeleteReservaCentral(long id)
         {
 
             
-            return await _service.DeleteReservaCentral(ParqueID, id);
+            return await _service.DeleteReservaCentral(id);
 
         }
 

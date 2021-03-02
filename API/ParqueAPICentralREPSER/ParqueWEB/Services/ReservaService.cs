@@ -75,36 +75,39 @@ namespace ParqueAPICentral.Services
             }
 
         }        //========================================================================>>reservaAPI
-        public async Task<ActionResult<Reserva>> CancelarReserva(long parqueID, long reservaAPIID)
+        public async Task<ActionResult<Reserva>> CancelarReserva(long reservaID)
         {
-            //====>o que retornar da DeleteReservaCentral(repository) vai para reservaCentral
+            var reserv = _serviceR.GetReservaById(reservaID);
+            var reservaAPIID = reserv.Result.Value.ReservaAPI;
+            var parqueID = reserv.Result.Value.ParqueID;
             var parque = await _service.GetParqueById(parqueID);
 
             using HttpClient client = new HttpClient();
             string endpoint = parque.Value.Url + "reservas/cancelar/" + reservaAPIID;
+
             try
             {
-                var reservaRes = await client.GetAsync(endpoint);
-                var reserva_ = await reservaRes.Content.ReadAsAsync<ReservaPrivateDTO>();
-                long reservaById = reserva_.ReservaID;
-                var ReservaCentral = _serviceR.GetAllReservasCentralAsync().Result.Value.Where(r => r.ParqueID == parqueID).Where(rr => rr.ReservaAPI == reservaAPIID).FirstOrDefault();
+                var ReservaCentral = _serviceR.GetAllReservasCentralAsync().Result.Value.
+                    Where(r => r.ParqueID == parqueID).Where(rr => rr.ReservaAPI == reservaAPIID).FirstOrDefault();
+
                 var cliente_ = await _serviceC.GetClienteById(ReservaCentral.ClienteID);
-                //alterar na factura para encontrar por reserva   
+
                 var fatura = _serviceF.GetAllFaturas().Result.Value.Where(f => f.ReservaID == ReservaCentral.ReservaID).FirstOrDefault();
 
                 if (fatura != null)
+
+                    if (fatura != null)
                 {
                     float precoFatura = fatura.PrecoFatura;
 
-                    //nao acrescenta valor ===>>>>
-                    await _serviceC.UpdatePagamentoCliente(cliente_.Value.ClienteID, -1 * precoFatura);
+                    await _serviceC.UpdatePagamentoCliente(cliente_.Value.ClienteID, precoFatura);
                 }
 
                 var deleteTask = client.DeleteAsync(endpoint);
 
-                var reservaCentral = await _serviceR.DeleteReservaCentral(parqueID, reservaAPIID);
+                var reservaCentral = await _serviceR.DeleteReservaCentral(reservaID);
 
-                return reservaCentral;
+                return NoContent();
 
             }
             catch (HttpRequestException)
@@ -165,11 +168,12 @@ namespace ParqueAPICentral.Services
                     sub.Reservado = true;
                     sub.NovoCliente = ClienteID;
                     await _serviceS.UpdateSubAluguer(sub);
-
+                   
+                    //pagamento do cliente que aluga
+                    await _serviceC.UpdatePagamentoCliente(sub.NovoCliente, sub.Preco * -1);
                     //depositar cliente da reservacentral
                     await _serviceC.UpdatePagamentoCliente(reservaC.ClienteID, sub.Preco);
-                    //pagamento do cliente que aluga
-                    await _serviceC.UpdatePagamentoCliente(sub.NovoCliente, sub.Preco);
+
                     reservaC.ParaSubAluguer = false;
                     await _serviceR.UpdateReserva(reservaC);
 

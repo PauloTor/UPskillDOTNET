@@ -70,10 +70,10 @@ namespace ParqueAPICentral.Controllers
         // DELETE: api/reservas/parqueID/reservaId - Cancelar reserva e devolver credito
 
         [EnableCors]
-        [HttpGet("apagar/{parqueID}/{reservaID}")]
-        public async Task<ActionResult<Reserva>> CancelarReserva(long parqueID, long reservaID)
+        [HttpDelete("cancelar/{reservaID}")]
+        public async Task<ActionResult<Reserva>> CancelarReserva(long reservaID)
         {
-            return await _service.CancelarReserva(parqueID, reservaID);
+            return await _service.CancelarReserva(reservaID);
         }
         
         

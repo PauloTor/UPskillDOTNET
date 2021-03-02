@@ -39,20 +39,16 @@ namespace ParqueAPICentral.Services
 
         public async Task<ActionResult<Cliente>> UpdatePagamentoCliente(long clienteid, float valor)
         {
-            var cliente = await _repo.FindById(clienteid);
-            if (valor < 0)
-            {
-                throw new Exception("A quantia a pagar deve ter um valor positivo.");
-            }
-            else
-            {
-                cliente.Value.Credito -= valor;
-                // Cofre.Entrada(valor);
-            }
+            var cliente = await _repo.FindClienteById(clienteid);
+
+            cliente.Value.Credito += valor;
+            // Cofre.Entrada(valor);
+
+
             if (cliente.Value.Credito < 0)
             {
                 // Cofre.Saida(valor);
-                cliente.Value.Credito += valor;
+                cliente.Value.Credito -= valor;
                 throw new Exception("O crédito não permite efetuar a operação.");
             }
             return await _repo.UpdatePagamentoCliente(cliente.Value);
