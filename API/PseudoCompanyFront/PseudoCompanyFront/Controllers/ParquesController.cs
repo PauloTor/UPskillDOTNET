@@ -1,153 +1,158 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using PseudoCompanyFront.Data;
+using PseudoCompanyFront.ViewModel;
 using PseudoCompanyFront.Models;
+using System.Net.Http;
 
 namespace PseudoCompanyFront.Controllers
 {
+
+
     public class ParquesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IConfiguration _configure;
+        private readonly string apiBaseUrl;
 
-        public ParquesController(ApplicationDbContext context)
+
+        public ParquesController(IConfiguration configuration)
         {
-            _context = context;
+            _configure = configuration;
+            apiBaseUrl = _configure.GetValue<string>("WebAPIBaseUrl");
         }
 
-        // GET: Parques
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.ParquesDTO.ToListAsync());
-        }
+        // Construtor do controller
 
-        // GET: Parques/Details/5
-        public async Task<IActionResult> Details(long? id)
+        // GET: Obter informação de todos os Clientes
+        public async Task<IActionResult> Index(string searchString)
         {
-            if (id == null)
+            // ViewData["CurrentFilter"] = searchString;
+           // ViewModel1 vmDemo = new ViewModel1();
+            var listaParques = new List<ParqueDTO>();
+            var listaMoradas = new List<MoradaDTO>();
+            using (HttpClient client = new HttpClient())
             {
-                return NotFound();
+                string endpoint = "https://localhost:44330/api/Parques";
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                listaParques = await response.Content.ReadAsAsync<List<ParqueDTO>>();
+                string endpoint2 = "https://localhost:44330/api/Moradas";
+                var response2 = await client.GetAsync(endpoint2);
+                response2.EnsureSuccessStatusCode();
+                listaMoradas = await response2.Content.ReadAsAsync<List<MoradaDTO>>();
+                var a = from e1 in listaMoradas
+                            join e2 in listaParques
+                                on e1.MoradaID equals e2.MoradaID
+                            select new
+                            {
+                                parqueID = e2.ParqueID,
+                                nomeParque = e2.NomeParque,
+                                nifParque = e2.NIFParque,
+                                Lotacao = e2.Lotacao,
+                                url = e2.Url,
+                                moradaid = e2.MoradaID,
+                                rua = e1.Rua,
+                                codPostal = e1.CodigoPostal
+                            };
+                var vmDemo = new List<ViewModel1>();
+                foreach (var item in a)
+                {
+                    vmDemo.Add(new ViewModel1
+                    {
+                        CodigoPostal =item.codPostal,
+                        ParqueID = item.parqueID,
+                        NomeParque = item.nomeParque,
+                        NIFParque = item.nifParque,
+                        Lotacao = item.Lotacao,
+                        Url = item.url,
+                        MoradaID = item.moradaid,
+                        Rua = item.rua
+                    });
+
+                }
+
+                return View(vmDemo);
             }
 
-            var parqueDTO = await _context.ParquesDTO
-                .FirstOrDefaultAsync(m => m.ParqueID == id);
-            if (parqueDTO == null)
-            {
-                return NotFound();
-            }
-
-            return View(parqueDTO);
         }
 
-        // GET: Parques/Create
-        public IActionResult Create()
+
+
+
+
+
+
+        // GET: ParquesController/Details/5
+        public ActionResult Details(int id)
         {
             return View();
         }
 
-        // POST: Parques/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // GET: ParquesController/Create
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: ParquesController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ParqueID,NomeParque,NIFParque,Lotacao,Url,MoradaID")] ParqueDTO parqueDTO)
+        public ActionResult Create(IFormCollection collection)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(parqueDTO);
-                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(parqueDTO);
+            catch
+            {
+                return View();
+            }
         }
 
-        // GET: Parques/Edit/5
-        public async Task<IActionResult> Edit(long? id)
+        // GET: ParquesController/Edit/5
+        public ActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var parqueDTO = await _context.ParquesDTO.FindAsync(id);
-            if (parqueDTO == null)
-            {
-                return NotFound();
-            }
-            return View(parqueDTO);
+            return View();
         }
 
-        // POST: Parques/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: ParquesController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("ParqueID,NomeParque,NIFParque,Lotacao,Url,MoradaID")] ParqueDTO parqueDTO)
+        public ActionResult Edit(int id, IFormCollection collection)
         {
-            if (id != parqueDTO.ParqueID)
+            try
             {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(parqueDTO);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ParqueDTOExists(parqueDTO.ParqueID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
                 return RedirectToAction(nameof(Index));
             }
-            return View(parqueDTO);
+            catch
+            {
+                return View();
+            }
         }
 
-        // GET: Parques/Delete/5
-        public async Task<IActionResult> Delete(long? id)
+        // GET: ParquesController/Delete/5
+        public ActionResult Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var parqueDTO = await _context.ParquesDTO
-                .FirstOrDefaultAsync(m => m.ParqueID == id);
-            if (parqueDTO == null)
-            {
-                return NotFound();
-            }
-
-            return View(parqueDTO);
+            return View();
         }
 
-        // POST: Parques/Delete/5
-        [HttpPost, ActionName("Delete")]
+        // POST: ParquesController/Delete/5
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(long id)
+        public ActionResult Delete(int id, IFormCollection collection)
         {
-            var parqueDTO = await _context.ParquesDTO.FindAsync(id);
-            _context.ParquesDTO.Remove(parqueDTO);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool ParqueDTOExists(long id)
-        {
-            return _context.ParquesDTO.Any(e => e.ParqueID == id);
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
 }

@@ -20,5 +20,8 @@ namespace PseudoCompanyFront.Models
             Rua = rua;
             CodigoPostal = codigoPostal;
         }
+        public MoradaDTO()
+        {
+        }
     }
 }

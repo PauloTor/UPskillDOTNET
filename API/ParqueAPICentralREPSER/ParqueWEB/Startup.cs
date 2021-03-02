@@ -39,7 +39,10 @@ namespace ParqueAPICentral
 
             services.AddScoped<IFaturaRepository, FaturaRepository>();
             services.AddTransient<FaturaService>();
-            
+
+            services.AddScoped<IMoradaRepository, MoradaRepository>();
+            services.AddTransient<MoradaService>();
+
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddTransient<ClienteService>();
 

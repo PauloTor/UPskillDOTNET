@@ -1,59 +1,54 @@
-﻿@model IEnumerable<PseudoCompanyFront.Models.ParqueDTO>
+﻿@model IEnumerable<PseudoCompanyFront.ViewModel.ViewModel1>
 
-@{
-    ViewData["Title"] = "Index";
+
+@{ViewData["Title"] = "Index";
 }
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.NomeParque)
+                <a>Codigo Postal</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NIFParque)
+                <a>Rua</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Lotacao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Url)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MoradaID)
+                <a>Nome do Parque</a>
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NomeParque)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NIFParque)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Lotacao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Url)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MoradaID)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ParqueID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ParqueID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ParqueID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CodigoPostal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rua)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NomeParque)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.MetodoPagamento)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Credito)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>*@
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.MoradaID">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.MoradaID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.MoradaID">Apagar</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
