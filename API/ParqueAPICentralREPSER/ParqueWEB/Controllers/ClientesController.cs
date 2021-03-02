@@ -53,6 +53,14 @@ namespace ParqueAPICentral.Controllers
             return await _service.CreateCliente(cliente);
         }
 
+        [EnableCors]
+        [HttpPut]
+        public async Task<ActionResult<Cliente>> UpdateCliente(Cliente cliente)
+        {
+
+            return await _service.UpdateCliente(cliente);
+        }
+
         // DELETE: api/Clientes/5
         //[Authorize]
         [EnableCors]

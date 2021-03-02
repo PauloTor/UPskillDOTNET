@@ -14,11 +14,9 @@ namespace ParqueAPICentral.Models
         public long ClienteID { get; set; }
 
         public string NomeCliente { get; set; }
-        [Required]
-        [DataType(DataType.EmailAddress)]
+      
         public string EmailCliente { get; set; }
-        [Required]
-        [RegularExpression(@"^\\d{9}$", ErrorMessage = "NIF length must be 9 numbers")]
+        
         public int NifCliente { get; set; }
 
         public string MetodoPagamento { get; set; }

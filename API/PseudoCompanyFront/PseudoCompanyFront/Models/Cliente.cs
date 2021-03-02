@@ -20,7 +20,7 @@ namespace PseudoCompanyFront.Models
         public string EmailCliente { get; set; }
 
         [Required]
-        [RegularExpression(@"^\\d{9}$", ErrorMessage = "NIF length must be 9 numbers")]
+        [RegularExpression(@"^\d{9}$", ErrorMessage = "NIF length must be 9 numbers")] 
         public int NifCliente { get; set; }
 
         public string MetodoPagamento { get; set; }

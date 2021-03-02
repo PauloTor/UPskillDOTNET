@@ -78,7 +78,6 @@ namespace ParqueAPICentral.Services
         public async Task<ActionResult<Reserva>> CancelarReserva(long parqueID, long reservaAPIID)
         {
             //====>o que retornar da DeleteReservaCentral(repository) vai para reservaCentral
-            var reservaCentral = await _serviceR.DeleteReservaCentral(parqueID, reservaAPIID);
             var parque = await _service.GetParqueById(parqueID);
 
             using HttpClient client = new HttpClient();
@@ -103,6 +102,7 @@ namespace ParqueAPICentral.Services
 
                 var deleteTask = client.DeleteAsync(endpoint);
 
+                var reservaCentral = await _serviceR.DeleteReservaCentral(parqueID, reservaAPIID);
 
                 return reservaCentral;
 
@@ -112,6 +112,8 @@ namespace ParqueAPICentral.Services
                 return NotFound("API do Parque " + parque.Value.NomeParque + " nao conectada");
             }
         }
+
+
         public async Task<ActionResult<ReservaPrivateDTO>> PostReservaByData(String DataInicio, String DataFim, long ClienteID, long parqueid)
         {
             var parque = await _service.GetParqueById(parqueid);

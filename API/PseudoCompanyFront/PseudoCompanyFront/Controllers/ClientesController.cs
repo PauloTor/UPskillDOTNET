@@ -89,7 +89,7 @@ namespace PseudoCompanyFront.Controllers
                 using (HttpClient client = new HttpClient())
                 {
                     StringContent content = new StringContent(JsonConvert.SerializeObject(cliente), Encoding.UTF8, "application/json");
-                    string endpoint = apiBaseUrl + "/Cliente";
+                    string endpoint = apiBaseUrl + "/Clientes";
                     var response = await client.PostAsync(endpoint, content);
                 }
                 return RedirectToAction(nameof(Index));
@@ -168,7 +168,7 @@ namespace PseudoCompanyFront.Controllers
         //[Authorize(Roles = "Funcionario,Administrador")]
         public async Task<IActionResult> Edit(long id, [Bind("ClienteID,NomeCliente,EmailCliente,NifCliente,MetodoPagamento,Credito")] Cliente cliente)
         {
-            if (id != cliente.Id)
+            if (id != cliente.ClienteID)
             {
                 return NotFound();
             }
