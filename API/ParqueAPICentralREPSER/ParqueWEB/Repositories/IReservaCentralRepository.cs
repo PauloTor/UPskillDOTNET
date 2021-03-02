@@ -11,7 +11,7 @@ namespace ParqueAPICentral.Repositories
     {
 
         Task<ActionResult<IEnumerable<Reserva>>> GetAllReservasCentralAsync();
-        Task<ActionResult<Reserva>> DeleteReservaCentral(long ParqueID, long id);
+        Task<ActionResult<Reserva>> DeleteReservaCentral(long id);
         Task<ActionResult<Reserva>> GetAllClienteByReservasCentralAsync(long ParqueID, long id);
         Task<ActionResult<Reserva>> GetReservaByIdAsync(long id);
         Task<ActionResult<Reserva>> ParaSubALuguer(long ReservaID, bool id);

@@ -39,9 +39,9 @@ namespace ParqueAPICentral.Services
 
 
 
-        public async Task<ActionResult<Reserva>> DeleteReservaCentral(long ParqueID, long id)
+        public async Task<ActionResult<Reserva>> DeleteReservaCentral(long id)
     {
-        return await _repo.DeleteReservaCentral(ParqueID, id);
+        return await _repo.DeleteReservaCentral(id);
     }
         
         public async Task<ActionResult<Reserva>> GetAllClienteByReservasCentral(long ParqueID, long id)

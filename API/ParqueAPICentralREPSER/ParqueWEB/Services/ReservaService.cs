@@ -75,8 +75,11 @@ namespace ParqueAPICentral.Services
             }
 
         }        //========================================================================>>reservaAPI
-        public async Task<ActionResult<Reserva>> CancelarReserva(long parqueID, long reservaAPIID)
+        public async Task<ActionResult<Reserva>> CancelarReserva(long reservaID)
         {
+            var reserv = _serviceR.GetReservaById(reservaID);
+            var reservaAPIID = reserv.Result.Value.ReservaAPI;
+            var parqueID = reserv.Result.Value.ParqueID;
             var parque = await _service.GetParqueById(parqueID);
 
             using HttpClient client = new HttpClient();
@@ -102,9 +105,9 @@ namespace ParqueAPICentral.Services
 
                 var deleteTask = client.DeleteAsync(endpoint);
 
-                var reservaCentral = await _serviceR.DeleteReservaCentral(parqueID, reservaAPIID);
+                var reservaCentral = await _serviceR.DeleteReservaCentral(reservaID);
 
-                return reservaCentral;
+                return NoContent();
 
             }
             catch (HttpRequestException)
