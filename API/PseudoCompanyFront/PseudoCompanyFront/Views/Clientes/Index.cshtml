@@ -1,10 +1,9 @@
 ﻿@model IEnumerable<PseudoCompanyFront.Models.Cliente>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista de Clientes";
 }
 
-<h1>Clientes</h1>
 
 <p>
     <a asp-action="Create">Criar Novo Cliente</a>
@@ -13,10 +12,9 @@
 <form asp-action="Index" method="get">
     <div class="form-actions no-color">
         <p>
-            Pesquisa por nome: <input type="text" name="SearchString" classes="btn btn-default" value="@ViewData["CurrentFilter"]" />
-
+            Pesquisa por nome: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
             <input type="submit" value="Search" class="btn btn-default" />
-
+            <a asp-action="Index">Voltar à lista completa</a>
         </p>
     </div>
 </form>
