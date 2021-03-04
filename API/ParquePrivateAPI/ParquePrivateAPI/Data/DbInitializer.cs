@@ -43,6 +43,7 @@ namespace ParquePrivateAPI.Data
             context.SaveChanges();
 //===========================================================================================0
 
+            /*
             var reserva = new Reserva[]
 {
             new Reserva
@@ -82,7 +83,7 @@ namespace ParquePrivateAPI.Data
                 context.Reserva.Add(s);
             }
             context.SaveChanges();
-      
+      */
         }
 
 

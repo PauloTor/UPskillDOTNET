@@ -27,7 +27,7 @@ namespace PseudoCompanyFront.Models
         [Display(Name = "Data de fim")]
         [DataType(DataType.Date)]
         public DateTime DataFim { get; set; }
-        
+
         [Display(Name = "Data de reserva")]
         [DataType(DataType.Date)]
         public DateTime DataReserva = DateTime.Now;

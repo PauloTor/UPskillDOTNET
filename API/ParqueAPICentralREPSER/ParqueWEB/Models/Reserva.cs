@@ -9,7 +9,6 @@ namespace ParqueAPICentral.Models
 {
     public class Reserva
     {
-        [Key]
         public long ReservaID { get; set; }
 
         public long ReservaAPI { get; set; }
@@ -22,23 +21,29 @@ namespace ParqueAPICentral.Models
         public long ClienteID { get; set; }
         public Cliente Cliente { get; set; }
 
+        [DataType(DataType.Date)]
+        public DateTime DataReserva { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime DataInicio { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime DataFim { get; set; }
+
         public long LugarID { get; set; }
 
         public bool ParaSubAluguer { get; set; }
 
 
-        //public Reserva(long parqueID, long reservaAPI, long clienteID)
-        //{
-        //    ParqueID = parqueID;
-        //    ReservaAPI = reservaAPI;
-        //    ClienteID = clienteID;
-        //}
-        public Reserva( long parqueID,long reservaAPI, long clienteID, long lugarId)
+        public Reserva( long parqueID,long reservaAPI, long clienteID, long lugarId, DateTime dRes, DateTime inicio, DateTime fim)
         {
             ParqueID = parqueID;
             ReservaAPI = reservaAPI;
             ClienteID = clienteID;
             LugarID = lugarId;
+            DataReserva = dRes;
+            DataInicio = inicio;
+            DataFim = fim;
         }
 
         public Reserva()
