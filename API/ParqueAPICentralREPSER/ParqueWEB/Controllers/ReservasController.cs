@@ -36,6 +36,14 @@ namespace ParqueAPICentral.Controllers
             this._service = service;
         }
 
+        [EnableCors]
+        [HttpGet("Reservas/{id}")]
+        public async Task<ActionResult<Reserva>> GetReservaById(long id)
+        {
+            return await this._service.GetReservaById(id);
+        }
+
+
         // GET: api/Reservas por parque
         [EnableCors]
         [HttpGet("ReservasParque/{id}")]
@@ -47,7 +55,7 @@ namespace ParqueAPICentral.Controllers
         }
 
         [EnableCors]
-        [HttpGet("Reservas")]
+        [HttpGet("Reservas/Clientes")]
         public async Task<ActionResult<IEnumerable<ReservaPrivateDTO>>> GetReservasPorParqueporcliente(long id)
         {
            

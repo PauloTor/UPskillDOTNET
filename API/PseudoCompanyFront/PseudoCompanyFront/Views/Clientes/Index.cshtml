@@ -6,7 +6,12 @@
 
 
 <p>
-    <a asp-action="Create">Criar Novo Cliente</a>
+    @if (User.IsInRole("Funcionario") || User.IsInRole("Administrador"))
+    {
+        <div>
+            <a asp-action="Create">Criar novo país</a>
+        </div>
+    }
 </p>
 
 <form asp-action="Index" method="get">
@@ -23,10 +28,10 @@
     <thead>
         <tr>
             <th>
-                <a>Nome</a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NomeSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Nome</a>
             </th>
             <th>
-                <a>Email</a>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NomeSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">NIF</a>
             </th>
             <th>
                 <a>NIF</a>

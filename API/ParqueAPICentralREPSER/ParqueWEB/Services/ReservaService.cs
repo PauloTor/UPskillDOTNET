@@ -46,6 +46,12 @@ namespace ParqueAPICentral.Services
             this._serviceS = serviceS;
         }
 
+        public async Task<ActionResult<Reserva>> GetReservaById(long id)
+        {
+            return await _serviceR.GetReservaById(id);
+        }
+
+
         public async Task<ActionResult<IEnumerable<ReservaPrivateDTO>>> GetAllReservasByParque(long id)
         {
             var ListaReservas = new List<ReservaPrivateDTO>();

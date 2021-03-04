@@ -94,9 +94,32 @@ namespace PseudoCompanyFront.Controllers
             return View(reserva);
         }
 
-    
+
+        //GET: Reservas/Delete/5
+        public async Task<IActionResult> Delete(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Reserva reserva;
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = apiBaseUrl + "/Reservas/" + id;
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                reserva = await response.Content.ReadAsAsync<Reserva>();
+            }
+            if (reserva == null)
+            {
+                return NotFound();
+            }
+            return View(reserva);
+        }
+
+
         // DELETE: Reservas/Delete/5
-        public async Task<IActionResult> Delete(long id)
+        public async Task<IActionResult> DeleteConfirmed(long id)
         {
             using (HttpClient client = new HttpClient())
             {
