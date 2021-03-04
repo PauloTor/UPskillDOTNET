@@ -36,10 +36,15 @@
             @Html.DisplayFor(model => model.MetodoPagamento)
         </dd>
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="ClienteID" />
         <input type="submit" value="Eliminar" class="btn btn-danger" /> |
         <a asp-action="Index">Voltar à Lista de Clientes</a>
     </form>
+
+    <div class="col-md-6">
+        <img src="~/photos/Customer2.png"/>
+    </div>
+
 </div>
