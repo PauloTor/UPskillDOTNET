@@ -46,6 +46,11 @@ namespace ParqueAPICentral.Services
             this._serviceS = serviceS;
         }
 
+        public async Task<ActionResult<IEnumerable<Reserva>>> GetReservas()
+        {
+            return await _serviceR.GetAllReservasCentralAsync();
+        }
+
         public async Task<ActionResult<Reserva>> GetReservaById(long id)
         {
             return await _serviceR.GetReservaById(id);
@@ -77,7 +82,7 @@ namespace ParqueAPICentral.Services
             }
             catch (HttpRequestException)
             {
-                return NotFound("API do Parque " + parque.Value.NomeParque + " nao conectada");
+                return NotFound("API do Parque " + parque.Value.NomeParque + " não conectada.");
             }
 
         }        //========================================================================>>reservaAPI
@@ -118,82 +123,43 @@ namespace ParqueAPICentral.Services
             }
             catch (HttpRequestException)
             {
-                return NotFound("API do Parque " + parque.Value.NomeParque + " nao conectada");
+                return NotFound("API do Parque " + parque.Value.NomeParque + " não conectada.");
             }
         }
 
 
-        public async Task<ActionResult<ReservaPrivateDTO>> PostReservaByData(String DataInicio, String DataFim, long ClienteID, long parqueid)
+        public async Task<ActionResult<ReservaPrivateDTO>> PostReservaByData(ReservaPrivateDTO dto)
         {
-            var parque = await _service.GetParqueById(parqueid);
+            var parque = await _service.GetParqueById(dto.ParqueID);
             using var client = new HttpClient();
             try
             {
                 var rtoken = await GetToken(parque.Value.Url + "users/authenticate");
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", rtoken);
-                var i = _serviceL.GetLugaresDisponiveisComSubAlugueres(DataInicio, DataFim, parqueid).Result.Value.FirstOrDefault();
-                var reserva = new ReservaPrivateDTO(DateTime.Now, DateTime.Parse(DataInicio), DateTime.Parse(DataFim), i.LugarID);
+                var i = _serviceL.GetLugaresDisponiveisComSubAlugueres(dto.DataInicio.ToString(), dto.DataFim.ToString(), dto.ParqueID).Result.Value.FirstOrDefault();
+                //var reserva = new ReservaPrivateDTO(DateTime.Now, dto.DataInicio, dto.DataFim, i.LugarID);
 
-
-
-                //var lugarEscolhido = await _serviceL.(parkingLots); //criar lista nos lugares
-
-                //var i = parkingLots.Value.FirstOrDefault(p => p.LugarID == lugarId && p.ParqueId == parqueid);
-
-                //var i = parkingLots.Value.FirstOrDefault(p => p.LugarID == lugarescolhido && p.parqueId == parqueid);
-
-                if ((DateTime.Parse(DataInicio) > DateTime.Parse(DataFim)))
+                if (dto.DataInicio >= dto.DataFim)
                 {
                     return NotFound("Data inválida");
                 }
-
-                if (i == null)
-                {
-                    return NotFound("Lugar não disponivel para ser reservado");
-                }
-
-                if (i.subReservado == false)
-                {
+              
                     StringContent reserva_ = new StringContent(JsonConvert.
-                        SerializeObject(reserva), Encoding.UTF8, "application/json");
+                        SerializeObject(dto), Encoding.UTF8, "application/json");
                     var response2 = await client.
                         PostAsync(parque.Value.Url + "reservas/", reserva_);
-                    var UltimaReservaAPI = await GetUltimaReservaPrivate(parqueid);
-                    var reservaCentral = new Reserva(parqueid, UltimaReservaAPI.Value.ReservaID, ClienteID, i.LugarID);
+                    var UltimaReservaAPI = await GetUltimaReservaPrivate(dto.ParqueID);
+                    var reservaCentral = new Reserva(dto.ParqueID, UltimaReservaAPI.Value.ReservaID, dto.ClienteID, dto.LugarID);
                     await _serviceR.CriarReservaCentral(reservaCentral);
                     var qrCode = GerarQRcode(UltimaReservaAPI.Value);
-                    await EnviarEmail(qrCode.Value, ClienteID, UltimaReservaAPI.Value.ReservaID);
+                    await EnviarEmail(qrCode.Value, dto.ClienteID, UltimaReservaAPI.Value.ReservaID);
 
-                    return CreatedAtAction(nameof(PostReservaByData), new { id = reserva.ReservaID }, reserva);
-                }
-
-                else
-                {
-                    var sub = _serviceS.GetAllSubAluguerAsync().Result.Value.Where(n => n.SubAluguerID == i.subAluguerId).FirstOrDefault();
-                    var reservaC = _serviceR.GetAllReservasCentralAsync().Result.Value.Where(r => r.ReservaID == sub.ReservaID).FirstOrDefault();
-                    sub.Reservado = true;
-                    sub.NovoCliente = ClienteID;
-                    await _serviceS.UpdateSubAluguer(sub);
-                   
-                    //pagamento do cliente que aluga
-                    await _serviceC.UpdatePagamentoCliente(sub.NovoCliente, sub.Preco * -1);
-                    //depositar cliente da reservacentral
-                    await _serviceC.UpdatePagamentoCliente(reservaC.ClienteID, sub.Preco);
-
-                    reservaC.ParaSubAluguer = false;
-                    await _serviceR.UpdateReserva(reservaC);
-
-                    var qrCode = GerarQRcode(reserva);
-                    await EnviarEmail(qrCode.Value, ClienteID, reservaC.ReservaID);
-
-                    return CreatedAtAction(nameof(PostReservaByData),
-                 new { id = sub.SubAluguerID }, sub);
-
-                }
+                    return CreatedAtAction(nameof(PostReservaByData), new { id = dto.ReservaID }, dto);
+            
             }
             catch (HttpRequestException)
             {
-                return NotFound("API do Parque " + parque.Value.NomeParque + " nao conectada");
+                return NotFound("API do Parque " + parque.Value.NomeParque + " não conectada.");
             }
         }
 
@@ -224,7 +190,7 @@ namespace ParqueAPICentral.Services
                 }
                 catch (HttpRequestException)
                 {
-                    return NotFound("API do Parque " + parque.Value.NomeParque + " nao conectada");
+                    return NotFound("API do Parque " + parque.Value.NomeParque + " não conectada.");
                 }
             }
         }

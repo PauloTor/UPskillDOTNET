@@ -46,10 +46,10 @@ namespace ParqueAPICentral.Services
             var parque = await _serviceP.GetParqueById(parqueID);
 
             using var client = new HttpClient();
-            var rtoken = await GetToken(parque.Value.Url + "users/authenticate");
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", rtoken);
+            //var rtoken = await GetToken(parque.Value.Url + "users/authenticate");
+            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", rtoken);
             var response = await client.GetAsync(parque.Value.Url + "Reservas/" + DataInicio + "/" + DataFim);
-            response.EnsureSuccessStatusCode();
+            //response.EnsureSuccessStatusCode();
             var listaReservas = await response.Content.ReadAsAsync<List<ReservaPrivateDTO>>();
             var reservas = await _serviceR.GetAllReservasCentralAsync();
             var subAluguer = await _serviceS.GetAllSubAluguerAsync(); //alterar para: por parqueID
