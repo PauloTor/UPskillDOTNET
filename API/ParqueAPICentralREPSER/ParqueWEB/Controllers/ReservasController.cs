@@ -26,18 +26,26 @@ using System.Net;
 namespace ParqueAPICentral.Controllers
 {
     [EnableCors("MyAllowSpecificOrigins")]
-    [Route("api")]
+    [Route("api/Reservas")]
     [ApiController]
     public class ReservasController : ControllerBase
     {
         private readonly ReservaService _service;
          public ReservasController(ReservaService service)
         {
-            this._service = service;
+            _service = service;
         }
 
         [EnableCors]
-        [HttpGet("Reservas/{id}")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Reserva>>> GetReservas()
+        {
+            return await _service.GetReservas();
+        }
+
+
+        [EnableCors]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Reserva>> GetReservaById(long id)
         {
             return await this._service.GetReservaById(id);
@@ -46,38 +54,32 @@ namespace ParqueAPICentral.Controllers
 
         // GET: api/Reservas por parque
         [EnableCors]
-        [HttpGet("ReservasParque/{id}")]
+        [HttpGet("Parque/{id}")]
         public async Task<ActionResult<IEnumerable<ReservaPrivateDTO>>> GetReservasPorParque(long id)
         {
-           
-
             return await this._service.GetAllReservasByParque(id);
         }
 
         [EnableCors]
-        [HttpGet("Reservas/Clientes")]
+        [HttpGet("Clientes")]
         public async Task<ActionResult<IEnumerable<ReservaPrivateDTO>>> GetReservasPorParqueporcliente(long id)
-        {
-           
-
+        {           
             return await this._service.GetAllReservasByParque(id);
         }
 
 
-        //Post Reservas by {DataInicio}/{DataFim}/{ClienteID}/{ParqueID}/{lugarId}
+        //POST
         [EnableCors]
-        [HttpGet("post/{DataInicio}/{DataFim}/{ClienteID}/{ParqueID}")]
-        public async Task<ActionResult<ReservaPrivateDTO>> PostReservaByData(String DataInicio, String DataFim, long ClienteID, long parqueid)
-        {
-            
-            return await _service.PostReservaByData(DataInicio, DataFim, ClienteID, parqueid);
-
+        [HttpPost]
+        public async Task<ActionResult<ReservaPrivateDTO>> PostReservaByData(ReservaPrivateDTO dto)
+        {           
+            return await _service.PostReservaByData(dto);
         }
         
 
-        // DELETE: api/cancelar/reservaID - Cancelar reserva e devolver credito
+        // DELETE: api/reservaID - Cancelar reserva e devolver credito
         [EnableCors]
-        [HttpDelete("cancelar/{reservaID}")]
+        [HttpDelete("{reservaID}")]
         public async Task<ActionResult<Reserva>> CancelarReserva(long reservaID)
         {
             return await _service.CancelarReserva(reservaID);

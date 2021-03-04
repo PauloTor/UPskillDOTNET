@@ -20,6 +20,20 @@ namespace PseudoCompanyFront.Models
         [Display(Name = "Nº Cliente")]
         public long ClienteID { get; set; }
 
-        public Reserva Reservas { get; }
+        [Display(Name = "Data de início")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime DataInicio { get; set; }
+
+        [Display(Name = "Data de fim")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime DataFim { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime DataReserva = DateTime.Now;
+
+        public Reserva Reservas { get; set; }
     }
 }

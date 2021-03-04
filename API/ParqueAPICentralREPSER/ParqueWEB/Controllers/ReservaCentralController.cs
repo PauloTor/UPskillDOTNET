@@ -31,40 +31,26 @@ namespace ParqueAPICentral.Controllers
             this._service = service;
         }
 
-
         // GET: api/Reservas por parque
         [EnableCors]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Reserva>>> GetAllReservaCentral()
         {
             return await this._service.GetAllReservasCentralAsync();
-
         }
 
         [EnableCors]
         [HttpPut("{ParqueID}")]
         public async Task<ActionResult<Reserva>> UpdateReserva(Reserva reserva)
         {
-
             return await _service.UpdateReserva(reserva);
-
         }
+
         [EnableCors]
         [HttpGet("ClienteReserva/{id}")]
         public async Task<ActionResult<Reserva>> GetAllClienteByReservasCentralAsync(long ParqueID, long id)
         {
-
         return await this._service.GetAllClienteByReservasCentral(ParqueID, id);
-        }
-
-        [EnableCors]
-        [HttpDelete("{ParqueID}/{id}")]
-        public async Task<ActionResult<Reserva>> DeleteReservaCentral(long id)
-        {
-
-            
-            return await _service.DeleteReservaCentral(id);
-
         }
 
 
@@ -72,9 +58,7 @@ namespace ParqueAPICentral.Controllers
         [EnableCors]
         [HttpGet("{id}")]
         public async Task<ActionResult<Reserva>> GetReservaById(long id)
-        {
-            
-            
+        {                     
         return await _service.GetReservaById(id);
         }
     }

@@ -10,8 +10,8 @@ using ParqueAPICentral.Data;
 namespace ParqueAPICentral.Migrations
 {
     [DbContext(typeof(APICentralContext))]
-    [Migration("20210301100154_dois")]
-    partial class dois
+    [Migration("20210304103933_fromthetop")]
+    partial class fromthetop
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

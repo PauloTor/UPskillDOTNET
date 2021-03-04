@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using PseudoCompanyFront.Data;
 using PseudoCompanyFront.Models;
 
@@ -29,7 +31,7 @@ namespace PseudoCompanyFront.Controllers
         public async Task<ActionResult> IndexAsync()
         {
             using HttpClient client = new HttpClient();
-            string endpoint = apiBaseUrl + "/ReservasCentral";
+            string endpoint = apiBaseUrl + "/Reservas";
             var response = await client.GetAsync(endpoint);
 
             if (response.IsSuccessStatusCode)
@@ -58,7 +60,7 @@ namespace PseudoCompanyFront.Controllers
             }
 
             using HttpClient client = new HttpClient();
-            string endpoint = apiBaseUrl + "/ReservasCentral/" + id;
+            string endpoint = apiBaseUrl + "/Reservas/" + id;
             var response = await client.GetAsync(endpoint);
             var reserva = await response.Content.ReadAsAsync<Reserva>();
 
@@ -69,11 +71,18 @@ namespace PseudoCompanyFront.Controllers
 
             return View(reserva);
         }
-        
+
 
         // GET: Reservas/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = apiBaseUrl + "/Reservas";
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                var reservas = await response.Content.ReadAsAsync<List<Reserva>>();
+            }
             return View();
         }
 
@@ -81,14 +90,16 @@ namespace PseudoCompanyFront.Controllers
         // POST: Reservas/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ReservaID,ParqueID,LugarID,ClienteID")] Reserva reserva)
+        public async Task<IActionResult> Create([Bind("ReservaID,ParqueID,LugarID,ClienteID,DataInicio,DataFim,DataReserva")] Reserva reserva)
         {
             if (ModelState.IsValid)
             {
-                using HttpClient client = new HttpClient();
-                string endpoint = apiBaseUrl + "/Post";
-                var response = await client.GetAsync(endpoint);
-
+                using (HttpClient client = new HttpClient())
+                {
+                    StringContent content = new StringContent(JsonConvert.SerializeObject(reserva), Encoding.UTF8, "application/json");
+                    string endpoint = apiBaseUrl + "/Reservas";
+                    var response = await client.PostAsync(endpoint, content);
+                }
                 return RedirectToAction(nameof(Index));
             }
             return View(reserva);
@@ -119,11 +130,13 @@ namespace PseudoCompanyFront.Controllers
 
 
         // DELETE: Reservas/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
             using (HttpClient client = new HttpClient())
             {
-                string endpoint = apiBaseUrl + "/Cancelar/" + id;
+                string endpoint = apiBaseUrl + "/Reservas/" + id;
                 var response = await client.DeleteAsync(endpoint);
             }
             return RedirectToAction(nameof(Index));
