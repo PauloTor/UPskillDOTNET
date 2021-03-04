@@ -8,30 +8,28 @@ namespace PseudoCompanyFront.Models
 {
     public class Reserva
     {
-        [Display(Name = "Nº Reserva")]
+        [Display(Name = "Nº da reserva")]
         public long ReservaID { get; set; }
 
-        [Display(Name = "Nº Parque")]
+        [Display(Name = "Nº do parque")]
         public long ParqueID { get; set; }
 
-        [Display(Name = "Nº Lugar")]
+        [Display(Name = "Nº do lugar")]
         public long LugarID { get; set; }
 
-        [Display(Name = "Nº Cliente")]
+        [Display(Name = "Nº do cliente")]
         public long ClienteID { get; set; }
 
         [Display(Name = "Data de início")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DataInicio { get; set; }
 
         [Display(Name = "Data de fim")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DataFim { get; set; }
 
+        [Display(Name = "Data de reserva")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DataReserva = DateTime.Now;
 
         public Reserva Reservas { get; set; }

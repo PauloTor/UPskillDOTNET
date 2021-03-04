@@ -59,7 +59,6 @@ namespace ParqueAPICentral.Services
 
         public async Task<ActionResult<IEnumerable<ReservaPrivateDTO>>> GetAllReservasByParque(long id)
         {
-            var ListaReservas = new List<ReservaPrivateDTO>();
             var parque = await _service.GetParqueById(id);
             if (await _service.ParqueExist(id) == false)
             {
@@ -77,7 +76,7 @@ namespace ParqueAPICentral.Services
                 string endpoint = parque.Value.Url + "Reservas/";
                 var response = await client.GetAsync(endpoint);
                 response.EnsureSuccessStatusCode();
-                ListaReservas = await response.Content.ReadAsAsync<List<ReservaPrivateDTO>>();
+                var ListaReservas = await response.Content.ReadAsAsync<List<ReservaPrivateDTO>>();
                 return ListaReservas;
             }
             catch (HttpRequestException)
@@ -136,7 +135,7 @@ namespace ParqueAPICentral.Services
             {
                 var rtoken = await GetToken(parque.Value.Url + "users/authenticate");
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", rtoken);
-                var i = _serviceL.GetLugaresDisponiveisComSubAlugueres(dto.DataInicio.ToString(), dto.DataFim.ToString(), dto.ParqueID).Result.Value.FirstOrDefault();
+                //var i = _serviceL.GetLugaresDisponiveisComSubAlugueres(dto.DataInicio.ToString(), dto.DataFim.ToString(), dto.ParqueID).Result.Value.FirstOrDefault();
                 //var reserva = new ReservaPrivateDTO(DateTime.Now, dto.DataInicio, dto.DataFim, i.LugarID);
 
                 if (dto.DataInicio >= dto.DataFim)
@@ -149,7 +148,7 @@ namespace ParqueAPICentral.Services
                     var response2 = await client.
                         PostAsync(parque.Value.Url + "reservas/", reserva_);
                     var UltimaReservaAPI = await GetUltimaReservaPrivate(dto.ParqueID);
-                    var reservaCentral = new Reserva(dto.ParqueID, UltimaReservaAPI.Value.ReservaID, dto.ClienteID, dto.LugarID);
+                    var reservaCentral = new Reserva(dto.ParqueID, UltimaReservaAPI.Value.ReservaID, dto.ClienteID, dto.LugarID, dto.DataReserva, dto.DataInicio, dto.DataFim);
                     await _serviceR.CriarReservaCentral(reservaCentral);
                     var qrCode = GerarQRcode(UltimaReservaAPI.Value);
                     await EnviarEmail(qrCode.Value, dto.ClienteID, UltimaReservaAPI.Value.ReservaID);

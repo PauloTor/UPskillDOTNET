@@ -1,0 +1,26 @@
+####
+//AUTH
+POST https://localhost:44353/api/authenticate/login
+Content-Type: application/json
+
+{
+  "username": "Duarte",
+  "password": "User_123456"
+}
+
+
+####
+//AUTH
+POST https://localhost:44353/api/authenticate/register
+Content-Type: application/json
+
+{
+  "username": "Duarte",
+  "email": "username@gmail.com",
+  "password": "User_123456"
+}
+
+####
+//AUTH
+GET http://localhost:44353/api/authenticate
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiRHVhcnRlIiwianRpIjoiNjU2ZWE3ZWEtNDA0NS00MDY5LTg2NWQtNjYzODIxMDEzNTM1IiwiZXhwIjoxNjE0ODgxODczLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjQ0MzUzIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo0MjAwIn0.SiQRsMsAYVc7WVbD9swj2Y9FxRrnTlntflV5CTnGiSg
