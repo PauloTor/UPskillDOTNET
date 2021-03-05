@@ -48,31 +48,8 @@ namespace ParqueAPICentral.Repositories
         public async Task<ActionResult<Reserva>> ParaSubALuguer(long id)  // put booleano
         {
             var reserva = RepContext.Reserva.Where(r => r.ReservaID == id).FirstOrDefault();
-            /*
-            if (reserva.ParaSubAluguer == false)
-            {
-                reserva.ParaSubAluguer = true;
-                await _rep.CreateSubAluguer(new SubAluguer
-                {
-                    Preco = 11,
-                    ReservaID = id,
-                    Reservado = false
-                });
-            }
-            else
-            {
-                reserva.ParaSubAluguer = false;
-                await _rep.DeleteSubAluguer(id);
-            }*/
-            if (reserva.ParaSubAluguer == false)
-            {
-                reserva.ParaSubAluguer = true;
-            }
-            else
-            {
-                reserva.ParaSubAluguer = false;
-            }
-            return await UpdateReserva(reserva);
+
+            return await UpdateAsync(reserva);
         }
         
         public async Task<ActionResult<Reserva>> DeleteReservaCentral(long id)

@@ -13,16 +13,23 @@ using ParqueAPICentral.Repositories;
 using Microsoft.Extensions.Configuration;
 using ParqueAPICentral.DTO;
 using ParqueAPICentral.Data;
+using Microsoft.Extensions.DependencyInjection;
+using System.Net;
+using System.Net.Mail;
+using System.IO;
+using System.Drawing;
 
 namespace ParqueAPICentral.Services
 {
     public class ReservaCentralService
     {
         private readonly IReservaCentralRepository _repo;
+        private readonly SubAluguerService _serviceS;
 
-        public ReservaCentralService(IReservaCentralRepository repo)
+        public ReservaCentralService(IReservaCentralRepository repo/*, SubAluguerService serviceS*/) // causa erro
         {
             this._repo = repo;
+            //this._serviceS = serviceS;
         }
 
 
@@ -51,15 +58,13 @@ namespace ParqueAPICentral.Services
         }
 
         public async Task<ActionResult<Reserva>> ParaSubALuguer(long id)
-        {
-            /*
-            var reserva = _repo.GetReservaByIdAsync(id);
-            var r = reserva.Result.Value;
-
-            if (r.ParaSubAluguer == false)
+        {           
+            var reserva = _repo.GetReservaByIdAsync(id).Result.Value;
+            
+            if (reserva.ParaSubAluguer == false)
             {
-                r.ParaSubAluguer = true;
-                await _serv.CreateSubAluguer(new SubAluguer
+                reserva.ParaSubAluguer = true;
+                await _serviceS.PostSubAluguer(new SubAluguer
                 {
                     Preco = 11,
                     ReservaID = id,
@@ -68,10 +73,10 @@ namespace ParqueAPICentral.Services
             }
             else
             {
-                r.ParaSubAluguer = false;
-                await _serv.DeleteSubAluguer(id);
+                reserva.ParaSubAluguer = false;
+                await _serviceS.DeleteSubAluguer(id);
             }
-            */
+            
         return await _repo.ParaSubALuguer(id);
         }
 

@@ -14,11 +14,12 @@ namespace ParqueAPICentral.Repositories
         public SubAluguerRepository(APICentralContext theContext) : base(theContext)
         {
         }
+
         public async Task<ActionResult<IEnumerable<SubAluguer>>> GetAllSubAluguerAsync()
-        {
-            
+        {           
             return await RepContext.SubAluguer.ToListAsync();
         }
+
         public async Task<ActionResult<SubAluguer>> FindSubAluguerById(long id)
         {
             return await RepContext.SubAluguer.FindAsync(id);
@@ -27,11 +28,6 @@ namespace ParqueAPICentral.Repositories
         public async Task<ActionResult<SubAluguer>> PostSubAluguer(SubAluguer subAluguer)
         {
             return await AddAsync(subAluguer);
-        }
-
-        public async Task<ActionResult<SubAluguer>> CreateSubAluguer(SubAluguer subaluguer)
-        {          
-            return await AddAsync(subaluguer);
         }
 
         public async Task<ActionResult<SubAluguer>> DeleteSubAluguer(long id)
