@@ -28,7 +28,7 @@ namespace PseudoCompanyFront.Controllers
 
 
         // GET: Reservas
-        public async Task<ActionResult> IndexAsync()
+        public async Task<ActionResult> Index()
         {
             using HttpClient client = new HttpClient();
             string endpoint = apiBaseUrl + "/Reservas";
@@ -43,7 +43,6 @@ namespace PseudoCompanyFront.Controllers
 
                 return View(reservas);
             }
-
             else
             {
                 return BadRequest("Server error. Please contact administrator.");
@@ -52,7 +51,7 @@ namespace PseudoCompanyFront.Controllers
 
 
         // GET: Reservas/Details/5
-        public async Task<IActionResult> DetailsAsync(long? id)
+        public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
             {

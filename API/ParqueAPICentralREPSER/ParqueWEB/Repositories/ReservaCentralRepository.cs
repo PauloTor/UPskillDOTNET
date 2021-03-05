@@ -48,7 +48,9 @@ namespace ParqueAPICentral.Repositories
             var reserva = RepContext.Reserva.Where(r => r.ReservaID == id).FirstOrDefault();
 
             if (reserva.ParaSubAluguer == false)
+            {
                 reserva.ParaSubAluguer = true;
+            }
             else
                 reserva.ParaSubAluguer = false;
 
