@@ -53,13 +53,12 @@ namespace ParqueAPICentral.Controllers
             return await _service.UpdateSubAluguer(subaluguer);
         }
         
-        // POST: api/SubAlugueres/{reservaID}/{preco}/
-        // passar para services
+        // POST: api/SubAlugueres/
         [EnableCors]
-        [HttpPost("{reservaID}/{preco}/{reservado}")]
-        public async Task<ActionResult<SubAluguer>> PostSubAluguer(long reservaID, float preco, bool reservado)
+        [HttpPost]
+        public async Task<ActionResult<SubAluguer>> PostSubAluguer(SubAluguer subaluguer)
         {
-        return await _service.PostSubAluguer(reservaID, preco,reservado);
+        return await _service.PostSubAluguer(subaluguer);
         }      
     }
 }

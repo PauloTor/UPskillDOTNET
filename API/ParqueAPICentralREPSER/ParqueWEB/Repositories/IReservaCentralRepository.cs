@@ -14,17 +14,9 @@ namespace ParqueAPICentral.Repositories
         Task<ActionResult<Reserva>> DeleteReservaCentral(long id);
         Task<ActionResult<Reserva>> GetAllClienteByReservasCentralAsync(long ParqueID, long id);
         Task<ActionResult<Reserva>> GetReservaByIdAsync(long id);
-        Task<ActionResult<Reserva>> ParaSubALuguer(long ReservaID, bool id);
+        Task<ActionResult<Reserva>> ParaSubALuguer(long id);
         Task<ActionResult<Reserva>> CriarReservaCentral(Reserva reserva);
         Task<ActionResult<Reserva>> UpdateReserva(Reserva reserva);
-        
-
-
-
-
-
-
-
     }
 
 }

@@ -49,9 +49,9 @@ namespace ParqueAPICentral.Services
             return await _repo.GetAllClienteByReservasCentralAsync(ParqueID, id);
         }
 
-        public async Task<ActionResult<Reserva>> ParaSubALuguer(long ReservaID, bool boleano) //reservaID key
+        public async Task<ActionResult<Reserva>> ParaSubALuguer(long id) //reservaID key
         {
-            return await _repo.ParaSubALuguer(ReservaID, boleano);
+            return await _repo.ParaSubALuguer(id);
         }
 
         public async Task<ActionResult<Reserva>>  CriarReservaCentral(Reserva reserva)

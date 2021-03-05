@@ -90,7 +90,7 @@ namespace PseudoCompanyFront.Controllers
         // POST: Reservas/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ReservaID,ParqueID,LugarID,ClienteID,DataInicio,DataFim,DataReserva")] Reserva reserva)
+        public async Task<IActionResult> Create([Bind("ReservaID,ParqueID,LugarID,ClienteID,DataInicio,DataFim,DataReserva,")] Reserva reserva)
         {
             if (ModelState.IsValid)
             {
@@ -99,6 +99,55 @@ namespace PseudoCompanyFront.Controllers
                     StringContent content = new StringContent(JsonConvert.SerializeObject(reserva), Encoding.UTF8, "application/json");
                     string endpoint = apiBaseUrl + "/Reservas";
                     var response = await client.PostAsync(endpoint, content);
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(reserva);
+        }
+
+
+        // GET: Reservas/Edit/5
+        public async Task<IActionResult> Edit(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Reserva reserva;
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = apiBaseUrl + "/Reservas/" + id;
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                reserva = await response.Content.ReadAsAsync<Reserva>();
+            }
+            if (reserva == null)
+            {
+                return NotFound();
+            }
+            return View(reserva);
+        }
+
+
+        // POST: Reservas/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(long id, [Bind("ReservaID,ParqueID,LugarID,ClienteID,DataInicio,DataFim,ParaSubAluguer")] Reserva reserva)
+        {
+            if (id != reserva.ReservaID)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                reserva.ParaSubAluguer = true;
+
+                using (HttpClient client = new HttpClient())
+                {
+
+                    StringContent content = new StringContent(JsonConvert.SerializeObject(reserva), Encoding.UTF8, "application/json");
+                    string endpoint = apiBaseUrl + "/ReservasCentral/" + id;
+                    var response = await client.PutAsync(endpoint, content);
                 }
                 return RedirectToAction(nameof(Index));
             }

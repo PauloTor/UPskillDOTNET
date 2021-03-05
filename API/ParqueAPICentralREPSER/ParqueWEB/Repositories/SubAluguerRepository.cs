@@ -24,10 +24,10 @@ namespace ParqueAPICentral.Repositories
             return await RepContext.SubAluguer.FindAsync(id);
         }
        
-        public async Task<ActionResult<SubAluguer>> PostSubAluguer(long reservaID, float preco, bool reservado)
+        public async Task<ActionResult<SubAluguer>> PostSubAluguer(SubAluguer subAluguer)
         {
-            var sub = new SubAluguer(reservaID, preco,reservado);
-            return await AddAsync(sub);
+            //var sub = new SubAluguer(subAluguer);
+            return await AddAsync(subAluguer);
         }
 
         public async Task<ActionResult<SubAluguer>> CreateSubAluguer(SubAluguer subaluguer)
@@ -56,9 +56,5 @@ namespace ParqueAPICentral.Repositories
         {
             return await GetAll().Where(p => p.SubAluguerID == id).AnyAsync();
         }
-
-
-
-
     }
 } 
