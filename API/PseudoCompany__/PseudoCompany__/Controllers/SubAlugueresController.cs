@@ -17,6 +17,7 @@ using ParqueAPICentral.Repositories;
 
 namespace ParqueAPICentral.Controllers
 {
+    //[Authorize(Policy = "Roles")]
     [EnableCors("MyAllowSpecificOrigins")]
     [Route("api/SubAlugueres")]
     [ApiController]
@@ -30,6 +31,7 @@ namespace ParqueAPICentral.Controllers
         }
 
         // GET: api/SubAlugueres
+        //[Authorize(Policy = "Roles")]
         [EnableCors]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SubAluguer>>> GetAllSubAluguerAsync()
@@ -38,6 +40,7 @@ namespace ParqueAPICentral.Controllers
         }
 
         // GET: api/SubAlugueres/id
+        //[Authorize(Policy = "Roles")]
         [EnableCors]
         [HttpGet("{id}")]
         public async Task<ActionResult<SubAluguer>> GetSubAlugueresById(long id)
@@ -45,15 +48,17 @@ namespace ParqueAPICentral.Controllers
             return await _service.FindSubAluguerById(id);
         }
 
+        //[Authorize(Policy = "User")]
         [EnableCors]
         [HttpPut("{id}")]
         public async Task<ActionResult<SubAluguer>> UpdateSubAluguer(SubAluguer subaluguer)
         {
             return await _service.UpdateSubAluguer(subaluguer);
         }
-        
+
         // POST: api/SubAlugueres/{reservaID}/{preco}/
         // passar para services
+        //[Authorize(Policy = "Roles")]
         [EnableCors]
         [HttpPost("{reservaID}/{preco}/{reservado}")]
         public async Task<ActionResult<SubAluguer>> PostSubAluguer(long reservaID, float preco, bool reservado)

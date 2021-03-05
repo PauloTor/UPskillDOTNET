@@ -11,6 +11,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using ParqueAPICentral.Repositories;
 using ParqueAPICentral.Services;
+using Microsoft.AspNetCore.Authorization;
+using ParqueAPICentral.Authorization;
 
 namespace ParqueAPICentral
 {
@@ -29,7 +31,23 @@ namespace ParqueAPICentral
             services.AddControllersWithViews();
             services.AddCors();
             services.AddControllers();
-           
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminPolicy", policy => policy.RequireClaim("Admin"));
+                options.AddPolicy("UserPolicy", policy => policy.RequireClaim("User"));
+                options.AddPolicy("UserOperatorPolicy", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                });
+                options.AddPolicy("Roles", policy =>
+                {
+                    policy.Requirements.Add(new ClaimsRequirement("Admin", "User"));
+                });
+            });
+
+            services.AddSingleton<IAuthorizationHandler, ClaimsRequirementHandler>();
+
             services.AddScoped<IFaturaRepository, FaturaRepository>();
             services.AddTransient<FaturaService>();
 
