@@ -1,23 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using ParqueAPICentral.Entities;
 using ParqueAPICentral.Models;
 using ParqueAPICentral.Repositories;
-using Microsoft.Extensions.Configuration;
-using ParqueAPICentral.DTO;
-using ParqueAPICentral.Data;
-using Microsoft.Extensions.DependencyInjection;
-using System.Net;
-using System.Net.Mail;
-using System.IO;
-using System.Drawing;
 
 namespace ParqueAPICentral.Services
 {
@@ -26,10 +12,10 @@ namespace ParqueAPICentral.Services
         private readonly IReservaCentralRepository _repo;
         private readonly SubAluguerService _serviceS;
 
-        public ReservaCentralService(IReservaCentralRepository repo/*, SubAluguerService serviceS*/) // causa erro
+        public ReservaCentralService(IReservaCentralRepository repo, SubAluguerService serviceS) // causa erro
         {
             this._repo = repo;
-            //this._serviceS = serviceS;
+            this._serviceS = serviceS;
         }
 
 

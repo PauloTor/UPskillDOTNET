@@ -16,16 +16,14 @@ namespace ParqueAPICentral.Services
             this._repo = repo;
         }
 
-
         public async Task<ActionResult<IEnumerable<Cliente>>> GetAllClientes()
         {
-            return await this._repo.GetAllClientesAsync();
+            return await _repo.GetAllClientesAsync();
         }
 
         public async Task<ActionResult<Cliente>> GetClienteById(long id)
         {
-
-            return await this._repo.FindClienteById(id);
+            return await _repo.FindClienteById(id);
         }
         public async Task<ActionResult<Cliente>> CreateCliente(Cliente cliente)
         {
@@ -44,7 +42,6 @@ namespace ParqueAPICentral.Services
             cliente.Value.Credito += valor;
             // Cofre.Entrada(valor);
 
-
             if (cliente.Value.Credito < 0)
             {
                 // Cofre.Saida(valor);
@@ -57,7 +54,6 @@ namespace ParqueAPICentral.Services
 
         public async Task<ActionResult<Cliente>> UpdateCliente(Cliente cliente)
         {
-
             return await _repo.UpdateCliente(cliente);
         }
     }

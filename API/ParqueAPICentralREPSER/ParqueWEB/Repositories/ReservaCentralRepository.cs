@@ -14,9 +14,7 @@ namespace ParqueAPICentral.Repositories
     {
         public ReservaCentralRepository(APICentralContext RepContext) : base(RepContext)
         {
-
         }
-
 
         public async Task<ActionResult<IEnumerable<Reserva>>> GetAllReservasCentralAsync()
         {

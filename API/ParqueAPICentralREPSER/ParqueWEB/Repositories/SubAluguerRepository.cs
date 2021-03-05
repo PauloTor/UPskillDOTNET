@@ -32,7 +32,7 @@ namespace ParqueAPICentral.Repositories
 
         public async Task<ActionResult<SubAluguer>> DeleteSubAluguer(long id)
         {
-            var subAluguer = GetAll().FirstOrDefault(u => u.SubAluguerID == id);
+            var subAluguer = GetAll().FirstOrDefault(u => u.ReservaID == id);
 
             await DeleteAsync(subAluguer);
 
@@ -44,11 +44,6 @@ namespace ParqueAPICentral.Repositories
             await UpdateAsync(subaluguer);
 
             return subaluguer;
-        }
-              
-        public async Task<bool> FindClienteAny(long id)
-        {
-            return await GetAll().Where(p => p.SubAluguerID == id).AnyAsync();
         }
     }
 } 
