@@ -26,7 +26,6 @@ namespace ParqueAPICentral.Repositories
        
         public async Task<ActionResult<SubAluguer>> PostSubAluguer(SubAluguer subAluguer)
         {
-            //var sub = new SubAluguer(subAluguer);
             return await AddAsync(subAluguer);
         }
 
