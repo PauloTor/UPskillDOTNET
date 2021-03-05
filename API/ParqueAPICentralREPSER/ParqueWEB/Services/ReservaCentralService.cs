@@ -19,10 +19,14 @@ namespace ParqueAPICentral.Services
     public class ReservaCentralService
     {
         private readonly IReservaCentralRepository _repo;
+        private readonly SubAluguerService _serv;
+        private readonly ReservaService _servR;
 
-        public ReservaCentralService(IReservaCentralRepository repo)
+        public ReservaCentralService(IReservaCentralRepository repo, SubAluguerService serv, ReservaService servR)
         {
             this._repo = repo;
+            _serv = serv;
+            _servR = servR;
         }
         
         public async Task<ActionResult<IEnumerable<Reserva>>> GetAllReservasCentralAsync()
@@ -49,9 +53,27 @@ namespace ParqueAPICentral.Services
             return await _repo.GetAllClienteByReservasCentralAsync(ParqueID, id);
         }
 
-        public async Task<ActionResult<Reserva>> ParaSubALuguer(long ReservaID, bool boleano) //reservaID key
+        public async Task<ActionResult<Reserva>> ParaSubALuguer(long id)
         {
-            return await _repo.ParaSubALuguer(ReservaID, boleano);
+            var reserva = _repo.GetReservaByIdAsync(id);
+            var r = reserva.Result.Value;
+
+            if (r.ParaSubAluguer == false)
+            {
+                r.ParaSubAluguer = true;
+                await _serv.CreateSubAluguer(new SubAluguer
+                {
+                    Preco = 11,
+                    ReservaID = id,
+                    Reservado = false
+                });
+            }
+            else
+            {
+                r.ParaSubAluguer = false;
+                await _serv.DeleteSubAluguer(id);
+            }
+        return await _repo.ParaSubALuguer(r);
         }
 
         public async Task<ActionResult<Reserva>>  CriarReservaCentral(Reserva reserva)

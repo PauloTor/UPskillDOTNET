@@ -4,41 +4,77 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Subalugar reserva</h1>
 
-<h4>Reserva</h4>
+<h3>Tem a certeza que pretende colocar/retirar esta reserva para subaluguer?</h3>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ReservaID" />
-            <div class="form-group">
-                <label asp-for="ParqueID" class="control-label"></label>
-                <input asp-for="ParqueID" class="form-control" />
-                <span asp-validation-for="ParqueID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LugarID" class="control-label"></label>
-                <input asp-for="LugarID" class="form-control" />
-                <span asp-validation-for="LugarID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ClienteID" class="control-label"></label>
-                <input asp-for="ClienteID" class="form-control" />
-                <span asp-validation-for="ClienteID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-
 <div>
-    <a asp-action="Index">Back to List</a>
+    <h4>Reserva</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClienteID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClienteID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ReservaID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ReservaID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ParqueID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ParqueID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LugarID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LugarID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClienteID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClienteID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataReserva)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataReserva)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataInicio)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataInicio)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataFim)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataFim)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ParaSubAluguer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ParaSubAluguer)
+        </dd>
+    </dl>
+
+    <form asp-action="Edit">
+        <input type="hidden" asp-for="ReservaID" />
+        <input type="submit" value="Confirmar" class="btn btn-danger" /> |
+        <a asp-action="Index">Voltar</a>
+    </form>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

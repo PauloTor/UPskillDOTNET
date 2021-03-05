@@ -32,6 +32,7 @@ namespace PseudoCompanyFront.Models
         [DataType(DataType.Date)]
         public DateTime DataReserva = DateTime.Now;
 
-        public Reserva Reservas { get; set; }
+        [Display(Name = "Para subaluguer")]
+        public bool ParaSubAluguer { get; set; }
     }
 }

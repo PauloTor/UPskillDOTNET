@@ -43,6 +43,7 @@
                 @Html.DisplayFor(modelItem => item.LugarID)
             </td>
             <td>
+                <a asp-action="Edit" asp-route-id="@item.ReservaID">Subalugar</a> |
                 <a asp-action="Details" asp-route-id="@item.ReservaID">Detalhes</a> |
                 <a asp-action="Delete" asp-route-id="@item.ReservaID">Eliminar</a>
             </td>
