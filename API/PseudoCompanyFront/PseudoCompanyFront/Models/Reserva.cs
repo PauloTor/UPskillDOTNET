@@ -34,7 +34,5 @@ namespace PseudoCompanyFront.Models
 
         [Display(Name = "Para subaluguer")]
         public bool ParaSubAluguer { get; set; }
-
-        public Reserva Reservas { get; set; }
     }
 }

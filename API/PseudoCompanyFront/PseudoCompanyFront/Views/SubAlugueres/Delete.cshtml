@@ -1,0 +1,45 @@
+﻿@model PseudoCompanyFront.Models.SubAluguer
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>SubAluguer</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Preco)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Preco)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Reservado)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Reservado)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NovoCliente)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NovoCliente)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Reserva)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Reserva.ReservaID)
+        </dd class>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="SubAluguerID" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
