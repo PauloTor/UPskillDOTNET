@@ -31,8 +31,7 @@ namespace ParqueAPICentral.Repositories
         }
 
         public async Task<ActionResult<SubAluguer>> CreateSubAluguer(SubAluguer subaluguer)
-        {
-           
+        {          
             return await AddAsync(subaluguer);
         }
 

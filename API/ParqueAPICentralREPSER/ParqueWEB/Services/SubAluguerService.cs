@@ -31,12 +31,12 @@ namespace ParqueAPICentral.Services
         {
             return await this._repo.FindSubAluguerById(id);
         }
-        /*
-        public async Task<ActionResult<SubAluguer>> CreateCliente(SubAluguer subAluguer)
+        
+        public async Task<ActionResult<SubAluguer>> CreateSubAluguer(SubAluguer subAluguer)
         {
             return await _repo.CreateSubAluguer(subAluguer);
         }
-        */
+        
         public async Task<ActionResult<SubAluguer>> DeleteSubAluguer(long id)
         {
             return await _repo.DeleteSubAluguer(id);
@@ -44,8 +44,6 @@ namespace ParqueAPICentral.Services
         
         public async Task<ActionResult<SubAluguer>> PostSubAluguer(SubAluguer subaluguer)
         {
-            //await _serviceR.ParaSubALuguer(subaluguer); // alterar reservacentral para booleano true
-                        
             return await _repo.PostSubAluguer(subaluguer);
         }
     }

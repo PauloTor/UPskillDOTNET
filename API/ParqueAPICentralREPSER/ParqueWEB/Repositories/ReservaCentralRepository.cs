@@ -12,8 +12,10 @@ namespace ParqueAPICentral.Repositories
 {
     public class ReservaCentralRepository : RepositoryBase<Reserva>, IReservaCentralRepository
     {
-        public ReservaCentralRepository(APICentralContext RepContext) : base(RepContext)
+        private readonly SubAluguerRepository _rep;
+        public ReservaCentralRepository(APICentralContext RepContext, SubAluguerRepository rep) : base(RepContext)
         {
+            _rep = rep; 
         }
 
         public async Task<ActionResult<IEnumerable<Reserva>>> GetAllReservasCentralAsync()
@@ -43,17 +45,25 @@ namespace ParqueAPICentral.Repositories
             return await RepContext.Reserva.Where(r => r.ReservaID == id).FirstOrDefaultAsync();
         }
         
-        public async Task<ActionResult<Reserva>> ParaSubALuguer(long id)  // put booleano
+        public async Task<ActionResult<Reserva>> ParaSubALuguer(Reserva reserva)  // put booleano
         {
-            var reserva = RepContext.Reserva.Where(r => r.ReservaID == id).FirstOrDefault();
+            /*var reserva = RepContext.Reserva.Where(r => r.ReservaID == id).FirstOrDefault();
 
             if (reserva.ParaSubAluguer == false)
             {
                 reserva.ParaSubAluguer = true;
+                await _rep.CreateSubAluguer(new SubAluguer
+                {
+                    Preco = 11,
+                    ReservaID = id,
+                    Reservado = false
+                });
             }
             else
+            {
                 reserva.ParaSubAluguer = false;
-
+                await _rep.DeleteSubAluguer(id);
+            }*/
             return await UpdateReserva(reserva);
         }
         
