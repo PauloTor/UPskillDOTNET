@@ -20,6 +20,7 @@ using ParqueAPICentral.Services;
 
 namespace ParqueAPICentral.Controllers
 {
+    //[Authorize(Policy = "Roles")]
     [EnableCors("MyAllowSpecificOrigins")]
     [Route("api/ReservasCentral")]
     [ApiController]
@@ -33,6 +34,7 @@ namespace ParqueAPICentral.Controllers
 
 
         // GET: api/Reservas por parque
+        //[Authorize(Policy = "Admin")]
         [EnableCors]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Reserva>>> GetAllReservaCentral()
@@ -41,6 +43,7 @@ namespace ParqueAPICentral.Controllers
 
         }
 
+        //[Authorize(Policy = "Roles")]
         [EnableCors]
         [HttpPut("{ParqueID}")]
         public async Task<ActionResult<Reserva>> UpdateReserva(Reserva reserva)
@@ -49,6 +52,8 @@ namespace ParqueAPICentral.Controllers
             return await _service.UpdateReserva(reserva);
 
         }
+
+        //[Authorize(Policy = "Admin")]
         [EnableCors]
         [HttpGet("ClienteReserva/{id}")]
         public async Task<ActionResult<Reserva>> GetAllClienteByReservasCentralAsync(long ParqueID, long id)
@@ -57,25 +62,21 @@ namespace ParqueAPICentral.Controllers
         return await this._service.GetAllClienteByReservasCentral(ParqueID, id);
         }
 
+        //[Authorize(Policy = "Roles")]
         [EnableCors]
         [HttpDelete("{ParqueID}/{id}")]
         public async Task<ActionResult<Reserva>> DeleteReservaCentral(long id)
         {
-
-            
             return await _service.DeleteReservaCentral(id);
-
         }
 
-
         // GET: api/Reservas/id
+        //[Authorize(Policy = "Roles")]
         [EnableCors]
         [HttpGet("{id}")]
         public async Task<ActionResult<Reserva>> GetReservaById(long id)
-        {
-            
-            
-        return await _service.GetReservaById(id);
+        {   
+            return await _service.GetReservaById(id);
         }
     }
 }
