@@ -2,11 +2,12 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-left">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center">
+    <h1 class="display-4">Bem-Vindo à PseudoCompany Smart Parking!</h1>
+    <img src="~/Img/P2.1.png" ; style="width: 350px">
 
-    <!-- Check for token -->
+
+    <!--Check for token
     @if (ViewBag.Token == false)
     {
         <p>User not logged!</p>
@@ -15,12 +16,12 @@
     {
         <p>User logged!</p>
     }
-
-    <!-- Check for role -->
+         -->
+    <!-- Check for role
     @if (TempData["role"] == null)
     {
         <p>Role = Nao registado</p>
-    }
+    } -->
 
     @if ((string)TempData["role"] == "\"Administrator\"")
     {
