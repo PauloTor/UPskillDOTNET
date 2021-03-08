@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using PseudoCompanyFront.Data;
 using PseudoCompanyFront.Models;
 
 namespace PseudoCompanyFront.Controllers
@@ -30,7 +26,7 @@ namespace PseudoCompanyFront.Controllers
         // GET: Reservas
         public async Task<ActionResult> Index()
         {
-            using HttpClient client = new HttpClient();
+            using HttpClient client = new();
             string endpoint = apiBaseUrl + "/Reservas";
             var response = await client.GetAsync(endpoint);
 
@@ -57,7 +53,6 @@ namespace PseudoCompanyFront.Controllers
             {
                 return NotFound();
             }
-
             using HttpClient client = new HttpClient();
             string endpoint = apiBaseUrl + "/Reservas/" + id;
             var response = await client.GetAsync(endpoint);
@@ -139,8 +134,6 @@ namespace PseudoCompanyFront.Controllers
             }
             if (ModelState.IsValid)
             {
-                reserva.ParaSubAluguer = true;
-
                 using (HttpClient client = new HttpClient())
                 {
 
