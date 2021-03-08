@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-left">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <!-- Check for token -->
+    @if (ViewBag.Token == false)
+    {
+        <p>User not logged!</p>
+    }
+    else
+    {
+        <p>User logged!</p>
+    }
+
+    <!-- Check for role -->
+    @if (TempData["role"] == null)
+    {
+        <p>Role = Nao registado</p>
+    }
+
+    @if ((string)TempData["role"] == "\"Administrator\"")
+    {
+        <p>Role = Administrador</p>
+    }
+
+    @if ((string)TempData["role"] == "\"User\"")
+    {
+        <p>Role = Utilizador Cliente</p>
+    }
+
+    @if (TempData["message"] != null)
+    {
+        <div>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h3>@TempData["message"]</h3>
+        </div>
+    }
+</div>

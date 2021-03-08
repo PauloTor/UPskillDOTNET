@@ -12,7 +12,7 @@ using System.Text;
 using ParqueAPICentral.Repositories;
 using ParqueAPICentral.Services;
 using Microsoft.AspNetCore.Authorization;
-using ParqueAPICentral.Authorization;
+using PaqueAPICentral.Authentication;
 
 namespace ParqueAPICentral
 {
