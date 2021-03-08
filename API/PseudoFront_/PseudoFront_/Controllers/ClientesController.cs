@@ -103,6 +103,28 @@ namespace PseudoFront_.Controllers
             }
             return View();
         }
+
+        //POST Clientes/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //[Authorize(Roles = "Funcionario,Administrador")]
+
+        public async Task<IActionResult> Create([Bind("ClienteID,NomeCliente,EmailCliente,NifCliente,MetodoPagamento,Credito")] Cliente cliente)
+        {
+            if (ModelState.IsValid)
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    StringContent content = new StringContent(JsonConvert.SerializeObject(cliente), Encoding.UTF8, "application/json");
+                    string endpoint = apiBaseUrl + "/Clientes";
+                    var response = await client.PostAsync(endpoint, content);
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(cliente);
+        }
+
+
     }
 }
 
