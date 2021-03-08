@@ -1,0 +1,54 @@
+﻿@model IEnumerable<PseudoCompanyFront.ViewModel.ViewModel1>
+
+
+@{ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a>Codigo Postal</a>
+            </th>
+            <th>
+                <a>Rua</a>
+            </th>
+            <th>
+                <a>Nome do Parque</a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CodigoPostal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rua)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NomeParque)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.MetodoPagamento)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Credito)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>*@
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.MoradaID">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.MoradaID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.MoradaID">Apagar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

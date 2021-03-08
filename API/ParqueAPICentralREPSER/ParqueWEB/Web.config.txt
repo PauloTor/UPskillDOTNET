@@ -1,0 +1,5 @@
+<httpErrors errorMode="Custom" existingResponse="PassThrough">
+    <clear />
+    <error statusCode="404" responseMode="ExecuteURL" path="/error" />
+    <error statusCode="500" responseMode="ExecuteURL" path="/error" />
+</httpErrors>r>
