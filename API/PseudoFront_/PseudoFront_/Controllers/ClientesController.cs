@@ -147,6 +147,20 @@ namespace PseudoFront_.Controllers
             return View(cliente);
         }
 
+        //POST: Clientes/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        //[Authorize(Roles = "Funcionario,Administrador")]
+        public async Task<IActionResult> DeleteConfirmed(long id)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = apiBaseUrl + "/Clientes/" + id;
+                var response = await client.DeleteAsync(endpoint);
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }
 
