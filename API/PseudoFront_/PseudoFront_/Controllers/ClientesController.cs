@@ -10,9 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 //using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-
 using PseudoFront_.Models;
-
 
 namespace PseudoFront_.Controllers
 {
@@ -65,7 +63,7 @@ namespace PseudoFront_.Controllers
                     break;
             }
             int pageSize = 10;
-            return View(await PaginatedList<Cliente>.CreateAsync(clientes, pageNumber ?? 1, pageSize));
+            return View(PaginatedList<Cliente>.CreateAsync(clientes, pageNumber ?? 1, pageSize));
         }
 
         // GET: Clientes/Details/5
