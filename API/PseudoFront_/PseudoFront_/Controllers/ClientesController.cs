@@ -161,6 +161,44 @@ namespace PseudoFront_.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //EDIT GET
+        //[Authorize(Roles = "Funcionario,Administrador")]
+        public async Task<IActionResult> Edit(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Cliente cliente;
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = apiBaseUrl + "/Clientes/" + id;
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                cliente = await response.Content.ReadAsAsync<Cliente>();
+            }
+            if (cliente == null)
+            {
+                return NotFound();
+            }
+            return View(cliente);
+        }
+
+        //EDIT POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //[Authorize(Roles = "Funcionario,Administrador")]
+        public async Task<IActionResult> Edit(long id, [Bind("ClienteID,NomeCliente,EmailCliente,NifCliente,MetodoPagamento,Credito")] Cliente cliente)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                StringContent content = new StringContent(JsonConvert.SerializeObject(cliente), Encoding.UTF8, "application/json");
+                string endpoint = apiBaseUrl + "/Clientes/" + id;
+                var response = await client.PutAsync(endpoint, content);
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }
 
