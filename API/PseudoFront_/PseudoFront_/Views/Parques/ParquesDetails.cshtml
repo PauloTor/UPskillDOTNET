@@ -1,0 +1,56 @@
+﻿@model PseudoFront_.Models.ParqueDTO
+@{ ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<h1>Details</h1>
+
+<div class="login-div" style="opacity: 0.9; margin-top: 50px; height: 120px; width: 900px; padding: 35px 35px 35px 35px;color: #000000">
+    <div>
+        <h4>Park</h4>
+        <hr />
+        <div class="fields" style="opacity:0.98;margin-left :-12px;">
+            <dl class="row" style="color:#ffffff">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.ParqueID)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ParqueID)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.NomeParque)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.NomeParque)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.MoradaID)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.MoradaID)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.MoradaID)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.MoradaID)
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>
+<form asp-action="CriarReserva" method="get">
+    <div class="login-div" style="opacity: 0.9; margin-top: 200px; height: 120px; width: 900px; padding: 35px 35px 35px 35px;color: #000000">
+        <div class="fields" style="opacity:0.98;margin-left :-12px;">
+            <div><input type="datetime-local" id="datainicio" style=" width: 540px" name="datai" placeholder="Inicio da Reserva" /></div>
+            <div><input type="datetime-local" id="datafim" style=" width: 540px" name="dataf" placeholder="Fim da Reserva" /></div>
+        </div>
+        <input type="submit" value="Criar Reserva" style=" width: 100px;justify-self :flex-end; margin-top:25px" class="signin-button" />
+    </div>
+</form>
+<div>
+    <a class="buttonz" asp-action="Index">Voltar</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
