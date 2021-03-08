@@ -13,10 +13,9 @@ namespace ParqueAPICentral.Repositories
     {
         Task<ActionResult<IEnumerable<SubAluguer>>> GetAllSubAluguerAsync();
         Task<ActionResult<SubAluguer>> FindSubAluguerById(long id);
-        Task<ActionResult<SubAluguer>> CreateSubAluguer(SubAluguer subAluguer); 
         Task<ActionResult<SubAluguer>> UpdateSubAluguer(SubAluguer subaluguer);
         Task<ActionResult<SubAluguer>> DeleteSubAluguer(long id);
-        Task<ActionResult<SubAluguer>> PostSubAluguer(long reservaID, float preco,bool reservado);
+        Task<ActionResult<SubAluguer>> PostSubAluguer(SubAluguer subAluguer);
     }
    
 }

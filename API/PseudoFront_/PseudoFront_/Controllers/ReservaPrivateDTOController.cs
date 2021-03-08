@@ -27,7 +27,7 @@ namespace PseudoFront_.Controllers
         public async Task<ActionResult> Index()
         {
             using HttpClient client = new();
-            string endpoint = apiBaseUrl + "/Reservas";
+            string endpoint = apiBaseUrl + "/ReservasCentral";
             var response = await client.GetAsync(endpoint);
 
             if (response.IsSuccessStatusCode)
@@ -53,8 +53,8 @@ namespace PseudoFront_.Controllers
             {
                 return NotFound();
             }
-            using HttpClient client = new HttpClient();
-            string endpoint = apiBaseUrl + "/Reservas/" + id;
+            using HttpClient client = new();
+            string endpoint = apiBaseUrl + "/ReservasCentral/" + id;
             var response = await client.GetAsync(endpoint);
             var reserva = await response.Content.ReadAsAsync<ReservaPrivateDTOController>();
 
@@ -70,9 +70,9 @@ namespace PseudoFront_.Controllers
         // GET: Reservas/Create
         public async Task<IActionResult> Create()
         {
-            using (HttpClient client = new HttpClient())
+            using (HttpClient client = new())
             {
-                string endpoint = apiBaseUrl + "/Reservas";
+                string endpoint = apiBaseUrl + "/post";
                 var response = await client.GetAsync(endpoint);
                 response.EnsureSuccessStatusCode();
                 var reservas = await response.Content.ReadAsAsync<List<ReservaPrivateDTOController>>();
@@ -88,10 +88,10 @@ namespace PseudoFront_.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (HttpClient client = new HttpClient())
+                using (HttpClient client = new())
                 {
-                    StringContent content = new StringContent(JsonConvert.SerializeObject(reserva), Encoding.UTF8, "application/json");
-                    string endpoint = apiBaseUrl + "/Reservas";
+                    StringContent content = new(JsonConvert.SerializeObject(reserva), Encoding.UTF8, "application/json");
+                    string endpoint = apiBaseUrl + "/post";
                     var response = await client.PostAsync(endpoint, content);
                 }
                 return RedirectToAction(nameof(Index));
@@ -108,7 +108,7 @@ namespace PseudoFront_.Controllers
                 return NotFound();
             }
             ReservaPrivateDTOController reserva;
-            using (HttpClient client = new HttpClient())
+            using (HttpClient client = new())
             {
                 string endpoint = apiBaseUrl + "/Reservas/" + id;
                 var response = await client.GetAsync(endpoint);
@@ -134,9 +134,9 @@ namespace PseudoFront_.Controllers
             }
             if (ModelState.IsValid)
             {
-                using (HttpClient client = new HttpClient())
+                using (HttpClient client = new())
                 {
-                    StringContent content = new StringContent(JsonConvert.SerializeObject(reserva), Encoding.UTF8, "application/json");
+                    StringContent content = new(JsonConvert.SerializeObject(reserva), Encoding.UTF8, "application/json");
                     string endpoint = apiBaseUrl + "/ReservasCentral/" + id;
                     var response = await client.PutAsync(endpoint, content);
                 }

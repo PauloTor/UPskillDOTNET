@@ -44,9 +44,11 @@ namespace ParqueAPICentral.Repositories
             return await RepContext.Reserva.Where(r => r.ReservaID == id).FirstOrDefaultAsync();
         }
         
-        public async Task<ActionResult<Reserva>> ParaSubALuguer(long ReservaID, bool boleano)  // put booleano
+        public async Task<ActionResult<Reserva>> ParaSubALuguer(long id)
         {
-            return await RepContext.Reserva.Where(r => r.ReservaID == ReservaID).FirstOrDefaultAsync();
+            var reserva = RepContext.Reserva.Where(r => r.ReservaID == id).FirstOrDefault();
+
+            return await UpdateAsync(reserva);
         }
         
         public async Task<ActionResult<Reserva>> DeleteReservaCentral(long id)

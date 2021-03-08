@@ -22,19 +22,12 @@ namespace ParqueAPICentral.Repositories
         }
         public async Task<ActionResult<SubAluguer>> FindSubAluguerById(long id)
         {
-            return await RepContext.SubAluguer.FindAsync(id);
+            return await RepContext.SubAluguer.Where(s => s.ReservaID == id).FirstOrDefaultAsync();
         }
        
-        public async Task<ActionResult<SubAluguer>> PostSubAluguer(long reservaID, float preco, bool reservado)
+        public async Task<ActionResult<SubAluguer>> PostSubAluguer(SubAluguer subAluguer)
         {
-            var sub = new SubAluguer(reservaID, preco,reservado);
-            return await AddAsync(sub);
-        }
-
-        public async Task<ActionResult<SubAluguer>> CreateSubAluguer(SubAluguer subaluguer)
-        {
-           
-            return await AddAsync(subaluguer);
+            return await AddAsync(subAluguer);
         }
 
         public async Task<ActionResult<SubAluguer>> DeleteSubAluguer(long id)

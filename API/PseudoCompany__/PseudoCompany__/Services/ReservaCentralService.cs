@@ -19,12 +19,14 @@ namespace ParqueAPICentral.Services
     public class ReservaCentralService
     {
         private readonly IReservaCentralRepository _repo;
+        private readonly SubAluguerService _serviceS;
 
-        public ReservaCentralService(IReservaCentralRepository repo)
+        public ReservaCentralService(IReservaCentralRepository repo, SubAluguerService serviceS)
         {
             this._repo = repo;
+            _serviceS = serviceS;
         }
-        
+
         public async Task<ActionResult<IEnumerable<Reserva>>> GetAllReservasCentralAsync()
         {
 
@@ -49,9 +51,32 @@ namespace ParqueAPICentral.Services
             return await _repo.GetAllClienteByReservasCentralAsync(ParqueID, id);
         }
 
-        public async Task<ActionResult<Reserva>> ParaSubALuguer(long ReservaID, bool boleano) //reservaID key
+        public async Task<ActionResult<Reserva>> ParaSubALuguer(long id)
         {
-            return await _repo.ParaSubALuguer(ReservaID, boleano);
+            var reserva = _repo.GetReservaByIdAsync(id).Result.Value;
+
+            if (reserva.ParaSubAluguer == false)
+            {
+                reserva.ParaSubAluguer = true;
+                await _serviceS.PostSubAluguer(new SubAluguer
+                {
+                    //Preco = 11,
+                    ReservaID = id,
+                    Reservado = false
+                });
+            }
+            else
+            {
+                var sub = _serviceS.FindSubAluguerById(id);
+                if (sub.Result.Value.Reservado == false)
+                {
+                    reserva.ParaSubAluguer = false;
+                    await _serviceS.DeleteSubAluguer(id);
+                }
+                else
+                    throw new Exception("Este subaluguer já está reservado por outro utilizador e não é possível eliminar.");
+            }
+            return await _repo.ParaSubALuguer(id);
         }
 
         public async Task<ActionResult<Reserva>>  CriarReservaCentral(Reserva reserva)

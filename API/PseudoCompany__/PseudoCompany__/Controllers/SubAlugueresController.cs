@@ -60,10 +60,9 @@ namespace ParqueAPICentral.Controllers
         // passar para services
         //[Authorize(Policy = "Roles")]
         [EnableCors]
-        [HttpPost("{reservaID}/{preco}/{reservado}")]
-        public async Task<ActionResult<SubAluguer>> PostSubAluguer(long reservaID, float preco, bool reservado)
+        public async Task<ActionResult<SubAluguer>> PostSubAluguer(SubAluguer subaluguer)
         {
-        return await _service.PostSubAluguer(reservaID, preco,reservado);
-        }      
+            return await _service.PostSubAluguer(subaluguer);
+        }
     }
 }
