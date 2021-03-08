@@ -154,9 +154,9 @@ namespace PseudoFront_.Controllers
                 return NotFound();
             }
             ReservaPrivateDTO reserva;
-            using (HttpClient client = new HttpClient())
+            using (HttpClient client = new())
             {
-                string endpoint = apiBaseUrl + "/Reservas/" + id;
+                string endpoint = apiBaseUrl + "/ReservasCentral/" + id;
                 var response = await client.GetAsync(endpoint);
                 response.EnsureSuccessStatusCode();
                 reserva = await response.Content.ReadAsAsync<ReservaPrivateDTO>();
@@ -174,9 +174,9 @@ namespace PseudoFront_.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            using (HttpClient client = new HttpClient())
+            using (HttpClient client = new())
             {
-                string endpoint = apiBaseUrl + "/Reservas/" + id;
+                string endpoint = apiBaseUrl + "/Cancelar/" + id;
                 var response = await client.DeleteAsync(endpoint);
             }
             return RedirectToAction(nameof(Index));
