@@ -68,7 +68,27 @@ namespace PseudoFront_.Controllers
             return View(await PaginatedList<Cliente>.CreateAsync(clientes, pageNumber ?? 1, pageSize));
         }
 
-
+        // GET: Clientes/Details/5
+        public async Task<IActionResult> Details(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Cliente cliente;
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = apiBaseUrl + "/Clientes/" + id;
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                cliente = await response.Content.ReadAsAsync<Cliente>();
+            }
+            if (cliente == null)
+            {
+                return NotFound();
+            }
+            return View(cliente);
+        }
     }
 }
 
