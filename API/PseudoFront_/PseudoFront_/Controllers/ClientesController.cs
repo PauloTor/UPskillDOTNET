@@ -89,6 +89,20 @@ namespace PseudoFront_.Controllers
             }
             return View(cliente);
         }
+
+        //GET: Clientes/Create
+        public async Task<IActionResult> Create()
+        {
+            var listaClientes = new List<Cliente>();
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = apiBaseUrl + "/Clientes";
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                listaClientes = await response.Content.ReadAsAsync<List<Cliente>>();
+            }
+            return View();
+        }
     }
 }
 
