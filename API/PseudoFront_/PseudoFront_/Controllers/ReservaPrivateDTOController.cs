@@ -72,7 +72,7 @@ namespace PseudoFront_.Controllers
         {
             using (HttpClient client = new())
             {
-                string endpoint = apiBaseUrl + "/post";
+                string endpoint = apiBaseUrl + "/ReservasCentral";
                 var response = await client.GetAsync(endpoint);
                 response.EnsureSuccessStatusCode();
                 var reservas = await response.Content.ReadAsAsync<List<ReservaPrivateDTO>>();
