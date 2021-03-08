@@ -27,207 +27,218 @@ namespace PseudoFront_.Controllers
             _configure = configuration;
             apiBaseUrl = _configure.GetValue<string>("WebAPIBaseUrl");
         }
+
         // GET: Obter informação de todos os Clientes
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
-            // ViewData["CurrentFilter"] = searchString;
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NomeSortParm"] = String.IsNullOrEmpty(sortOrder) ? "nome_desc" : "";
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewData["CurrentFilter"] = searchString;
             var listaClientes = new List<Cliente>();
             using (HttpClient client = new HttpClient())
             {
-
-                client.BaseAddress = new Uri("https://localhost:44353/api/");
-                // string endpoint = apiBaseUrl + "/Clientes";
-                var response = client.GetAsync("Clientes");
-                response.Wait();
-                //var response = await client.GetAsync("https://localhost:44353/api/Clientes");
-                var result = response.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                    listaClientes = await result.Content.ReadAsAsync<List<Cliente>>();
-                    //read.Wait();
-                    //lista = listaClientes.Result;
-                }
-                else
-                {
-                    ////erro
-                    //listaClientes= Enumerable.Empty.List<Cliente>
-                    listaClientes.Clear();
-                    ModelState.AddModelError(string.Empty, "Server error occured");
-                }
-
+                string endpoint = apiBaseUrl + "/Clientes";
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                listaClientes = await response.Content.ReadAsAsync<List<Cliente>>();
             }
-            return View(listaClientes);
-
-
-            //      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            //// GET: Clientes/Details/5
-            //public async Task<IActionResult> Details(long? id)
-            //{
-            //    if (id == null)
-            //    {
-            //        return NotFound();
-            //    }
-            //    Cliente cliente;
-            //    using (HttpClient client = new HttpClient())
-            //    {
-            //        string endpoint = apiBaseUrl + "/Clientes/" + id;
-            //        var response = await client.GetAsync(endpoint);
-            //        response.EnsureSuccessStatusCode();
-            //        cliente = await response.Content.ReadAsAsync<Cliente>();
-            //    }
-            //    if (cliente == null)
-            //    {
-            //        return NotFound();
-            //    }
-            //    return View(cliente);
-            //}
-
-            ////GET: Clientes/Create
-
-            //public async Task<IActionResult> Create()
-            //{
-            //    var listaClientes = new List<Cliente>();
-            //    using (HttpClient client = new HttpClient())
-            //    {
-            //        string endpoint = apiBaseUrl + "/Clientes";
-            //        var response = await client.GetAsync(endpoint);
-            //        response.EnsureSuccessStatusCode();
-            //        listaClientes = await response.Content.ReadAsAsync<List<Cliente>>();
-            //    }
-            //    return View();
-            //}
-
-            ////POST Clientes/Create
-            //[HttpPost]
-            //[ValidateAntiForgeryToken]
-            ////[Authorize(Roles = "Funcionario,Administrador")]
-
-            //public async Task<IActionResult> Create([Bind("ClienteID,NomeCliente,EmailCliente,NifCliente,MetodoPagamento,Credito")] Cliente cliente)
-            //{
-            //    if (ModelState.IsValid)
-            //    {
-            //        using (HttpClient client = new HttpClient())
-            //        {
-            //            StringContent content = new StringContent(JsonConvert.SerializeObject(cliente), Encoding.UTF8, "application/json");
-            //            string endpoint = apiBaseUrl + "/Clientes";
-            //            var response = await client.PostAsync(endpoint, content);
-            //        }
-            //        return RedirectToAction(nameof(Index));
-            //    }
-            //    return View(cliente);
-            //}
-
-            ////GET: Clientes/Delete/5
-            ////[Authorize(Roles = "Funcionario,Administrador")]
-            //public async Task<IActionResult> Delete(long? id)
-            //{
-            //    if (id == null)
-            //    {
-            //        return NotFound();
-            //    }
-            //    Cliente cliente;
-            //    using (HttpClient client = new HttpClient())
-            //    {
-            //        string endpoint = apiBaseUrl + "/Clientes/" + id;
-            //        var response = await client.GetAsync(endpoint);
-            //        response.EnsureSuccessStatusCode();
-            //        cliente = await response.Content.ReadAsAsync<Cliente>();
-            //    }
-            //    if (cliente == null)
-            //    {
-            //        return NotFound();
-            //    }
-            //    return View(cliente);
-            //}
-
-            ////POST: Clientes/Delete/5
-            //[HttpPost, ActionName("Delete")]
-            //[ValidateAntiForgeryToken]
-            ////[Authorize(Roles = "Funcionario,Administrador")]
-            //public async Task<IActionResult> DeleteConfirmed(long id)
-            //{
-            //    using (HttpClient client = new HttpClient())
-            //    {
-            //        string endpoint = apiBaseUrl + "/Clientes/" + id;
-            //        var response = await client.DeleteAsync(endpoint);
-            //    }
-            //    return RedirectToAction(nameof(Index));
-            //}
-
-            ////EDIT GET
-            ////[Authorize(Roles = "Funcionario,Administrador")]
-            //public async Task<IActionResult> Edit(long? id)
-            //{
-            //    if (id == null)
-            //    {
-            //        return NotFound();
-            //    }
-            //    Cliente cliente;
-            //    using (HttpClient client = new HttpClient())
-            //    {
-            //        //UserInfo user = new UserInfo();
-            //        //StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
-            //        //var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
-            //        //UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
-            //        //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
-            //        string endpoint = apiBaseUrl + "/Clientes/" + id;
-            //        var response = await client.GetAsync(endpoint);
-            //        response.EnsureSuccessStatusCode();
-            //        cliente = await response.Content.ReadAsAsync<Cliente>();
-            //    }
-            //    if (cliente == null)
-            //    {
-            //        return NotFound();
-            //    }
-            //    return View(cliente);
-            //}
-
-            ////EDIT POST
-            //[HttpPost]
-            //[ValidateAntiForgeryToken]
-            ////[Authorize(Roles = "Funcionario,Administrador")]
-            //public async Task<IActionResult> Edit(long id, [Bind("ClienteID,NomeCliente,EmailCliente,NifCliente,MetodoPagamento,Credito")] Cliente cliente)
-            //{
-            //    if (id != cliente.ClienteID)
-            //    {
-            //        return NotFound();
-            //    }
-            //    if (ModelState.IsValid)
-            //    {
-            //        using (HttpClient client = new HttpClient())
-            //        {
-            //            //UserInfo user = new UserInfo();
-            //            //StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
-            //            //var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
-            //            //UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
-            //            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
-            //            StringContent content = new StringContent(JsonConvert.SerializeObject(cliente), Encoding.UTF8, "application/json");
-            //            string endpoint = apiBaseUrl + "/Clientes/" + id;
-            //            var response = await client.PutAsync(endpoint, content);
-            //        }
-            //        return RedirectToAction(nameof(Index));
-            //    }
-            //    return View(cliente);
-            //}
+            IQueryable<Cliente> clientes = (from c in listaClientes select c).AsQueryable();
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                clientes = clientes.Where(c => c.NomeCliente.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "nome_desc":
+                    clientes = clientes.OrderByDescending(c => c.NomeCliente);
+                    break;
+                default:
+                    clientes = clientes.OrderBy(c => c.NomeCliente);
+                    break;
+            }
+            int pageSize = 10;
+            return View(await PaginatedList<Cliente>.CreateAsync(clientes, pageNumber ?? 1, pageSize));
         }
+
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //// GET: Clientes/Details/5
+        //public async Task<IActionResult> Details(long? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    Cliente cliente;
+        //    using (HttpClient client = new HttpClient())
+        //    {
+        //        string endpoint = apiBaseUrl + "/Clientes/" + id;
+        //        var response = await client.GetAsync(endpoint);
+        //        response.EnsureSuccessStatusCode();
+        //        cliente = await response.Content.ReadAsAsync<Cliente>();
+        //    }
+        //    if (cliente == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(cliente);
+        //}
+
+        ////GET: Clientes/Create
+
+        //public async Task<IActionResult> Create()
+        //{
+        //    var listaClientes = new List<Cliente>();
+        //    using (HttpClient client = new HttpClient())
+        //    {
+        //        string endpoint = apiBaseUrl + "/Clientes";
+        //        var response = await client.GetAsync(endpoint);
+        //        response.EnsureSuccessStatusCode();
+        //        listaClientes = await response.Content.ReadAsAsync<List<Cliente>>();
+        //    }
+        //    return View();
+        //}
+
+        ////POST Clientes/Create
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        ////[Authorize(Roles = "Funcionario,Administrador")]
+
+        //public async Task<IActionResult> Create([Bind("ClienteID,NomeCliente,EmailCliente,NifCliente,MetodoPagamento,Credito")] Cliente cliente)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        using (HttpClient client = new HttpClient())
+        //        {
+        //            StringContent content = new StringContent(JsonConvert.SerializeObject(cliente), Encoding.UTF8, "application/json");
+        //            string endpoint = apiBaseUrl + "/Clientes";
+        //            var response = await client.PostAsync(endpoint, content);
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(cliente);
+        //}
+
+        ////GET: Clientes/Delete/5
+        ////[Authorize(Roles = "Funcionario,Administrador")]
+        //public async Task<IActionResult> Delete(long? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    Cliente cliente;
+        //    using (HttpClient client = new HttpClient())
+        //    {
+        //        string endpoint = apiBaseUrl + "/Clientes/" + id;
+        //        var response = await client.GetAsync(endpoint);
+        //        response.EnsureSuccessStatusCode();
+        //        cliente = await response.Content.ReadAsAsync<Cliente>();
+        //    }
+        //    if (cliente == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(cliente);
+        //}
+
+        ////POST: Clientes/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        ////[Authorize(Roles = "Funcionario,Administrador")]
+        //public async Task<IActionResult> DeleteConfirmed(long id)
+        //{
+        //    using (HttpClient client = new HttpClient())
+        //    {
+        //        string endpoint = apiBaseUrl + "/Clientes/" + id;
+        //        var response = await client.DeleteAsync(endpoint);
+        //    }
+        //    return RedirectToAction(nameof(Index));
+        //}
+
+        ////EDIT GET
+        ////[Authorize(Roles = "Funcionario,Administrador")]
+        //public async Task<IActionResult> Edit(long? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    Cliente cliente;
+        //    using (HttpClient client = new HttpClient())
+        //    {
+        //        //UserInfo user = new UserInfo();
+        //        //StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+        //        //var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
+        //        //UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
+        //        //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
+        //        string endpoint = apiBaseUrl + "/Clientes/" + id;
+        //        var response = await client.GetAsync(endpoint);
+        //        response.EnsureSuccessStatusCode();
+        //        cliente = await response.Content.ReadAsAsync<Cliente>();
+        //    }
+        //    if (cliente == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(cliente);
+        //}
+
+        ////EDIT POST
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        ////[Authorize(Roles = "Funcionario,Administrador")]
+        //public async Task<IActionResult> Edit(long id, [Bind("ClienteID,NomeCliente,EmailCliente,NifCliente,MetodoPagamento,Credito")] Cliente cliente)
+        //{
+        //    if (id != cliente.ClienteID)
+        //    {
+        //        return NotFound();
+        //    }
+        //    if (ModelState.IsValid)
+        //    {
+        //        using (HttpClient client = new HttpClient())
+        //        {
+        //            //UserInfo user = new UserInfo();
+        //            //StringContent contentUser = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+        //            //var responseLogin = await client.PostAsync(apiBaseUrl + "/users/login", contentUser);
+        //            //UserToken token = await responseLogin.Content.ReadAsAsync<UserToken>();
+        //            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
+        //            StringContent content = new StringContent(JsonConvert.SerializeObject(cliente), Encoding.UTF8, "application/json");
+        //            string endpoint = apiBaseUrl + "/Clientes/" + id;
+        //            var response = await client.PutAsync(endpoint, content);
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(cliente);
+        //}
+    }
     }
 }
 
