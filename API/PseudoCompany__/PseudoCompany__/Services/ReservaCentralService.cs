@@ -21,10 +21,10 @@ namespace ParqueAPICentral.Services
         private readonly IReservaCentralRepository _repo;
         private readonly SubAluguerService _serviceS;
 
-        public ReservaCentralService(IReservaCentralRepository repo)
+        public ReservaCentralService(IReservaCentralRepository repo, SubAluguerService serviceS)
         {
             this._repo = repo;
-            //_serviceS = serviceS;
+            _serviceS = serviceS;
         }
 
         public async Task<ActionResult<IEnumerable<Reserva>>> GetAllReservasCentralAsync()

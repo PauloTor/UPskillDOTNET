@@ -11,11 +11,10 @@ namespace ParqueAPICentral.Services
     public class SubAluguerService
     {
         private readonly ISubAluguerRepository _repo;
-        private readonly ReservaCentralService _serviceR;
-        public SubAluguerService(ISubAluguerRepository repo, ReservaCentralService serviceR)
+
+        public SubAluguerService(ISubAluguerRepository repo)
         {
             this._repo = repo;
-            this._serviceR = serviceR;
         }
      
        public async Task<ActionResult<IEnumerable<SubAluguer>>> GetAllSubAluguerAsync()
