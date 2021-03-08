@@ -58,6 +58,11 @@ namespace PseudoCompanyFront.Controllers
                                 rua = e1.Rua,
                                 codPostal = e1.CodigoPostal
                             };
+                var Lista = (from N in a
+                                where N.parqueID != null
+                                select new { N.codPostal });
+                ViewBag.Name = Lista.ToList();
+
                 var vmDemo = new List<ViewModel1>();
                 foreach (var item in a)
                 {
@@ -74,7 +79,7 @@ namespace PseudoCompanyFront.Controllers
                     });
 
                 }
-
+               
                 return View(vmDemo);
             }
 
