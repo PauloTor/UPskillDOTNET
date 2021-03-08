@@ -64,38 +64,6 @@ namespace PseudoCompanyFront.Controllers
         }
 
 
-        // GET: SubAlugueres/Create
-        public async Task<IActionResult> Create()
-        {
-            using (HttpClient client = new())
-            {
-                string endpoint = apiBaseUrl + "/SubAlugueres";
-                var response = await client.GetAsync(endpoint);
-                response.EnsureSuccessStatusCode();
-                var sub = await response.Content.ReadAsAsync<List<Subaluguer>>();
-            }
-            return View();
-        }
-
-        // POST: SubAlugueres/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SubAluguerID,Preco,Reservado,NovoCliente,ReservaID")] Subaluguer sub)
-        {
-            if (ModelState.IsValid)
-            {
-                using (HttpClient client = new())
-                {
-                    StringContent content = new(JsonConvert.SerializeObject(sub), Encoding.UTF8, "application/json");
-                    string endpoint = apiBaseUrl + "/Reservas";
-                    var response = await client.PostAsync(endpoint, content);
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(sub);
-        }
-
-
         // GET: SubAlugueres/Edit/5
         public async Task<IActionResult> Edit(long? id)
         {
@@ -141,7 +109,7 @@ namespace PseudoCompanyFront.Controllers
             return View(sub);
         }
 
-        /*
+        
         // GET: SubAlugueres/Delete/5
         public async Task<IActionResult> Delete(long? id)
         {
@@ -149,7 +117,7 @@ namespace PseudoCompanyFront.Controllers
             {
                 return NotFound();
             }
-            SubAluguer sub;
+            Subaluguer sub;
             using (HttpClient client = new())
             {
                 string endpoint = apiBaseUrl + "/SubAlugueres/" + id;
@@ -176,6 +144,6 @@ namespace PseudoCompanyFront.Controllers
                 var response = await client.DeleteAsync(endpoint);
             }
             return RedirectToAction(nameof(Index));
-        }*/
+        }
     }
 }
