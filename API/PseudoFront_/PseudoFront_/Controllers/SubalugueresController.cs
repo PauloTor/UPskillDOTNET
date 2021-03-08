@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using PseudoFront_.Models;
 
-namespace PseudoCompanyFront.Controllers
+namespace PseudoFront_.Controllers
 {
     public class SubalugueresController : Controller
     {
