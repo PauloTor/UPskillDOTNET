@@ -52,22 +52,15 @@ namespace ParqueAPICentral.Services
                 reserva.ParaSubAluguer = true;
                 await _serviceS.PostSubAluguer(new SubAluguer
                 {
-                    //Preco = 11,
+                    Preco = 11,
                     ReservaID = id,
                     Reservado = false
                 });
             }
             else
             {
-                var sub = await _serviceS.FindSubAluguerById(id);
-
-                if (sub.Value.Reservado == false)
-                {
-                    reserva.ParaSubAluguer = false;
-                    await _serviceS.DeleteSubAluguer(id);
-                }
-                else
-                    throw new Exception("Este subaluguer já foi reservado por outro utilizador e não pode ser eliminado.");
+                reserva.ParaSubAluguer = false;
+                await _serviceS.DeleteSubAluguer(id);
             }
             
         return await _repo.ParaSubALuguer(id);
