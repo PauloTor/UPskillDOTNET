@@ -78,5 +78,12 @@ namespace ParqueAPICentral.Controllers
         {   
             return await _service.GetReservaById(id);
         }
+
+        [EnableCors]
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Reserva>> PutParaSubALuguer(long id)
+        {
+            return await _service.ParaSubALuguer(id);
+        }
     }
 }
