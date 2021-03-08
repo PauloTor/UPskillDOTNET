@@ -1,0 +1,46 @@
+﻿@model PseudoFront_.Models.LoginModel
+@{ ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<h1>Details</h1>
+
+
+
+<div class="login-div" style="opacity: 0.9; margin-top: 50px; height: 120px; width: 900px; padding: 35px 35px 35px 35px;color: #000000">
+    <div>
+        <h4>Park</h4>
+        <hr />
+        <div class="fields" style="opacity:0.98;margin-left :-12px;">
+            <dl class="row" style="color:#ffffff">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Username)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Username)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Password)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Password)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Password)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Password)
+                </dd>
+                
+            </dl>
+        </div>
+    </div>
+</div>
+
+
+<div>
+    <a class="buttonz" asp-action="Index">Voltar</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

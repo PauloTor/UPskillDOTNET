@@ -59,7 +59,7 @@ namespace ParqueAPICentral.Services
             {
                 foreach (var reservaOriginal in listaReservas)
                 {
-                    if (reservaOriginal.ReservaID == reserva.ReservaAPI && reserva.ParqueID == parqueID && reserva.ParaSubAluguer)
+                    if (reservaOriginal.ReservaID == reserva.ReservaAPI && reserva.ParqueID == parqueID && reserva.ParaSubAluguer == true)
                     {
                         var sub = subAluguer.Value.FirstOrDefault(s => s.ReservaID == reserva.ReservaID);
                         if (sub.Reservado == false)
@@ -71,7 +71,7 @@ namespace ParqueAPICentral.Services
                 }
             }
             var response2 = await client.GetAsync(parque.Value.Url + "Lugares/");
-            response2.EnsureSuccessStatusCode();
+            //response2.EnsureSuccessStatusCode();
             var listaLugares = await response2.Content.ReadAsAsync<List<LugarDTO>>();
             var lugaresNaoReservados = new List<LugarReserva>();
             foreach (var lug in listaLugares)

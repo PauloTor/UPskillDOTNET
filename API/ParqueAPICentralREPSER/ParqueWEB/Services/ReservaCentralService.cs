@@ -1,30 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using ParqueAPICentral.Entities;
 using ParqueAPICentral.Models;
 using ParqueAPICentral.Repositories;
-using Microsoft.Extensions.Configuration;
-using ParqueAPICentral.DTO;
-using ParqueAPICentral.Data;
 
 namespace ParqueAPICentral.Services
 {
     public class ReservaCentralService
     {
         private readonly IReservaCentralRepository _repo;
+        private readonly SubAluguerService _serviceS;
 
-        public ReservaCentralService(IReservaCentralRepository repo)
+        public ReservaCentralService(IReservaCentralRepository repo, SubAluguerService serviceS) // causa erro
         {
             this._repo = repo;
+            this._serviceS = serviceS;
         }
-        
+
+
         public async Task<ActionResult<IEnumerable<Reserva>>> GetAllReservasCentralAsync()
         {
 
@@ -49,9 +43,27 @@ namespace ParqueAPICentral.Services
             return await _repo.GetAllClienteByReservasCentralAsync(ParqueID, id);
         }
 
-        public async Task<ActionResult<Reserva>> ParaSubALuguer(long id) //reservaID key
-        {
-            return await _repo.ParaSubALuguer(id);
+        public async Task<ActionResult<Reserva>> ParaSubALuguer(long id)
+        {           
+            var reserva = _repo.GetReservaByIdAsync(id).Result.Value;
+            
+            if (reserva.ParaSubAluguer == false)
+            {
+                reserva.ParaSubAluguer = true;
+                await _serviceS.PostSubAluguer(new SubAluguer
+                {
+                    Preco = 11,
+                    ReservaID = id,
+                    Reservado = false
+                });
+            }
+            else
+            {
+                reserva.ParaSubAluguer = false;
+                await _serviceS.DeleteSubAluguer(id);
+            }
+            
+        return await _repo.ParaSubALuguer(id);
         }
 
         public async Task<ActionResult<Reserva>>  CriarReservaCentral(Reserva reserva)

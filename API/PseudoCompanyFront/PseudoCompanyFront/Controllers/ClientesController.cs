@@ -27,8 +27,18 @@ namespace PseudoCompanyFront.Controllers
             apiBaseUrl = _configure.GetValue<string>("WebAPIBaseUrl");
         }
         // GET: Obter informação de todos os Clientes
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NomeSortParm"] = String.IsNullOrEmpty(sortOrder) ? "nome_desc" : "";
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
             ViewData["CurrentFilter"] = searchString;
             var listaClientes = new List<Cliente>();
             using (HttpClient client = new HttpClient())
@@ -38,7 +48,23 @@ namespace PseudoCompanyFront.Controllers
                 response.EnsureSuccessStatusCode();
                 listaClientes = await response.Content.ReadAsAsync<List<Cliente>>();
             }
-            return View(listaClientes);
+            IQueryable<Cliente> clientes = (from c in listaClientes select c).AsQueryable();
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                clientes = clientes.Where(c => c.NomeCliente.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "nome_desc":
+                    clientes = clientes.OrderByDescending(c => c.NomeCliente);
+                    break;
+                default:
+                    clientes = clientes.OrderBy(c => c.NomeCliente);
+                    break;
+            }
+            int pageSize = 10;
+            return View(await PaginatedList<Cliente>.CreateAsync(clientes, pageNumber ?? 1, pageSize));
+
         }
         // GET: Clientes/Details/5
         public async Task<IActionResult> Details(long? id)

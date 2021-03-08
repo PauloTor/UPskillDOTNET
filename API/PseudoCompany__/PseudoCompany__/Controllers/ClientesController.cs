@@ -14,8 +14,8 @@ using Microsoft.AspNetCore.Cors;
 
 namespace ParqueAPICentral.Controllers
 {
-    //[Authorize]
-   // [EnableCors("MyAllowSpecificOrigins")]
+    // [Authorize(Policy = "Admin")]
+    // [EnableCors("MyAllowSpecificOrigins")]
     [Route("api/Clientes")]
     [ApiController]
     public class ClientesController : ControllerBase
@@ -27,25 +27,26 @@ namespace ParqueAPICentral.Controllers
             this._service = service;
         }
 
-        // GET: api/Clientes : Obter Informação de um Cliente
-       // [Authorize]
-     //   [EnableCors]
+        // GET: api/Clientes : Obter Informação dos Clientes
+        // [Authorize(Policy = "Admin")]
+        //   [EnableCors]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Cliente>>> Get_Clientes()
         {
          
             return await this._service.GetAllClientes();
         }
-        
-            //// GET: api/Clientes/5  - Obter Informação de um Cliente por ID
+
+        //// GET: api/Clientes/5  - Obter Informação de um Cliente por ID
+        //[Authorize(Policy = "Admin")]
         [EnableCors]
         [HttpGet("{id}")]
         public async Task<ActionResult<Cliente>> GetClienteById(long id)
         {
             return await _service.GetClienteById(id);
         }
-
-       // [EnableCors]
+        //[Authorize(Policy = "Admin")]
+        // [EnableCors]
         [HttpPost]
         public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
         {
@@ -53,7 +54,8 @@ namespace ParqueAPICentral.Controllers
             return await _service.CreateCliente(cliente);
         }
 
-//        [EnableCors]
+        //[Authorize(Policy = "Admin")]
+        //[EnableCors]
         [HttpPut]
         public async Task<ActionResult<Cliente>> UpdateCliente(Cliente cliente)
         {
@@ -62,8 +64,8 @@ namespace ParqueAPICentral.Controllers
         }
 
         // DELETE: api/Clientes/5
-        //[Authorize]
-  //      [EnableCors]
+        //[Authorize(Policy = "Admin")]
+        // [EnableCors]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Cliente>> DeleteCliente(long id)
         {
@@ -71,12 +73,12 @@ namespace ParqueAPICentral.Controllers
           return  await _service.DeleteCliente(id);
                         
         }
+        //[Authorize(Policy = "Admin")]
         public async Task<ActionResult<Cliente>> UpdatePagamentoCliente(long clienteID,float valor)
         {
 
             return await _service.UpdatePagamentoCliente(clienteID, valor);
-        }
-               
+        }     
 
         //public async Task<bool> ClienteExists(long id)
         //{

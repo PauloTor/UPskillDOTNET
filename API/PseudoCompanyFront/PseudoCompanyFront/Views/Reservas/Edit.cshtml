@@ -6,26 +6,75 @@
 
 <h1>Subalugar reserva</h1>
 
-<h3>Tem a certeza que pretende subalugar esta reserva?</h3>
+<h3>Tem a certeza que pretende colocar/retirar esta reserva para subaluguer?</h3>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ReservaID" />
-            <div class="form-group">
+<div>
+    <h4>Reserva</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClienteID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClienteID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ReservaID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ReservaID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ParqueID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ParqueID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LugarID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LugarID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClienteID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClienteID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataReserva)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataReserva)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataInicio)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataInicio)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataFim)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataFim)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ParaSubAluguer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ParaSubAluguer)
+        </dd>
+    </dl>
 
-            </div>
-        </form>
-    </div>
+    <form asp-action="Edit">
+        <input type="hidden" asp-for="ReservaID" />
+        <input type="submit" value="Confirmar" class="btn btn-danger" /> |
+        <a asp-action="Index">Voltar</a>
+    </form>
 </div>
 
-<form asp-action="Edit">
-    <input type="hidden" asp-for="ReservaID" />
-    <input type="submit" value="Subalugar" class="btn btn-danger" /> |
-    <a asp-action="Index">Voltar</a>
-</form>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

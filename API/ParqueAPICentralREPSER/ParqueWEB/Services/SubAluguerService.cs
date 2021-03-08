@@ -11,32 +11,25 @@ namespace ParqueAPICentral.Services
     public class SubAluguerService
     {
         private readonly ISubAluguerRepository _repo;
-        private readonly ReservaCentralService _serviceR;
-        public SubAluguerService(ISubAluguerRepository repo, ReservaCentralService serviceR)
+        public SubAluguerService(ISubAluguerRepository repo)
         {
             this._repo = repo;
-            this._serviceR = serviceR;
         }
      
        public async Task<ActionResult<IEnumerable<SubAluguer>>> GetAllSubAluguerAsync()
         {
-            return await this._repo.GetAllSubAluguerAsync();
+            return await _repo.GetAllSubAluguerAsync();
         }
         public async Task<ActionResult<SubAluguer>> UpdateSubAluguer(SubAluguer subaluguer)
         {
-            return await this._repo.UpdateSubAluguer(subaluguer);
+            return await _repo.UpdateSubAluguer(subaluguer);
         }
 
         public async Task<ActionResult<SubAluguer>> FindSubAluguerById(long id)
         {
-            return await this._repo.FindSubAluguerById(id);
+            return await _repo.FindSubAluguerById(id);
         }
-        /*
-        public async Task<ActionResult<SubAluguer>> CreateCliente(SubAluguer subAluguer)
-        {
-            return await _repo.CreateSubAluguer(subAluguer);
-        }
-        */
+        
         public async Task<ActionResult<SubAluguer>> DeleteSubAluguer(long id)
         {
             return await _repo.DeleteSubAluguer(id);
@@ -44,8 +37,6 @@ namespace ParqueAPICentral.Services
         
         public async Task<ActionResult<SubAluguer>> PostSubAluguer(SubAluguer subaluguer)
         {
-            //await _serviceR.ParaSubALuguer(subaluguer); // alterar reservacentral para booleano true
-                        
             return await _repo.PostSubAluguer(subaluguer);
         }
     }
