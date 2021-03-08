@@ -11,41 +11,31 @@ namespace PseudoFront_.DTO
 {
     public class ReservaPrivateDTO
     {
-        [Key]
+        [Display(Name = "Nº da reserva")]
         public long ReservaID { get; set; }
 
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime DataReserva { get; set; }
+        [Display(Name = "Nº do parque")]
+        public long ParqueID { get; set; }
 
+        [Display(Name = "Nº do lugar")]
+        public long LugarID { get; set; }
+
+        [Display(Name = "Nº do cliente")]
+        public long ClienteID { get; set; }
+
+        [Display(Name = "Data de início")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DataInicio { get; set; }
 
+        [Display(Name = "Data de fim")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DataFim { get; set; }
 
-        [ForeignKey("LugarID")]
-        public long LugarID { get; set; }        
-        public LugarDTO LugarDTO { get; set; }
+        [Display(Name = "Data de reserva")]
+        [DataType(DataType.Date)]
+        public DateTime DataReserva = DateTime.Now;
 
-
-
-        public ReservaPrivateDTO(DateTime datareserva, DateTime datainicio, DateTime datafim,long lugarid)
-        {
-            DataReserva = datareserva;
-            DataInicio = datainicio;
-            DataFim = datafim;
-            LugarID = lugarid;
-
-        }
-
-
-
+        [Display(Name = "Para subaluguer")]
+        public bool ParaSubAluguer { get; set; }
     }
-
-
-
-
 }

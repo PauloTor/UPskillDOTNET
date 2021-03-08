@@ -1,20 +1,32 @@
 ﻿@model PseudoFront_.DTO.ReservaPrivateDTO
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes";
 }
 
-<h1>Details</h1>
+<h1>Detalhes</h1>
 
 <div>
     <h4>Reserva</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ParqueID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ParqueID)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.LugarID)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.LugarID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClienteID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClienteID)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.DataReserva)
@@ -33,6 +45,12 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.DataFim)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ParaSubAluguer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ParaSubAluguer)
         </dd>
     </dl>
 </div>
