@@ -67,7 +67,7 @@ namespace ParqueAPICentral.Services
             }
             else
             {
-                var sub = _serviceS.FindSubAluguerById(id);
+                var sub = _serviceS.FindSubAluguerByReserva(id);
                 if (sub.Result.Value.Reservado == false)
                 {
                     reserva.ParaSubAluguer = false;

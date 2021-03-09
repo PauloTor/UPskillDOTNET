@@ -74,7 +74,7 @@ namespace PseudoFront_.Controllers
             Subaluguer sub;
             using (HttpClient client = new())
             {
-                string endpoint = apiBaseUrl + "/SubAluguers/" + id;
+                string endpoint = apiBaseUrl + "/SubAlugueres/" + id;
                 var response = await client.GetAsync(endpoint);
                 response.EnsureSuccessStatusCode();
                 sub = await response.Content.ReadAsAsync<Subaluguer>();
