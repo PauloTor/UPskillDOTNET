@@ -91,7 +91,7 @@ namespace PseudoFront_.Controllers
                 using (HttpClient client = new())
                 {
                     StringContent content = new(JsonConvert.SerializeObject(reserva), Encoding.UTF8, "application/json");
-                    string endpoint = apiBaseUrl + "/post";
+                    string endpoint = apiBaseUrl + "/reservas";
                     var response = await client.PostAsync(endpoint, content);
                 }
                 return RedirectToAction(nameof(Index));
@@ -137,7 +137,7 @@ namespace PseudoFront_.Controllers
                 using (HttpClient client = new())
                 {
                     StringContent content = new(JsonConvert.SerializeObject(reserva), Encoding.UTF8, "application/json");
-                    string endpoint = apiBaseUrl + "/ReservasCentral/" + id;
+                    string endpoint = apiBaseUrl + "/ReservasCentral/sub/" + id;
                     var response = await client.PutAsync(endpoint, content);
                 }
                 return RedirectToAction(nameof(Index));
