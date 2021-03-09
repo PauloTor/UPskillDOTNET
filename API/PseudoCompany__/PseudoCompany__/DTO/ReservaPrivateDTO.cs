@@ -30,7 +30,11 @@ namespace ParqueAPICentral.DTO
         public long LugarID { get; set; }        
         public LugarDTO LugarDTO { get; set; }
 
+        public long ParqueID { get; set; }
+        public Parque Parque { get; set; }
 
+        public long ClienteID { get; set; }
+        public Cliente Cliente { get; set; }
 
         public ReservaPrivateDTO(DateTime datareserva, DateTime datainicio, DateTime datafim,long lugarid)
         {
@@ -38,14 +42,6 @@ namespace ParqueAPICentral.DTO
             DataInicio = datainicio;
             DataFim = datafim;
             LugarID = lugarid;
-
         }
-
-
-
     }
-
-
-
-
 }

@@ -316,7 +316,7 @@ namespace ParqueAPICentral.Services
                 var response2 = await client.
                     PostAsync(parque.Value.Url + "reservas/", reserva_);
                 var UltimaReservaAPI = await GetUltimaReservaPrivate(2);
-                var reservaCentral = new Reserva(2, UltimaReservaAPI.Value.ReservaID, 3, dto.LugarID, dto.DataInicio, dto.DataFim);
+                var reservaCentral = new Reserva(dto.ParqueID, UltimaReservaAPI.Value.ReservaID, dto.ClienteID, dto.LugarID, dto.DataInicio, dto.DataFim);
                 await _serviceR.CriarReservaCentral(reservaCentral);
                 var qrCode = GerarQRcode(UltimaReservaAPI.Value);
                 await EnviarEmail(qrCode.Value, 3, UltimaReservaAPI.Value.ReservaID);
