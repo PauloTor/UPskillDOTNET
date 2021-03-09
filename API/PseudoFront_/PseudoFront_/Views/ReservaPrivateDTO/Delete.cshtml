@@ -12,16 +12,34 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClienteID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClienteID)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ReservaID)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ReservaID)
         </dd>
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ParqueID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ParqueID)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.LugarID)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.LugarID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClienteID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClienteID)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.DataReserva)
@@ -41,8 +59,14 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.DataFim)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ParaSubAluguer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ParaSubAluguer)
+        </dd>
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="ReservaID" />
         <input type="submit" value="Eliminar" class="btn btn-danger" /> |

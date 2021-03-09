@@ -13,6 +13,16 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label asp-for="ClienteID" class="control-label"></label>
+                <input asp-for="ClienteID" class="form-control" />
+                <span asp-validation-for="ClienteID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ParqueID" class="control-label"></label>
+                <input asp-for="ParqueID" class="form-control" />
+                <span asp-validation-for="ParqueID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="LugarID" class="control-label"></label>
                 <input asp-for="LugarID" class="form-control" />
                 <span asp-validation-for="LugarID" class="text-danger"></span>

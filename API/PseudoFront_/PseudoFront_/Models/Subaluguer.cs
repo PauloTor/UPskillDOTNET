@@ -15,13 +15,14 @@ namespace PseudoFront_.Models
         [Display(Name = "Preço")]
         public float Preco { get; set; }
 
-        [Display(Name = "Reservado?")]
+        [Display(Name = "Sub-reservado")]
         public bool Reservado { get; set; }
 
         [Display(Name = "Nº do cliente")]
         public long NovoCliente { get; set; }
 
+        [Display(Name = "Nº da reserva original")]
         public long ReservaID { get; set; }
-        public ReservaPrivateDTO Reserva { get; set; }
+        //public ReservaPrivateDTO Reserva { get; set; }
     }
 }

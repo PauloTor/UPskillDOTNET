@@ -69,7 +69,6 @@ namespace ParqueAPICentral.Controllers
         
 
         // DELETE: api/reservas/parqueID/reservaId - Cancelar reserva e devolver credito
-
         [EnableCors]
         [HttpDelete("cancelar/{reservaID}")]
         public async Task<ActionResult<Reserva>> CancelarReserva(long reservaID)
@@ -91,6 +90,12 @@ namespace ParqueAPICentral.Controllers
             return rtoken;
         }
 
-
+        //POST
+        [EnableCors]
+        [HttpPost("reservas")]
+        public async Task<ActionResult<ReservaPrivateDTO>> PostReserva(ReservaPrivateDTO dto)
+        {
+            return await _service.PostReserva(dto);
+        }
     }
 }

@@ -297,7 +297,38 @@ namespace ParqueAPICentral.Services
             smtp.Send(mail);
         }
 
+        public async Task<ActionResult<ReservaPrivateDTO>> PostReserva(ReservaPrivateDTO dto)
+        {
+            var parque = await _service.GetParqueById(2);
+            using var client = new HttpClient();
+            try
+            {
+                var rtoken = await GetToken(parque.Value.Url + "users/authenticate");
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", rtoken);
 
+                if (dto.DataInicio >= dto.DataFim)
+                {
+                    return NotFound("Data inválida");
+                }
+
+                StringContent reserva_ = new StringContent(JsonConvert.
+                    SerializeObject(dto), Encoding.UTF8, "application/json");
+                var response2 = await client.
+                    PostAsync(parque.Value.Url + "reservas/", reserva_);
+                var UltimaReservaAPI = await GetUltimaReservaPrivate(2);
+                var reservaCentral = new Reserva(2, UltimaReservaAPI.Value.ReservaID, 3, dto.LugarID);
+                await _serviceR.CriarReservaCentral(reservaCentral);
+                var qrCode = GerarQRcode(UltimaReservaAPI.Value);
+                await EnviarEmail(qrCode.Value, 3, UltimaReservaAPI.Value.ReservaID);
+
+                return CreatedAtAction(nameof(PostReserva), new { id = dto.ReservaID }, dto);
+
+            }
+            catch (HttpRequestException)
+            {
+                return NotFound("API do Parque " + parque.Value.NomeParque + " não conectada.");
+            }
+        }
     }
 }
 

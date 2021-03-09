@@ -31,6 +31,11 @@ namespace ParqueAPICentral.Services
             return await this._repo.FindSubAluguerById(id);
         }
 
+        public async Task<ActionResult<SubAluguer>> FindSubAluguerByReserva(long id)
+        {
+            return await this._repo.FindSubAluguerByReserva(id);
+        }
+
         public async Task<ActionResult<SubAluguer>> DeleteSubAluguer(long id)
         {
             return await _repo.DeleteSubAluguer(id);
