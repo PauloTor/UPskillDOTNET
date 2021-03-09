@@ -92,21 +92,24 @@ namespace PseudoFront_.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(long id, [Bind("SubAluguerID,Preco,Reservado,NovoCliente,ReservaID")] Subaluguer sub)
         {
-            if (id != sub.SubAluguerID)
+
+            using HttpClient client1 = new();
+            string endpoint1 = apiBaseUrl + "/SubAlugueres/" + id;
+            var response1 = await client1.GetAsync(endpoint1);
+            var suba = await response1.Content.ReadAsAsync<Subaluguer>();
+
+            sub.SubAluguerID = suba.SubAluguerID;
+            sub.ReservaID = suba.ReservaID;
+            sub.Reservado = suba.Reservado;
+            sub.NovoCliente = suba.NovoCliente;
+
+            using (HttpClient client = new())
             {
-                return NotFound();
+                StringContent content = new(JsonConvert.SerializeObject(sub), Encoding.UTF8, "application/json");
+                string endpoint = apiBaseUrl + "/SubAlugueres/" + id;
+                var response = await client.PutAsync(endpoint, content);
             }
-            if (ModelState.IsValid)
-            {
-                using (HttpClient client = new())
-                {
-                    StringContent content = new(JsonConvert.SerializeObject(sub), Encoding.UTF8, "application/json");
-                    string endpoint = apiBaseUrl + "/SubAlugueres/" + id;
-                    var response = await client.PutAsync(endpoint, content);
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(sub);
+            return RedirectToAction(nameof(Index));
         }
 
         

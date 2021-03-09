@@ -37,7 +37,7 @@ namespace ParqueAPICentral.Repositories
 
         public async Task<ActionResult<SubAluguer>> DeleteSubAluguer(long id)
         {
-            var subAluguer = GetAll().FirstOrDefault(u => u.SubAluguerID == id);
+            var subAluguer = GetAll().FirstOrDefault(u => u.ReservaID == id);
 
             await DeleteAsync(subAluguer);
 

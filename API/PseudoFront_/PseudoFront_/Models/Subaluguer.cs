@@ -18,7 +18,7 @@ namespace PseudoFront_.Models
         [Display(Name = "Sub-reservado")]
         public bool Reservado { get; set; }
 
-        [Display(Name = "Nº do cliente")]
+        [Display(Name = "Nº do sub-cliente")]
         public long NovoCliente { get; set; }
 
         [Display(Name = "Nº da reserva original")]

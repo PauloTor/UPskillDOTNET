@@ -51,9 +51,8 @@ namespace ParqueAPICentral.Controllers
         //[Authorize(Policy = "User")]
         [EnableCors]
         [HttpPut("{id}")]
-        public async Task<ActionResult<SubAluguer>> UpdateSubAluguer(long id)
+        public async Task<ActionResult<SubAluguer>> UpdateSubAluguer(SubAluguer subaluguer)
         {
-            var subaluguer = _service.FindSubAluguerById(id).Result.Value;
             if (subaluguer.Reservado == false)
                 return await _service.UpdateSubAluguer(subaluguer);
             else

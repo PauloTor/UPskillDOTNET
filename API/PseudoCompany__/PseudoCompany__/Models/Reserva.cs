@@ -26,13 +26,6 @@ namespace ParqueAPICentral.Models
 
         public bool ParaSubAluguer { get; set; }
 
-
-        //public Reserva(long parqueID, long reservaAPI, long clienteID)
-        //{
-        //    ParqueID = parqueID;
-        //    ReservaAPI = reservaAPI;
-        //    ClienteID = clienteID;
-        //}
         public Reserva( long parqueID,long reservaAPI, long clienteID, long lugarId)
         {
             ParqueID = parqueID;
