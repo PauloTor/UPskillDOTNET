@@ -10,6 +10,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace ParqueAPICentral.Controllers
 {
@@ -28,6 +29,17 @@ namespace ParqueAPICentral.Controllers
             _configuration = configuration;
         }
 
+        [HttpGet]
+        [Route("getUser")]
+        public IActionResult GetUser()
+        {
+
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ApplicationUser currentUser = userManager.Users.FirstOrDefault(x => x.Id == currentUserId);
+
+            return Ok(currentUser);
+        }
+
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
@@ -39,6 +51,7 @@ namespace ParqueAPICentral.Controllers
 
                 var authClaims = new List<Claim>
                 {
+                    new Claim(ClaimTypes.NameIdentifier, user.Id),
                     new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 };
