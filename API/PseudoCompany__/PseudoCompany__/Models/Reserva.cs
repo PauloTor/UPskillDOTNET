@@ -24,14 +24,24 @@ namespace ParqueAPICentral.Models
 
         public long LugarID { get; set; }
 
+        [DataType(DataType.DateTime)]
+        public DateTime DataInicio { get; set; }
+
+        [DataType(DataType.DateTime)]
+        public DateTime DataFim { get; set; }
+
         public bool ParaSubAluguer { get; set; }
 
-        public Reserva( long parqueID,long reservaAPI, long clienteID, long lugarId)
+        public float Preco { get; set; }
+
+        public Reserva(long parqueID, long reservaAPI, long clienteID, long lugarId, DateTime inicio, DateTime fim)
         {
             ParqueID = parqueID;
             ReservaAPI = reservaAPI;
             ClienteID = clienteID;
             LugarID = lugarId;
+            DataInicio = inicio;
+            DataFim = fim;
         }
 
         public Reserva()

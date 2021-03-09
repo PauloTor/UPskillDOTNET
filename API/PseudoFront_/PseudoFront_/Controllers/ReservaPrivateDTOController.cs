@@ -88,6 +88,10 @@ namespace PseudoFront_.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (reserva.DataInicio >= reserva.DataFim || reserva.DataInicio < DateTime.Now)
+                {
+                    throw new Exception("Data inválida");
+                }
                 using (HttpClient client = new())
                 {
                     StringContent content = new(JsonConvert.SerializeObject(reserva), Encoding.UTF8, "application/json");

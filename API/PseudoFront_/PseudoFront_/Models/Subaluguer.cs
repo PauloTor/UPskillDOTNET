@@ -23,6 +23,5 @@ namespace PseudoFront_.Models
 
         [Display(Name = "Nº da reserva original")]
         public long ReservaID { get; set; }
-        //public ReservaPrivateDTO Reserva { get; set; }
     }
 }
