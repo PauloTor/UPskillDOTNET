@@ -88,7 +88,7 @@ namespace PseudoFront_.Controllers
                 String[] str = new String[vmDemo.Count];
                 foreach (var item in vmDemo)
                 {
-                    str[i] = (item.CodigoPostal + " " + item.Rua + " " + item.NomeParque);
+                    str[i] = (item.CodigoPostal + ", " + item.Rua + ", " + item.NomeParque);
 
                     if ((myCountry != null) && (myCountry == str[i]))
                     {

@@ -19,7 +19,7 @@ namespace PseudoFront_.Controllers
             apiBaseUrl = _configure.GetValue<string>("WebAPIBaseUrl");
         }
 
-        // GET: SubAlugueres
+        // GET: Faturas
         public async Task<ActionResult> Index()
         {
             using HttpClient client = new();
