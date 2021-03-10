@@ -57,7 +57,7 @@ namespace ParquePublicoAPI.Data
                 context.Lugar.Add(s);
             }
             context.SaveChanges();
-           
+           /*
             var reserva = new Reserva[]
 
                {
@@ -72,7 +72,7 @@ namespace ParquePublicoAPI.Data
                 context.Reserva.Add(r);
             }
             context.SaveChanges();
-
+           */
 
             //===========================================================================================0
         }
