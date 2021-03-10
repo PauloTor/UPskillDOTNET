@@ -1,0 +1,51 @@
+﻿@model IEnumerable<PseudoFront_.Models.Fatura>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Faturas</h1>
+
+<p>
+
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FaturaID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReservaID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrecoFatura)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataFatura)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FaturaID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReservaID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrecoFatura)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataFatura)
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

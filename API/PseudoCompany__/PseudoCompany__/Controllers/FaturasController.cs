@@ -51,7 +51,6 @@ namespace ParqueAPICentral.Controllers
             //    return NotFound("Data inválida");
             //}
            return await this._service.FindFaturaByID(FaturaID);
-
         }
 
         // GET Faturas by FaturaID - api/Faturas/5
@@ -59,11 +58,7 @@ namespace ParqueAPICentral.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Fatura>>> GetAllFaturas()
         {
-            var d = 1;
          return  await this._service.GetAllFaturas();
-
         }
-
-
     }
 }
