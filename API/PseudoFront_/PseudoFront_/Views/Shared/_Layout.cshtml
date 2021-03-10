@@ -13,6 +13,11 @@
             background-size: 100% 100%;
         }
 
+        .image {
+            opacity: 0.4;
+            filter: alpha(opacity=60);
+        } 
+
 
         ul.nav a:hover {
             color: #fff !important;
@@ -75,9 +80,6 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="Profile">Profile</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
                             </li>
                             @*}*@ }
                     </ul>
