@@ -17,7 +17,7 @@ namespace SeleniumTests.Pages
 
         public IWebDriver Driver { get; }
 
-        IWebElement txtUserName => Driver.FindElement(By.Name("UserName"));
+        IWebElement txtUserName => Driver.FindElement(By.Name("Username"));
 
         IWebElement txtPassword => Driver.FindElement(By.Name("Password"));
 

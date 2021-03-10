@@ -34,7 +34,7 @@ namespace SeleniumTests.Tests
             //-----Disconnect--------
 
             LoginPage loginPage = new LoginPage(webDriver);
-            loginPage.Login("tiago", "ukWN8kr27.");
+            loginPage.Login("testQwerty", "12345Qwerty.");
 
             var loginComSucesso = webDriver.FindElement(By.XPath("/html/body/div/main/div/div/h3"));
 
