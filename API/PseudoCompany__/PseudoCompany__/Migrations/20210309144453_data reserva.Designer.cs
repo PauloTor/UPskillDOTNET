@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ParqueAPICentral.Authentication;
 
 namespace PaqueAPICentral.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210309144453_data reserva")]
+    partial class datareserva
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -375,9 +377,6 @@ namespace PaqueAPICentral.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DataInicio")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DataReserva")
                         .HasColumnType("datetime2");
 
                     b.Property<long>("LugarID")

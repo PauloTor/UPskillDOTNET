@@ -53,11 +53,13 @@ namespace ParqueAPICentral.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<SubAluguer>> UpdateSubAluguer(SubAluguer subaluguer)
         {
-            return await _service.UpdateSubAluguer(subaluguer);
+            if (subaluguer.Reservado == false)
+                return await _service.UpdateSubAluguer(subaluguer);
+            else
+                throw new Exception("O subaluguer já se encontra reservado e não pode ser modificado.");
         }
 
-        // POST: api/SubAlugueres/{reservaID}/{preco}/
-        // passar para services
+        // POST: api/SubAlugueres/
         //[Authorize(Policy = "Roles")]
         [EnableCors]
         public async Task<ActionResult<SubAluguer>> PostSubAluguer(SubAluguer subaluguer)

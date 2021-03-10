@@ -80,7 +80,7 @@ namespace ParqueAPICentral.Controllers
         }
 
         [EnableCors]
-        [HttpPut("{id}")]
+        [HttpPut("sub/{id}")]
         public async Task<ActionResult<Reserva>> PutParaSubALuguer(long id)
         {
             return await _service.ParaSubALuguer(id);

@@ -37,5 +37,8 @@ namespace PseudoFront_.DTO
 
         [Display(Name = "Para subaluguer")]
         public bool ParaSubAluguer { get; set; }
+
+        [Display(Name = "Preço para subaluguer")]
+        public float Preco { get; set; }
     }
 }

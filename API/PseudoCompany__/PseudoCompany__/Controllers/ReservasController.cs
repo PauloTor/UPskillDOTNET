@@ -90,6 +90,12 @@ namespace ParqueAPICentral.Controllers
             return rtoken;
         }
 
-
+        //POST
+        [EnableCors]
+        [HttpPost("reservas")]
+        public async Task<ActionResult<ReservaPrivateDTO>> PostReserva(ReservaPrivateDTO dto)
+        {
+            return await _service.PostReserva(dto);
+        }
     }
 }
