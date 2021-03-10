@@ -4,7 +4,7 @@ using OpenQA.Selenium.Chrome;
 
 namespace SeleniumTests
 {
-    public class Tests
+    public class Test1
     {
         [SetUp]
         public void Setup()
@@ -12,7 +12,7 @@ namespace SeleniumTests
         }
 
         [Test]
-        public void Test1()
+        public void UnitTest()
         {
 
             //Browser Driver
