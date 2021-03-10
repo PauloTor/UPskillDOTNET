@@ -30,8 +30,7 @@ namespace ParqueAPICentral.Services
 
         public async Task<ActionResult<Parque>> GetParqueById(long id)
         {
-           
-
+          
             return await this._repo.GetParqueById(id);
         }
 

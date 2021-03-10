@@ -299,7 +299,7 @@ namespace ParqueAPICentral.Services
 
         public async Task<ActionResult<ReservaPrivateDTO>> PostReserva(ReservaPrivateDTO dto)
         {
-            var parque = await _service.GetParqueById(2);
+            var parque = await _service.GetParqueById(dto.ParqueID);
             using var client = new HttpClient();
             try
             {
@@ -315,7 +315,7 @@ namespace ParqueAPICentral.Services
                     SerializeObject(dto), Encoding.UTF8, "application/json");
                 var response2 = await client.
                     PostAsync(parque.Value.Url + "reservas/", reserva_);
-                var UltimaReservaAPI = await GetUltimaReservaPrivate(2);
+                var UltimaReservaAPI = await GetUltimaReservaPrivate(dto.ParqueID);
                 var reservaCentral = new Reserva(dto.ParqueID, UltimaReservaAPI.Value.ReservaID, dto.ClienteID, dto.LugarID, dto.DataInicio, dto.DataFim, dto.DataReserva);
                 await _serviceR.CriarReservaCentral(reservaCentral);
                 var qrCode = GerarQRcode(UltimaReservaAPI.Value);

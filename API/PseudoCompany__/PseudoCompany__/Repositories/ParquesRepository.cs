@@ -24,9 +24,6 @@ namespace ParqueAPICentral.Repositories
 
         public async Task<ActionResult<Parque>> GetParqueById(long id)
         {
-            
-
-
             return await RepContext.Parque.FindAsync(id);
         }
 
