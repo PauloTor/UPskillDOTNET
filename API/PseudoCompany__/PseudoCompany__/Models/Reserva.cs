@@ -30,11 +30,14 @@ namespace ParqueAPICentral.Models
         [DataType(DataType.DateTime)]
         public DateTime DataFim { get; set; }
 
+        [DataType(DataType.DateTime)]
+        public DateTime DataReserva { get; set; }
+
         public bool ParaSubAluguer { get; set; }
 
         public float Preco { get; set; }
 
-        public Reserva(long parqueID, long reservaAPI, long clienteID, long lugarId, DateTime inicio, DateTime fim)
+        public Reserva(long parqueID, long reservaAPI, long clienteID, long lugarId, DateTime inicio, DateTime fim, DateTime reserva)
         {
             ParqueID = parqueID;
             ReservaAPI = reservaAPI;
@@ -42,6 +45,7 @@ namespace ParqueAPICentral.Models
             LugarID = lugarId;
             DataInicio = inicio;
             DataFim = fim;
+            DataReserva = reserva;
         }
 
         public Reserva()

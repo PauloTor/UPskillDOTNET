@@ -153,7 +153,7 @@ namespace ParqueAPICentral.Services
                     var response2 = await client.
                         PostAsync(parque.Value.Url + "reservas/", reserva_);
                     var UltimaReservaAPI = await GetUltimaReservaPrivate(parqueid);
-                    var reservaCentral = new Reserva(parqueid, UltimaReservaAPI.Value.ReservaID, ClienteID, i.LugarID, DateTime.Parse(DataInicio), DateTime.Parse(DataFim));
+                    var reservaCentral = new Reserva(parqueid, UltimaReservaAPI.Value.ReservaID, ClienteID, i.LugarID, DateTime.Parse(DataInicio), DateTime.Parse(DataFim), reserva.DataReserva);
                     await _serviceR.CriarReservaCentral(reservaCentral);
                     var qrCode = GerarQRcode(UltimaReservaAPI.Value);
                     await EnviarEmail(qrCode.Value, ClienteID, UltimaReservaAPI.Value.ReservaID);
@@ -316,7 +316,7 @@ namespace ParqueAPICentral.Services
                 var response2 = await client.
                     PostAsync(parque.Value.Url + "reservas/", reserva_);
                 var UltimaReservaAPI = await GetUltimaReservaPrivate(2);
-                var reservaCentral = new Reserva(dto.ParqueID, UltimaReservaAPI.Value.ReservaID, dto.ClienteID, dto.LugarID, dto.DataInicio, dto.DataFim);
+                var reservaCentral = new Reserva(dto.ParqueID, UltimaReservaAPI.Value.ReservaID, dto.ClienteID, dto.LugarID, dto.DataInicio, dto.DataFim, dto.DataReserva);
                 await _serviceR.CriarReservaCentral(reservaCentral);
                 var qrCode = GerarQRcode(UltimaReservaAPI.Value);
                 await EnviarEmail(qrCode.Value, 3, UltimaReservaAPI.Value.ReservaID);

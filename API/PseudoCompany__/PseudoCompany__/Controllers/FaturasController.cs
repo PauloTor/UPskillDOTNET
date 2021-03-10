@@ -40,18 +40,12 @@ namespace ParqueAPICentral.Controllers
             return await this._service.CreateFaturaByReservaID(reservaID);
         }
 
-
         // GET Faturas by FaturaID - api/Faturas/5
         //[Authorize(Policy = "Roles")]
         [HttpGet("{FaturaID}")]
         public async Task<ActionResult<Fatura>> GetFatura(long FaturaID)
         {
-            //if (Fatura == null)
-            //{
-            //    return NotFound("Data inválida");
-            //}
            return await this._service.FindFaturaByID(FaturaID);
-
         }
 
         // GET Faturas by FaturaID - api/Faturas/5
@@ -59,11 +53,7 @@ namespace ParqueAPICentral.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Fatura>>> GetAllFaturas()
         {
-            var d = 1;
          return  await this._service.GetAllFaturas();
-
         }
-
-
     }
 }

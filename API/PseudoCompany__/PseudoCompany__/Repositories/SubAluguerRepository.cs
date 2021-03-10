@@ -22,7 +22,7 @@ namespace ParqueAPICentral.Repositories
         }
         public async Task<ActionResult<SubAluguer>> FindSubAluguerById(long id)
         {
-            return await RepContext.SubAluguer.FirstOrDefaultAsync();
+            return await RepContext.SubAluguer.Where(s => s.SubAluguerID == id).FirstOrDefaultAsync();
         }
 
         public async Task<ActionResult<SubAluguer>> FindSubAluguerByReserva(long id)
