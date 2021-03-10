@@ -40,5 +40,27 @@ namespace PseudoFront_.Controllers
                 return BadRequest("Server error. Please contact administrator.");
             }
         }
+
+        // GET: Faturas/Details/5
+        public async Task<IActionResult> Details(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Fatura fatura;
+            using (HttpClient client = new HttpClient())
+            {
+                string endpoint = apiBaseUrl + "/Faturas/" + id;
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                fatura = await response.Content.ReadAsAsync<Fatura>();
+            }
+            if (fatura == null)
+            {
+                return NotFound();
+            }
+            return View(fatura);
+        }
     }
 }
