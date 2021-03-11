@@ -8,6 +8,22 @@
 
 <head>
     <style>
+        h1 {
+            font-size: 2rem;
+            font-weight: 400;
+            line-height: 0.1;
+            display: block;
+            margin-block-start: 0.67em;
+            margin-block-end: 0.67em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+
+        p {
+            margin-top: 2rm;
+            margin-bottom: 0.2rem;
+        }
+
         body {
             background-image: url("/Img/162752-pg.jpg");
             background-repeat: no-repeat;
@@ -21,7 +37,17 @@
             text-align: left;
         }
 
-        textarea {
+        .navbar > .container, .navbar > .container-fluid {
+            display: flex;
+            position: relative;
+            /*flex-wrap: wrap;*/
+            align-items: center;
+            /*justify-content: space-between;*/
+            padding: .1rem 0.5rem;
+        }
+
+        #opiniao {
+            width: 100%;
             width: 100%;
             height: 100px;
             padding: 12px 20px;
@@ -32,6 +58,7 @@
             font-size: 16px;
             resize: none;
         }
+
 
         input[type=text], select {
             width: 100%;
@@ -52,15 +79,21 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            align-items: center;
         }
 
-        input[type=submit]:hover {
-           background-color: #45a049;
-        }
+            input[type=submit]:hover {
+                background-color: #45a049;
+            }
 
         div {
             border-radius: 5px;
             padding: 20px;
+        }
+
+        form {
+            display: block;
+            margin-top: 0em;
         }
 
         .footer {
@@ -70,21 +103,29 @@
             white-space: nowrap;
             line-height: 15px;
         }
-
     </style>
+    <script type="text/javascript">
+    function submitform()
+    {
+        if(document.myform.onsubmit &&
+        !document.myform.onsubmit())
+        {
+        return;
+        }
+     document.myform.submit();
+    }
+    </script>
 </head>
 <body>
     <h1>@ViewData["Title"]</h1>
 
     <p>Todos os dados fornecidos pelos nossos clientes estão protegidos pelo Regulamento Geral de Proteção de Dados.</p>
+    <p>Dê-nos uma sugestão. A sua opinião conta.</p>
 
     <div>
         <form action="/action_page.php">
-            <label for="fname">Primeiro Nome</label>
-            <input type="text" id="fname" name="primeiroNome" placeholder="Primeiro Nome..">
-
-            <label for="lname">Sobrenome</label>
-            <input type="text" id="lname" name="sobrenome" placeholder="Sobrenome..">
+            <label for="fname">Nome Completo</label>
+            <input type="text" id="fname" name="nomeCompleto" placeholder="Introduza o seu nome completo...">
 
             <label for="sexo">Sexo</label>
             <select id="sexo" name="sexo">
@@ -92,13 +133,16 @@
                 <option value="masculino">Masculino</option>
             </select>
 
-            <textarea placeholder="Sobrenome.."> </textarea>
+            <input type="text" id="opiniao" name="opiniao" placeholder="Escreva aqui a sua opinião...">
             <input type="submit" value="Submit">
+            <a href="javascript: submitform()">
+                <img src="go.gif" width="33" height="19" border="0" />
+            </a>
         </form>
     </div>
 
-    
-        
-        
+
+
+
 </body>
 </html>
