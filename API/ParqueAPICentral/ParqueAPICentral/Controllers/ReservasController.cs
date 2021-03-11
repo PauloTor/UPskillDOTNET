@@ -60,11 +60,11 @@ namespace ParqueAPICentral.Controllers
 
         //Post Reservas by {DataInicio}/{DataFim}/{ClienteID}/{ParqueID}/{lugarId}
         [EnableCors]
-        [HttpGet("post/{DataInicio}/{DataFim}/{ClienteID}/{ParqueID}")]
-        public async Task<ActionResult<ReservaPrivateDTO>> PostReservaByData(String DataInicio, String DataFim, String ClienteID, long parqueid)
+        [HttpGet("post/{DataInicio}/{DataFim}/{EmailID}/{ParqueID}")]
+        public async Task<ActionResult<ReservaPrivateDTO>> PostReservaByData(String DataInicio, String DataFim, String Email, long parqueid)
         {
             
-            return await _service.PostReservaByData(DataInicio, DataFim, ClienteID, parqueid);
+          return await _service.PostReservaByData(DataInicio, DataFim, Email, parqueid);
 
         }
         

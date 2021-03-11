@@ -17,5 +17,6 @@ namespace ParqueAPICentral.Services
         bool RevokeToken(string token);
         ApplicationUser GetById(string id);
         ApplicationUser UpdatePagamentoCliente(string clienteID, float valor);
+        string GetIdByEmail(string email);
     }
 }

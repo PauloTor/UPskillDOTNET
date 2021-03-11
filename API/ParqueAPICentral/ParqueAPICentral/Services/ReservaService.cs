@@ -117,8 +117,11 @@ namespace ParqueAPICentral.Services
         }
 
 
-        public async Task<ActionResult<ReservaPrivateDTO>> PostReservaByData(String DataInicio, String DataFim, string ClienteID, long parqueid)
+        public async Task<ActionResult<ReservaPrivateDTO>> PostReservaByData(String DataInicio, String DataFim, string Email, long parqueid)
         {
+
+            var ClienteID = _serviceC.GetIdByEmail(Email);
+            
             var parque = await _service.GetParqueById(parqueid);
             using var client = new HttpClient();
             try
@@ -126,7 +129,7 @@ namespace ParqueAPICentral.Services
                 var rtoken = await GetToken(parque.Value.Url + "users/authenticate");
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", rtoken);
                 var i = _serviceL.GetLugaresDisponiveisComSubAlugueres(DataInicio, DataFim, parqueid).Result.Value.FirstOrDefault();
-                var reserva = new ReservaPrivateDTO(DateTime.Now, DateTime.Parse(DataInicio), DateTime.Parse(DataFim), i.LugarID);
+                var reserva = new ReservaPrivateDTO(DateTime.Now, DateTime.Parse(DataInicio), DateTime.Parse(DataFim), ClienteID, i.LugarID);
 
 
 

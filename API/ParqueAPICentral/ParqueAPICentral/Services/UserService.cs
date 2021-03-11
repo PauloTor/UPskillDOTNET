@@ -224,16 +224,16 @@ namespace ParqueAPICentral.Services
             
             cliente =  _context.Users.Find(Userid);
 
-            //cliente.Credito += valor;
-            //// Cofre.Entrada(valor);
+            cliente.Credito += valor;
+            // Cofre.Entrada(valor);
 
 
-            //if (cliente.Credito < 0)
-            //{
-            //    // Cofre.Saida(valor);
-            //    cliente.Credito -= valor;
-            //    throw new Exception("O crédito não permite efetuar a operação.");
-            //}
+            if (cliente.Credito < 0)
+            {
+                // Cofre.Saida(valor);
+                cliente.Credito -= valor;
+                throw new Exception("O crédito não permite efetuar a operação.");
+            }
 
 
             _context.Update(cliente);
@@ -266,6 +266,13 @@ namespace ParqueAPICentral.Services
         {
             return _context.Users.Find(id);
         }
+
+        public string GetIdByEmail(string email)
+        {
+            return _context.Users.Find(email).Id;
+        }
+
+
 
         //  Update Users // : Remove User de Role 
     }
