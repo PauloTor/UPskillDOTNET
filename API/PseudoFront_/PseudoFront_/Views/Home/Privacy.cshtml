@@ -8,141 +8,148 @@
 
 <head>
     <style>
-        h1 {
-            font-size: 2rem;
-            font-weight: 400;
-            line-height: 0.1;
-            display: block;
-            margin-block-start: 0.67em;
-            margin-block-end: 0.67em;
-            margin-inline-start: 0px;
-            margin-inline-end: 0px;
-        }
-
-        p {
-            margin-top: 2rm;
-            margin-bottom: 0.2rem;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            font-family: 'Josefin Sans', sans-serif;
         }
 
         body {
-            background-image: url("/Img/162752-pg.jpg");
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-size: 100% 100%;
-            margin: 0;
-            font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-            font-size: 1rem;
-            line-height: 1;
-            color: #fff;
-            text-align: left;
+            /*background: #fece0c;*/
         }
 
-        .navbar > .container, .navbar > .container-fluid {
-            display: flex;
-            position: relative;
-            /*flex-wrap: wrap;*/
-            align-items: center;
-            /*justify-content: space-between;*/
-            padding: .1rem 0.5rem;
-        }
-
-        #opiniao {
+        .wrapper {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            max-width: 400px;
             width: 100%;
-            width: 100%;
-            height: 100px;
-            padding: 12px 20px;
-            box-sizing: border-box;
-            border: 2px solid #ccc;
-            border-radius: 4px;
-            background-color: #f8f8f8;
-            font-size: 16px;
-            resize: none;
+            background: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 4px 4px 2px rgba(254,236,164,1);
         }
 
-
-        input[type=text], select {
-            width: 100%;
-            padding: 5px 15px;
-            margin: 8px 0;
-            display: inline-block;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        input[type=submit] {
-            width: 100%;
-            background-color: #4CAF50;
-            color: white;
-            padding: 14px 20px;
-            margin: 8px 0;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            align-items: center;
-        }
-
-            input[type=submit]:hover {
-                background-color: #45a049;
+            .wrapper h2 {
+                text-align: center;
+                margin-bottom: 20px;
+                text-transform: uppercase;
+                letter-spacing: 3px;
+                color: #332902;
             }
 
-        div {
-            border-radius: 5px;
-            padding: 20px;
-        }
+            .wrapper .input_field {
+                margin-bottom: 10px;
+            }
 
-        form {
-            display: block;
-            margin-top: 0em;
-        }
+                .wrapper .input_field input[type="text"],
+                .wrapper textarea {
+                    border: 1px solid #e0e0e0;
+                    width: 100%;
+                    padding: 10px;
+                }
 
-        .footer {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            white-space: nowrap;
-            line-height: 15px;
+            .wrapper textarea {
+                resize: none;
+                height: 80px;
+            }
+
+            .wrapper .btn input[type="submit"] {
+                border: 0px;
+                margin-top: 15px;
+                padding: 10px;
+                text-align: center;
+                width: 100%;
+                background: #fece0c;
+                color: #332902;
+                text-transform: uppercase;
+                letter-spacing: 5px;
+                font-weight: bold;
+                border-radius: 25px;
+                cursor: pointer;
+            }
+
+        #error_message {
+            margin-bottom: 20px;
+            background: #fe8b8e;
+            padding: 0px;
+            text-align: center;
+            font-size: 14px;
+            transition: all 0.5s ease;
         }
     </style>
-    <script type="text/javascript">
-    function submitform()
-    {
-        if(document.myform.onsubmit &&
-        !document.myform.onsubmit())
-        {
-        return;
+    <script>
+        function validate(){
+  var name = document.getElementById("name").value;
+  var subject = document.getElementById("subject").value;
+  var phone = document.getElementById("phone").value;
+  var email = document.getElementById("email").value;
+  var message = document.getElementById("message").value;
+  var error_message = document.getElementById("error_message");
+
+  error_message.style.padding = "10px";
+
+  var text;
+  if(name.length < 5){
+    text = "Please Enter valid Name";
+    error_message.innerHTML = text;
+    return false;
+  }
+  if(subject.length < 10){
+    text = "Please Enter Correct Subject";
+    error_message.innerHTML = text;
+    return false;
+  }
+  if(isNaN(phone) || phone.length != 10){
+    text = "Please Enter valid Phone Number";
+    error_message.innerHTML = text;
+    return false;
+  }
+    if(email.indexOf(email.length < 6){
+        text = "Please Enter valid Email";
+        error_message.innerHTML = text;
+        return false;
         }
-     document.myform.submit();
-    }
+  if(message.length <= 140){
+    text = "Please Enter More Than 140 Characters";
+    error_message.innerHTML = text;
+    return false;
+  }
+  alert("Form Submitted Successfully!");
+  return true;
+}
+
     </script>
 </head>
 <body>
-    <h1>@ViewData["Title"]</h1>
+    <div class="wrapper">
+        <h2>Contact us</h2>
+        <div id="error_message">
 
-    <p>Todos os dados fornecidos pelos nossos clientes estão protegidos pelo Regulamento Geral de Proteção de Dados.</p>
-    <p>Dê-nos uma sugestão. A sua opinião conta.</p>
-
-    <div>
-        <form action="/action_page.php">
-            <label for="fname">Nome Completo</label>
-            <input type="text" id="fname" name="nomeCompleto" placeholder="Introduza o seu nome completo...">
-
-            <label for="sexo">Sexo</label>
-            <select id="sexo" name="sexo">
-                <option value="feminino">Feminino</option>
-                <option value="masculino">Masculino</option>
-            </select>
-
-            <input type="text" id="opiniao" name="opiniao" placeholder="Escreva aqui a sua opinião...">
-            <input type="submit" value="Submit">
-            <a href="javascript: submitform()">
-                <img src="go.gif" width="33" height="19" border="0" />
-            </a>
+        </div>
+        <form action="" id="myform" onsubmit="return validate();">
+            <div class="input_field">
+                <input type="text" placeholder="Nome" id="name">
+            </div>
+            <div class="input_field">
+                <input type="text" placeholder="Assunto" id="subject">
+            </div>
+            <div class="input_field">
+                <input type="text" placeholder="Telefone" id="phone">
+            </div>
+            <div class="input_field">
+                <input type="text" placeholder="Email" id="email">
+            </div>
+            <div class="input_field">
+                <textarea placeholder="Mensagem" id="message"></textarea>
+            </div>
+            <div class="btn">
+                <input type="submit">
+            </div>
         </form>
     </div>
-
-
-
-
 </body>
 </html>
