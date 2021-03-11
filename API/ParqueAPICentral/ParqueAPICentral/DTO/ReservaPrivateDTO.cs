@@ -36,11 +36,12 @@ namespace ParqueAPICentral.DTO
         public string UserID { get; set; }
         public ApplicationUser applicationUser { get; set; }
 
-        public ReservaPrivateDTO(DateTime datareserva, DateTime datainicio, DateTime datafim,long lugarid)
+        public ReservaPrivateDTO(DateTime datareserva, DateTime datainicio, DateTime datafim, string userid, long lugarid)
         {
             DataReserva = datareserva;
             DataInicio = datainicio;
             DataFim = datafim;
+            UserID = userid;
             LugarID = lugarid;
         }
     }
