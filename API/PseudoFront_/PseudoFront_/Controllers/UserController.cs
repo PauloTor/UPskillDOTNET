@@ -67,10 +67,11 @@ namespace PseudoFront_.Controllers
             {
                 try
                 {
-                    client.BaseAddress = new Uri("https://localhost:44353/api/");
+               // https://localhost:44346/api/user/token
+                    client.BaseAddress = new Uri("https://localhost:44346/api/");
                     client.DefaultRequestHeaders.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                    var postTask = client.PostAsJsonAsync("Login", loginModel);
+                   // client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                    var postTask = client.PostAsJsonAsync("user/token", loginModel);
                     postTask.Wait();
                     var result = postTask.Result;
                     if (result.IsSuccessStatusCode)

@@ -21,7 +21,9 @@ namespace PseudoFront_.Controllers
 
         public IActionResult Index()
         {
+            
             var token = Request.Cookies["token"];
+          //  var user_=Request.Cookies[User]
             if (token == null)
             {
                 ViewBag.Token = false;
