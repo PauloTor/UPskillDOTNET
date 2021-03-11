@@ -54,6 +54,7 @@ namespace PseudoFront_.Controllers
         public IActionResult Login()
         {
             var token = Request.Cookies["token"];
+            
             if (token == null)
                 ViewBag.Token = false;
             else
@@ -85,7 +86,8 @@ namespace PseudoFront_.Controllers
                             cookieOptions.Expires = DateTime.Now.AddHours(1);
                             Response.Cookies.Append("token", content.Result.Token, cookieOptions);
                             Response.Cookies.Append("email", content.Result.Email, cookieOptions);
-                          //  Response.Cookies.Append("role", content.Result.Roles., cookieOptions);
+             
+                            //  Response.Cookies.Append("role", content.Result.Roles., cookieOptions);
                             TempData["message"] = "Login efectuado com sucesso";
                             return RedirectToAction("Index", "Home");
                         }
