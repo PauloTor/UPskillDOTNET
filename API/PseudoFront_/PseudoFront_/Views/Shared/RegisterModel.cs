@@ -8,10 +8,12 @@ namespace PseudoFront_.Models
 {
     public class RegisterModel
     {
-        [Required(ErrorMessage = "FirstName é necessário")]
+        [Required(ErrorMessage = "Primeiro Nome é necessário")]
+        [Display(Name = "Primeiro Nome")]
         public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "LastName é necessário")]
+        [Required(ErrorMessage = "Sobrenome é necessário")]
+        [Display(Name = "Sobrenome")]
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "UserName é necessário")]
@@ -27,6 +29,7 @@ namespace PseudoFront_.Models
         public float Credito { get; set; }
 
         [Required(ErrorMessage = "Metodo Pagamento é necessário")]
+        [Display(Name = "Método de Pagamento")]
         public string MetodoPagamento { get; set; }
 
         [Required(ErrorMessage = "Password é necessária")]
