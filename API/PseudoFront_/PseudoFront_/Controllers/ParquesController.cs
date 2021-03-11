@@ -42,11 +42,11 @@ namespace PseudoFront_.Controllers
             var listaMoradas = new List<MoradaDTO>();
             using (HttpClient client = new HttpClient())
             {
-                string endpoint = "https://localhost:44353/api/Parques";
+                string endpoint = "https://localhost:44346/api/Parques";
                 var response = await client.GetAsync(endpoint);
                 response.EnsureSuccessStatusCode();
                 listaParques = await response.Content.ReadAsAsync<List<ParqueDTO>>();
-                string endpoint2 = "https://localhost:44353/api/Moradas";
+                string endpoint2 = "https://localhost:44346/api/Moradas";
                 var response2 = await client.GetAsync(endpoint2);
                 response2.EnsureSuccessStatusCode();
 
@@ -128,7 +128,7 @@ namespace PseudoFront_.Controllers
 
             using (HttpClient client = new HttpClient())
             {
-                string endpoint = "https://localhost:44353/api/Parques/" + id;
+                string endpoint = "https://localhost:44346/api/Parques/" + id;
                 var response = client.GetAsync(endpoint);
                 response.Wait();
                 var result = response.Result;
