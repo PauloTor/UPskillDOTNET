@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SeleniumTests.Tests
 {
-    class LoginTest
+    class RegisterTest
     {
 
         //Browser Driver
@@ -19,7 +19,7 @@ namespace SeleniumTests.Tests
         [SetUp]
         public void Setup()
         {
-           
+
             //Navigate to site 
             webDriver.Navigate().GoToUrl("https://localhost:44342/");
 
@@ -33,27 +33,29 @@ namespace SeleniumTests.Tests
 
             //-----Disconnect--------
 
-            LoginPage loginPage = new LoginPage(webDriver);
-            loginPage.Login("testQwerty", "12345Qwerty.");
+            RegisterPage registerPage = new RegisterPage(webDriver);
+            registerPage.Register("test2Qwerty2.", "qwerty2@mail.com", "12345Qwerty.");
 
-            var loginComSucesso = webDriver.FindElement(By.XPath("/html/body/div/main/div/div/h3"));
+            //TODO meter o path da mensagem de sucesso na criação de utilizador
+
+            var RegistoComSucesso = webDriver.FindElement(By.XPath(""));
 
             var sucesso = false;
 
-            var loginMessage = loginComSucesso.Text;
+            var registerMessage = RegistoComSucesso.Text;
 
-            if (loginMessage == "Login efectuado com sucesso")
+            if (registerMessage == "User created successfully!")
             {
                 sucesso = true;
-                Console.WriteLine("Login bem sucedido!");
+                Console.WriteLine("Registo bem sucedido!");
             }
 
             Assert.That(sucesso, Is.True);
 
-            //Assert.Pass();
         }
-
         [TearDown]
         public void TearDown() => webDriver.Quit();
+
+
     }
 }
