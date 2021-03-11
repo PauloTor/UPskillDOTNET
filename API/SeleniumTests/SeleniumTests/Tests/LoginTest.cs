@@ -53,7 +53,7 @@ namespace SeleniumTests.Tests
             //Assert.Pass();
         }
 
-
-
+        [TearDown]
+        public void TearDown() => webDriver.Quit();
     }
 }

@@ -11,6 +11,7 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using PseudoFront_.DTO;
 using System.Security.Claims;
+using System.Text;
 
 namespace PseudoFront_.Controllers
 {
@@ -42,11 +43,11 @@ namespace PseudoFront_.Controllers
             var listaMoradas = new List<MoradaDTO>();
             using (HttpClient client = new HttpClient())
             {
-                string endpoint = "https://localhost:44353/api/Parques";
+                string endpoint = "https://localhost:44346/api/Parques";
                 var response = await client.GetAsync(endpoint);
                 response.EnsureSuccessStatusCode();
                 listaParques = await response.Content.ReadAsAsync<List<ParqueDTO>>();
-                string endpoint2 = "https://localhost:44353/api/Moradas";
+                string endpoint2 = "https://localhost:44346/api/Moradas";
                 var response2 = await client.GetAsync(endpoint2);
                 response2.EnsureSuccessStatusCode();
 
@@ -88,7 +89,7 @@ namespace PseudoFront_.Controllers
                 String[] str = new String[vmDemo.Count];
                 foreach (var item in vmDemo)
                 {
-                    str[i] = (item.CodigoPostal + " " + item.Rua + " " + item.NomeParque);
+                    str[i] = (item.CodigoPostal + ", " + item.Rua + ", " + item.NomeParque);
 
                     if ((myCountry != null) && (myCountry == str[i]))
                     {
@@ -120,15 +121,12 @@ namespace PseudoFront_.Controllers
             {
                 // var action = item.ParqueID;
 
-                return RedirectToAction("CriarReserva", new { i = id, di = datai, df = dataf });
-
+                return RedirectToAction("CriarReserva", new { di = datai, df = dataf, i = id });
             }
-
             ParqueDTO parque;
-
             using (HttpClient client = new HttpClient())
             {
-                string endpoint = "https://localhost:44353/api/Parques/" + id;
+                string endpoint = "https://localhost:44346/api/Parques/" + id;
                 var response = client.GetAsync(endpoint);
                 response.Wait();
                 var result = response.Result;
@@ -149,100 +147,23 @@ namespace PseudoFront_.Controllers
             }
         }
 
-
-        public IActionResult CriarReserva(int parqueid, DateTime datai, DateTime dataf)
+        public IActionResult CriarReserva(DateTime datai, DateTime dataf, int parqueid)
         {
 
-            ReservaPrivateDTO reservaPrivateDTO;
-            var userId = User.Identity;
+            //ReservaPrivateDTO reservaPrivateDTO;
+            var email = Request.Cookies["email"];
+            var reserva = new ReservaPrivateDTO_(datai, dataf, email, parqueid);
 
+            string queryString = "Datai=" + datai + "&Dataf=" + dataf + "Email" + email + "Parqueid" + parqueid;
 
-            //using (HttpClient client = new HttpClient())
-            //{
-            //    string endpoint = "https://localhost:44353/api/Parques/" + id;
-            //    var response = client.GetAsync(endpoint);
-            //    response.Wait();
-            //    var result = response.Result;
+            //long a = 1;
+            using (HttpClient client = new HttpClient())
+            {
+                var response = client.PostAsJsonAsync("https://localhost:44346/api/post/", queryString).Result;
 
-            //    if (result.IsSuccessStatusCode)
-            //    {
-            //        var read = result.Content.ReadAsAsync<ParqueDTO>();
-            //        read.Wait();
-            //        parque = read.Result;
-            //    }
-            //    else
-            //    {
-            //        //erro
-            //        parque = null;
-            //        ModelState.AddModelError(string.Empty, "Server error occured");
-            //    }
-            return View();
+            }
+            return View(reserva);
         }
 
     }
-
 }
-
-
-        //    // GET: ParquesController/Create
-        //    public ActionResult Create()
-        //{
-        //    return View();
-        //}
-
-        //// POST: ParquesController/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create(IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
-
-        //// GET: ParquesController/Edit/5
-        //public ActionResult Edit(int id)
-        //{
-        //    return View();
-        //}
-
-        //// POST: ParquesController/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
-
-        //// GET: ParquesController/Delete/5
-        //public ActionResult Delete(int id)
-        //{
-        //    return View();
-        //}
-
-        //// POST: ParquesController/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}

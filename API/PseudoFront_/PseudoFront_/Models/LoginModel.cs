@@ -9,11 +9,10 @@ namespace PseudoFront_.Models
     public class LoginModel
     {
         
-        
-            [Required(ErrorMessage = "User Name is required")]
-            public string Username { get; set; }
+            [Required(ErrorMessage = "O Email é necessário")]
+            public string Email { get; set; }
 
-            [Required(ErrorMessage = "Password is required")]
+            [Required(ErrorMessage = "A Password é necessária")]
             public string Password { get; set; }
         
     }
