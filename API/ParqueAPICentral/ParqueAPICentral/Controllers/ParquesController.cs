@@ -32,7 +32,7 @@ namespace ParqueAPICentral.Controllers
             this._service = service;
         }
 
-        // GET: api/Reservas
+        // GET: api/Parques
         [EnableCors]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Parque>>> GetParquesTodos()
@@ -41,7 +41,7 @@ namespace ParqueAPICentral.Controllers
             return await _service.GetAllParques();
         }
        
-        //// GET: api/Clientes/5  - Obter Informação de um Cliente por ID
+        //// GET: api/Parques/5  - Obter Informação de um Parque por ID
         [EnableCors]
         [HttpGet("{id}")]
         public async Task<ActionResult<Parque>> GetParqueById(long id)
