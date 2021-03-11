@@ -21,7 +21,7 @@ namespace PseudoFront_.Models
         public string Email { get; set; }
 
         [Required]
-        [RegularExpression(@"^\\d{9}$", ErrorMessage = "NIF length must be 9 numbers")]
+        [RegularExpression(@"^\\d{9}$", ErrorMessage = "NIF deve ter 9 números")]
         public int Nif { get; set; }
 
         public float Credito { get; set; }
