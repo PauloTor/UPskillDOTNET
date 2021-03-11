@@ -14,6 +14,7 @@ namespace PseudoFront_.Controllers
         public IActionResult Register()
         {
             var token = Request.Cookies["token"];
+     
             if (token == null)
                 ViewBag.Token = false;
             else
@@ -67,10 +68,11 @@ namespace PseudoFront_.Controllers
             {
                 try
                 {
-                    client.BaseAddress = new Uri("https://localhost:44353/api/");
+               // https://localhost:44346/api/user/token
+                    client.BaseAddress = new Uri("https://localhost:44346/api/");
                     client.DefaultRequestHeaders.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                    var postTask = client.PostAsJsonAsync("Login", loginModel);
+                   // client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                    var postTask = client.PostAsJsonAsync("user/token", loginModel);
                     postTask.Wait();
                     var result = postTask.Result;
                     if (result.IsSuccessStatusCode)
@@ -82,6 +84,8 @@ namespace PseudoFront_.Controllers
                             CookieOptions cookieOptions = new CookieOptions();
                             cookieOptions.Expires = DateTime.Now.AddHours(1);
                             Response.Cookies.Append("token", content.Result.Token, cookieOptions);
+                            Response.Cookies.Append("email", content.Result.Email, cookieOptions);
+                          //  Response.Cookies.Append("role", content.Result.Roles., cookieOptions);
                             TempData["message"] = "Login efectuado com sucesso";
                             return RedirectToAction("Index", "Home");
                         }

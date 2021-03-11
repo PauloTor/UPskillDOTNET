@@ -1,41 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PseudoFront_.Models
+namespace ParqueAPICentral.Models
 {
     public class RegisterModel
     {
-        [Required(ErrorMessage = "Primeiro Nome é necessário")]
-        [Display(Name = "Primeiro Nome")]
+        [Required]
         public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "Sobrenome é necessário")]
-        [Display(Name = "Sobrenome")]
+        [Required]
         public string LastName { get; set; }
 
-        [Required(ErrorMessage = "UserName é necessário")]
+        [Required]
         public string Username { get; set; }
 
-        [Required(ErrorMessage = "Email é necessário")]
+        [Required]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
         [Required]
         [RegularExpression(@"^\\d{9}$", ErrorMessage = "NIF deve ter 9 números")]
+        [Index(nameof(Nif), IsUnique = true)]
         public int Nif { get; set; }
 
         public float Credito { get; set; }
-
-        [Required(ErrorMessage = "Metodo Pagamento é necessário")]
-        [Display(Name = "Método de Pagamento")]
+       
+        [Required]
         public string MetodoPagamento { get; set; }
 
-        [Required(ErrorMessage = "Password é necessária")]
-        public string Password { get; set; }
 
+        [Required]
+        public string Password { get; set; }
     }
 }
-
-
