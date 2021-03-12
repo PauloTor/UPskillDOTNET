@@ -29,13 +29,11 @@ namespace ParqueAPICentral.Services
 
         public async Task<ActionResult<IEnumerable<Reserva>>> GetAllReservasCentralAsync()
         {
-
             return await _repo.GetAllReservasCentralAsync();
         }
 
         public async Task<ActionResult<Reserva>> UpdateReserva(Reserva reserva)
         {
-
             return await _repo.UpdateReserva(reserva);
         }
 
@@ -60,7 +58,7 @@ namespace ParqueAPICentral.Services
                 reserva.ParaSubAluguer = true;
                 await _serviceS.PostSubAluguer(new SubAluguer
                 {
-                    Preco = reserva.Preco,
+                    Preco = reserva.preco,
                     ReservaID = id,
                     Reservado = false
                 });
@@ -80,10 +78,8 @@ namespace ParqueAPICentral.Services
         }
 
         public async Task<ActionResult<Reserva>>  CriarReservaCentral(Reserva reserva)
-        {
-                    
+        {                  
             return await _repo.CriarReservaCentral(reserva);
-
         }
 
         public async Task<ActionResult<Reserva>> GetReservaById(long id)

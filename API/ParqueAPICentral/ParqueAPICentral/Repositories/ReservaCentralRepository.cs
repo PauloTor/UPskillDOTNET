@@ -26,14 +26,12 @@ namespace ParqueAPICentral.Repositories
         {
             await UpdateAsync(reserva);
 
-            return reserva;
-        
+            return reserva;       
         }
 
 
         public async Task<ActionResult<Reserva>> GetAllClienteByReservasCentralAsync(long parqueID, long id)
         {
-
             var Res = await RepContext.Reserva.Where(r => r.ParqueID == parqueID).Where(rr => rr.ReservaAPI == id).FirstOrDefaultAsync();
 
             return Res;
@@ -62,8 +60,5 @@ namespace ParqueAPICentral.Repositories
         {
             return await AddAsync(reserva);
         }
-
-
-
     }
 }

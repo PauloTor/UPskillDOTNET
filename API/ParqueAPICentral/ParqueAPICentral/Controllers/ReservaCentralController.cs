@@ -47,6 +47,11 @@ namespace ParqueAPICentral.Controllers
         [HttpPut("{ParqueID}")]
         public async Task<ActionResult<Reserva>> UpdateReserva(Reserva reserva)
         {
+            //var id = reserva.ReservaID;
+            //var original = _service.GetReservaById(id).Result.Value.ReservaAPI;
+            //var preco = reserva.preco;
+            //reserva.ReservaAPI = original;
+            //reserva.preco = preco;
             return await _service.UpdateReserva(reserva);
         }
 
