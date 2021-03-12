@@ -40,7 +40,6 @@ namespace ParqueAPICentral.Controllers
         public async Task<ActionResult<IEnumerable<Reserva>>> GetAllReservaCentral()
         {
             return await this._service.GetAllReservasCentralAsync();
-
         }
 
         //[Authorize(Policy = "Roles")]
@@ -48,9 +47,7 @@ namespace ParqueAPICentral.Controllers
         [HttpPut("{ParqueID}")]
         public async Task<ActionResult<Reserva>> UpdateReserva(Reserva reserva)
         {
-
             return await _service.UpdateReserva(reserva);
-
         }
 
         //[Authorize(Policy = "Admin")]
@@ -58,7 +55,6 @@ namespace ParqueAPICentral.Controllers
         [HttpGet("ClienteReserva/{id}")]
         public async Task<ActionResult<Reserva>> GetAllClienteByReservasCentralAsync(long ParqueID, long id)
         {
-
         return await this._service.GetAllClienteByReservasCentral(ParqueID, id);
         }
 

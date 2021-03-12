@@ -130,24 +130,36 @@ namespace PseudoFront_.Controllers
         // POST: Reservas/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("ReservaID,ParqueID,LugarID,ClienteID,DataInicio,DataFim,ParaSubAluguer")] ReservaPrivateDTO reserva)
+        public async Task<IActionResult> Edit(long id, [Bind("ReservaID,ParqueID,LugarID,ClienteID,DataInicio,DataFim,ParaSubAluguer,Preco")] ReservaPrivateDTO reserva)
         {
-            if (id != reserva.ReservaID)
+            using HttpClient client1 = new();
+            string endpoint1 = apiBaseUrl + "/ReservasCentral/" + id;
+            var response1 = await client1.GetAsync(endpoint1);
+            var suba = await response1.Content.ReadAsAsync<ReservaPrivateDTO>();
+
+            reserva.ReservaID = suba.ReservaID;
+            reserva.ParqueID = suba.ParqueID;
+            reserva.LugarID = suba.LugarID;
+            reserva.ClienteID = suba.ClienteID;
+            reserva.DataInicio = suba.DataInicio;
+            reserva.DataFim = suba.DataFim;
+            reserva.DataReserva = suba.DataReserva;
+            //reserva.Preco = 
+
+            using (HttpClient client = new())
             {
-                return NotFound();
+                StringContent content = new(JsonConvert.SerializeObject(reserva), Encoding.UTF8, "application/json");
+                string endpoint = apiBaseUrl + "/ReservasCentral/" + id;
+                var response = await client.PutAsync(endpoint, content);
             }
-            if (ModelState.IsValid)
+            using (HttpClient client = new())
             {
-                using (HttpClient client = new())
-                {
-                    StringContent content = new(JsonConvert.SerializeObject(reserva), Encoding.UTF8, "application/json");
-                    string endpoint = apiBaseUrl + "/ReservasCentral/sub/" + id;
-                    var response = await client.PutAsync(endpoint, content);
-                }
-                return RedirectToAction(nameof(Index));
+                StringContent content = new(JsonConvert.SerializeObject(reserva), Encoding.UTF8, "application/json");
+                string endpoint = apiBaseUrl + "/ReservasCentral/sub/" + id;
+                var response = await client.PutAsync(endpoint, content);
             }
-            return View(reserva);
-        }
+            return RedirectToAction(nameof(Index));
+            }
 
 
         //GET: Reservas/Delete/5

@@ -60,7 +60,7 @@ namespace ParqueAPICentral.Services
                 reserva.ParaSubAluguer = true;
                 await _serviceS.PostSubAluguer(new SubAluguer
                 {
-                    //Preco = 11,
+                    Preco = reserva.preco,
                     ReservaID = id,
                     Reservado = false
                 });
