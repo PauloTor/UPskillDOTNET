@@ -144,7 +144,7 @@ namespace PseudoFront_.Controllers
             reserva.DataInicio = suba.DataInicio;
             reserva.DataFim = suba.DataFim;
             reserva.DataReserva = suba.DataReserva;
-            //reserva.Preco = 
+            reserva.ParaSubAluguer = suba.ParaSubAluguer;
 
             using (HttpClient client = new())
             {
