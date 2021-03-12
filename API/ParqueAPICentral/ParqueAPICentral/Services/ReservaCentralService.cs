@@ -85,8 +85,7 @@ namespace ParqueAPICentral.Services
         public async Task<ActionResult<Reserva>> GetReservaById(long id)
         {
             return await _repo.GetReservaByIdAsync(id);
-        }
-        
+        }       
     }
 }
 

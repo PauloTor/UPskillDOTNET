@@ -53,7 +53,7 @@ namespace ParqueAPICentral.Data
             }
             context.SaveChanges();
 
-
+            /*
             IList<Reserva> defaultReserva = new List<Reserva>
             {
                 new Reserva(1, 1, "1",1,true),
@@ -67,7 +67,7 @@ namespace ParqueAPICentral.Data
             context.Reserva.AddRange(defaultReserva);
 
             context.SaveChanges();
-
+            */
 
             IList<Fatura> defaultFatura = new List<Fatura>
             {

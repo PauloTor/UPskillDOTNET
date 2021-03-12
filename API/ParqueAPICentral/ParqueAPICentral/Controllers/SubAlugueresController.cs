@@ -23,11 +23,15 @@ namespace ParqueAPICentral.Controllers
     [ApiController]
     public class SubAlugueresController : ControllerBase
     {
-
         private readonly SubAluguerService _service;
-        public SubAlugueresController(SubAluguerService service)
+        private readonly ReservaService _serviceR;
+        private readonly ReservaCentralService _serviceRC;
+
+        public SubAlugueresController(SubAluguerService service, ReservaService serviceR, ReservaCentralService serviceRC)
         {
             _service = service;
+            _serviceR = serviceR;
+            _serviceRC = serviceRC;
         }
 
         // GET: api/SubAlugueres
@@ -65,6 +69,17 @@ namespace ParqueAPICentral.Controllers
         public async Task<ActionResult<SubAluguer>> PostSubAluguer(SubAluguer subaluguer)
         {
             return await _service.PostSubAluguer(subaluguer);
+        }
+
+        [EnableCors]
+        [HttpPost("post")]
+        public async Task<ActionResult<Reserva>> PostSubReserva(SubAluguer subaluguer)
+        {
+            var id = subaluguer.ReservaID;
+            var reserva = _serviceRC.GetReservaById(id).Result.Value;
+            reserva.UserID = "3"; // subaluguer.NovoCliente.ToString();
+            return await _serviceR.PostSubReserva(reserva);
+            //return await _serviceRC.DeleteReservaCentral(id);
         }
     }
 }

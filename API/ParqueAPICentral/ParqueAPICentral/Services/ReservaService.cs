@@ -156,7 +156,7 @@ namespace ParqueAPICentral.Services
                     var response2 = await client.
                         PostAsync(parque.Value.Url + "reservas/", reserva_);
                     var UltimaReservaAPI = await GetUltimaReservaPrivate(parqueid);
-                    var reservaCentral = new Reserva(parqueid, UltimaReservaAPI.Value.ReservaID, ClienteID, i.LugarID,true);
+                    var reservaCentral = new Reserva(parqueid, UltimaReservaAPI.Value.ReservaID, ClienteID, i.LugarID);
                     await _serviceR.CriarReservaCentral(reservaCentral);
                     var qrCode = GerarQRcode(UltimaReservaAPI.Value);
                     await EnviarEmail(qrCode.Value, ClienteID, UltimaReservaAPI.Value.ReservaID);
@@ -272,7 +272,7 @@ namespace ParqueAPICentral.Services
 
         public async Task EnviarEmail(byte[] qrCode, string ClienteID, long ReservaID)
         {
-            var cliente =  _serviceC.GetById(ClienteID);
+            var cliente = _serviceC.GetById(ClienteID);
 
             string remetente = "pseudocompany2020@gmail.com";
 
@@ -318,8 +318,8 @@ namespace ParqueAPICentral.Services
                     SerializeObject(dto), Encoding.UTF8, "application/json");
                 var response2 = await client.
                     PostAsync(parque.Value.Url + "reservas/", reserva_);
-                var UltimaReservaAPI = await GetUltimaReservaPrivate(2);
-                var reservaCentral = new Reserva(dto.ParqueID, UltimaReservaAPI.Value.ReservaID, dto.UserID, dto.LugarID, true);
+                var UltimaReservaAPI = await GetUltimaReservaPrivate(dto.ParqueID);
+                var reservaCentral = new Reserva(dto.ParqueID, dto.ReservaID, dto.UserID, dto.LugarID);
                 await _serviceR.CriarReservaCentral(reservaCentral);
                 var qrCode = GerarQRcode(UltimaReservaAPI.Value);
                 await EnviarEmail(qrCode.Value, "3", UltimaReservaAPI.Value.ReservaID);
@@ -332,6 +332,22 @@ namespace ParqueAPICentral.Services
                 return NotFound("API do Parque " + parque.Value.NomeParque + " não conectada.");
             }
         }
+
+        public async Task<ActionResult<Reserva>> PostSubReserva(Reserva reserva)
+        {
+            //pagamento do cliente que aluga
+            //_serviceC.UpdatePagamentoCliente("3", reserva.Preco * -1);
+            //depositar cliente da reservacentral
+            //_serviceC.UpdatePagamentoCliente(reserva.UserID, reserva.Preco);
+            var reservaCentral = new Reserva(reserva.ParqueID, reserva.ReservaAPI, reserva.UserID, reserva.LugarID);
+            await _serviceR.CriarReservaCentral(reservaCentral);
+            var UltimaReservaAPI = await GetUltimaReservaPrivate(reserva.ParqueID);
+            var qrCode = GerarQRcode(UltimaReservaAPI.Value);
+            EnviarEmail(qrCode.Value, "3", UltimaReservaAPI.Value.ReservaID);
+            _serviceR.DeleteReservaCentral(reserva.ReservaID);
+
+            return CreatedAtAction(nameof(PostReserva), new { id = reserva.ReservaID }, reserva);
+        }       
     }
 }
 

@@ -28,13 +28,12 @@ namespace ParqueAPICentral.Models
 
         public float Preco { get; set; }
 
-        public Reserva(long parqueID, long reservaAPI, string userID, long lugarId, bool paras)
+        public Reserva(long parqueID, long reservaAPI, string userID, long lugarId)
         {
             ParqueID = parqueID;
             ReservaAPI = reservaAPI;
             UserID = userID;
             LugarID = lugarId;
-            paras = false;
         }
 
         public Reserva()
