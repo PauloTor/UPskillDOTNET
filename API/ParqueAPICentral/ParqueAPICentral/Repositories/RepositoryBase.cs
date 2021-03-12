@@ -25,18 +25,10 @@ namespace ParqueAPICentral.Repositories
             {
                 throw new ArgumentNullException($"{nameof(AddAsync)} entity must not be null");
             }
-
-            try
-            {
                 RepContext.Update(entity);
                 await RepContext.SaveChangesAsync();
 
                 return entity;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"{nameof(entity)} could not be updated: {ex.Message}");
-            }
         }
         public Task<ActionResult<T>> Create(T entity)
         {

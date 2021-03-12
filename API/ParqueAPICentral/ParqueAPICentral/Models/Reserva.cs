@@ -26,7 +26,7 @@ namespace ParqueAPICentral.Models
 
         public bool ParaSubAluguer { get; set; }
 
-        public float preco { get; set; }
+        public float Preco { get; set; }
 
         public Reserva(long parqueID, long reservaAPI, string userID, long lugarId, bool paras)
         {
