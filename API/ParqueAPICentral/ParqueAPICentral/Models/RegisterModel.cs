@@ -24,7 +24,7 @@ namespace ParqueAPICentral.Models
 
         [Required]
         [RegularExpression(@"^\\d{9}$", ErrorMessage = "NIF deve ter 9 números")]
-        [Index(nameof(Nif), IsUnique = true)]
+        //[Index(nameof(Nif), IsUnique = true)]
         public int Nif { get; set; }
 
         public float Credito { get; set; }
