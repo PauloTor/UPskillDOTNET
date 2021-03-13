@@ -9,9 +9,10 @@ using PseudoFront_.ViewModel;
 using PseudoFront_.Models;
 using System.Net.Http;
 using Newtonsoft.Json;
-using PseudoFront_.DTO;
+using PseudoFront_.Models;
 using System.Security.Claims;
 using System.Text;
+using System.Globalization;
 
 namespace PseudoFront_.Controllers
 {
@@ -114,10 +115,10 @@ namespace PseudoFront_.Controllers
 
         public IActionResult ParquesDetails(int id, DateTime datai, DateTime dataf)
         {
-            ViewData["Dataini"] = datai;
-            ViewData["Dataini"] = dataf;
-
-            if (datai == DateTime.MinValue && dataf != DateTime.MinValue)
+            ViewData["Datainicio"] = datai;
+            ViewData["Datafim"] = dataf;
+        
+           if (dataf != DateTime.MinValue)
             {
                 // var action = item.ParqueID;
 
@@ -147,22 +148,36 @@ namespace PseudoFront_.Controllers
             }
         }
 
-        public IActionResult CriarReserva(DateTime datai, DateTime dataf, int parqueid)
+        public IActionResult CriarReserva(DateTime di, DateTime df, long i)
         {
 
             //ReservaPrivateDTO reservaPrivateDTO;
             var email = Request.Cookies["email"];
-            var reserva = new ReservaPrivateDTO_(datai, dataf, email, parqueid);
-
-            string queryString = "Datai=" + datai + "&Dataf=" + dataf + "Email" + email + "Parqueid" + parqueid;
-
-            //long a = 1;
+            
+            var dr = DateTime.Now;
+            var reserva = new ReservaPrivateDTO_(dr,di, df, email, i,1);
+            //            [HttpGet("post/{DataInicio}/{DataFim}/{EmailID}/{ParqueID}")]
+            // string queryString = "DataInicio=" + datai + "&DataFim=" + dataf + "&EmailID=" + email + "&ParqueID=" + i;
             using (HttpClient client = new HttpClient())
             {
-                var response = client.PostAsJsonAsync("https://localhost:44346/api/post/", queryString).Result;
+                client.BaseAddress = new Uri("https://localhost:44346/api/");
+                client.DefaultRequestHeaders.Clear();
+                // client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                var postTask = client.PostAsJsonAsync("criarreserva", reserva);
+                postTask.Wait();
+                var result = postTask.Result;
 
+
+                //long a = 1;
+                //using (HttpClient client = new HttpClient())
+                //{
+                //    var response = client.PostAsJsonAsync("https://localhost:44346/api/criarreserva", reserva).Result;
+
+                return RedirectToAction("Index","Home", new { });
+               
+                //return View(reserva);
             }
-            return View(reserva);
+
         }
 
     }

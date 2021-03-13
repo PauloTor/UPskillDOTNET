@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using PseudoFront_.Models;
 
 
-namespace PseudoFront_.DTO
+namespace PseudoFront_.Models
 {
     public class ReservaPrivateDTO
     {

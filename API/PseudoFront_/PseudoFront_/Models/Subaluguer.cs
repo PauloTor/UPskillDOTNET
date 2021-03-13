@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using PseudoFront_.DTO;
+using PseudoFront_.Models;
 
 namespace PseudoFront_.Models
 {

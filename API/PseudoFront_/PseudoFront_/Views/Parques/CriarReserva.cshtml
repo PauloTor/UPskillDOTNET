@@ -1,4 +1,4 @@
-﻿@model PseudoFront_.Models.LoginModel
+﻿@model IEnumerable<PseudoFront_.Models.ReservaPrivateDTO_>
 @{ ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml"; }
 
@@ -13,12 +13,12 @@
         <div class="fields" style="opacity:0.98;margin-left :-12px;">
             <dl class="row" style="color:#ffffff">
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Email)
+                    @Html.DisplayNameFor(model => model.DataReserva)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Email)
+                    <a>Data da reserva</a>
                 </dd>
-                <dt class="col-sm-2">
+                @*<dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.Password)
                 </dt>
                 <dd class="col-sm-10">
@@ -29,8 +29,8 @@
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Password)
-                </dd>
-                
+                </dd>*@
+
             </dl>
         </div>
     </div>

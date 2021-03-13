@@ -10,8 +10,8 @@ using ParquePrivateAPI.Data;
 namespace ParquePrivateAPI.Migrations
 {
     [DbContext(typeof(ParquePrivateAPIContext))]
-    [Migration("20210304182338_initial")]
-    partial class initial
+    [Migration("20210312140141_kkkkk")]
+    partial class kkkkk
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
