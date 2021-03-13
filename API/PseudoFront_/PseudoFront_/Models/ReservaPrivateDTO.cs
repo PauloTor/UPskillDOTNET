@@ -40,5 +40,7 @@ namespace PseudoFront_.Models
 
         [Display(Name = "Preço para subaluguer")]
         public float Preco { get; set; }
+
+        public long ReservaAPI { get; set; }
     }
 }

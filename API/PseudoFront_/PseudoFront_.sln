@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31019.35
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PseudoFront_", "PseudoFront_\PseudoFront_.csproj", "{461FC927-8C58-432F-A4C1-2CB752F7880F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PseudoFront_", "PseudoFront_\PseudoFront_.csproj", "{461FC927-8C58-432F-A4C1-2CB752F7880F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

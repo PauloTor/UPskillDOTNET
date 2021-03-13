@@ -43,26 +43,6 @@ namespace PseudoFront_.Controllers
             }
         }
 
-        // GET: SubAlugueres/Details/5
-        public async Task<IActionResult> Details(long? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            using HttpClient client = new();
-            string endpoint = apiBaseUrl + "/SubAlugueres/" + id;
-            var response = await client.GetAsync(endpoint);
-            var sub = await response.Content.ReadAsAsync<Subaluguer>();
-
-            if (sub == null)
-            {
-                return NotFound();
-            }
-
-            return View(sub);
-        }
-
 
         // GET: SubAlugueres/Edit/5
         public async Task<IActionResult> Edit(long? id)
@@ -92,27 +72,75 @@ namespace PseudoFront_.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(long id, [Bind("SubAluguerID,Preco,Reservado,NovoCliente,ReservaID")] Subaluguer sub)
         {
+            if (sub.Reservado == false)
+            { 
+                using HttpClient client1 = new();
+                string endpoint1 = apiBaseUrl + "/SubAlugueres/" + id;
+                var response1 = await client1.GetAsync(endpoint1);
+                var suba = await response1.Content.ReadAsAsync<Subaluguer>();
 
-            using HttpClient client1 = new();
-            string endpoint1 = apiBaseUrl + "/SubAlugueres/" + id;
-            var response1 = await client1.GetAsync(endpoint1);
-            var suba = await response1.Content.ReadAsAsync<Subaluguer>();
+                sub.SubAluguerID = suba.SubAluguerID;
+                sub.ReservaID = suba.ReservaID;
+                sub.Reservado = suba.Reservado;
+                sub.NovoCliente = suba.NovoCliente;
 
-            sub.SubAluguerID = suba.SubAluguerID;
-            sub.ReservaID = suba.ReservaID;
-            sub.Reservado = suba.Reservado;
-            sub.NovoCliente = suba.NovoCliente;
-
-            using (HttpClient client = new())
-            {
+                using HttpClient client = new();
                 StringContent content = new(JsonConvert.SerializeObject(sub), Encoding.UTF8, "application/json");
                 string endpoint = apiBaseUrl + "/SubAlugueres/" + id;
                 var response = await client.PutAsync(endpoint, content);
             }
+            else
+                throw new Exception("O subaluguer já se encontra reservado e não pode ser modificado.");
+
             return RedirectToAction(nameof(Index));
         }
 
-        
+
+        // GET: SubAlugueres/Reservar/5
+        public async Task<IActionResult> Reservar(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Subaluguer sub;
+            using (HttpClient client = new())
+            {
+                string endpoint = apiBaseUrl + "/SubAlugueres/" + id;
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                sub = await response.Content.ReadAsAsync<Subaluguer>();
+            }
+            if (sub == null)
+            {
+                return NotFound();
+            }
+            return View(sub);
+        }
+
+
+        // POST: SubAlugueres/Reservar/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Reservar(long id, [Bind("SubAluguerID,Preco,Reservado,NovoCliente,ReservaID")] Subaluguer sub)
+        {
+                using HttpClient client1 = new();
+                string endpoint1 = apiBaseUrl + "/SubAlugueres/" + id;
+                var response1 = await client1.GetAsync(endpoint1);
+                var suba = await response1.Content.ReadAsAsync<Subaluguer>();
+
+                sub.SubAluguerID = suba.SubAluguerID;
+                sub.ReservaID = suba.ReservaID;
+
+                using HttpClient client = new();
+                StringContent content = new(JsonConvert.SerializeObject(sub), Encoding.UTF8, "application/json");
+                string endpoint = apiBaseUrl + "/SubAlugueres/post/";
+                var response = await client.PostAsync(endpoint, content);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
         // GET: SubAlugueres/Delete/5
         public async Task<IActionResult> Delete(long? id)
         {
