@@ -10,8 +10,8 @@ using ParqueAPICentral.Contexts;
 namespace ParqueAPICentral.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210311224753_k")]
-    partial class k
+    [Migration("20210313154656_ll")]
+    partial class ll
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -329,6 +329,15 @@ namespace ParqueAPICentral.Migrations
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<DateTime>("DataFim")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataInicio")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataReserva")
+                        .HasColumnType("datetime2");
+
                     b.Property<long>("LugarID")
                         .HasColumnType("bigint");
 
@@ -337,6 +346,9 @@ namespace ParqueAPICentral.Migrations
 
                     b.Property<long>("ParqueID")
                         .HasColumnType("bigint");
+
+                    b.Property<float>("Preco")
+                        .HasColumnType("real");
 
                     b.Property<long>("ReservaAPI")
                         .HasColumnType("bigint");

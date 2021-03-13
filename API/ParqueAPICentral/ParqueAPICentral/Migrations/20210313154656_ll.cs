@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ParqueAPICentral.Migrations
 {
-    public partial class k : Migration
+    public partial class ll : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -228,7 +228,11 @@ namespace ParqueAPICentral.Migrations
                     UserID = table.Column<string>(nullable: true),
                     ApplicationUserId = table.Column<string>(nullable: true),
                     LugarID = table.Column<long>(nullable: false),
-                    ParaSubAluguer = table.Column<bool>(nullable: false)
+                    DataInicio = table.Column<DateTime>(nullable: false),
+                    DataFim = table.Column<DateTime>(nullable: false),
+                    DataReserva = table.Column<DateTime>(nullable: false),
+                    ParaSubAluguer = table.Column<bool>(nullable: false),
+                    Preco = table.Column<float>(nullable: false)
                 },
                 constraints: table =>
                 {

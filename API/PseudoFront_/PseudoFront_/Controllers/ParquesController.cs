@@ -9,7 +9,6 @@ using PseudoFront_.ViewModel;
 using PseudoFront_.Models;
 using System.Net.Http;
 using Newtonsoft.Json;
-using PseudoFront_.Models;
 using System.Security.Claims;
 using System.Text;
 using System.Globalization;
@@ -115,14 +114,20 @@ namespace PseudoFront_.Controllers
 
         public IActionResult ParquesDetails(int id, DateTime datai, DateTime dataf)
         {
-            ViewData["Datainicio"] = datai;
-            ViewData["Datafim"] = dataf;
-        
-           if (dataf != DateTime.MinValue)
+            // ViewData["Datainicio"] = datai;
+            // ViewData["Datafim"] = dataf;
+            ViewData["Dataerror"] = "";
+            if (dataf != DateTime.MinValue)
             {
+                if (dataf < datai || datai < DateTime.Now)
+                {
+                    ViewData["Dataerror"] = "Datas Inválidas";
+                }
+                else { 
                 // var action = item.ParqueID;
 
                 return RedirectToAction("CriarReserva", new { di = datai, df = dataf, i = id });
+                      }
             }
             ParqueDTO parque;
             using (HttpClient client = new HttpClient())

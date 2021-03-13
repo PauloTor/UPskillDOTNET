@@ -277,5 +277,28 @@ namespace ParqueAPICentral.Services
 
 
         //  Update Users // : Remove User de Role 
+
+        public async Task<ActionResult<IEnumerable<ApplicationUser>>> GetAllUsers()
+        {
+            return await this._context.Users.ToListAsync();
+        }
+
+        //public async Task<ActionResult<ApplicationUser>> UpdateUserById(ApplicationUser applicationuser)
+        //{
+        //    return await this._context.Users.Update(applicationuser);
+        //}
+
+        public async Task<ActionResult<ApplicationUser>> DeleteUser(string id)
+        {
+            var user = this._context.Users.FirstOrDefault(u => u.Id == id);
+
+            await DeleteAsync(user);
+
+            return user;
+        }
+        private Task DeleteAsync(ApplicationUser user)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

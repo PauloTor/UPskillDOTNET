@@ -16,22 +16,36 @@ namespace SeleniumTests.Pages
 
         public IWebDriver Driver { get; }
 
-        IWebElement txtUserName => Driver.FindElement(By.Name("UserName"));
+        IWebElement txtFirstName => Driver.FindElement(By.Id("FirstName"));
 
-        IWebElement txtEmail => Driver.FindElement(By.Name("Email"));
+        IWebElement txtLastName => Driver.FindElement(By.Id("LastName"));
 
-        IWebElement txtPassword => Driver.FindElement(By.Name("Password"));
+        IWebElement txtUsername => Driver.FindElement(By.Id("Username"));
 
-        IWebElement btnCreate => Driver.FindElement(By.XPath("/html/body/div/main/div/div/div[4]/input[1]"));
+        IWebElement txtEmail => Driver.FindElement(By.Id("Email"));
+
+        IWebElement txtPassword => Driver.FindElement(By.Id("Password"));
+
+        IWebElement txtNif => Driver.FindElement(By.Id("Nif"));
+
+        IWebElement txtMetodoPagamento => Driver.FindElement(By.Id("MetodoPagamento"));
 
 
-        public void Register(string userName, string email, string password)
+        IWebElement btnRegistar => Driver.FindElement(By.XPath("/html/body/div/main/div/div/form/div[8]/input[1]"));
+
+        IWebElement btnLimpar => Driver.FindElement(By.XPath("/html/body/div/main/div/div/form/div[8]/input[2]"));
+
+        
+
+
+        public void Register(string firstName, string lastName, string userName, string email, string password, string nif, string metodoPagamento)
         {
-
-            txtUserName.SendKeys(userName);
+            txtFirstName.SendKeys(firstName);
+            txtLastName.SendKeys(lastName);
+            txtUsername.SendKeys(userName);
             txtEmail.SendKeys(email);
             txtPassword.SendKeys(password);
-            btnCreate.Submit();
+            btnRegistar.Submit();
         }
     }
 }
