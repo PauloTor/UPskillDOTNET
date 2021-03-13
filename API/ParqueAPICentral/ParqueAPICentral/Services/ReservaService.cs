@@ -163,7 +163,7 @@ namespace ParqueAPICentral.Services
                     var response2 = await client.
                         PostAsync(parque.Value.Url + "reservas/", reserva__);
                     var UltimaReservaAPI = await GetUltimaReservaPrivate(parqueid);
-                    var reservaCentral = new Reserva(parqueid, UltimaReservaAPI.Value.ReservaID, ClienteID, i.LugarID);
+                    var reservaCentral = new Reserva(parqueid, UltimaReservaAPI.Value.ReservaID, reserva_.UserID, reserva_.LugarID, reserva_.DataInicio, reserva_.DataFim, reserva_.DataReserva);
                     await _serviceR.CriarReservaCentral(reservaCentral);
                     var qrCode = GerarQRcode(UltimaReservaAPI.Value);
                     await EnviarEmail(qrCode.Value, ClienteID, UltimaReservaAPI.Value.ReservaID);
@@ -320,19 +320,15 @@ namespace ParqueAPICentral.Services
                 {
                     throw new Exception("Data inválida");
                 }
-
-                StringContent reserva_ = new StringContent(JsonConvert.
-                    SerializeObject(dto), Encoding.UTF8, "application/json");
-                var response2 = await client.
-                    PostAsync(parque.Value.Url + "reservas/", reserva_);
+                StringContent reserva_ = new(JsonConvert.SerializeObject(dto), Encoding.UTF8, "application/json");
+                var response2 = await client.PostAsync(parque.Value.Url + "reservas/", reserva_);
                 var UltimaReservaAPI = await GetUltimaReservaPrivate(dto.ParqueID);
-                var reservaCentral = new Reserva(dto.ParqueID, dto.ReservaID, dto.UserID, dto.LugarID);
+                var reservaCentral = new Reserva(dto.ParqueID, dto.ReservaID, dto.UserID, dto.LugarID, dto.DataInicio, dto.DataFim, dto.DataReserva);
                 await _serviceR.CriarReservaCentral(reservaCentral);
                 var qrCode = GerarQRcode(UltimaReservaAPI.Value);
                 await EnviarEmail(qrCode.Value, "3", UltimaReservaAPI.Value.ReservaID);
 
                 return CreatedAtAction(nameof(PostReserva), new { id = dto.ReservaID }, dto);
-
             }
             catch (HttpRequestException)
             {
@@ -346,7 +342,7 @@ namespace ParqueAPICentral.Services
             //_serviceC.UpdatePagamentoCliente("3", reserva.Preco * -1);
             //depositar cliente da reservacentral
             //_serviceC.UpdatePagamentoCliente(reserva.UserID, reserva.Preco);
-            var reservaCentral = new Reserva(reserva.ParqueID, reserva.ReservaAPI, reserva.UserID, reserva.LugarID);
+            var reservaCentral = new Reserva(reserva.ParqueID, reserva.ReservaAPI, reserva.UserID, reserva.LugarID, reserva.DataInicio, reserva.DataFim, reserva.DataReserva);
             await _serviceR.CriarReservaCentral(reservaCentral);
             var UltimaReservaAPI = await GetUltimaReservaPrivate(reserva.ParqueID);
             var qrCode = GerarQRcode(UltimaReservaAPI.Value);
