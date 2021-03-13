@@ -1,4 +1,5 @@
-﻿using ParqueAPICentral.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using ParqueAPICentral.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,5 +19,10 @@ namespace ParqueAPICentral.Services
         ApplicationUser GetById(string id);
         ApplicationUser UpdatePagamentoCliente(string clienteID, float valor);
         string GetIdByEmail(string email);
+        Task<ActionResult<IEnumerable<ApplicationUser>>> GetAllUsers();
+
+        //Task<ActionResult<ApplicationUser>> UpdateUserById(string Id, ApplicationUser applicationuser);
+
+        Task<ActionResult<ApplicationUser>> DeleteUser(string id);
     }
 }

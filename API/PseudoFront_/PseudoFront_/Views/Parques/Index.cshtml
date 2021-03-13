@@ -83,16 +83,16 @@
 
 
     <form asp-action="Index" method="get">
-        <div style="opacity: 0.9; margin-top: 200px; height: 120px; width: 900px; padding: 35px 35px 35px 35px;color: #000000">
+        <div style="opacity: 0.9; margin-top: 200px; height: 120px; width: 900px; padding: 35px 55px 85px 250px;color: #000000">
             <div class="autocomplete" style="width:700px;opacity:0.98;font-size: 20px;margin-top :-33px;">
                 <div class="fields" style="opacity:0.98;margin-left :-12px;">
              @*       <div class="autocomplete" style="opacity:0.98">*@
-
-                        <div class="username"><input id="myInput" style=" width: 840px" type="text" name="myCountry" placeholder="Codigo-Postal" /></div>
-
+                        <div class="username">
+                            <input id="myInput" style=" width: 800px" type="text" name="myCountry" placeholder="Código Postal" />
+                        </div>
                      @*</div>*@
                 </div>
-                <input type="submit" value="Submeter" style=" width: 100px;justify-self :flex-end; margin-top:25px" class="signin-button" />
+                <input type="submit" value="Submeter" style=" width: 150px;justify-self :flex-end; margin-top:25px; margin-left:250px; background-color: #656b73; border-color: #999999" class="btn btn-primary" />
                 @*   <button class="signin-button" style=" width: 900px; margin-top:25px">Submeter</button>*@
             </div>
         </div>
@@ -112,9 +112,9 @@
                 if (!val) { return false; }
                 currentFocus = -1;
                 /*create a DIV element that will contain the items (values):*/
-                a = document.createElement("DIV");
-                a.setAttribute("id", this.id + "autocomplete-list");
-                a.setAttribute("class", "autocomplete-items");
+                //a = document.createElement("DIV");
+                //a.setAttribute("id", this.id + "autocomplete-list");
+                //a.setAttribute("class", "autocomplete-items");
                 /*append the DIV element as a child of the autocomplete container:*/
                 this.parentNode.appendChild(a);
                 /*for each item in the array...*/

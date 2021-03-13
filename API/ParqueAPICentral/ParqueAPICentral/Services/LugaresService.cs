@@ -37,6 +37,7 @@ namespace ParqueAPICentral.Services
                 var response = await client.GetAsync(parque.Value.Url + "Lugares/" + DataInicio + "/" + DataFim);
                 response.EnsureSuccessStatusCode();
                 ListaLugar = await response.Content.ReadAsAsync<List<LugarDTO>>();
+           
             }
             return ListaLugar;
         }
