@@ -115,8 +115,8 @@ namespace PseudoFront_.Controllers
 
         public IActionResult ParquesDetails(int id, DateTime datai, DateTime dataf)
         {
-            ViewData["Datainicio"] = datai;
-            ViewData["Datafim"] = dataf;
+           // ViewData["Datainicio"] = datai;
+           // ViewData["Datafim"] = dataf;
         
            if (dataf != DateTime.MinValue)
             {
