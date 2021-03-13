@@ -117,12 +117,19 @@ namespace ParqueAPICentral.Services
         }
 
 
-        public async Task<ActionResult<ReservaPrivateDTO>> PostReservaByData(String DataInicio, String DataFim, string Email, long parqueid)
+        public async Task<ActionResult<ReservaPrivateDTO>> PostReservaByData(ReservaPrivateDTO reserva_)
         {
 
-            var ClienteID = _serviceC.GetIdByEmail(Email);
+            var ClienteID = _serviceC.GetIdByEmail(reserva_.UserID);
             
-            var parque = await _service.GetParqueById(parqueid);
+            var parque = await _service.GetParqueById(reserva_.ParqueID);
+            //var DataInicio = reserva_.DataInicio.ToString();
+            var DataInicio = reserva_.DataInicio.ToString("yyyy-MM-ddThh:mm:ss");
+            var DataFim = reserva_.DataFim.ToString("yyyy-MM-ddThh:mm:ss");
+
+            var parqueid = reserva_.ParqueID;
+
+           
             using var client = new HttpClient();
             try
             {
@@ -151,10 +158,10 @@ namespace ParqueAPICentral.Services
 
                 if (i.subReservado == false)
                 {
-                    StringContent reserva_ = new StringContent(JsonConvert.
+                    StringContent reserva__ = new StringContent(JsonConvert.
                         SerializeObject(reserva), Encoding.UTF8, "application/json");
                     var response2 = await client.
-                        PostAsync(parque.Value.Url + "reservas/", reserva_);
+                        PostAsync(parque.Value.Url + "reservas/", reserva__);
                     var UltimaReservaAPI = await GetUltimaReservaPrivate(parqueid);
                     var reservaCentral = new Reserva(parqueid, UltimaReservaAPI.Value.ReservaID, ClienteID, i.LugarID,true);
                     await _serviceR.CriarReservaCentral(reservaCentral);

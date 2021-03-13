@@ -187,6 +187,9 @@ namespace ParqueAPICentral.Migrations
                     b.Property<string>("MetodoPagamento")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Nif")
+                        .HasColumnType("int");
+
                     b.Property<string>("NormalizedEmail")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);

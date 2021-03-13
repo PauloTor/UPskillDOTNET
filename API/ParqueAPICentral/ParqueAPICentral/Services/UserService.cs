@@ -39,7 +39,8 @@ namespace ParqueAPICentral.Services
             {
                 UserName = model.Username,
                 Email = model.Email,
-                Credito= model.Credito,
+                Credito = model.Credito,
+                Nif = model.Nif,           
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 MetodoPagamento = model.MetodoPagamento,
@@ -124,7 +125,6 @@ namespace ParqueAPICentral.Services
         {
             var userClaims = await _userManager.GetClaimsAsync(user);
             var roles = await _userManager.GetRolesAsync(user);
-
             var roleClaims = new List<Claim>();
 
             for (int i = 0; i < roles.Count; i++)
@@ -267,9 +267,11 @@ namespace ParqueAPICentral.Services
             return _context.Users.Find(id);
         }
 
+        //var user = _context.Users.SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == token));
         public string GetIdByEmail(string email)
         {
-            return _context.Users.Find(email).Id;
+            var user = _context.Users.SingleOrDefault(u => u.Email == email).Id;
+            return user; 
         }
 
 

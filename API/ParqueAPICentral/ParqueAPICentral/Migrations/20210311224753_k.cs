@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ParqueAPICentral.Migrations
 {
-    public partial class ini1 : Migration
+    public partial class k : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -42,6 +42,7 @@ namespace ParqueAPICentral.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
+                    Nif = table.Column<int>(nullable: false),
                     Credito = table.Column<float>(nullable: false),
                     MetodoPagamento = table.Column<string>(nullable: true)
                 },

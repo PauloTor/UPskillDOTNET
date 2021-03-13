@@ -48,23 +48,24 @@ namespace ParqueAPICentral.Controllers
             return await this._service.GetAllReservasByParque(id);
         }
 
-        [EnableCors]
-        [HttpGet("Reservas")]
-        public async Task<ActionResult<IEnumerable<ReservaPrivateDTO>>> GetReservasPorParqueporcliente(long id)
-        {
+        //[EnableCors]
+        //[HttpGet("Reservas")]
+        //public async Task<ActionResult<IEnumerable<ReservaPrivateDTO>>> GetReservasPorParqueporcliente(long id)
+        //{
            
 
-            return await this._service.GetAllReservasByParque(id);
-        }
+        //    return await this._service.GetAllReservasByParque(id);
+        //}
 
 
         //Post Reservas by {DataInicio}/{DataFim}/{ClienteID}/{ParqueID}/{lugarId}
         [EnableCors]
-        [HttpGet("post/{DataInicio}/{DataFim}/{EmailID}/{ParqueID}")]
-        public async Task<ActionResult<ReservaPrivateDTO>> PostReservaByData(String DataInicio, String DataFim, String Email, long parqueid)
+        [HttpPost("criarreserva")]
+         //public async Task<ActionResult<ReservaPrivateDTO>> PostReservaByData(String DataInicio, String DataFim, String Email, long parqueid)
+       public async Task<ActionResult<ReservaPrivateDTO>> PostReservaByData(ReservaPrivateDTO reserva)
         {
             
-          return await _service.PostReservaByData(DataInicio, DataFim, Email, parqueid);
+          return await _service.PostReservaByData(reserva);
 
         }
         
@@ -76,7 +77,6 @@ namespace ParqueAPICentral.Controllers
         {
             return await _service.CancelarReserva(reservaID);
         }
-        
         
         [EnableCors]
         public async Task<string> GetToken(string apiBaseUrlPrivado)

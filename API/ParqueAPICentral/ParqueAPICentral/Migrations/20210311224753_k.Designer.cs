@@ -10,8 +10,8 @@ using ParqueAPICentral.Contexts;
 namespace ParqueAPICentral.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210310211552_ini1")]
-    partial class ini1
+    [Migration("20210311224753_k")]
+    partial class k
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -188,6 +188,9 @@ namespace ParqueAPICentral.Migrations
 
                     b.Property<string>("MetodoPagamento")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Nif")
+                        .HasColumnType("int");
 
                     b.Property<string>("NormalizedEmail")
                         .HasColumnType("nvarchar(256)")

@@ -83,6 +83,7 @@ namespace ParqueAPICentral.Controllers
 
             return  _userService.UpdatePagamentoCliente(clienteID, valor);
         }
+        
         [Authorize]
         [HttpPost("getidbymail/{email}")]
         public string GetIdbyEmail(string email)

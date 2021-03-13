@@ -12,6 +12,7 @@ namespace ParqueAPICentral.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
+        public int Nif { get; set; }
         public float Credito { get; set; }
         public string MetodoPagamento { get; set; }
 
