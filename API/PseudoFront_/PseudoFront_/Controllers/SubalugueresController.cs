@@ -124,56 +124,20 @@ namespace PseudoFront_.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Reservar(long id, [Bind("SubAluguerID,Preco,Reservado,NovoCliente,ReservaID")] Subaluguer sub)
         {
-                using HttpClient client1 = new();
-                string endpoint1 = apiBaseUrl + "/SubAlugueres/" + id;
-                var response1 = await client1.GetAsync(endpoint1);
-                var suba = await response1.Content.ReadAsAsync<Subaluguer>();
+            using HttpClient client1 = new();
+            string endpoint1 = apiBaseUrl + "/SubAlugueres/" + id;
+            var response1 = await client1.GetAsync(endpoint1);
+            var suba = await response1.Content.ReadAsAsync<Subaluguer>();
 
-                sub.SubAluguerID = suba.SubAluguerID;
-                sub.ReservaID = suba.ReservaID;
+            sub.SubAluguerID = suba.SubAluguerID;
+            sub.ReservaID = suba.ReservaID;
+            sub.Preco = suba.Preco;            
 
-                using HttpClient client = new();
-                StringContent content = new(JsonConvert.SerializeObject(sub), Encoding.UTF8, "application/json");
-                string endpoint = apiBaseUrl + "/SubAlugueres/post/";
-                var response = await client.PostAsync(endpoint, content);
+            using HttpClient client = new();
+            StringContent content = new(JsonConvert.SerializeObject(sub), Encoding.UTF8, "application/json");
+            string endpoint = apiBaseUrl + "/SubAlugueres/post/";
+            var response = await client.PostAsync(endpoint, content);
 
-            return RedirectToAction(nameof(Index));
-        }
-
-
-        // GET: SubAlugueres/Delete/5
-        public async Task<IActionResult> Delete(long? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            Subaluguer sub;
-            using (HttpClient client = new())
-            {
-                string endpoint = apiBaseUrl + "/SubAlugueres/" + id;
-                var response = await client.GetAsync(endpoint);
-                response.EnsureSuccessStatusCode();
-                sub = await response.Content.ReadAsAsync<Subaluguer>();
-            }
-            if (sub == null)
-            {
-                return NotFound();
-            }
-            return View(sub);
-        }
-
-
-        // POST: SubAlugueres/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(long id)
-        {
-            using (HttpClient client = new())
-            {
-                string endpoint = apiBaseUrl + "/Subalugueres/" + id;
-                var response = await client.DeleteAsync(endpoint);
-            }
             return RedirectToAction(nameof(Index));
         }
     }

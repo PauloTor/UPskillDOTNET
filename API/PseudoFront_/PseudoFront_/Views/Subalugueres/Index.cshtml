@@ -21,12 +21,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Preco)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Reservado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NovoCliente)
-            </th>
+
             <th></th>
         </tr>
     </thead>
@@ -42,12 +37,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Preco)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Reservado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NovoCliente)
-            </td>
+
             <td>
                 <a asp-action="Edit" asp-route-id="@item.SubAluguerID">Alterar preço</a> |
                 <a asp-action="Reservar" asp-route-id="@item.SubAluguerID">Reservar</a> |
