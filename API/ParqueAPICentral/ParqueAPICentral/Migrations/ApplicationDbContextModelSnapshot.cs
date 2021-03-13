@@ -336,6 +336,9 @@ namespace ParqueAPICentral.Migrations
                     b.Property<long>("ParqueID")
                         .HasColumnType("bigint");
 
+                    b.Property<float>("Preco")
+                        .HasColumnType("real");
+
                     b.Property<long>("ReservaAPI")
                         .HasColumnType("bigint");
 
