@@ -251,14 +251,10 @@ namespace ParqueAPICentral.Services
 
         public ActionResult<byte[]> GerarQRcode(ReservaPrivateDTO reserva)
         {
-            var qrInfo = "Reserva nº: " + reserva.ReservaID
-                       + "\nNome do Parque: " + reserva.Parque.NomeParque
-                       + "\nMorada do Parque: " + reserva.Parque.Morada
-                       + "\nLugar nº: " + reserva.LugarID
-                       + "\nData de Fim: " + reserva.UserID
-                       + "\nData de Reserva: " + reserva.DataReserva
-                       + "\nData de Inicio: " + reserva.DataInicio
-                       + "\nData de Fim: " + reserva.DataFim;
+            var qrInfo = "Reserva: " + reserva.ReservaID
+                   + "\nLugar: " + reserva.LugarID
+                   + "\nData de Inicio: " + reserva.DataInicio
+                   + "\nData de Fim: " + reserva.DataFim;
 
             QRCodeGenerator qrGenerator = new();
 

@@ -9,7 +9,6 @@ using PseudoFront_.ViewModel;
 using PseudoFront_.Models;
 using System.Net.Http;
 using Newtonsoft.Json;
-using PseudoFront_.Models;
 using System.Security.Claims;
 using System.Text;
 using System.Globalization;
