@@ -19,7 +19,15 @@ namespace SeleniumTests.Pages
 
         public IWebElement lnkLogin => Driver.FindElement(By.LinkText("Login"));
 
+        public IWebElement lnkRegister => Driver.FindElement(By.LinkText("Register"));
+
+        public IWebElement lnkParques => Driver.FindElement(By.LinkText("Parques"));
+
         public void ClickLogin() => lnkLogin.Click();
+
+        public void ClickRegister() => lnkRegister.Click();
+
+        public void ClickParques() => lnkParques.Click();
 
     }
 }
