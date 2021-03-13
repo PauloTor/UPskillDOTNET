@@ -101,6 +101,29 @@ namespace ParqueAPICentral.Controllers
             return Ok(user.RefreshTokens);
         }
 
-       
+        // GET: api/User : Obter Informação dos Users
+        //[Authorize(Policy = "Admin")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ApplicationUser>>> GetAllUsers()
+        {
+            return await this._userService.GetAllUsers();
+        }
+
+        // PUT: api/User/ - Actualizar informação de um User
+        //[Authorize(Policy = "Admin")]
+        //[HttpPut("{id}")]
+        ////public async Task<ActionResult<ApplicationUser>> UpdateUserById(string Id, ApplicationUser applicationuser)
+        ////{
+        ////    return await this._userService.UpdateUserById(applicationuser);
+        ////}
+
+        // DELETE: api/User/5 - Eliminar um User
+        //[Authorize(Policy = "Admin")]
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<ApplicationUser>> DeleteUser(string id)
+        {
+            return await this._userService.DeleteUser(id);
+        }
+
     }
 }
