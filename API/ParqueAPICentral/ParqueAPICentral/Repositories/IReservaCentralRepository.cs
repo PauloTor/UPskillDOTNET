@@ -17,14 +17,6 @@ namespace ParqueAPICentral.Repositories
         Task<ActionResult<Reserva>> ParaSubALuguer(long id);
         Task<ActionResult<Reserva>> CriarReservaCentral(Reserva reserva);
         Task<ActionResult<Reserva>> UpdateReserva(Reserva reserva);
-        
-
-
-
-
-
-
-
+        Task<ActionResult<IEnumerable<Reserva>>> GetAllReservaByUserAsync(string id);
     }
-
 }

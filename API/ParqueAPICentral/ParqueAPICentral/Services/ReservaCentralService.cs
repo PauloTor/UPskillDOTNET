@@ -32,6 +32,11 @@ namespace ParqueAPICentral.Services
             return await _repo.GetAllReservasCentralAsync();
         }
 
+        public async Task<ActionResult<IEnumerable<Reserva>>> GetAllReservaByUserAsync(string id)
+        {
+            return await _repo.GetAllReservaByUserAsync(id);
+        }
+
         public async Task<ActionResult<Reserva>> UpdateReserva(Reserva reserva)
         {
             return await _repo.UpdateReserva(reserva);

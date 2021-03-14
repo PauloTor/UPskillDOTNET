@@ -25,8 +25,14 @@ namespace PseudoFront_.Controllers
         // GET: Reservas
         public async Task<ActionResult> Index()
         {
+            var email = Request.Cookies["email"];
+            using HttpClient client2 = new();
+            string endpoint2 = apiBaseUrl + "/user/getidbymail/" + email;
+            var response2 = await client2.GetAsync(endpoint2);
+            var userId = await response2.Content.ReadAsStringAsync();
+
             using HttpClient client = new();
-            string endpoint = apiBaseUrl + "/ReservasCentral";
+            string endpoint = apiBaseUrl + "/ReservasCentral/user/" + userId;
             var response = await client.GetAsync(endpoint);
 
             if (response.IsSuccessStatusCode)
@@ -91,6 +97,13 @@ namespace PseudoFront_.Controllers
                 {
                     throw new Exception("Data inválida");
                 }
+                var email = Request.Cookies["email"];
+                using HttpClient client2 = new();
+                string endpoint2 = apiBaseUrl + "/user/getidbymail/" + email;
+                var response2 = await client2.GetAsync(endpoint2);
+                var userId = await response2.Content.ReadAsStringAsync();
+                reserva.UserID = userId;
+
                 using (HttpClient client = new())
                 {
                     StringContent content = new(JsonConvert.SerializeObject(reserva), Encoding.UTF8, "application/json");
@@ -139,7 +152,7 @@ namespace PseudoFront_.Controllers
             reserva.ReservaID = suba.ReservaID;
             reserva.ParqueID = suba.ParqueID;
             reserva.LugarID = suba.LugarID;
-            reserva.ClienteID = suba.ClienteID;
+            reserva.UserID = suba.UserID;
             reserva.DataInicio = suba.DataInicio;
             reserva.DataFim = suba.DataFim;
             reserva.DataReserva = suba.DataReserva;

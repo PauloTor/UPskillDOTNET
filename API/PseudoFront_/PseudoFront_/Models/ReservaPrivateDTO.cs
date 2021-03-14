@@ -20,8 +20,8 @@ namespace PseudoFront_.Models
         [Display(Name = "Nº do lugar")]
         public long LugarID { get; set; }
 
-        [Display(Name = "Nº do cliente")]
-        public long ClienteID { get; set; }
+        [Display(Name = "Nº do utilizador")]
+        public string UserID { get; set; }
 
         [Display(Name = "Data de início")]
         [DataType(DataType.Date)]

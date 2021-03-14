@@ -22,6 +22,11 @@ namespace ParqueAPICentral.Repositories
             return await RepContext.Reserva.ToListAsync();
         }
 
+        public async Task<ActionResult<IEnumerable<Reserva>>> GetAllReservaByUserAsync(string id)
+        {
+            return await RepContext.Reserva.Where(r => r.UserID == id).ToListAsync();
+        }
+
         public async Task<ActionResult<Reserva>> UpdateReserva(Reserva reserva)
         {
             await UpdateAsync(reserva);
