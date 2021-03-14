@@ -283,22 +283,22 @@ namespace ParqueAPICentral.Services
             return await this._context.Users.ToListAsync();
         }
 
-        //public async Task<ActionResult<ApplicationUser>> UpdateUserById(ApplicationUser applicationuser)
+        //public async Task<ActionResult<ApplicationUser>> UpdateUser(ApplicationUser applicationuser)
         //{
-        //    return await this._context.Users.Update(applicationuser);
+        //    return await this._context.Users.UpdateRange(applicationuser);
         //}
 
-        public async Task<ActionResult<ApplicationUser>> DeleteUser(string id)
-        {
-            var user = this._context.Users.FirstOrDefault(u => u.Id == id);
+        //public async Task<ActionResult<ApplicationUser>> DeleteUser(string id)
+        //{
+        //    var user = this._context.Users.FirstOrDefault(u => u.Id == id);
 
-            await DeleteAsync(user);
+        //    await DeleteAsync(user);
 
-            return user;
-        }
-        private Task DeleteAsync(ApplicationUser user)
-        {
-            throw new NotImplementedException();
-        }
+        //    return user;
+        //}
+        //private Task DeleteAsync(ApplicationUser user)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

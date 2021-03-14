@@ -10,6 +10,10 @@ namespace PseudoFront_.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public int Nif { get; set; }
+        public float Credito { get; set; }
+        public override string Email { get; set; }
+        public string MetodoPagamento { get; set; }
         public int PaymentMethodId { get; set; }
     }
 }

@@ -1,0 +1,63 @@
+﻿@model PaginatedList<PseudoFront_.Models.ApplicationUser>
+
+@{
+    ViewData["Title"] = "Lista de Usuários";
+}
+
+<h1>Usuários</h1>
+
+<p>
+    <a asp-action="Create">Nova Reserva</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.F)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReservaID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ParqueID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LugarID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ParaSubAluguer)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nif)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Credito)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MetodoPagamento)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ReservaID">Subalugar</a> |
+                <a asp-action="Details" asp-route-id="@item.ReservaID">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.ReservaID">Eliminar</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
