@@ -96,7 +96,7 @@ namespace ParqueAPICentral.Controllers
             var redirUrls = new RedirectUrls()
             {
                 cancel_url = "www.google.pt" + "&Cancel=true",
-                return_url = "https://localhost:44330/api/paypal/pagamento"
+                return_url = "https://apicentral.azurewebsites.net/api/paypal/pagamento"
             };
             // Adding Tax, shipping and Subtotal details
             var details = new Details()

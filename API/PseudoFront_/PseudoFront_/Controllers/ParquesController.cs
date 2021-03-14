@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using System.Security.Claims;
 using System.Text;
 using System.Globalization;
+using System.Configuration;
 
 namespace PseudoFront_.Controllers
 {
@@ -43,11 +44,11 @@ namespace PseudoFront_.Controllers
             var listaMoradas = new List<MoradaDTO>();
             using (HttpClient client = new HttpClient())
             {
-                string endpoint = "https://localhost:44346/api/Parques";
+                string endpoint = "https://apicentral.azurewebsites.net/api/Parques";
                 var response = await client.GetAsync(endpoint);
                 response.EnsureSuccessStatusCode();
                 listaParques = await response.Content.ReadAsAsync<List<ParqueDTO>>();
-                string endpoint2 = "https://localhost:44346/api/Moradas";
+                string endpoint2 = "https://apicentral.azurewebsites.net/api/Moradas";
                 var response2 = await client.GetAsync(endpoint2);
                 response2.EnsureSuccessStatusCode();
 
@@ -132,7 +133,7 @@ namespace PseudoFront_.Controllers
             ParqueDTO parque;
             using (HttpClient client = new HttpClient())
             {
-                string endpoint = "https://localhost:44346/api/Parques/" + id;
+                string endpoint = "https://apicentral.azurewebsites.net/api/Parques/" + id;
                 var response = client.GetAsync(endpoint);
                 response.Wait();
                 var result = response.Result;
@@ -165,7 +166,7 @@ namespace PseudoFront_.Controllers
             // string queryString = "DataInicio=" + datai + "&DataFim=" + dataf + "&EmailID=" + email + "&ParqueID=" + i;
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:44346/api/");
+                client.BaseAddress = new Uri("https://apicentral.azurewebsites.net/api/");
                 client.DefaultRequestHeaders.Clear();
                 // client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                 var postTask = client.PostAsJsonAsync("criarreserva", reserva);
@@ -182,7 +183,7 @@ namespace PseudoFront_.Controllers
                 //long a = 1;
                 //using (HttpClient client = new HttpClient())
                 //{
-                //    var response = client.PostAsJsonAsync("https://localhost:44346/api/criarreserva", reserva).Result;
+                //    var response = client.PostAsJsonAsync("https://apicentral.azurewebsites.net/api/criarreserva", reserva).Result;
 
                 return RedirectToAction("Index", "Home", new { });
 

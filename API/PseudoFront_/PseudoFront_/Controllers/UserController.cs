@@ -33,7 +33,7 @@ namespace PseudoFront_.Controllers
                 //    PostAsync("https://localhost:44353/api/register", reserva_);
 
 
-                client.BaseAddress = new Uri("https://localhost:44346/api/user/");
+                client.BaseAddress = new Uri("https://apicentral.azurewebsites.net/api/user/");
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                 var postTask = client.PostAsJsonAsync("register", registerModel);
@@ -69,8 +69,7 @@ namespace PseudoFront_.Controllers
             {
                 try
                 {
-               // https://localhost:44346/api/user/token
-                    client.BaseAddress = new Uri("https://localhost:44346/api/");
+                    client.BaseAddress = new Uri("https://apicentral.azurewebsites.net/api/");
                     client.DefaultRequestHeaders.Clear();
                    // client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                     var postTask = client.PostAsJsonAsync("user/token", loginModel);
