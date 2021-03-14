@@ -40,7 +40,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-rgb(149, 149, 149) ">
             <div class="container">
-                <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">PseudoCompany</a>
+                <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">PseudoCompany<Home></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -63,7 +63,7 @@
                                     <a class="nav-link text-white" asp-area="" asp-controller="Subalugueres" asp-action="Index">Subalugueres</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-white" asp-area="" asp-controller="Parques" asp-action="Index">Parques</a>
+                                    <a class="nav-link text-white" asp-area="" asp-controller="Parques" asp-action="Index">Criar Reserva</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-white" asp-area="" asp-controller="Faturas" asp-action="Index">Faturas</a>
@@ -74,6 +74,16 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="Profile">Conta</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-warning" asp-area="" asp-controller="" asp-action="">@ViewBag.username</a>
+                                </li>
+
+                            }
+                        }
+
                     </ul>
                 </div>
             </div>

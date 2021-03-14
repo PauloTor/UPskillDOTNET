@@ -4,33 +4,33 @@
 
 <div class="text-center">
     <h1 class="display-4">Bem-Vindo à PseudoCompany Smart Parking!</h1>
-    <img src="~/Img/P2.png" ; style="width: 350px;" >
+    <img src="~/Img/P2.png" ; style="width: 350px;">
 
 
-    <!--Check for token-->
+    <!--Check for token - false em caso de nao estar login-->
     @if (ViewBag.Token == false)
     {
-        <p>User not logged!</p>
+        <p style="font-size:30px ">Usuário nao autenticado!</p>
     }
     else
     {
-        <p>User logged!</p>
+        <p style="font-size:30px ">Login efectuado com sucesso!</p>
     }
-         
+
     <!-- Check for role-->
     @if (TempData["role"] == null)
     {
-        <p>Role = Nao registado</p>
-    } 
+        //<p>Role = Nao registado</p>
+    }
 
     @if ((string)TempData["role"] == "\"Administrator\"")
     {
-        <p>Role = Administrador</p>
+       // <p>Role = Administrador</p>
     }
 
     @if ((string)TempData["role"] == "\"User\"")
     {
-        <p>Role = Utilizador Cliente</p>
+       // <p>Role = Utilizador Cliente</p>
     }
 
     @if (TempData["message"] != null)
