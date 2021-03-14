@@ -18,15 +18,10 @@ namespace ParqueAPICentral
     {
         public async static Task Main(string[] args)
         {
-           // var host = CreateHostBuilder(args)
+           
           var host = CreateHostBuilder(args).Build();
 
             CreateDbIfNotExists(host);
-
-          //  host.Run();
-                
-                
-             //   .Build();
 
             using (var scope = host.Services.CreateScope())
             {
