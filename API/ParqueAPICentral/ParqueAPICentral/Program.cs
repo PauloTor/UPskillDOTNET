@@ -23,7 +23,7 @@ namespace ParqueAPICentral
 
             CreateDbIfNotExists(host);
 
-            host.Run();
+          //  host.Run();
                 
                 
              //   .Build();
