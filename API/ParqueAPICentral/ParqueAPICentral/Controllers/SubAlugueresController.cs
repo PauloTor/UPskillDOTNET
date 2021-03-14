@@ -77,7 +77,7 @@ namespace ParqueAPICentral.Controllers
         {
             var id = subaluguer.ReservaID;
             var reserva = _serviceRC.GetReservaById(id).Result.Value;
-            reserva.UserID = subaluguer.NovoCliente; // subaluguer.NovoCliente.ToString();
+            reserva.UserID = subaluguer.NovoCliente;
             return await _serviceR.PostSubReserva(reserva);
             //return await _serviceRC.DeleteReservaCentral(id);
         }

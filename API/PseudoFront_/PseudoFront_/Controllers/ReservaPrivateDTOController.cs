@@ -25,8 +25,14 @@ namespace PseudoFront_.Controllers
         // GET: Reservas
         public async Task<ActionResult> Index()
         {
+            var email = Request.Cookies["email"];
+            using HttpClient client2 = new();
+            string endpoint2 = apiBaseUrl + "/user/getidbymail/" + email;
+            var response2 = await client2.GetAsync(endpoint2);
+            var userId = await response2.Content.ReadAsStringAsync();
+
             using HttpClient client = new();
-            string endpoint = apiBaseUrl + "/ReservasCentral";
+            string endpoint = apiBaseUrl + "/ReservasCentral/user/" + userId;
             var response = await client.GetAsync(endpoint);
 
             if (response.IsSuccessStatusCode)
