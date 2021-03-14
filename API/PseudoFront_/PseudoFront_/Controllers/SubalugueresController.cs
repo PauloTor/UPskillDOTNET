@@ -124,6 +124,12 @@ namespace PseudoFront_.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Reservar(long id, [Bind("SubAluguerID,Preco,Reservado,NovoCliente,ReservaID")] Subaluguer sub)
         {
+            var email = Request.Cookies["email"];
+            using HttpClient client2 = new();
+            string endpoint2 = apiBaseUrl + "/user/getidbymail/" + email;
+            var response2 = await client2.GetAsync(endpoint2);
+            var userId = await response2.Content.ReadAsStringAsync();
+
             using HttpClient client1 = new();
             string endpoint1 = apiBaseUrl + "/SubAlugueres/" + id;
             var response1 = await client1.GetAsync(endpoint1);
@@ -131,7 +137,8 @@ namespace PseudoFront_.Controllers
 
             sub.SubAluguerID = suba.SubAluguerID;
             sub.ReservaID = suba.ReservaID;
-            sub.Preco = suba.Preco;            
+            sub.Preco = suba.Preco;
+            sub.NovoCliente = userId;
 
             using HttpClient client = new();
             StringContent content = new(JsonConvert.SerializeObject(sub), Encoding.UTF8, "application/json");

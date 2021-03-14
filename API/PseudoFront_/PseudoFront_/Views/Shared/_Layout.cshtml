@@ -50,17 +50,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Contacto</a>
                         </li>
-                        @{ if (ViewBag.Token == false || ViewBag.Token == null)
-                            {
                                 <li class="nav-item">
                                     <a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="Register">Registar</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="Login">Login</a>
                                 </li>
-                            }
-                            else
-                            {
                                 <li class="nav-item">
                                     <a class="nav-link text-white" asp-area="" asp-controller="ReservaPrivateDTO" asp-action="Index">Reservas</a>
                                 </li>
@@ -74,7 +69,7 @@
                                     <a class="nav-link text-white" asp-area="" asp-controller="Faturas" asp-action="Index">Faturas</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-white" asp-area="" asp-controller="Clientes" asp-action="Index">Clientes</a>
+                                    <a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="Index">Usuários</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-white" asp-area="" asp-controller="User" asp-action="Profile">Conta</a>

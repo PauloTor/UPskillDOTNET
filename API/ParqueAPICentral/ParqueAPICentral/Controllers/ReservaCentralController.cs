@@ -42,6 +42,13 @@ namespace ParqueAPICentral.Controllers
             return await this._service.GetAllReservasCentralAsync();
         }
 
+        [EnableCors]
+        [HttpGet("user/{id}")]
+        public async Task<ActionResult<IEnumerable<Reserva>>> GetAllReservaByUser(string id)
+        {
+            return await this._service.GetAllReservaByUserAsync(id);
+        }
+
         //[Authorize(Policy = "Roles")]
         [EnableCors]
         [HttpPut("{ParqueID}")]
