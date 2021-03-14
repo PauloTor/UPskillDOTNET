@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ParqueAPICentral.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/User")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -87,11 +87,10 @@ namespace ParqueAPICentral.Controllers
             return _userService.UpdatePagamentoCliente(clienteID, valor);
         }
 
-        [Authorize]
-        [HttpPost("getidbymail/{email}")]
+        //[Authorize]
+        [HttpGet("getidbymail/{email}")]
         public string GetIdbyEmail(string email)
         {
-
             return _userService.GetIdByEmail(email);
         }
 

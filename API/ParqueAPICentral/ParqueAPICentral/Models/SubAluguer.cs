@@ -20,13 +20,14 @@ namespace ParqueAPICentral.Models
 
         public bool Reservado { get; set; }
         
-        public long NovoCliente { get; set; }
+        public string NovoCliente { get; set; }
 
-        public SubAluguer(long reservaID, float preco, bool reservado)
+        public SubAluguer(long reservaID, float preco, bool reservado, string novoC)
         {
             Preco = preco;
             ReservaID = reservaID;
             Reservado = reservado;
+            NovoCliente = novoC;
         }
 
         public SubAluguer()

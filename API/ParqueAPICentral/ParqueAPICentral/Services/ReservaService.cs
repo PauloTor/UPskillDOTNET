@@ -178,7 +178,7 @@ namespace ParqueAPICentral.Services
                     var sub = _serviceS.GetAllSubAluguerAsync().Result.Value.Where(n => n.SubAluguerID == i.subAluguerId).FirstOrDefault();
                     var reservaC = _serviceR.GetAllReservasCentralAsync().Result.Value.Where(r => r.ReservaID == sub.ReservaID).FirstOrDefault();
                     sub.Reservado = true;
-                    sub.NovoCliente = Convert.ToInt64(ClienteID);
+                    sub.NovoCliente = ClienteID;
                     await _serviceS.UpdateSubAluguer(sub);
 
                     //pagamento do cliente que aluga
@@ -328,7 +328,7 @@ namespace ParqueAPICentral.Services
                 var reservaCentral = new Reserva(dto.ParqueID, dto.ReservaID, dto.UserID, dto.LugarID, dto.DataInicio, dto.DataFim, dto.DataReserva);
                 await _serviceR.CriarReservaCentral(reservaCentral);
                 var qrCode = GerarQRcode(UltimaReservaAPI.Value);
-                await EnviarEmail(qrCode.Value, "3", UltimaReservaAPI.Value.ReservaID);
+                await EnviarEmail(qrCode.Value, dto.UserID, UltimaReservaAPI.Value.ReservaID);
 
                 return CreatedAtAction(nameof(PostReserva), new { id = dto.ReservaID }, dto);
             }
@@ -345,7 +345,7 @@ namespace ParqueAPICentral.Services
             await _serviceR.CriarReservaCentral(reservaCentral);
             var UltimaReservaAPI = await GetUltimaReservaPrivate(reserva.ParqueID);
             var qrCode = GerarQRcode(UltimaReservaAPI.Value);
-            EnviarEmail(qrCode.Value, "3", UltimaReservaAPI.Value.ReservaID);
+            EnviarEmail(qrCode.Value, reserva.UserID, UltimaReservaAPI.Value.ReservaID);
             _serviceR.DeleteReservaCentral(reserva.ReservaID);
 
             return CreatedAtAction(nameof(PostReserva), new { id = reserva.ReservaID }, reserva);
