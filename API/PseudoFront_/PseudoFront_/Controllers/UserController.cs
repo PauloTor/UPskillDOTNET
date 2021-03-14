@@ -151,7 +151,7 @@ namespace PseudoFront_.Controllers
             var listaUsers = new List<ApplicationUser>();
             using (HttpClient client = new HttpClient())
             {
-                string endpoint = apiBaseUrl + "/Users";
+                string endpoint = apiBaseUrl + "/User/List";
                 var response = await client.GetAsync(endpoint);
                 response.EnsureSuccessStatusCode();
                 listaUsers = await response.Content.ReadAsAsync<List<ApplicationUser>>();
@@ -175,7 +175,7 @@ namespace PseudoFront_.Controllers
         }
 
         // GET: Users/Details/5
-        public async Task<IActionResult> Details(long? id) // ?????
+        public async Task<IActionResult> Details(string? id) // ?????
         {
             if (id == null)
             {
@@ -184,7 +184,7 @@ namespace PseudoFront_.Controllers
             ApplicationUser applicationUser;
             using (HttpClient client = new HttpClient())
             {
-                string endpoint = apiBaseUrl + "/Users/" + id;
+                string endpoint = apiBaseUrl + "/User/List" + id;
                 var response = await client.GetAsync(endpoint);
                 response.EnsureSuccessStatusCode();
                 applicationUser = await response.Content.ReadAsAsync<ApplicationUser>();

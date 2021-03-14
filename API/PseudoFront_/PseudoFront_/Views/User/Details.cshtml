@@ -1,0 +1,53 @@
+﻿@model PseudoFront_.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "Detalhes do Usuário";
+}
+
+
+<div>
+    <h4>Detalhes do Usuário</h4>
+
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Primeiro Nome
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt class="col-sm-2">
+            Sobrenome
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt class="col-sm-2">
+            NIF
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nif)
+        </dd>
+        <dt class="col-sm-2">
+            Credito
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Credito)
+        </dd>
+        <dt class="col-sm-2">
+            Email
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class="col-sm-2">
+            Metodo Pagamento
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MetodoPagamento)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index">Voltar à lista de Usuários</a>
+</div>

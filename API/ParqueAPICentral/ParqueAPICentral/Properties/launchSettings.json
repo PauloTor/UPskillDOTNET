@@ -12,7 +12,8 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/LugaresDisponiveis/1920-02-01T11:00:00/1923-02-01T11:00:00/2",
+      //"launchUrl": "api/LugaresDisponiveis/1920-02-01T11:00:00/1923-02-01T11:00:00/2",
+      "launchUrl": "api/User/List",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
