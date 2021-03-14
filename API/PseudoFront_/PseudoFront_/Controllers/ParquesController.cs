@@ -176,7 +176,7 @@ namespace PseudoFront_.Controllers
                 {
                     var content = result.Content.ReadAsStringAsync();
                     content.Wait();
-                    TempData["message"] = "Reserva efetuada com sucesso";
+                    TempData["message"] = "Reserva Criada com sucesso! Código QR enviado para o seu email";
                 }
 
                 //long a = 1;

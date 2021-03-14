@@ -23,8 +23,10 @@ namespace PseudoFront_.Controllers
         {
             
             var token = Request.Cookies["token"];
-            var uemail = Request.Cookies["email"];
+            ViewBag.username= Request.Cookies["username"];
+            
             //var user_=Request.Cookies[User]
+            ViewBag.Token = true;
             if (token == null)
             {
                 ViewBag.Token = false;
@@ -32,24 +34,26 @@ namespace PseudoFront_.Controllers
             }
             else
             {
+                
+
                 // GetUserRole
                 using (var client = new HttpClient())
                 {
                     try
                     {
-                        client.BaseAddress = new Uri("https://localhost:44398/api/");
+                        client.BaseAddress = new Uri("https://localhost:44346/api/");
                         client.DefaultRequestHeaders.Clear();
                         client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                         client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-                        var postTask = client.GetAsync("user/role");
-                        postTask.Wait();
-                        var result = postTask.Result;
-                        if (result.IsSuccessStatusCode)
+                        //var postTask = client.GetAsync("user/role");
+                        //postTask.Wait();
+                        //var result = postTask.Result;
+                        if (Request.Cookies["role"]!=null)
                         {
-                            var content = result.Content.ReadAsStringAsync();
-                            content.Wait();
-                            var role = content.Result;
-                            TempData["role"] = content.Result;
+                          //  var content = result.Content.ReadAsStringAsync();
+                           // content.Wait();
+                         //   var role = content.Result;
+                            TempData["role"] = Request.Cookies["role"];
                         }
                         else
                             TempData["role"] = null;
