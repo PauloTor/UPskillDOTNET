@@ -18,7 +18,7 @@ namespace SeleniumTests
             //Browser Driver
             IWebDriver webDriver = new ChromeDriver();
             //Navigate to site 
-            webDriver.Navigate().GoToUrl("https://localhost:44342/");
+            webDriver.Navigate().GoToUrl("https://pseudocompany.azurewebsites.net/");
 
 
 

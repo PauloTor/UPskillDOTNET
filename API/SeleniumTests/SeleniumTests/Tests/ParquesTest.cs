@@ -22,7 +22,7 @@ namespace SeleniumTests.Tests
         {
 
             //Navigate to site 
-            webDriver.Navigate().GoToUrl("https://localhost:44342/");
+            webDriver.Navigate().GoToUrl("https://pseudocompany.azurewebsites.net/");
 
         }
 
