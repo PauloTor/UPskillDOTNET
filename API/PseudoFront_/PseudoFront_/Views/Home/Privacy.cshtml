@@ -27,10 +27,10 @@
             transform: translate(-50%,-50%);
             max-width: 400px;
             width: 100%;
-            background: #fff;
+            background: rgba(153, 153, 153, 0.25);
             padding: 15px;
             border-radius: 5px;
-            box-shadow: 4px 4px 2px rgba(254,236,164,1);
+            box-shadow: 4px 4px 2px #808080;
         }
 
             .wrapper h2 {
@@ -38,7 +38,7 @@
                 margin-bottom: 20px;
                 text-transform: uppercase;
                 letter-spacing: 3px;
-                color: #332902;
+                color: #020303;
             }
 
             .wrapper .input_field {
@@ -60,16 +60,19 @@
             .wrapper .btn input[type="submit"] {
                 border: 0px;
                 margin-top: 15px;
-                padding: 10px;
+                padding: 7px;
                 text-align: center;
                 width: 100%;
-                background: #fece0c;
-                color: #332902;
+                background: #656b73;
+                color: #fff;
                 text-transform: uppercase;
                 letter-spacing: 5px;
                 font-weight: bold;
                 border-radius: 25px;
                 cursor: pointer;
+                margin-left: 85px;
+                background-color: #656b73;
+                border-color: #999999;
             }
 
         #error_message {
@@ -126,7 +129,7 @@
 </head>
 <body>
     <div class="wrapper">
-        <h2>Contact us</h2>
+        <h2 style="color: #fff; text-shadow: 1px 1px 1px #000000; font-weight: bold">Formulário de Contacto</h2>
         <div id="error_message">
 
         </div>
@@ -144,10 +147,11 @@
                 <input type="text" placeholder="Email" id="email">
             </div>
             <div class="input_field">
-                <textarea placeholder="Mensagem" id="message"></textarea>
+                <textarea placeholder="Mensagem..." id="message"></textarea>
             </div>
             <div class="btn">
                 <input type="submit">
+                @*<input type="submit" value="Enviar" class="btn btn-primary" style="background-color:  #656b73; border-color: #999999" />*@
             </div>
         </form>
     </div>

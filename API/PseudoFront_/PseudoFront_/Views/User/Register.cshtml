@@ -1,60 +1,83 @@
-﻿@model PseudoFront_.Models.RegisterModel
+﻿<!DOCTYPE html>
+<html>
+@model PseudoFront_.Models.RegisterModel
 
 @{
     ViewData["Title"] = "Register";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<head>
+    <style>
+        .wrapper {
+            position: absolute;
+            top: 50%;
+            left: 30%;
+            transform: translate(-50%,-50%);
+            max-width: 625px;
+            width: 100%;
+            background: rgba(153, 153, 153, 0.55);
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 4px 4px 2px #808080;
+        }
+    </style>
+</head>
 
-<h1>Registar</h1>
-
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Register">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
+<body>
+    <div class="wrapper">
+        <h1 style="color: #fff; text-shadow: 1px 1px 1px #000000; font-weight: bold">Registar</h1>
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Register">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="FirstName" class="control-label" style="color: #fff; text-shadow: 1px 1px 2px #000000; font-weight: bold">Nome</label>
+                        <input asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LastName" class="control-label" style="color: #fff; text-shadow: 1px 1px 2px #000000; font-weight: bold">Apelido</label>
+                        <input asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Username" class="control-label" style="color: #fff; text-shadow: 1px 1px 2px #000000; font-weight: bold"></label>
+                        <input asp-for="Username" class="form-control" />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label" style="color: #fff; text-shadow: 1px 1px 2px #000000; font-weight: bold"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label" style="color: #fff; text-shadow: 1px 1px 2px #000000; font-weight: bold"></label>
+                        <input asp-for="Password" type="password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Nif" class="control-label" style="color: #fff; text-shadow: 1px 1px 2px #000000; font-weight: bold">NIF</label>
+                        <input asp-for="Nif" class="form-control" />
+                        <span asp-validation-for="Nif" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MetodoPagamento" class="control-label" style="color: #fff; text-shadow: 1px 1px 2px #000000; font-weight: bold">Método de Pagamento</label>
+                        <input asp-for="MetodoPagamento" class="form-control" />
+                        <span asp-validation-for="MetodoPagamento" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Registar" class="btn btn-primary" style="background-color:  #656b73; border-color: #999999"/>
+                        <input type="reset" value="Limpar" class="btn btn-primary" style="background-color:  #7a0a00; border-color: #7a0a00"/>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" type="password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Nif" class="control-label"></label>
-                <input asp-for="Nif" type="password" class="form-control" />
-                <span asp-validation-for="Nif" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MetodoPagamento" class="control-label"></label>
-                <input asp-for="MetodoPagamento" class="form-control" />
-                <span asp-validation-for="MetodoPagamento" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Registar" class="btn btn-primary" />
-                <input type="reset" value="Limpar" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+</body>
+
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+</html>

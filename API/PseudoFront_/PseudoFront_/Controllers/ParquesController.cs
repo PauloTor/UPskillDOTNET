@@ -172,14 +172,20 @@ namespace PseudoFront_.Controllers
                 postTask.Wait();
                 var result = postTask.Result;
 
+                if (result.IsSuccessStatusCode)
+                {
+                    var content = result.Content.ReadAsStringAsync();
+                    content.Wait();
+                    TempData["message"] = "Reserva efetuada com sucesso";
+                }
 
                 //long a = 1;
                 //using (HttpClient client = new HttpClient())
                 //{
                 //    var response = client.PostAsJsonAsync("https://localhost:44346/api/criarreserva", reserva).Result;
 
-                return RedirectToAction("Index","Home", new { });
-               
+                return RedirectToAction("Index", "Home", new { });
+
                 //return View(reserva);
             }
 

@@ -82,7 +82,6 @@ namespace PseudoFront_.Controllers
             {
                 try
                 {
-               // https://localhost:44346/api/user/token
                     client.BaseAddress = new Uri("https://localhost:44346/api/");
                     client.DefaultRequestHeaders.Clear();
                    // client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));

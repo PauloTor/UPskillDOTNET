@@ -124,8 +124,8 @@ namespace ParqueAPICentral.Services
 
             var parque = await _service.GetParqueById(reserva_.ParqueID);
             //var DataInicio = reserva_.DataInicio.ToString();
-            var DataInicio = reserva_.DataInicio.ToString("yyyy-MM-ddThh:mm:ss");
-            var DataFim = reserva_.DataFim.ToString("yyyy-MM-ddThh:mm:ss");
+            var DataInicio = reserva_.DataInicio.ToString("yyyy-MM-ddTHH:mm:ss");
+            var DataFim = reserva_.DataFim.ToString("yyyy-MM-ddTHH:mm:ss");
 
             var parqueid = reserva_.ParqueID;
 

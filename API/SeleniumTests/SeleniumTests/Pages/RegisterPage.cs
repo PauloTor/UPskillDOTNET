@@ -45,6 +45,8 @@ namespace SeleniumTests.Pages
             txtUsername.SendKeys(userName);
             txtEmail.SendKeys(email);
             txtPassword.SendKeys(password);
+            txtNif.SendKeys(nif);
+            txtMetodoPagamento.SendKeys(metodoPagamento);
             btnRegistar.Submit();
         }
     }
