@@ -68,7 +68,7 @@ namespace ParqueAPICentral.Data
 
             context.SaveChanges();
             */
-
+            /*
             IList<Fatura> defaultFatura = new List<Fatura>
             {
                 new Fatura(DateTime.Parse("2020-01-04 21:00:00"), 33, 1),
@@ -82,8 +82,8 @@ namespace ParqueAPICentral.Data
             context.Fatura.AddRange(defaultFatura);
 
             context.SaveChanges();
-
-
+            */
+            /*
             IList<SubAluguer> defaultSubAluguer = new List<SubAluguer>
             {
                 new SubAluguer(3, 12,false),
@@ -93,6 +93,7 @@ namespace ParqueAPICentral.Data
             context.SubAluguer.AddRange(defaultSubAluguer);
 
             context.SaveChanges();
+            */
         }
     }
 }

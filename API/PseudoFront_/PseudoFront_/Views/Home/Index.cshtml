@@ -7,7 +7,7 @@
     <img src="~/Img/P2.png" ; style="width: 350px;" >
 
 
-    <!--Check for token
+    <!--Check for token-->
     @if (ViewBag.Token == false)
     {
         <p>User not logged!</p>
@@ -16,12 +16,12 @@
     {
         <p>User logged!</p>
     }
-         -->
-    <!-- Check for role
+         
+    <!-- Check for role-->
     @if (TempData["role"] == null)
     {
         <p>Role = Nao registado</p>
-    } -->
+    } 
 
     @if ((string)TempData["role"] == "\"Administrator\"")
     {

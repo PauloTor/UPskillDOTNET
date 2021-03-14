@@ -126,7 +126,7 @@ public class ReservasController : ControllerBase
     }
 
         // GET: api/Reservas/data1,data2 Pesquisar Reservas por datas
-        [Authorize]
+        //[Authorize]
         [EnableCors]
         [HttpGet("{dateInicio}/{dateFim}")]
         public async Task<ActionResult<IEnumerable<Reserva>>> GetReservaByData(string dateInicio, string dateFim)

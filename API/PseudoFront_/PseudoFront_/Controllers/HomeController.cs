@@ -24,7 +24,7 @@ namespace PseudoFront_.Controllers
             
             var token = Request.Cookies["token"];
             var uemail = Request.Cookies["email"];
-          //  var user_=Request.Cookies[User]
+            //var user_=Request.Cookies[User]
             if (token == null)
             {
                 ViewBag.Token = false;

@@ -45,7 +45,6 @@ namespace ParqueAPICentral.Services
         public async Task<ActionResult<IEnumerable<LugarReserva>>> GetLugaresDisponiveisComSubAlugueres(String DataInicio, String DataFim, long parqueID)
         {
             var parque = await _serviceP.GetParqueById(parqueID);
-
             using var client = new HttpClient();
             var rtoken = await GetToken(parque.Value.Url + "users/authenticate");
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", rtoken);
@@ -55,7 +54,6 @@ namespace ParqueAPICentral.Services
             var reservas = await _serviceR.GetAllReservasCentralAsync();
             var subAluguer = await _serviceS.GetAllSubAluguerAsync(); //alterar para: por parqueID
             var lugaresNaoSubAlugados = new List<(long, float, long)>();
-
             foreach (var reserva in reservas.Value)
             {
                 foreach (var reservaOriginal in listaReservas)
@@ -71,7 +69,7 @@ namespace ParqueAPICentral.Services
                     }
                 }
             }
-             var response2 = await client.GetAsync(parque.Value.Url + "Lugares/");
+            var response2 = await client.GetAsync(parque.Value.Url + "Lugares/");
             response2.EnsureSuccessStatusCode();
             var listaLugares = await response2.Content.ReadAsAsync<List<LugarDTO>>();
             var lugaresNaoReservados = new List<LugarReserva>();

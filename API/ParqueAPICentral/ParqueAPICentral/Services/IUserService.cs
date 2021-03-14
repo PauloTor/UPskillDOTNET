@@ -21,8 +21,8 @@ namespace ParqueAPICentral.Services
         string GetIdByEmail(string email);
         Task<ActionResult<IEnumerable<ApplicationUser>>> GetAllUsers();
 
-        //Task<ActionResult<ApplicationUser>> UpdateUserById(string Id, ApplicationUser applicationuser);
+        //Task<ActionResult<ApplicationUser>> UpdateUser(ApplicationUser applicationuser);
 
-        Task<ActionResult<ApplicationUser>> DeleteUser(string id);
+        //Task<ActionResult<ApplicationUser>> DeleteUser(string id);
     }
 }

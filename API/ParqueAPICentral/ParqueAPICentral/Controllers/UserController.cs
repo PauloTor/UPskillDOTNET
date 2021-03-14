@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ParqueAPICentral.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/User")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -31,7 +31,10 @@ namespace ParqueAPICentral.Controllers
         public async Task<IActionResult> GetTokenAsync(TokenRequestModel model)
         {
             var result = await _userService.GetTokenAsync(model);
-            SetRefreshTokenInCookie(result.RefreshToken);
+            if (result.RefreshToken != null)
+            {
+                SetRefreshTokenInCookie(result.RefreshToken);
+            }
             return Ok(result);
         }
         [HttpPost("addrole")]
@@ -49,7 +52,7 @@ namespace ParqueAPICentral.Controllers
                 SetRefreshTokenInCookie(response.RefreshToken);
             return Ok(response);
         }
-        
+
 
         [HttpPost("revoke-token")]
         public async Task<IActionResult> RevokeToken([FromBody] RevokeTokenRequest model)
@@ -81,14 +84,13 @@ namespace ParqueAPICentral.Controllers
         public ApplicationUser UpdatePagamentoCliente(string clienteID, float valor)
         {
 
-            return  _userService.UpdatePagamentoCliente(clienteID, valor);
+            return _userService.UpdatePagamentoCliente(clienteID, valor);
         }
-        
-        [Authorize]
-        [HttpPost("getidbymail/{email}")]
+
+        //[Authorize]
+        [HttpGet("getidbymail/{email}")]
         public string GetIdbyEmail(string email)
         {
-
             return _userService.GetIdByEmail(email);
         }
 
@@ -103,7 +105,7 @@ namespace ParqueAPICentral.Controllers
 
         // GET: api/User : Obter Informação dos Users
         //[Authorize(Policy = "Admin")]
-        [HttpGet]
+        [HttpGet("List")]
         public async Task<ActionResult<IEnumerable<ApplicationUser>>> GetAllUsers()
         {
             return await this._userService.GetAllUsers();
@@ -112,18 +114,17 @@ namespace ParqueAPICentral.Controllers
         // PUT: api/User/ - Actualizar informação de um User
         //[Authorize(Policy = "Admin")]
         //[HttpPut("{id}")]
-        ////public async Task<ActionResult<ApplicationUser>> UpdateUserById(string Id, ApplicationUser applicationuser)
-        ////{
-        ////    return await this._userService.UpdateUserById(applicationuser);
-        ////}
+        //public async Task<ActionResult<ApplicationUser>> UpdateUserById(ApplicationUser applicationuser)
+        //{
+        //    return await this._userService.UpdateUser(applicationuser);
+        //}
 
         // DELETE: api/User/5 - Eliminar um User
         //[Authorize(Policy = "Admin")]
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<ApplicationUser>> DeleteUser(string id)
-        {
-            return await this._userService.DeleteUser(id);
-        }
-
+        //[HttpDelete("delete/{id}")] 
+        //public async Task<ActionResult<ApplicationUser>> DeleteUser(string id)
+        //{
+        //    return await this._userService.DeleteUser(id);
+        //}
     }
 }
