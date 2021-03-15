@@ -26,7 +26,7 @@ namespace SeleniumTests.Tests
         }
 
         [Test]
-        public void Login()
+        public void Register()
         {
             HomePage homePage = new HomePage(webDriver);
             homePage.ClickRegister();
@@ -38,16 +38,15 @@ namespace SeleniumTests.Tests
 
             //TODO meter o path da mensagem de sucesso na criação de utilizador
 
-            var RegistoComSucesso = webDriver.FindElement(By.XPath("/html/body/div/main/div/div/h3"));
+            var RegistoComSucesso = webDriver.FindElement(By.XPath("/html/body/div/main/div/p"));
 
             var sucesso = false;
 
             var registerMessage = RegistoComSucesso.Text;
 
-            if (registerMessage == "New user registered")
+            if (registerMessage == "Usuário nao autenticado!")
             {
                 sucesso = true;
-                Console.WriteLine("Registo bem sucedido!");
             }
 
             Assert.That(sucesso, Is.True);

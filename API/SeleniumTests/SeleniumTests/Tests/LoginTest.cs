@@ -36,13 +36,13 @@ namespace SeleniumTests.Tests
             LoginPage loginPage = new LoginPage(webDriver);
             loginPage.Login("pseudocompanygrupo3@gmail.com", "12345Qwerty.");
 
-            var loginComSucesso = webDriver.FindElement(By.XPath("/html/body/div/main/div/div/h3"));
+            var loginComSucesso = webDriver.FindElement(By.XPath("/html/body/div/main/div/p"));
 
             var sucesso = false;
 
             var loginMessage = loginComSucesso.Text;
 
-            if (loginMessage == "Login efectuado com sucesso")
+            if (loginMessage == "Login efectuado com sucesso!")
             {
                 sucesso = true;
                 Console.WriteLine("Login bem sucedido!");

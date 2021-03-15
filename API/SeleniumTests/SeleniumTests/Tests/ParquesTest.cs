@@ -44,9 +44,9 @@ namespace SeleniumTests.Tests
 
             ParquesDetailsPage parquesDetailsPage = new ParquesDetailsPage(webDriver);
 
-            parquesDetailsPage.SubmeterDataInicio("13040020211800");
+            parquesDetailsPage.SubmeterDataInicio("14040020211800");
             
-            parquesDetailsPage.SubmeterDataFim("13040020212000");
+            parquesDetailsPage.SubmeterDataFim("14040020212000");
             
             var reservaComSucesso = webDriver.FindElement(By.XPath("/html/body/div/main/div/div/h3"));
 
@@ -54,10 +54,9 @@ namespace SeleniumTests.Tests
 
             var reservaMessage = reservaComSucesso.Text;
 
-            if (reservaMessage == "Reserva efetuada com sucesso")
+            if (reservaMessage == "Reserva Criada com sucesso! Código QR enviado para o seu email")
             {
                 sucesso = true;
-                Console.WriteLine("Reserva bem sucedida!");
             }
 
             Assert.That(sucesso, Is.True);

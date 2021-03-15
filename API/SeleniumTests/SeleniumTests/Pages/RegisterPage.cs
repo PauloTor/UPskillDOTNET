@@ -31,9 +31,9 @@ namespace SeleniumTests.Pages
         IWebElement txtMetodoPagamento => Driver.FindElement(By.Id("MetodoPagamento"));
 
 
-        IWebElement btnRegistar => Driver.FindElement(By.XPath("/html/body/div/main/div/div/form/div[8]/input[1]"));
+        IWebElement btnRegistar => Driver.FindElement(By.XPath("/html/body/div/main/div/div/div/form/div[8]/input[1]"));
 
-        IWebElement btnLimpar => Driver.FindElement(By.XPath("/html/body/div/main/div/div/form/div[8]/input[2]"));
+        IWebElement btnLimpar => Driver.FindElement(By.XPath("/html/body/div/main/div/div/div/form/div[8]/input[2]"));
 
         
 
@@ -47,7 +47,7 @@ namespace SeleniumTests.Pages
             txtPassword.SendKeys(password);
             txtNif.SendKeys(nif);
             txtMetodoPagamento.SendKeys(metodoPagamento);
-            btnRegistar.Submit();
+            btnRegistar.SendKeys(Keys.Enter);
         }
     }
 }
