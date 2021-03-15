@@ -159,9 +159,9 @@ namespace PseudoFront_.Controllers
 
             //ReservaPrivateDTO reservaPrivateDTO;
             var email = Request.Cookies["email"];
-            
+
             var dr = DateTime.Now;
-            var reserva = new ReservaPrivateDTO_(dr,di, df, email, i,1);
+            var reserva = new ReservaPrivateDTO_(dr, di, df, email, i, 1);
             //            [HttpGet("post/{DataInicio}/{DataFim}/{EmailID}/{ParqueID}")]
             // string queryString = "DataInicio=" + datai + "&DataFim=" + dataf + "&EmailID=" + email + "&ParqueID=" + i;
             using (HttpClient client = new HttpClient())
@@ -189,8 +189,38 @@ namespace PseudoFront_.Controllers
 
                 //return View(reserva);
             }
-
         }
 
+        // GET: Reservas/Create
+        public async Task<IActionResult> CreateParque()
+        {
+            using (HttpClient client = new())
+            {
+                string endpoint = apiBaseUrl + "/Parques";
+                var response = await client.GetAsync(endpoint);
+                response.EnsureSuccessStatusCode();
+                var reservas = await response.Content.ReadAsAsync<List<ParqueDTO>>();
+            }
+            return View();
+        }
+
+
+        // POST: Reservas/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateParque([Bind("ReservaID,ParqueID,LugarID,ClienteID,DataInicio,DataFim,DataReserva,")] ParqueDTO parque)
+        {
+            if (ModelState.IsValid)
+            {
+                using (HttpClient client = new())
+                {
+                    StringContent content = new(JsonConvert.SerializeObject(parque), Encoding.UTF8, "application/json");
+                    string endpoint = apiBaseUrl + "/reservas";
+                    var response = await client.PostAsync(endpoint, content);
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(parque);
+        }
     }
 }

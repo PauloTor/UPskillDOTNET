@@ -12,7 +12,7 @@ namespace ParqueAPICentral.Repositories
         
         Task<ActionResult<Parque>> GetParqueById(long id);
         Task<ActionResult<IEnumerable<Parque>>> GetAllParqueAsync();
-
+        Task<ActionResult<Parque>> PostParque(Parque parque);
         Task<bool> ParqueExist(long id);
         //Task<ActionResult<IEnumerable<Parque>>> PostParquesByDataAsync(String DataInicio, String DataFim, long ClienteID);
 

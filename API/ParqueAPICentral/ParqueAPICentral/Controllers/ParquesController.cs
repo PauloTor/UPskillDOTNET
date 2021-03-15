@@ -53,6 +53,13 @@ namespace ParqueAPICentral.Controllers
             return await _service.GetParqueById(id);
         }
 
+        [EnableCors]
+        [HttpPost]
+        public async Task<ActionResult<Parque>> PostParque(Parque parque)
+        {
+            return await _service.PostParque(parque);
+        }
+
         public async Task<bool> ParqueExist(long id)
         {
         return await _service.ParqueExist(id);

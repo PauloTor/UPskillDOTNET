@@ -9,7 +9,6 @@ namespace PseudoFront_.Models
 {
     public class ParqueDTO
     {
-        [Key]
         public long ParqueID { get; set; }
 
         public string NomeParque { get; set; }
@@ -24,19 +23,6 @@ namespace PseudoFront_.Models
         [ForeignKey("MoradaID")]
         public long MoradaID { get; set; }
         public MoradaDTO Moradadto {get;set;}
-        
-        public ParqueDTO()
-        {
-        }
-
-        public ParqueDTO(string nomeParque, long nifParque, int lotacao, string url, long moradaId)
-        {
-            NomeParque = nomeParque;
-            NIFParque = nifParque;
-            Lotacao = lotacao;
-            Url = url;
-            MoradaID = moradaId;
-        }
     }
 }
  
