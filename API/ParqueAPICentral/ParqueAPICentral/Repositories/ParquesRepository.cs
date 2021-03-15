@@ -30,6 +30,11 @@ namespace ParqueAPICentral.Repositories
             return await RepContext.Parque.FindAsync(id);
         }
 
+        public async Task<ActionResult<Parque>> PostParque(Parque parque)
+        {
+            return await AddAsync(parque);
+        }
+
         public async Task<bool> ParqueExist(long id)
         {
             return await GetAll().Where(p => p.ParqueID == id).AnyAsync();

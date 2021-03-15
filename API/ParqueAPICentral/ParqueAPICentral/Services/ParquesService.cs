@@ -35,6 +35,10 @@ namespace ParqueAPICentral.Services
             return await this._repo.GetParqueById(id);
         }
 
+        public async Task<ActionResult<Parque>> PostParque(Parque parque)
+        {
+            return await _repo.PostParque(parque);
+        }
 
         public async Task<bool> ParqueExist(long id)
         {
