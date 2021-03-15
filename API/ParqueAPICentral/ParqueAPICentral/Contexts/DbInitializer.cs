@@ -42,9 +42,9 @@ namespace ParqueAPICentral.Data
 
             var parque = new List<Parque>
             {
-                new Parque("Aparkai 1", 1234, 10, "https://localhost:44365/api/", 1),
-                new Parque("Aparkai 2", 1234, 4, "https://localhost:44365/api/", 2),
-                new Parque("Municipal", 4444, 22, "https://localhost:44339/api/", 3)
+                new Parque("Parque Central", 1234, 10, "https://localhost:44365/api/", 1),
+                new Parque("Parque Sul", 1234, 4, "https://localhost:44365/api/", 2),
+                new Parque("Parque Municipal", 4444, 22, "https://localhost:44339/api/", 3)
             };
 
             foreach (Parque p in parque)
